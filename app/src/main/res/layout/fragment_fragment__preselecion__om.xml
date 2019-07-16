@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Preselecion.Fragment_Preselecion_OM">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="387dp"
+        android:layout_height="88dp"
+        android:text="Preselecion OM"
+        android:textSize="30sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_Preselecion"
+        android:layout_width="400dp"
+        android:layout_height="659dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="160dp" />
+
+</RelativeLayout>
