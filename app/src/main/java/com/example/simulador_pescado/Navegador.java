@@ -15,6 +15,7 @@ import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_TiempoMu
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_TiempoMuerto;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -49,6 +50,9 @@ Contenedor.OnFragmentInteractionListener, Contenedor_Descongelado.OnFragmentInte
         setContentView(R.layout.activity_navegador);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        UsuarioLogueado usuarioLogueado = UsuarioLogueado.getUsuarioLogueado(null);
+        this.setTitle( usuarioLogueado.getNombre().concat(" ").concat( usuarioLogueado.getApellido_paterno() ) );
        
         Fragment fragment= new home();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commit();

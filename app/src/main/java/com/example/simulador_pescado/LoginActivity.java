@@ -1,64 +1,102 @@
 package com.example.simulador_pescado;
 
-import android.app.Activity;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.simulador_pescado.Descongelado.Tabs_Descongelado;
-import com.example.simulador_pescado.R;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.simulador_pescado.conexion.InicioSesion;
+import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.Usuario;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 public class LoginActivity extends AppCompatActivity {
 
-     EditText usernameEditText;
-     EditText passwordEditText;
-     Button loginButton;
-     ProgressBar loadingProgressBar;
+     private EditText textoUsuario;
+     private EditText textoContrasena;
+     private Button botonAcceder;
+     private ProgressBar barraProgreso;
+     private LoginActivity actividad;
+     private AlertDialog ventanaEmergente;
 
+    public LoginActivity getActividad() {
+        return actividad;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        usernameEditText = findViewById(R.id.username);
-        passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login);
-        loadingProgressBar = findViewById(R.id.loading);
-
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(getApplicationContext(), Navegador.class);
-                startActivity(intent);
-            }
-        });
-
+        iniciaComponentes();
     }
 
+    private void iniciaComponentes(){
+        this.actividad = this;
+        this.barraProgreso = findViewById(R.id.barraProgreso);
+        this.textoUsuario = findViewById(R.id.usuario);
+        this.textoContrasena = findViewById(R.id.contrasena);
+        this.botonAcceder = findViewById(R.id.acceder);
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        this.botonAcceder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                barraProgreso.setVisibility(View.VISIBLE);
+                textoUsuario.setEnabled(false);
+                textoContrasena.setEnabled(false);
+                botonAcceder.setEnabled(false);
+
+                InicioSesion login = new InicioSesion(
+                        textoUsuario.getText().toString(),//"usuarioerp",
+                        "16950b5a070a9a951cdccba2d7cf3e91",
+                        "2",
+                        getActividad()
+                );
+                login.execute();
+            }
+        });
+    }
+
+    public void iniciaSesion(Usuario usuarioLogueado){
+        this.barraProgreso.setVisibility(View.GONE);
+        this.textoUsuario.setEnabled(true);
+        this.textoContrasena.setEnabled(true);
+        this.botonAcceder.setEnabled(true);
+        UsuarioLogueado.getUsuarioLogueado( usuarioLogueado.getUsuario() );
+
+        Intent intent = new Intent(getApplicationContext(), Navegador.class);
+        startActivity(intent);
+    }
+
+    public void errorInicio(ErrorServicio errorServidor){
+        this.barraProgreso.setVisibility(View.GONE);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActividad() );
+        builder.setMessage( parseaMensaje( errorServidor.getMensaje() ) )
+                .setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        textoUsuario.setEnabled(true);
+                        textoContrasena.setEnabled(true);
+                        botonAcceder.setEnabled(true);
+                        ventanaEmergente.dismiss();
+                    }
+                });
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.show();
+    }
+
+    private String parseaMensaje(String mensaje){
+        String mensajeFinal = "";
+        if( mensaje.contains("contraseÃ±a") ){
+            mensajeFinal = mensaje.replace("Ã±", "ñ");
+        }
+        return mensajeFinal;
     }
 }
