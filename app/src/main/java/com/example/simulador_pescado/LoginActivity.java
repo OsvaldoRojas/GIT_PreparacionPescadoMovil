@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.simulador_pescado.Utilerias.Encriptacion;
 import com.example.simulador_pescado.conexion.InicioSesion;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Usuario;
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 InicioSesion login = new InicioSesion(
                         textoUsuario.getText().toString(),//"usuarioerp",
-                        "16950b5a070a9a951cdccba2d7cf3e91",
+                        Encriptacion.btnmd5(textoContrasena.getText().toString()),
                         "2",
                         getActividad()
                 );
@@ -99,4 +100,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         return mensajeFinal;
     }
+
+
 }
