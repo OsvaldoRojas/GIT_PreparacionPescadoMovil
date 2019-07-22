@@ -53,13 +53,16 @@ public class LoginActivity extends AppCompatActivity {
                 textoContrasena.setEnabled(false);
                 botonAcceder.setEnabled(false);
 
-                InicioSesion login = new InicioSesion(
-                        textoUsuario.getText().toString(),//"usuarioerp",
-                        Encriptacion.btnmd5(textoContrasena.getText().toString()),
+                /*InicioSesion login = new InicioSesion(
+                        textoUsuario.getText().toString(),//"usuarioerp"
+                        Encriptacion.md5( textoContrasena.getText().toString() ),
                         "2",
                         getActividad()
                 );
-                login.execute();
+                login.execute();*/
+
+                Intent intent = new Intent(getApplicationContext(), Navegador.class);
+                startActivity(intent);
             }
         });
     }
@@ -94,11 +97,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String parseaMensaje(String mensaje){
-        String mensajeFinal = "";
         if( mensaje.contains("contraseÃ±a") ){
-            mensajeFinal = mensaje.replace("Ã±", "ñ");
+            mensaje = mensaje.replace("Ã±", "ñ");
         }
-        return mensajeFinal;
+        return mensaje;
     }
 
 
