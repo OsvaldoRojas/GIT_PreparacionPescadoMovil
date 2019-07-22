@@ -51,8 +51,8 @@ Contenedor.OnFragmentInteractionListener, Contenedor_Descongelado.OnFragmentInte
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        UsuarioLogueado usuarioLogueado = UsuarioLogueado.getUsuarioLogueado(null);
-        this.setTitle( usuarioLogueado.getNombre().concat(" ").concat( usuarioLogueado.getApellido_paterno() ) );
+        /*UsuarioLogueado usuarioLogueado = UsuarioLogueado.getUsuarioLogueado(null);
+        this.setTitle( usuarioLogueado.getNombre().concat(" ").concat( usuarioLogueado.getApellido_paterno() ) );*/
        
         Fragment fragment= new home();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commit();

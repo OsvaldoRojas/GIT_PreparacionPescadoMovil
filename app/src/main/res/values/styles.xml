@@ -29,6 +29,94 @@
         <item name="android:textSize">20dp</item>
     </style>
 
+    <style name="botonAccion">
+        <item name="android:background">@drawable/boton_accion</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="posicionA">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">@color/negro</item>
+        <item name="android:gravity">center</item>
+        <item name="android:rotation">270</item>
+        <item name="android:textSize">11dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="posicionB">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textColor">@color/negro</item>
+        <item name="android:gravity">center</item>
+        <item name="android:rotation">270</item>
+        <item name="android:textSize">11dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="operador">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:background">@drawable/contenedor_icono</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:src">@drawable/ic_operador2</item>
+    </style>
+
+    <style name="tina">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:background">@drawable/contenedor_icono</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:src">@drawable/ic_tina2</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
+    <style name="bascula">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:background">@drawable/contenedor_icono</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:src">@drawable/ic_bascula2</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
+    <style name="montacargas">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:background">@drawable/contenedor_icono</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:src">@drawable/ic_montacargas2</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

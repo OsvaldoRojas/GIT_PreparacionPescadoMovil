@@ -5,6 +5,7 @@
     <color name="colorAccent">#053091</color>
 
     <color name="blanco">#FFFFFF</color>
+    <color name="negro">#000000</color>
 
     <color name="principalNormalContenido">#053091</color>
     <color name="principalNormalSombra">#032169</color>
