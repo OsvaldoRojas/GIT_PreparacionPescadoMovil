@@ -1,21 +1,27 @@
 package com.example.simulador_pescado.Preselecion;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.conexion.ObtenAsignados;
+import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
-import com.example.simulador_pescado.vista.Recurso;
 import com.example.simulador_pescado.vista.Tina;
 
 import java.util.ArrayList;
@@ -45,41 +51,45 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private Button boton1;
     private Button boton2;
 
-    private Recurso operador1;
-    private Recurso operador2;
-    private Recurso operador3;
-    private Recurso operador4;
-    private Recurso operador5;
-    private Recurso operador6;
-    private Recurso operador7;
-    private Recurso operador8;
-    private Recurso operador9;
-    private Recurso operador10;
+    private ImageView tina1;
+    private ImageView tina2;
+    private ImageView tina3;
+    private ImageView tina4;
+    private ImageView tina5;
+    private ImageView tina6;
+    private ImageView tina7;
+    private ImageView tina8;
+    private ImageView tina9;
+    private ImageView tina10;
+    private ImageView tina11;
+    private ImageView tina12;
 
-    private Recurso tina1;
-    private Recurso tina2;
-    private Recurso tina3;
-    private Recurso tina4;
-    private Recurso tina5;
-    private Recurso tina6;
-    private Recurso tina7;
-    private Recurso tina8;
-    private Recurso tina9;
-    private Recurso tina10;
-    private Recurso tina11;
-    private Recurso tina12;
+    private ImageView operador1;
+    private ImageView operador2;
+    private ImageView operador3;
+    private ImageView operador4;
+    private ImageView operador5;
+    private ImageView operador6;
+    private ImageView operador7;
+    private ImageView operador8;
+    private ImageView operador9;
+    private ImageView operador10;
 
-    private Recurso montacargas1;
-    private Recurso montacargas2;
-    private Recurso montacargas3;
-    private Recurso montacargas4;
+    private ImageView montacargas1;
+    private ImageView montacargas2;
+    private ImageView montacargas3;
+    private ImageView montacargas4;
 
-    private Recurso recursoSeleccionado;
+    private Tina tinaSeleccionada;
+    private OperadorBascula operadorSeleccionado;
+    private OperadorMontacargas montacargasSeleccionado;
 
-    private List<Recurso> listaRecursos = new ArrayList<>();
+    private List<Tina> listaTinas = new ArrayList<>();
+    private List<OperadorBascula> listaOperadores = new ArrayList<>();
+    private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
 
-    //private Button para1,para2;
-    //TextView panta_humo;
+    private AlertDialog ventanaError;
+    private ProgressBar barraProgreso;
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,12 +97,28 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         // Required empty public constructor
     }
 
-    public Recurso getRecursoSeleccionado() {
-        return recursoSeleccionado;
+    public Tina getTinaSeleccionada() {
+        return tinaSeleccionada;
     }
 
-    public void setRecursoSeleccionado(Recurso recursoSeleccionado) {
-        this.recursoSeleccionado = recursoSeleccionado;
+    public void setTinaSeleccionada(Tina tinaSeleccionada) {
+        this.tinaSeleccionada = tinaSeleccionada;
+    }
+
+    public OperadorBascula getOperadorSeleccionado() {
+        return operadorSeleccionado;
+    }
+
+    public void setOperadorSeleccionado(OperadorBascula operadorSeleccionado) {
+        this.operadorSeleccionado = operadorSeleccionado;
+    }
+
+    public OperadorMontacargas getMontacargasSeleccionado() {
+        return montacargasSeleccionado;
+    }
+
+    public void setMontacargasSeleccionado(OperadorMontacargas montacargasSeleccionado) {
+        this.montacargasSeleccionado = montacargasSeleccionado;
     }
 
     /**
@@ -128,55 +154,232 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         vista=inflater.inflate(R.layout.fragment_fragment__preselecion__tinas, container, false);
 
         iniciaComponentes();
-
         return vista;
     }
 
-    private void accionIconoOperador(Recurso recurso){
-        if( recurso.getEstado() == Recurso.ESTADO.inicial ){
-            setRecursoSeleccionado(recurso);
-            deshabilitaRecursos();
-            recurso.getIcono().setImageResource(R.drawable.ic_operador1);
-            recurso.getIcono().setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
-            recurso.setEstado( Recurso.ESTADO.seleccionado );
-            this.boton1.setText(R.string.liberarUsuario);
-            this.boton1.setEnabled(false);
-            this.boton2.setText(R.string.asignarUsuario);
-            this.boton2.setEnabled(true);
-            this.contenedorBotones.setVisibility(View.VISIBLE);
-        }else{
-            setRecursoSeleccionado(null);
-            habilitaRecursos();
-            recurso.getIcono().setImageResource(R.drawable.ic_operador2);
-            recurso.getIcono().setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
-            recurso.setEstado( Recurso.ESTADO.inicial );
-            this.contenedorBotones.setVisibility(View.GONE);
+    private ImageView getIconoTina(int posicion){
+        switch (posicion){
+            case 1: return this.tina1;
+            case 2: return this.tina2;
+            case 3: return this.tina3;
+            case 4: return this.tina4;
+            case 5: return this.tina5;
+            case 6: return this.tina6;
+            case 7: return this.tina7;
+            case 8: return this.tina8;
+            case 9: return this.tina9;
+            case 10: return this.tina10;
+            case 11: return this.tina11;
+            case 12: return this.tina12;
+        }
+        return null;
+    }
+
+    private ImageView getIconoOperador(int posicion){
+        switch (posicion){
+            case 1: return this.operador1;
+            case 2: return this.operador2;
+            case 3: return this.operador3;
+            case 4: return this.operador4;
+            case 5: return this.operador5;
+            case 6: return this.operador6;
+            case 7: return this.operador7;
+            case 8: return this.operador8;
+            case 9: return this.operador9;
+            case 10: return this.operador10;
+        }
+        return null;
+    }
+
+    private ImageView getIconoMontacargas(int posicion){
+        return null;
+    }
+
+    public void ordenaTinas(List<Tina> listaTinas){
+        this.listaTinas = listaTinas;
+        for( final Tina recursoTina : this.listaTinas ){
+            if( recursoTina.getLibre() ){
+                recursoTina.setEstado(Constantes.ESTADO.inicial);
+            }else{
+                recursoTina.setEstado(Constantes.ESTADO.seleccionado);
+                accionIconoTina( recursoTina.getIdPosicion() );
+            }
         }
     }
 
-    private void accionIconoTina(Recurso recurso){
-        if( recurso.getEstado() == Recurso.ESTADO.inicial ){
-            setRecursoSeleccionado(recurso);
-            deshabilitaRecursos();
-            recurso.getIcono().setImageResource(R.drawable.ic_tina1);
-            recurso.getIcono().setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
-            recurso.setEstado( Recurso.ESTADO.seleccionado );
-            this.boton1.setText(R.string.liberarTina);
-            this.boton1.setEnabled(false);
-            this.boton2.setText(R.string.asignarTina);
-            this.boton2.setEnabled(true);
-            this.contenedorBotones.setVisibility(View.VISIBLE);
-        }else{
-            setRecursoSeleccionado(null);
-            habilitaRecursos();
-            recurso.getIcono().setImageResource(R.drawable.ic_tina2);
-            recurso.getIcono().setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
-            recurso.setEstado( Recurso.ESTADO.inicial );
-            this.contenedorBotones.setVisibility(View.GONE);
+    public void ordenaOperadoresBascula(List<OperadorBascula> listaOperadores){
+        this.listaOperadores = listaOperadores;
+        for( final OperadorBascula recursoOperador : this.listaOperadores ){
+            if( recursoOperador.getLibre() ){
+                recursoOperador.setEstado(Constantes.ESTADO.inicial);
+            }else{
+                recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
+                accionIconoOperador( recursoOperador.getIdEstacion() );
+            }
         }
     }
 
-    private void accionIconoMontacargas(Recurso recurso){
+    public void ordenaOperadoresMontacargas(List<OperadorMontacargas> listaMontacargas){
+        this.listaMontacargas = listaMontacargas;
+        for( OperadorMontacargas recursoMontacargas : this.listaMontacargas ){
+
+        }
+    }
+
+    public void errorServicio(ErrorServicio errorMensaje){
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        builder.setMessage(mensajeMostrar)
+                .setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ventanaError.dismiss();
+                        creaObjetosVacios();
+                    }
+                });
+        this.ventanaError = builder.create();
+        this.ventanaError.show();
+    }
+
+    private void creaObjetosVacios(){
+        iniciaProcesando();
+
+        if( this.listaTinas.isEmpty() ){
+            for( int posicion = 1; posicion <= 12; posicion++ ){
+                final Tina recursoTina = new Tina();
+                recursoTina.setIdPosicion(posicion);
+                recursoTina.setLibre(true);
+                recursoTina.setEstado(Constantes.ESTADO.inicial);
+                this.listaTinas.add(recursoTina);
+            }
+        }
+
+        if( this.listaOperadores.isEmpty() ){
+            for( int posicion = 1; posicion <= 10; posicion++ ){
+                final OperadorBascula recursoOperador = new OperadorBascula();
+                recursoOperador.setIdEstacion(posicion);
+                recursoOperador.setLibre(true);
+                recursoOperador.setEstado(Constantes.ESTADO.inicial);
+                this.listaOperadores.add(recursoOperador);
+            }
+        }
+
+        if( this.listaMontacargas.isEmpty() ){
+
+        }
+
+        terminaProcesando();
+    }
+
+    private void accionIconoOperador(int posicion){
+        for( OperadorBascula operador : this.listaOperadores ){
+            if( operador.getIdEstacion() == posicion ){
+                if( operador.getEstado() == Constantes.ESTADO.inicial ){
+                    setOperadorSeleccionado(operador);
+                    deshabilitaRecursos();
+                    getIconoOperador( operador.getIdEstacion() ).
+                            setImageResource(R.drawable.ic_operador1);
+                    getIconoOperador( operador.getIdEstacion() ).
+                            setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                    operador.setEstado( Constantes.ESTADO.seleccionado );
+                    this.boton1.setText(R.string.liberarUsuario);
+                    this.boton1.setEnabled(false);
+                    this.boton2.setText(R.string.asignarUsuario);
+                    this.boton2.setEnabled(true);
+                    this.contenedorBotones.setVisibility(View.VISIBLE);
+                }else{
+                    if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setOperadorSeleccionado(null);
+                        habilitaRecursos();
+                        getIconoOperador( operador.getIdEstacion() ).
+                                setImageResource(R.drawable.ic_operador2);
+                        if( operador.getLibre() ){
+                            getIconoOperador( operador.getIdEstacion() ).
+                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                            operador.setEstado( Constantes.ESTADO.inicial );
+                        }else{
+                            getIconoOperador( operador.getIdEstacion() ).
+                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                            operador.setEstado( Constantes.ESTADO.asignado );
+                        }
+                        this.contenedorBotones.setVisibility(View.GONE);
+                    }else{
+                        setOperadorSeleccionado(operador);
+                        deshabilitaRecursos();
+                        getIconoOperador( operador.getIdEstacion() ).
+                                setImageResource(R.drawable.ic_operador1);
+                        getIconoOperador( operador.getIdEstacion() ).
+                                setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                        operador.setEstado( Constantes.ESTADO.seleccionado );
+                        this.boton1.setText(R.string.liberarUsuario);
+                        this.boton1.setEnabled(true);
+                        this.boton2.setText(R.string.asignarUsuario);
+                        this.boton2.setEnabled(false);
+                        this.contenedorBotones.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void accionIconoTina(int posicion){
+        for( Tina tina : this.listaTinas ){
+            if( tina.getIdPosicion() == posicion ){
+                if( tina.getEstado() == Constantes.ESTADO.inicial ){
+                    setTinaSeleccionada(tina);
+                    deshabilitaRecursos();
+                    getIconoTina( tina.getIdPosicion() ).
+                            setImageResource(R.drawable.ic_tina1);
+                    getIconoTina( tina.getIdPosicion() ).
+                            setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                    tina.setEstado( Constantes.ESTADO.seleccionado );
+                    this.boton1.setText(R.string.liberarTina);
+                    this.boton1.setEnabled(false);
+                    this.boton2.setText(R.string.asignarTina);
+                    this.boton2.setEnabled(true);
+                    this.contenedorBotones.setVisibility(View.VISIBLE);
+                }else{
+                    if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setTinaSeleccionada(null);
+                        habilitaRecursos();
+                        getIconoTina( tina.getIdPosicion() ).
+                                setImageResource(R.drawable.ic_tina2);
+                        if( tina.getLibre() ){
+                            getIconoTina( tina.getIdPosicion() ).
+                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                            tina.setEstado( Constantes.ESTADO.inicial );
+                        }else{
+                            getIconoTina( tina.getIdPosicion() ).
+                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                            tina.setEstado( Constantes.ESTADO.asignado );
+                        }
+                        this.contenedorBotones.setVisibility(View.GONE);
+                    }else{
+                        setTinaSeleccionada(tina);
+                        deshabilitaRecursos();
+                        getIconoTina( tina.getIdPosicion() ).
+                                setImageResource(R.drawable.ic_tina1);
+                        getIconoTina( tina.getIdPosicion() ).
+                                setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                        tina.setEstado( Constantes.ESTADO.seleccionado );
+                        this.boton1.setText(R.string.liberarTina);
+                        this.boton1.setEnabled(true);
+                        this.boton2.setText(R.string.mezclarTina);
+                        this.boton2.setEnabled(true);
+                        this.contenedorBotones.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    /*private void accionIconoMontacargas(Recurso recurso){
         if( recurso.getEstado() == Recurso.ESTADO.inicial ){
             setRecursoSeleccionado(recurso);
             deshabilitaRecursos();
@@ -196,370 +399,243 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             recurso.setEstado( Recurso.ESTADO.inicial );
             this.contenedorBotones.setVisibility(View.GONE);
         }
-    }
+    }*/
 
     private void iniciaComponentes(){
+        this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        iniciaProcesando();
+
         this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);
         this.boton1 = this.vista.findViewById(R.id.boton1);
         this.boton2 = this.vista.findViewById(R.id.boton2);
 
-        ImageView imagenTina1 = this.vista.findViewById(R.id.tina1);
-        this.tina1 = new Tina();
-        this.tina1.setEstado(Recurso.ESTADO.inicial);
-        this.tina1.setIcono(imagenTina1);
-        this.tina1.setPosicion("A1");
-        this.tina1.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina1 = this.vista.findViewById(R.id.tina1);
+        this.tina1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina1);
+                accionIconoTina(1);
             }
         });
 
-        ImageView imagenTina2 = this.vista.findViewById(R.id.tina2);
-        this.tina2 = new Tina();
-        this.tina2.setEstado(Recurso.ESTADO.inicial);
-        this.tina2.setIcono(imagenTina2);
-        this.tina2.setPosicion("A2");
-        this.tina2.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina2 = this.vista.findViewById(R.id.tina2);
+        this.tina2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina2);
+                accionIconoTina(2);
             }
         });
 
-        ImageView imagenTina3 = this.vista.findViewById(R.id.tina3);
-        this.tina3 = new Tina();
-        this.tina3.setEstado(Recurso.ESTADO.inicial);
-        this.tina3.setIcono(imagenTina3);
-        this.tina3.setPosicion("A3");
-        this.tina3.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina3 = this.vista.findViewById(R.id.tina3);
+        this.tina3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina3);
+                accionIconoTina(3);
             }
         });
 
-        ImageView imagenTina4 = this.vista.findViewById(R.id.tina4);
-        this.tina4 = new Tina();
-        this.tina4.setEstado(Recurso.ESTADO.inicial);
-        this.tina4.setIcono(imagenTina4);
-        this.tina4.setPosicion("A4");
-        this.tina4.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina4 = this.vista.findViewById(R.id.tina4);
+        this.tina4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina4);
+                accionIconoTina(4);
             }
         });
 
-        ImageView imagenTina5 = this.vista.findViewById(R.id.tina5);
-        this.tina5 = new Tina();
-        this.tina5.setEstado(Recurso.ESTADO.inicial);
-        this.tina5.setIcono(imagenTina5);
-        this.tina5.setPosicion("A5");
-        this.tina5.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina5 = this.vista.findViewById(R.id.tina5);
+        this.tina5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina5);
+                accionIconoTina(5);
             }
         });
 
-        ImageView imagenTina6 = this.vista.findViewById(R.id.tina6);
-        this.tina6 = new Tina();
-        this.tina6.setEstado(Recurso.ESTADO.inicial);
-        this.tina6.setIcono(imagenTina6);
-        this.tina6.setPosicion("A6");
-        this.tina6.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina6 = this.vista.findViewById(R.id.tina6);
+        this.tina6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina6);
+                accionIconoTina(6);
             }
         });
 
-        ImageView imagenTina7 = this.vista.findViewById(R.id.tina7);
-        this.tina7 = new Tina();
-        this.tina7.setEstado(Recurso.ESTADO.inicial);
-        this.tina7.setIcono(imagenTina7);
-        this.tina7.setPosicion("B6");
-        this.tina7.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina7 = this.vista.findViewById(R.id.tina7);
+        this.tina7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina7);
+                accionIconoTina(8);
             }
         });
 
-        ImageView imagenTina8 = this.vista.findViewById(R.id.tina8);
-        this.tina8 = new Tina();
-        this.tina8.setEstado(Recurso.ESTADO.inicial);
-        this.tina8.setIcono(imagenTina8);
-        this.tina8.setPosicion("B5");
-        this.tina8.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina8 = this.vista.findViewById(R.id.tina8);
+        this.tina8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina8);
+                accionIconoTina(9);
             }
         });
 
-        ImageView imagenTina9 = this.vista.findViewById(R.id.tina9);
-        this.tina9 = new Tina();
-        this.tina9.setEstado(Recurso.ESTADO.inicial);
-        this.tina9.setIcono(imagenTina9);
-        this.tina9.setPosicion("B4");
-        this.tina9.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina9 = this.vista.findViewById(R.id.tina9);
+        this.tina9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina9);
+                accionIconoTina(9);
             }
         });
 
-        ImageView imagenTina10 = this.vista.findViewById(R.id.tina10);
-        this.tina10 = new Tina();
-        this.tina10.setEstado(Recurso.ESTADO.inicial);
-        this.tina10.setIcono(imagenTina10);
-        this.tina10.setPosicion("B3");
-        this.tina10.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina10 = this.vista.findViewById(R.id.tina10);
+        this.tina10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina10);
+                accionIconoTina(10);
             }
         });
 
-        ImageView imagenTina11 = this.vista.findViewById(R.id.tina11);
-        this.tina11 = new Tina();
-        this.tina11.setEstado(Recurso.ESTADO.inicial);
-        this.tina11.setIcono(imagenTina11);
-        this.tina11.setPosicion("B2");
-        this.tina11.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina11 = this.vista.findViewById(R.id.tina11);
+        this.tina11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina11);
+                accionIconoTina(11);
             }
         });
 
-        ImageView imagenTina12 = this.vista.findViewById(R.id.tina12);
-        this.tina12 = new Tina();
-        this.tina12.setEstado(Recurso.ESTADO.inicial);
-        this.tina12.setIcono(imagenTina12);
-        this.tina12.setPosicion("B1");
-        this.tina12.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.tina12 = this.vista.findViewById(R.id.tina12);
+        this.tina12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(tina12);
+                accionIconoTina(12);
             }
         });
 
-        ImageView imagenOperador1 = this.vista.findViewById(R.id.operador1);
-        this.operador1 = new OperadorBascula();
-        this.operador1.setEstado(Recurso.ESTADO.inicial);
-        this.operador1.setIcono(imagenOperador1);
-        this.operador1.setPosicion("O1");
-        this.operador1.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador1 = this.vista.findViewById(R.id.operador1);
+        this.operador1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador1);
+                accionIconoOperador(1);
             }
         });
 
-        ImageView imagenOperador2 = this.vista.findViewById(R.id.operador2);
-        this.operador2 = new OperadorBascula();
-        this.operador2.setEstado(Recurso.ESTADO.inicial);
-        this.operador2.setIcono(imagenOperador2);
-        this.operador2.setPosicion("O2");
-        this.operador2.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador2 = this.vista.findViewById(R.id.operador2);
+        this.operador2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador2);
+                accionIconoOperador(2);
             }
         });
 
-        ImageView imagenOperador3 = this.vista.findViewById(R.id.operador3);
-        this.operador3 = new OperadorBascula();
-        this.operador3.setEstado(Recurso.ESTADO.inicial);
-        this.operador3.setIcono(imagenOperador3);
-        this.operador3.setPosicion("O3");
-        this.operador3.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador3 = this.vista.findViewById(R.id.operador3);
+        this.operador3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador3);
+                accionIconoOperador(3);
             }
         });
 
-        ImageView imagenOperador4 = this.vista.findViewById(R.id.operador4);
-        this.operador4 = new OperadorBascula();
-        this.operador4.setEstado(Recurso.ESTADO.inicial);
-        this.operador4.setIcono(imagenOperador4);
-        this.operador4.setPosicion("O4");
-        this.operador4.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador4 = this.vista.findViewById(R.id.operador4);
+        this.operador4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador4);
+                accionIconoOperador(4);
             }
         });
 
-        ImageView imagenOperador5 = this.vista.findViewById(R.id.operador5);
-        this.operador5 = new OperadorBascula();
-        this.operador5.setEstado(Recurso.ESTADO.inicial);
-        this.operador5.setIcono(imagenOperador5);
-        this.operador5.setPosicion("O5");
-        this.operador5.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador5 = this.vista.findViewById(R.id.operador5);
+        this.operador5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador5);
+                accionIconoOperador(5);
             }
         });
 
-        ImageView imagenOperador6 = this.vista.findViewById(R.id.operador6);
-        this.operador6 = new OperadorBascula();
-        this.operador6.setEstado(Recurso.ESTADO.inicial);
-        this.operador6.setIcono(imagenOperador6);
-        this.operador6.setPosicion("O6");
-        this.operador6.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador6 = this.vista.findViewById(R.id.operador6);
+        this.operador6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador6);
+                accionIconoOperador(6);
             }
         });
 
-        ImageView imagenOperador7 = this.vista.findViewById(R.id.operador7);
-        this.operador7 = new OperadorBascula();
-        this.operador7.setEstado(Recurso.ESTADO.inicial);
-        this.operador7.setIcono(imagenOperador7);
-        this.operador7.setPosicion("O7");
-        this.operador7.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador7 = this.vista.findViewById(R.id.operador7);
+        this.operador7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador7);
+                accionIconoOperador(7);
             }
         });
 
-        ImageView imagenOperador8 = this.vista.findViewById(R.id.operador8);
-        this.operador8 = new OperadorBascula();
-        this.operador8.setEstado(Recurso.ESTADO.inicial);
-        this.operador8.setIcono(imagenOperador8);
-        this.operador8.setPosicion("O8");
-        this.operador8.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador8 = this.vista.findViewById(R.id.operador8);
+        this.operador8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador8);
+                accionIconoOperador(8);
             }
         });
 
-        ImageView imagenOperador9 = this.vista.findViewById(R.id.operador9);
-        this.operador9 = new OperadorBascula();
-        this.operador9.setEstado(Recurso.ESTADO.inicial);
-        this.operador9.setIcono(imagenOperador9);
-        this.operador9.setPosicion("O9");
-        this.operador9.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador9 = this.vista.findViewById(R.id.operador9);
+        this.operador9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador9);
+                accionIconoOperador(9);
             }
         });
 
-        ImageView imagenOperador10 = this.vista.findViewById(R.id.operador10);
-        this.operador10 = new OperadorBascula();
-        this.operador10.setEstado(Recurso.ESTADO.inicial);
-        this.operador10.setIcono(imagenOperador10);
-        this.operador10.setPosicion("O10");
-        this.operador10.getIcono().setOnClickListener(new View.OnClickListener() {
+        this.operador10 = this.vista.findViewById(R.id.operador10);
+        this.operador10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoOperador(operador10);
+                accionIconoOperador(10);
             }
         });
 
-        ImageView imagenMontacargas1 = this.vista.findViewById(R.id.montacargas1);
-        this.montacargas1 = new OperadorMontacargas();
-        this.montacargas1.setEstado(Recurso.ESTADO.inicial);
-        this.montacargas1.setIcono(imagenMontacargas1);
-        this.montacargas1.setPosicion("M1");
-        this.montacargas1.getIcono().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoMontacargas(montacargas1);
-            }
-        });
-
-        ImageView imagenMontacargas2 = this.vista.findViewById(R.id.montacargas2);
-        this.montacargas2 = new OperadorMontacargas();
-        this.montacargas2.setEstado(Recurso.ESTADO.inicial);
-        this.montacargas2.setIcono(imagenMontacargas2);
-        this.montacargas2.setPosicion("M2");
-        this.montacargas2.getIcono().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoMontacargas(montacargas2);
-            }
-        });
-
-        ImageView imagenMontacargas3 = this.vista.findViewById(R.id.montacargas3);
-        this.montacargas3 = new OperadorMontacargas();
-        this.montacargas3.setEstado(Recurso.ESTADO.inicial);
-        this.montacargas3.setIcono(imagenMontacargas3);
-        this.montacargas3.setPosicion("M3");
-        this.montacargas3.getIcono().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoMontacargas(montacargas3);
-            }
-        });
-
-        ImageView imagenMontacargas4 = this.vista.findViewById(R.id.montacargas4);
-        this.montacargas4 = new OperadorMontacargas();
-        this.montacargas4.setEstado(Recurso.ESTADO.inicial);
-        this.montacargas4.setIcono(imagenMontacargas4);
-        this.montacargas4.setPosicion("M4");
-        this.montacargas4.getIcono().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoMontacargas(montacargas4);
-            }
-        });
-
-        llenaListaRecursos();
+        ObtenAsignados obtenAsignados = new ObtenAsignados(this);
+        obtenAsignados.execute();
     }
 
-    private void llenaListaRecursos(){
-        this.listaRecursos.add(operador1);
-        this.listaRecursos.add(operador2);
-        this.listaRecursos.add(operador3);
-        this.listaRecursos.add(operador4);
-        this.listaRecursos.add(operador5);
-        this.listaRecursos.add(operador6);
-        this.listaRecursos.add(operador7);
-        this.listaRecursos.add(operador8);
-        this.listaRecursos.add(operador9);
-        this.listaRecursos.add(operador10);
+    public void iniciaProcesando(){
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.barraProgreso.setVisibility(View.VISIBLE);
+    }
 
-        this.listaRecursos.add(tina1);
-        this.listaRecursos.add(tina2);
-        this.listaRecursos.add(tina3);
-        this.listaRecursos.add(tina4);
-        this.listaRecursos.add(tina5);
-        this.listaRecursos.add(tina6);
-        this.listaRecursos.add(tina7);
-        this.listaRecursos.add(tina8);
-        this.listaRecursos.add(tina9);
-        this.listaRecursos.add(tina10);
-        this.listaRecursos.add(tina11);
-        this.listaRecursos.add(tina12);
-
-        this.listaRecursos.add(montacargas1);
-        this.listaRecursos.add(montacargas2);
-        this.listaRecursos.add(montacargas3);
-        this.listaRecursos.add(montacargas4);
+    public void terminaProcesando(){
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.barraProgreso.setVisibility(View.GONE);
     }
 
     private void deshabilitaRecursos(){
-        for(Recurso recurso : this.listaRecursos){
-            if( !recurso.getPosicion().equalsIgnoreCase( getRecursoSeleccionado().getPosicion() ) ){
-                recurso.getIcono().setEnabled(false);
+        for(Tina tina : this.listaTinas){
+            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+        }
+
+        for(OperadorBascula operador : this.listaOperadores){
+            getIconoOperador( operador.getIdEstacion() ).setEnabled(false);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            //montacargas.getIcono().setEnabled(false);
+        }
+
+        if( getTinaSeleccionada() != null ){
+            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+        }else{
+            if( getOperadorSeleccionado() != null ){
+                getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
+            }else{
+                if( getMontacargasSeleccionado() != null ){
+                    //HABILITAR MONTACARGAS SELECCIONADO
+                }
             }
         }
     }
 
     private void habilitaRecursos(){
-        for(Recurso recurso : this.listaRecursos){
-            recurso.getIcono().setEnabled(true);
+        for(Tina tina : this.listaTinas){
+            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+        }
+
+        for(OperadorBascula operador : this.listaOperadores){
+            getIconoOperador( operador.getIdEstacion() ).setEnabled(true);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            //montacargas.getIcono().setEnabled(true);
         }
     }
 
