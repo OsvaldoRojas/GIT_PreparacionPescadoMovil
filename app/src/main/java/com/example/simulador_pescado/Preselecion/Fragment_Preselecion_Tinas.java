@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
@@ -90,6 +91,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private AlertDialog ventanaError;
     private ProgressBar barraProgreso;
+    private SwipeRefreshLayout actualizar;
+    private Fragment fragment;
 
     private OnFragmentInteractionListener mListener;
 
@@ -401,9 +404,40 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
     }*/
 
+    public Fragment getFragment() {
+        return fragment;
+    }
+
+    private void getAsignados(){
+        if( getTinaSeleccionada() != null ){
+            accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+        }
+
+        if( getOperadorSeleccionado() != null ){
+            accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
+        }
+
+        if( getMontacargasSeleccionado() != null ){
+
+        }
+
+        ObtenAsignados obtenAsignados = new ObtenAsignados( getFragment() );
+        obtenAsignados.execute();
+    }
+
     private void iniciaComponentes(){
+        this.fragment = this;
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
         iniciaProcesando();
+
+        this.actualizar = this.vista.findViewById(R.id.actualizar);
+        this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                actualizar.setRefreshing(true);
+                getAsignados();
+            }
+        });
 
         this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);
         this.boton1 = this.vista.findViewById(R.id.boton1);
@@ -585,8 +619,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             }
         });
 
-        ObtenAsignados obtenAsignados = new ObtenAsignados(this);
-        obtenAsignados.execute();
+        getAsignados();
     }
 
     public void iniciaProcesando(){
@@ -595,6 +628,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void terminaProcesando(){
+        if( this.actualizar.isRefreshing() ){
+            this.actualizar.setRefreshing(false);
+        }
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.GONE);
     }
