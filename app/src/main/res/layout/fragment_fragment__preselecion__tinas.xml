@@ -10,417 +10,424 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/actualizar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="3dp"
-                    android:paddingTop="3dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/no_selecion"
-                    android:textColor="@color/blanco"
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:text="Materia sin talla" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/posicionA"
-                        android:text="A1" />
-
-                    <TextView
-                        style="@style/posicionA"
-                        android:text="A2" />
-
-                    <TextView
-                        style="@style/posicionA"
-                        android:text="A3" />
-
-                    <TextView
-                        style="@style/posicionA"
-                        android:text="A4" />
-
-                    <TextView
-                        style="@style/posicionA"
-                        android:text="A5" />
-
-                    <TextView
-                        style="@style/posicionA"
-                        android:text="A6" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/tina1"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina2"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina3"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina4"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina5"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina6"
-                        style="@style/tina"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="34dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/operador1"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador2"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador3"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador4"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador5"
-                        style="@style/operador" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="34dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/bascula1"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula2"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula3"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula4"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula5"
-                        style="@style/bascula" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="8dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@android:drawable/arrow_up_float" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="2dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="4dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginTop="1dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="6dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginTop="1dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="8dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginTop="1dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="168dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:background="@color/no_selecion"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="8dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="6dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="4dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginBottom="1dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="2dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:background="@color/no_selecion" />
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="8dp"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@android:drawable/arrow_down_float" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="34dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/bascula10"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula9"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula8"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula7"
-                        style="@style/bascula" />
-
-                    <ImageView
-                        android:id="@+id/bascula6"
-                        style="@style/bascula" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="34dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/operador10"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador9"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador8"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador7"
-                        style="@style/operador" />
-
-                    <ImageView
-                        android:id="@+id/operador6"
-                        style="@style/operador" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/tina12"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina11"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina10"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina9"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina8"
-                        style="@style/tina"/>
-
-                    <ImageView
-                        android:id="@+id/tina7"
-                        style="@style/tina"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/posicionB"
-                        android:text="B1" />
-
-                    <TextView
-                        style="@style/posicionB"
-                        android:text="B2" />
-
-                    <TextView
-                        style="@style/posicionB"
-                        android:text="B3" />
-
-                    <TextView
-                        style="@style/posicionB"
-                        android:text="B4" />
-
-                    <TextView
-                        style="@style/posicionB"
-                        android:text="B5" />
-
-                    <TextView
-                        style="@style/posicionB"
-                        android:text="B6" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="3dp"
-                    android:paddingTop="3dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/no_selecion"
-                    android:textColor="@color/blanco"
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:text="Recepción" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/contenedorBotones"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:visibility="gone">
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/boton1"
-                    android:text="@string/liberarTina"
-                    style="@style/botonAccion"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
 
-                <Button
-                    android:id="@+id/boton2"
-                    android:text="@string/asignarTina"
-                    style="@style/botonAccion"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="3dp"
+                        android:paddingTop="3dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/no_selecion"
+                        android:textColor="@color/blanco"
+                        android:textStyle="bold"
+                        android:textSize="13dp"
+                        android:text="Materia sin talla" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A1" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A2" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A3" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A4" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A5" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A6" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/tina1"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina2"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina3"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina4"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina5"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina6"
+                            style="@style/tina"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="34dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/operador1"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador2"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador3"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador4"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador5"
+                            style="@style/operador" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="34dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bascula1"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula2"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula3"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula4"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula5"
+                            style="@style/bascula" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@android:drawable/arrow_up_float" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginTop="1dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="6dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginTop="1dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginTop="1dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="168dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/no_selecion"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"/>
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginBottom="1dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="6dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginBottom="1dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginBottom="1dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/no_selecion" />
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="8dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@android:drawable/arrow_down_float" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="34dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/bascula10"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula9"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula8"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula7"
+                            style="@style/bascula" />
+
+                        <ImageView
+                            android:id="@+id/bascula6"
+                            style="@style/bascula" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="34dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/operador10"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador9"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador8"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador7"
+                            style="@style/operador" />
+
+                        <ImageView
+                            android:id="@+id/operador6"
+                            style="@style/operador" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/tina12"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina11"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina10"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina9"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina8"
+                            style="@style/tina"/>
+
+                        <ImageView
+                            android:id="@+id/tina7"
+                            style="@style/tina"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B1" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B2" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B3" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B4" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B5" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B6" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="3dp"
+                        android:paddingTop="3dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/no_selecion"
+                        android:textColor="@color/blanco"
+                        android:textStyle="bold"
+                        android:textSize="13dp"
+                        android:text="Recepción" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contenedorBotones"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/boton1"
+                        android:text="@string/liberarTina"
+                        style="@style/botonAccion"/>
+
+                    <Button
+                        android:id="@+id/boton2"
+                        android:text="@string/asignarTina"
+                        style="@style/botonAccion"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </FrameLayout>
 
