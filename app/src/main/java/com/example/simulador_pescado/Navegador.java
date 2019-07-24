@@ -124,8 +124,6 @@ Contenedor.OnFragmentInteractionListener, Contenedor_Descongelado.OnFragmentInte
         } else if (id == R.id.cerrar_sesion) {
             this.finish();
 
-        } else if (id == R.id.options) {
-
         }
         if (fragmentSelecionado==true){
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main,mifragment).commit();
