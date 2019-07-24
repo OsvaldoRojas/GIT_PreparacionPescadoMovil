@@ -89,7 +89,18 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private List<OperadorBascula> listaOperadores = new ArrayList<>();
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
 
+    private View.OnClickListener eventoLiberarTina;
+    private View.OnClickListener eventoAsignarTina;
+    private View.OnClickListener eventoMezclarTina;
+    private View.OnClickListener eventoLiberarOperador;
+    private View.OnClickListener eventoAsignarOperador;
+    private View.OnClickListener eventoLiberarMontacargas;
+    private View.OnClickListener eventoAsignarMontacargas;
+
     private AlertDialog ventanaError;
+    private AlertDialog ventanaAsignarTina;
+    private AlertDialog ventanaAsignarOperador;
+    private AlertDialog ventanaAsignarMontacargas;
     private ProgressBar barraProgreso;
     private SwipeRefreshLayout actualizar;
     private Fragment fragment;
@@ -235,6 +246,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 !errorMensaje.getMensaje().equalsIgnoreCase("") ){
             mensajeMostrar = errorMensaje.getMensaje();
         }
+
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         builder.setMessage(mensajeMostrar)
                 .setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -291,8 +303,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     operador.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarUsuario);
                     this.boton1.setEnabled(false);
+                    this.boton1.setOnClickListener(null);
                     this.boton2.setText(R.string.asignarUsuario);
                     this.boton2.setEnabled(true);
+                    this.boton2.setOnClickListener(this.eventoAsignarOperador);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -320,8 +334,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         operador.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarUsuario);
                         this.boton1.setEnabled(true);
+                        this.boton1.setOnClickListener(this.eventoLiberarOperador);
                         this.boton2.setText(R.string.asignarUsuario);
                         this.boton2.setEnabled(false);
+                        this.boton2.setOnClickListener(null);
                         this.contenedorBotones.setVisibility(View.VISIBLE);
                     }
                 }
@@ -343,8 +359,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     tina.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarTina);
                     this.boton1.setEnabled(false);
+                    this.boton1.setOnClickListener(null);
                     this.boton2.setText(R.string.asignarTina);
                     this.boton2.setEnabled(true);
+                    this.boton2.setOnClickListener(this.eventoAsignarTina);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -372,8 +390,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         tina.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarTina);
                         this.boton1.setEnabled(true);
+                        this.boton1.setOnClickListener(this.eventoLiberarTina);
                         this.boton2.setText(R.string.mezclarTina);
                         this.boton2.setEnabled(true);
+                        this.boton2.setOnClickListener(this.eventoMezclarTina);
                         this.contenedorBotones.setVisibility(View.VISIBLE);
                     }
                 }
@@ -443,6 +463,103 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.boton1 = this.vista.findViewById(R.id.boton1);
         this.boton2 = this.vista.findViewById(R.id.boton2);
 
+        this.eventoAsignarTina = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("ASIGNAR TINA.............");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+
+                View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_tina, null);
+                builder.setCancelable(true);
+                builder.setView(vistaAsignar);
+
+                ventanaAsignarTina = builder.create();
+                ventanaAsignarTina.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        System.out.println("SHOW LISTENER.................");
+                    }
+                });
+                ventanaAsignarTina.show();
+            }
+        };
+
+        this.eventoLiberarTina = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("LIBERAR TINA..............");
+            }
+        };
+
+        this.eventoMezclarTina = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("MEZCLAR TINA..........");
+            }
+        };
+
+        this.eventoAsignarOperador = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("ASIGNAR OPERADOR..........");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+
+                View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_empleado, null);
+                builder.setCancelable(true);
+                builder.setView(vistaAsignar);
+
+                ventanaAsignarOperador = builder.create();
+                ventanaAsignarOperador.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        System.out.println("SHOW LISTENER.................");
+                    }
+                });
+                ventanaAsignarOperador.show();
+            }
+        };
+
+        this.eventoLiberarOperador = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("LIBERAR OPERADOR...........");
+            }
+        };
+
+        this.eventoAsignarMontacargas = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("ASIGNAR MONTACARGAS...........");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+
+                View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_montacargas, null);
+                builder.setCancelable(true);
+                builder.setView(vistaAsignar);
+
+                ventanaAsignarMontacargas = builder.create();
+                ventanaAsignarMontacargas.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        System.out.println("SHOW LISTENER.................");
+                    }
+                });
+                ventanaAsignarMontacargas.show();
+            }
+        };
+
+        this.eventoLiberarMontacargas = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("LIBERAR MONTACARGAS...........");
+            }
+        };
+
         this.tina1 = this.vista.findViewById(R.id.tina1);
         this.tina1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -495,7 +612,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(8);
+                accionIconoTina(7);
             }
         });
 
@@ -503,7 +620,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(9);
+                accionIconoTina(8);
             }
         });
 
