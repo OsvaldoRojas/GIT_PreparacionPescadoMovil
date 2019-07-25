@@ -7,6 +7,8 @@ public class Tina {
     private int idPosicion;
     private TinaPosicion tina;
     private Subtalla subtalla;
+    private Talla talla;
+    private GrupoEspecie especie;
     private int npiezas;
     private int peso;
     private Boolean libre;
@@ -22,6 +24,22 @@ public class Tina {
 
     public Constantes.ESTADO getEstado() {
         return estado;
+    }
+
+    public Talla getTalla() {
+        return talla;
+    }
+
+    public void setTalla(Talla talla) {
+        this.talla = talla;
+    }
+
+    public GrupoEspecie getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(GrupoEspecie especie) {
+        this.especie = especie;
     }
 
     public void setEstado(Constantes.ESTADO estado) {

@@ -1,20 +1,18 @@
 package com.example.simulador_pescado.vista;
 
-public class Subtalla {
+public class Talla {
 
-    private int idSubtalla;
+    private int idTalla;
     private String descripcion;
-    private int piezas;
-    private float pesoPromedioPieza;
     private Boolean activo;
     private Boolean borrado;
 
-    public int getIdSubtalla() {
-        return idSubtalla;
+    public int getIdTalla() {
+        return idTalla;
     }
 
-    public void setIdSubtalla(int idSubtalla) {
-        this.idSubtalla = idSubtalla;
+    public void setIdTalla(int idTalla) {
+        this.idTalla = idTalla;
     }
 
     public String getDescripcion() {
@@ -23,22 +21,6 @@ public class Subtalla {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public int getPiezas() {
-        return piezas;
-    }
-
-    public void setPiezas(int piezas) {
-        this.piezas = piezas;
-    }
-
-    public float getPesoPromedioPieza() {
-        return pesoPromedioPieza;
-    }
-
-    public void setPesoPromedioPieza(float pesoPromedioPieza) {
-        this.pesoPromedioPieza = pesoPromedioPieza;
     }
 
     public Boolean getActivo() {

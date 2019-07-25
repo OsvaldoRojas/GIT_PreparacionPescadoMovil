@@ -55,19 +55,7 @@
 
                         <TextView
                             style="@style/posicionA"
-                            android:text="A1" />
-
-                        <TextView
-                            style="@style/posicionA"
-                            android:text="A2" />
-
-                        <TextView
-                            style="@style/posicionA"
-                            android:text="A3" />
-
-                        <TextView
-                            style="@style/posicionA"
-                            android:text="A4" />
+                            android:text="A6" />
 
                         <TextView
                             style="@style/posicionA"
@@ -75,7 +63,19 @@
 
                         <TextView
                             style="@style/posicionA"
-                            android:text="A6" />
+                            android:text="A4" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A3" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A2" />
+
+                        <TextView
+                            style="@style/posicionA"
+                            android:text="A1" />
 
                     </LinearLayout>
 
@@ -358,19 +358,7 @@
 
                         <TextView
                             style="@style/posicionB"
-                            android:text="B1" />
-
-                        <TextView
-                            style="@style/posicionB"
-                            android:text="B2" />
-
-                        <TextView
-                            style="@style/posicionB"
-                            android:text="B3" />
-
-                        <TextView
-                            style="@style/posicionB"
-                            android:text="B4" />
+                            android:text="B6" />
 
                         <TextView
                             style="@style/posicionB"
@@ -378,7 +366,19 @@
 
                         <TextView
                             style="@style/posicionB"
-                            android:text="B6" />
+                            android:text="B4" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B3" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B2" />
+
+                        <TextView
+                            style="@style/posicionB"
+                            android:text="B1" />
 
                     </LinearLayout>
 
