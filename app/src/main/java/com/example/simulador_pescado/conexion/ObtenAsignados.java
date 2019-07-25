@@ -25,7 +25,7 @@ import java.util.List;
 public class ObtenAsignados extends AsyncTask<Void,Integer,Boolean> {
 
     private static final String URL_POSICIONES = "http://10.50.1.15:7080/api_simulador_prep_pescado/v1/dumies/posiciones";
-    private static final String URL_ESTACIONES = "http://10.50.1.15:7080/api_simulador_prep_pescado/v1/dumies/estaciones";
+    private static final String URL_ESTACIONES = "http://10.50.1.15:7080/api_simulador_prep_pescado/v1/dumies/estaciones?dumi=estaciones";
     private List<Tina> listaTinas = new ArrayList<>();
     private List<OperadorBascula> listaOperadores = new ArrayList<>();
     private ErrorServicio errorMensaje;
