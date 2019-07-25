@@ -37,7 +37,9 @@ import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -119,6 +121,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private ProgressBar barraProgreso;
     private SwipeRefreshLayout actualizar;
     private Fragment fragment;
+
+    private String fechaActual;
 
     private OnFragmentInteractionListener mListener;
 
@@ -290,7 +294,23 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             case 11: return "B5";
             case 12: return "B6";
         }
-        return null;
+        return "";
+    }
+
+    private String getEtiquetaOperador(int posicion){
+        switch (posicion){
+            case 1: return "A5";
+            case 2: return "A4";
+            case 3: return "A3";
+            case 4: return "A2";
+            case 5: return "A1";
+            case 6: return "B1";
+            case 7: return "B2";
+            case 8: return "B3";
+            case 9: return "B4";
+            case 10: return "B5";
+        }
+        return "";
     }
 
     private void creaObjetosVacios(){
@@ -569,6 +589,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
                 TextView etiquetaPosicion = ventanaAsignarTina.findViewById(R.id.etiquetaPosicion);
                 etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getEtiquetaMovil() ) );
+
+                TextView etiquetaFecha = ventanaAsignarTina.findViewById(R.id.etiquetaFecha);
+                etiquetaFecha.setText(fechaActual);
             }
         });
         this.ventanaAsignarTina.show();
@@ -583,20 +606,37 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarOperador(){
-        System.out.println("ASIGNAR OPERADOR..........");
-
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_empleado, null);
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
         this.ventanaAsignarOperador = builder.create();
         this.ventanaAsignarOperador.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                System.out.println("SHOW LISTENER.................");
+                Button botonCancelar = ventanaAsignarOperador.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
+                        ventanaAsignarOperador.dismiss();
+                    }
+                });
+
+                TextView etiquetaFecha = ventanaAsignarOperador.findViewById(R.id.etiquetaFecha);
+                etiquetaFecha.setText(fechaActual);
+
+                TextView etiquetaPosicion = ventanaAsignarOperador.findViewById(R.id.etiquetaPosicion);
+                etiquetaPosicion.setText( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+
+                TextView etiquetaTinaPrincipal = ventanaAsignarOperador.findViewById(R.id.etiquetaTinaPrincipal);
+                etiquetaTinaPrincipal.setText( getTinaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
+
+                TextView etiquetaTinaSecundaria = ventanaAsignarOperador.findViewById(R.id.etiquetaTinaSecundaria);
+                etiquetaTinaSecundaria.setText( getTinaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
             }
         });
         this.ventanaAsignarOperador.show();
@@ -630,10 +670,91 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         System.out.println("LIBERAR MONTACARGAS...........");
     }
 
+    private String getTinaPrincipalOperador(int posicionOperador){
+        for( Tina tina : this.listaTinas ){
+            if( tina.getIdPosicion() == posicionOperador + 1 ){
+                if( !tina.getLibre() ){
+                    return tina.getTina().getDescripcion();
+                }
+                break;
+            }
+        }
+        return "";
+    }
+
+    private String getTinaSecundariaOperador(int posicionOperador){
+        Tina tinaSecundaria;
+        switch (posicionOperador){
+            case 1:
+                tinaSecundaria = getTina(1);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 2:
+                tinaSecundaria = getTina(2);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 3:
+                tinaSecundaria = getTina(3);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 4:
+                tinaSecundaria = getTina(4);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 5:
+                tinaSecundaria = getTina(5);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 6:
+                tinaSecundaria = getTina(8);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 7:
+                tinaSecundaria = getTina(9);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 8:
+                tinaSecundaria = getTina(10);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 9:
+                tinaSecundaria = getTina(11);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+            case 10:
+                tinaSecundaria = getTina(12);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getTina().getDescripcion();
+                }
+        }
+        return "";
+    }
+
+    private Tina getTina(int posicion){
+        for( Tina tina : this.listaTinas ){
+            if( tina.getIdPosicion() == posicion ){
+                return tina;
+            }
+        }
+        return null;
+    }
+
     private void iniciaComponentes(){
         this.fragment = this;
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
         iniciaProcesando();
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        this.fechaActual = formatoFecha.format( new Date() );
 
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
