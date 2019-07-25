@@ -8,10 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -19,10 +24,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
+import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
+import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.Subtalla;
+import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
 
 import java.util.ArrayList;
@@ -88,6 +99,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private List<Tina> listaTinas = new ArrayList<>();
     private List<OperadorBascula> listaOperadores = new ArrayList<>();
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
+    private List<Subtalla> listaSubtalla = new ArrayList<>();
+    private List<Talla> listaTalla = new ArrayList<>();
+    private List<GrupoEspecie> listaGrupoEspecie = new ArrayList<>();
 
     private View.OnClickListener eventoLiberarTina;
     private View.OnClickListener eventoAsignarTina;
@@ -260,6 +274,24 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaError.show();
     }
 
+    private String getEtiquetaMovil(int posicion){
+        switch (posicion){
+            case 1: return "A1";
+            case 2: return "A2";
+            case 3: return "A3";
+            case 4: return "A4";
+            case 5: return "A5";
+            case 6: return "A6";
+            case 7: return "B6";
+            case 8: return "B5";
+            case 9: return "B4";
+            case 10: return "B3";
+            case 11: return "B2";
+            case 12: return "B1";
+        }
+        return null;
+    }
+
     private void creaObjetosVacios(){
         iniciaProcesando();
 
@@ -268,6 +300,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 final Tina recursoTina = new Tina();
                 recursoTina.setIdPosicion(posicion);
                 recursoTina.setLibre(true);
+                recursoTina.setEtiquetaMovil( getEtiquetaMovil(posicion) );
                 recursoTina.setEstado(Constantes.ESTADO.inicial);
                 this.listaTinas.add(recursoTina);
             }
@@ -445,6 +478,132 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         obtenAsignados.execute();
     }
 
+    private void asignarTina(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_tina, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaAsignarTina = builder.create();
+        this.ventanaAsignarTina.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonCancelar = ventanaAsignarTina.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+                        ventanaAsignarTina.dismiss();
+                    }
+                });
+
+                Spinner seleccionSubtalla = ventanaAsignarTina.findViewById(R.id.seleccionSubtalla);
+                seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), listaSubtalla ) );
+                seleccionSubtalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
+                        getTinaSeleccionada().setSubtalla( (Subtalla) adaptadorVista.getItemAtPosition(posicion) );
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                Spinner seleccionTalla = ventanaAsignarTina.findViewById(R.id.seleccionTalla);
+                seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), listaTalla ) );
+                seleccionTalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
+                        getTinaSeleccionada().setTalla( (Talla) adaptadorVista.getItemAtPosition(posicion) );
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                Spinner seleccionEspecie = ventanaAsignarTina.findViewById(R.id.seleccionEspecie);
+                seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), listaGrupoEspecie ) );
+                seleccionEspecie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
+                        getTinaSeleccionada().setEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                TextView etiquetaPosicion = ventanaAsignarTina.findViewById(R.id.etiquetaPosicion);
+                etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getEtiquetaMovil() ) );
+            }
+        });
+        this.ventanaAsignarTina.show();
+    }
+
+    private void liberarTina(){
+        System.out.println("LIBERAR TINA..............");
+    }
+
+    private void mezclarTina(){
+        System.out.println("MEZCLAR TINA..........");
+    }
+
+    private void asignarOperador(){
+        System.out.println("ASIGNAR OPERADOR..........");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_empleado, null);
+        builder.setCancelable(true);
+        builder.setView(vistaAsignar);
+
+        this.ventanaAsignarOperador = builder.create();
+        this.ventanaAsignarOperador.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                System.out.println("SHOW LISTENER.................");
+            }
+        });
+        this.ventanaAsignarOperador.show();
+    }
+
+    private void liberarOperador(){
+        System.out.println("LIBERAR OPERADOR...........");
+    }
+
+    private void asignarMontacargas(){
+        System.out.println("ASIGNAR MONTACARGAS...........");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_montacargas, null);
+        builder.setCancelable(true);
+        builder.setView(vistaAsignar);
+
+        this.ventanaAsignarMontacargas = builder.create();
+        this.ventanaAsignarMontacargas.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                System.out.println("SHOW LISTENER.................");
+            }
+        });
+        this.ventanaAsignarMontacargas.show();
+    }
+
+    private void liberarMontacargas(){
+        System.out.println("LIBERAR MONTACARGAS...........");
+    }
+
     private void iniciaComponentes(){
         this.fragment = this;
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
@@ -463,100 +622,91 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.boton1 = this.vista.findViewById(R.id.boton1);
         this.boton2 = this.vista.findViewById(R.id.boton2);
 
+        Subtalla titulo = new Subtalla();
+        Subtalla s1 = new Subtalla();
+        Subtalla s2 = new Subtalla();
+        Subtalla s3 = new Subtalla();
+        titulo.setDescripcion("Subtalla");
+        s1.setDescripcion("Sub-5");
+        s2.setDescripcion("Sub-6");
+        s3.setDescripcion("Sub-7");
+        listaSubtalla.add(titulo);
+        listaSubtalla.add(s1);
+        listaSubtalla.add(s2);
+        listaSubtalla.add(s3);
+
+        Talla tituloT = new Talla();
+        Talla t1 = new Talla();
+        Talla t2 = new Talla();
+        Talla t3 = new Talla();
+        tituloT.setDescripcion("Talla");
+        t1.setDescripcion("Talla-01");
+        t2.setDescripcion("Talla-02");
+        t3.setDescripcion("Talla-03");
+        listaTalla.add(tituloT);
+        listaTalla.add(t1);
+        listaTalla.add(t2);
+        listaTalla.add(t3);
+
+        GrupoEspecie tituloG = new GrupoEspecie();
+        GrupoEspecie g1 = new GrupoEspecie();
+        GrupoEspecie g2 = new GrupoEspecie();
+        GrupoEspecie g3 = new GrupoEspecie();
+        tituloG.setDescripcion("Especie");
+        g1.setDescripcion("Especie-01");
+        g2.setDescripcion("Especie-02");
+        g3.setDescripcion("Especie-03");
+        listaGrupoEspecie.add(tituloG);
+        listaGrupoEspecie.add(g1);
+        listaGrupoEspecie.add(g2);
+        listaGrupoEspecie.add(g3);
+
         this.eventoAsignarTina = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("ASIGNAR TINA.............");
-
-                AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-
-                View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_tina, null);
-                builder.setCancelable(true);
-                builder.setView(vistaAsignar);
-
-                ventanaAsignarTina = builder.create();
-                ventanaAsignarTina.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        System.out.println("SHOW LISTENER.................");
-                    }
-                });
-                ventanaAsignarTina.show();
+                asignarTina();
             }
         };
 
         this.eventoLiberarTina = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("LIBERAR TINA..............");
+                liberarTina();
             }
         };
 
         this.eventoMezclarTina = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("MEZCLAR TINA..........");
+                mezclarTina();
             }
         };
 
         this.eventoAsignarOperador = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("ASIGNAR OPERADOR..........");
-
-                AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-
-                View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_empleado, null);
-                builder.setCancelable(true);
-                builder.setView(vistaAsignar);
-
-                ventanaAsignarOperador = builder.create();
-                ventanaAsignarOperador.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        System.out.println("SHOW LISTENER.................");
-                    }
-                });
-                ventanaAsignarOperador.show();
+                asignarOperador();
             }
         };
 
         this.eventoLiberarOperador = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("LIBERAR OPERADOR...........");
+                liberarOperador();
             }
         };
 
         this.eventoAsignarMontacargas = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("ASIGNAR MONTACARGAS...........");
-
-                AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-
-                View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_montacargas, null);
-                builder.setCancelable(true);
-                builder.setView(vistaAsignar);
-
-                ventanaAsignarMontacargas = builder.create();
-                ventanaAsignarMontacargas.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        System.out.println("SHOW LISTENER.................");
-                    }
-                });
-                ventanaAsignarMontacargas.show();
+                asignarMontacargas();
             }
         };
 
         this.eventoLiberarMontacargas = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("LIBERAR MONTACARGAS...........");
+                liberarMontacargas();
             }
         };
 

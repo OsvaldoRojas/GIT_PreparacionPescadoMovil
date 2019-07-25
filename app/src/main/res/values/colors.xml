@@ -18,7 +18,10 @@
 
     <color name="no_selecion">#D6D7D7</color>
     <color name="selecion">#6B6E70</color>
+
     <color name="fondo_gris">#6B6E70</color>
+    <color name="fondo_asignar">#828788</color>
+
     <color name="Tina_asignada">#2CAF08</color>
     <color name="Tina_asignada_presionada">#145502</color>
 </resources>

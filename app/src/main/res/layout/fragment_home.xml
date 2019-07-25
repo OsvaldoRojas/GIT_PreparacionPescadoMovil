@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".home">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,10 +12,7 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="312dp"
+        android:layout_width="220dp"
         android:layout_height="220dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="174dp"
         android:src="@drawable/pinsa_sin_fondo" />
 </RelativeLayout>
