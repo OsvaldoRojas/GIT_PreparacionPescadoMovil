@@ -15,6 +15,7 @@
 
     <color name="principalDeshabilitadoContenido">#7C7C7C</color>
     <color name="principalDeshabilitadoSombra">#5F5F5F</color>
+    <color name="fondo_asignar_usuario">#84B0F1</color>
 
     <color name="no_selecion">#D6D7D7</color>
     <color name="selecion">#6B6E70</color>
