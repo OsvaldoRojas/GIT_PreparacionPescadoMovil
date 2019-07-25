@@ -27,6 +27,7 @@ import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
 import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
+import com.example.simulador_pescado.conexion.CargaCatalogos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.GrupoEspecie;
@@ -276,18 +277,18 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private String getEtiquetaMovil(int posicion){
         switch (posicion){
-            case 1: return "A1";
-            case 2: return "A2";
-            case 3: return "A3";
-            case 4: return "A4";
-            case 5: return "A5";
-            case 6: return "A6";
-            case 7: return "B6";
-            case 8: return "B5";
-            case 9: return "B4";
-            case 10: return "B3";
-            case 11: return "B2";
-            case 12: return "B1";
+            case 1: return "A6";
+            case 2: return "A5";
+            case 3: return "A4";
+            case 4: return "A3";
+            case 5: return "A2";
+            case 6: return "A1";
+            case 7: return "B1";
+            case 8: return "B2";
+            case 9: return "B3";
+            case 10: return "B4";
+            case 11: return "B5";
+            case 12: return "B6";
         }
         return null;
     }
@@ -476,6 +477,31 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
         ObtenAsignados obtenAsignados = new ObtenAsignados( getFragment() );
         obtenAsignados.execute();
+
+        CargaCatalogos cargaCatalogos = new CargaCatalogos( getFragment() );
+        cargaCatalogos.execute();
+    }
+
+    public void actualizaCatalogos(List<Talla> listaTalla, List<Subtalla> listaSubtalla, List<GrupoEspecie> listaEspecie){
+        this.listaTalla = new ArrayList<>();
+        this.listaSubtalla = new ArrayList<>();
+        this.listaGrupoEspecie = new ArrayList<>();
+
+        Talla talla = new Talla();
+        talla.setDescripcion("Talla");
+        this.listaTalla.add(talla);
+
+        Subtalla subtalla = new Subtalla();
+        subtalla.setDescripcion("Subtalla");
+        this.listaSubtalla.add(subtalla);
+
+        GrupoEspecie especie = new GrupoEspecie();
+        especie.setDescripcion("Especie");
+        this.listaGrupoEspecie.add(especie);
+
+        this.listaTalla.addAll(listaTalla);
+        this.listaSubtalla.addAll(listaSubtalla);
+        this.listaGrupoEspecie.addAll(listaEspecie);
     }
 
     private void asignarTina(){
@@ -621,45 +647,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);
         this.boton1 = this.vista.findViewById(R.id.boton1);
         this.boton2 = this.vista.findViewById(R.id.boton2);
-
-        Subtalla titulo = new Subtalla();
-        Subtalla s1 = new Subtalla();
-        Subtalla s2 = new Subtalla();
-        Subtalla s3 = new Subtalla();
-        titulo.setDescripcion("Subtalla");
-        s1.setDescripcion("Sub-5");
-        s2.setDescripcion("Sub-6");
-        s3.setDescripcion("Sub-7");
-        listaSubtalla.add(titulo);
-        listaSubtalla.add(s1);
-        listaSubtalla.add(s2);
-        listaSubtalla.add(s3);
-
-        Talla tituloT = new Talla();
-        Talla t1 = new Talla();
-        Talla t2 = new Talla();
-        Talla t3 = new Talla();
-        tituloT.setDescripcion("Talla");
-        t1.setDescripcion("Talla-01");
-        t2.setDescripcion("Talla-02");
-        t3.setDescripcion("Talla-03");
-        listaTalla.add(tituloT);
-        listaTalla.add(t1);
-        listaTalla.add(t2);
-        listaTalla.add(t3);
-
-        GrupoEspecie tituloG = new GrupoEspecie();
-        GrupoEspecie g1 = new GrupoEspecie();
-        GrupoEspecie g2 = new GrupoEspecie();
-        GrupoEspecie g3 = new GrupoEspecie();
-        tituloG.setDescripcion("Especie");
-        g1.setDescripcion("Especie-01");
-        g2.setDescripcion("Especie-02");
-        g3.setDescripcion("Especie-03");
-        listaGrupoEspecie.add(tituloG);
-        listaGrupoEspecie.add(g1);
-        listaGrupoEspecie.add(g2);
-        listaGrupoEspecie.add(g3);
 
         this.eventoAsignarTina = new View.OnClickListener() {
             @Override

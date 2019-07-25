@@ -5,7 +5,7 @@ public class Subtalla {
     private int idSubtalla;
     private String descripcion;
     private int piezas;
-    private int pesoPromedioPieza;
+    private float pesoPromedioPieza;
     private Boolean activo;
     private Boolean borrado;
 
@@ -33,11 +33,11 @@ public class Subtalla {
         this.piezas = piezas;
     }
 
-    public int getPesoPromedioPieza() {
+    public float getPesoPromedioPieza() {
         return pesoPromedioPieza;
     }
 
-    public void setPesoPromedioPieza(int pesoPromedioPieza) {
+    public void setPesoPromedioPieza(float pesoPromedioPieza) {
         this.pesoPromedioPieza = pesoPromedioPieza;
     }
 
