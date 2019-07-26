@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -93,6 +95,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private ImageView montacargas3;
     private ImageView montacargas4;
 
+    private TextView iconoTurno;
+
     private Tina tinaSeleccionada;
     private OperadorBascula operadorSeleccionado;
     private OperadorMontacargas montacargasSeleccionado;
@@ -113,6 +117,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private View.OnClickListener eventoAsignarMontacargas;
 
     private AlertDialog ventanaError;
+    private AlertDialog ventanaTurno;
+    private AlertDialog ventanaLiberaTurno;
     private AlertDialog ventanaAsignarTina;
     private AlertDialog ventanaAsignarOperador;
     private AlertDialog ventanaAsignarMontacargas;
@@ -121,6 +127,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private Fragment fragment;
 
     private String fechaActual;
+    private int turno = 0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -268,6 +275,30 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
     }
 
+    public void validaPeticionTurno(){
+        if(turno == 0){
+            for( OperadorBascula operador : this.listaOperadores ){
+                if( !operador.getLibre() ){
+                    if( operador.getTurno() ){
+                        this.turno = 1;
+                        this.iconoTurno.setText("T1");
+                        this.iconoTurno.setVisibility(View.VISIBLE);
+                    }else{
+                        this.turno = 2;
+                        this.iconoTurno.setText("T2");
+                        this.iconoTurno.setVisibility(View.VISIBLE);
+                    }
+                    terminaProcesando();
+                    return;
+                }
+            }
+
+            terminaProcesando();
+            solicitaTurno();
+        }
+        terminaProcesando();
+    }
+
     public void errorServicio(ErrorServicio errorMensaje){
         String mensajeMostrar = errorMensaje.getMessage();
         if( errorMensaje.getMensaje() != null &&
@@ -276,15 +307,30 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        builder.setMessage(mensajeMostrar)
-                .setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         ventanaError.dismiss();
                         creaObjetosVacios();
                     }
                 });
-        this.ventanaError = builder.create();
+            }
+        });
         this.ventanaError.show();
     }
 
@@ -367,6 +413,48 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         terminaProcesando();
+        solicitaTurno();
+    }
+
+    private void solicitaTurno(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_turno, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaTurno = builder.create();
+        this.ventanaTurno.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                final RadioGroup grupoTurno = ventanaTurno.findViewById(R.id.grupoTurno);
+                Button botonAceptar = ventanaTurno.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if( grupoTurno.getCheckedRadioButtonId() == -1 ) {
+                            Toast.makeText(getContext(), "Es necesario seleccionar un turno.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            if( grupoTurno.getCheckedRadioButtonId() == R.id.turno1 ){
+                                turno = 1;
+                                iconoTurno.setText("T1");
+                                iconoTurno.setVisibility(View.VISIBLE);
+                                ventanaTurno.dismiss();
+                            }else{
+                                if( grupoTurno.getCheckedRadioButtonId() == R.id.turno2 ){
+                                    turno = 2;
+                                    iconoTurno.setText("T2");
+                                    iconoTurno.setVisibility(View.VISIBLE);
+                                    ventanaTurno.dismiss();
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        this.ventanaTurno.show();
     }
 
     private void accionIconoOperador(int posicion){
@@ -740,6 +828,44 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         System.out.println("LIBERAR MONTACARGAS...........");
     }
 
+    private void liberaTurno(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_decision_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaLiberaTurno = builder.create();
+        this.ventanaLiberaTurno.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaLiberaTurno.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText("¿Desea terminar el turno?");
+
+                Button botonAceptar = ventanaLiberaTurno.findViewById(R.id.boton2);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        turno = 0;
+                        iconoTurno.setVisibility(View.GONE);
+                        ventanaLiberaTurno.dismiss();
+                        solicitaTurno();
+                    }
+                });
+
+                Button botonCancelar = ventanaLiberaTurno.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaLiberaTurno.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaLiberaTurno.show();
+    }
+
     private String getTinaPrincipalOperador(int posicionOperador){
         for( Tina tina : this.listaTinas ){
             if( tina.getIdPosicion() == posicionOperador + 1 ){
@@ -822,6 +948,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.fragment = this;
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
         iniciaProcesando();
+
+        this.iconoTurno = this.vista.findViewById(R.id.iconoTurno);
+        this.iconoTurno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                liberaTurno();
+            }
+        });
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         this.fechaActual = formatoFecha.format( new Date() );
