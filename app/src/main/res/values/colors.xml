@@ -24,4 +24,7 @@
 
     <color name="Tina_asignada">#2CAF08</color>
     <color name="Tina_asignada_presionada">#145502</color>
+
+    <color name="noValido">#CF0808</color>
+    <color name="siValido">#0EB82B</color>
 </resources>

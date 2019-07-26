@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -29,7 +32,9 @@ import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.CargaCatalogos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
+import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
@@ -786,6 +791,24 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
                 TextView etiquetaTinaSecundaria = ventanaAsignarOperador.findViewById(R.id.etiquetaTinaSecundaria);
                 etiquetaTinaSecundaria.setText( getTinaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+
+                EditText campoEscaner = ventanaAsignarOperador.findViewById(R.id.campoEscaner);
+                campoEscaner.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        validaGafete( editable.toString() );
+                    }
+                });
             }
         });
         this.ventanaAsignarOperador.show();
@@ -828,6 +851,39 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void liberarMontacargas(){
         System.out.println("LIBERAR MONTACARGAS...........");
+    }
+
+    private void validaGafete(String codigo){
+        if( codigo.length() >= 7 ){
+            iniciaProcesando();
+            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
+            validaGafete.execute();
+        }else{
+            EditText campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
+            campoNombre.setText("Código no valido");
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
+        }
+    }
+
+    public void resultadoEscaneoGafete(Gafete resultadoGafete){
+        EditText campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
+        if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
+            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
+            campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
+
+            getOperadorSeleccionado().getEmpleado()
+                    .setClaveEmpleado( resultadoGafete.getEmpleado().getCla_trab() );
+            getOperadorSeleccionado().getEmpleado()
+                    .setNombre( resultadoGafete.getEmpleado().getNom_trab() );
+            getOperadorSeleccionado().getEmpleado()
+                    .setApellidoPaterno( resultadoGafete.getEmpleado().getAp_paterno() );
+            getOperadorSeleccionado().getEmpleado()
+                    .setApellidoMaterno( resultadoGafete.getEmpleado().getAp_materno() );
+        }else{
+            campoNombre.setText("Código no valido");
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
+        }
+        terminaProcesando();
     }
 
     private void liberaTurno(){
