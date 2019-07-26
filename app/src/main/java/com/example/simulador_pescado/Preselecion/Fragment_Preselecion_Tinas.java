@@ -706,20 +706,31 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarMontacargas(){
-        System.out.println("ASIGNAR MONTACARGAS...........");
-
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_montacargas, null);
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
         this.ventanaAsignarMontacargas = builder.create();
         this.ventanaAsignarMontacargas.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                System.out.println("SHOW LISTENER.................");
+                Button botonCancelar = ventanaAsignarMontacargas.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
+                        ventanaAsignarMontacargas.dismiss();
+                    }
+                });
+
+                TextView etiquetaFecha = ventanaAsignarMontacargas.findViewById(R.id.etiquetaFecha);
+                etiquetaFecha.setText(fechaActual);
+
+                TextView etiquetaPosicion = ventanaAsignarMontacargas.findViewById(R.id.etiquetaPosicion);
+                etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ) );
             }
         });
         this.ventanaAsignarMontacargas.show();
