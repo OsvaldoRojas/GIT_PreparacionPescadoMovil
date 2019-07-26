@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_asignar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/asignarTurno"
+            android:textColor="@color/blanco"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:textSize="20dp"/>
+
+        <RadioGroup
+            android:id="@+id/grupoTurno"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp">
+
+            <RadioButton
+                android:id="@+id/turno1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:layout_marginLeft="30dp"
+                android:textColorHint="@color/blanco"
+                android:textColor="@color/blanco"
+                android:buttonTint="@color/blanco"
+                android:textSize="18dp"
+                android:text="Turno 1"/>
+
+            <RadioButton
+                android:id="@+id/turno2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:buttonTint="@color/blanco"
+                android:textColor="@color/blanco"
+                android:textSize="18dp"
+                android:text="Turno 2"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="bottom|center_horizontal">
+
+        <Button
+            android:id="@+id/boton1"
+            android:text="@string/aceptar"
+            style="@style/botonPrincipal"/>
+
+    </LinearLayout>
+
+</LinearLayout>

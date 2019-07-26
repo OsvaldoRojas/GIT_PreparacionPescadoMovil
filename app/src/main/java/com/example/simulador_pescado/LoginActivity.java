@@ -3,10 +3,12 @@ package com.example.simulador_pescado;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,21 +80,33 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void errorInicio(ErrorServicio errorServidor){
+    public void errorInicio(final ErrorServicio errorServidor){
         this.barraProgreso.setVisibility(View.GONE);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActividad() );
-        builder.setMessage( parseaMensaje( errorServidor.getMensaje() ) )
-                .setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText( parseaMensaje( errorServidor.getMensaje() ) );
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         textoUsuario.setEnabled(true);
                         textoContrasena.setEnabled(true);
                         botonAcceder.setEnabled(true);
                         ventanaEmergente.dismiss();
                     }
                 });
-        this.ventanaEmergente = builder.create();
+            }
+        });
         this.ventanaEmergente.show();
     }
 
