@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -225,6 +223,12 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private ImageView getIconoMontacargas(int posicion){
+        switch (posicion){
+            case 1: return this.montacargas1;
+            case 2: return this.montacargas2;
+            case 3: return this.montacargas3;
+            case 4: return this.montacargas4;
+        }
         return null;
     }
 
@@ -255,7 +259,12 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     public void ordenaOperadoresMontacargas(List<OperadorMontacargas> listaMontacargas){
         this.listaMontacargas = listaMontacargas;
         for( OperadorMontacargas recursoMontacargas : this.listaMontacargas ){
-
+            if( recursoMontacargas.getLibre() ){
+                recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
+            }else{
+                recursoMontacargas.setEstado(Constantes.ESTADO.seleccionado);
+                accionIconoMontacargas( recursoMontacargas.getIdMontacargaPreseleccion() );
+            }
         }
     }
 
@@ -313,6 +322,16 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         return "";
     }
 
+    private String getEtiquetaMontacargas(int posicion){
+        switch (posicion){
+            case 1: return "A1";
+            case 2: return "A2";
+            case 3: return "B1";
+            case 4: return "B2";
+        }
+        return "";
+    }
+
     private void creaObjetosVacios(){
         iniciaProcesando();
 
@@ -338,7 +357,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         if( this.listaMontacargas.isEmpty() ){
-
+            for( int posicion = 1; posicion <= 4; posicion++ ){
+                OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
+                recursoMontacargas.setIdMontacargaPreseleccion(posicion);
+                recursoMontacargas.setLibre(true);
+                recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
+                this.listaMontacargas.add(recursoMontacargas);
+            }
         }
 
         terminaProcesando();
@@ -350,10 +375,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 if( operador.getEstado() == Constantes.ESTADO.inicial ){
                     setOperadorSeleccionado(operador);
                     deshabilitaRecursos();
-                    getIconoOperador( operador.getIdEstacion() ).
-                            setImageResource(R.drawable.ic_operador1);
-                    getIconoOperador( operador.getIdEstacion() ).
-                            setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                    getIconoOperador( operador.getIdEstacion() )
+                            .setImageResource(R.drawable.ic_operador1);
+                    getIconoOperador( operador.getIdEstacion() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     operador.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarUsuario);
                     this.boton1.setEnabled(false);
@@ -366,25 +391,25 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
                         habilitaRecursos();
-                        getIconoOperador( operador.getIdEstacion() ).
-                                setImageResource(R.drawable.ic_operador2);
+                        getIconoOperador( operador.getIdEstacion() )
+                                .setImageResource(R.drawable.ic_operador2);
                         if( operador.getLibre() ){
-                            getIconoOperador( operador.getIdEstacion() ).
-                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                            getIconoOperador( operador.getIdEstacion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             operador.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoOperador( operador.getIdEstacion() ).
-                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                            getIconoOperador( operador.getIdEstacion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             operador.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
                     }else{
                         setOperadorSeleccionado(operador);
                         deshabilitaRecursos();
-                        getIconoOperador( operador.getIdEstacion() ).
-                                setImageResource(R.drawable.ic_operador1);
-                        getIconoOperador( operador.getIdEstacion() ).
-                                setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                        getIconoOperador( operador.getIdEstacion() )
+                                .setImageResource(R.drawable.ic_operador1);
+                        getIconoOperador( operador.getIdEstacion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         operador.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarUsuario);
                         this.boton1.setEnabled(true);
@@ -406,10 +431,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 if( tina.getEstado() == Constantes.ESTADO.inicial ){
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
-                    getIconoTina( tina.getIdPosicion() ).
-                            setImageResource(R.drawable.ic_tina1);
-                    getIconoTina( tina.getIdPosicion() ).
-                            setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                    getIconoTina( tina.getIdPosicion() )
+                            .setImageResource(R.drawable.ic_tina1);
+                    getIconoTina( tina.getIdPosicion() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     tina.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarTina);
                     this.boton1.setEnabled(false);
@@ -422,25 +447,25 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
                         setTinaSeleccionada(null);
                         habilitaRecursos();
-                        getIconoTina( tina.getIdPosicion() ).
-                                setImageResource(R.drawable.ic_tina2);
+                        getIconoTina( tina.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_tina2);
                         if( tina.getLibre() ){
-                            getIconoTina( tina.getIdPosicion() ).
-                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                            getIconoTina( tina.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             tina.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoTina( tina.getIdPosicion() ).
-                                    setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                            getIconoTina( tina.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             tina.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
                     }else{
                         setTinaSeleccionada(tina);
                         deshabilitaRecursos();
-                        getIconoTina( tina.getIdPosicion() ).
-                                setImageResource(R.drawable.ic_tina1);
-                        getIconoTina( tina.getIdPosicion() ).
-                                setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                        getIconoTina( tina.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_tina1);
+                        getIconoTina( tina.getIdPosicion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         tina.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarTina);
                         this.boton1.setEnabled(true);
@@ -456,27 +481,61 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
     }
 
-    /*private void accionIconoMontacargas(Recurso recurso){
-        if( recurso.getEstado() == Recurso.ESTADO.inicial ){
-            setRecursoSeleccionado(recurso);
-            deshabilitaRecursos();
-            recurso.getIcono().setImageResource(R.drawable.ic_montacargas1);
-            recurso.getIcono().setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
-            recurso.setEstado( Recurso.ESTADO.seleccionado );
-            this.boton1.setText(R.string.liberarUsuario);
-            this.boton1.setEnabled(false);
-            this.boton2.setText(R.string.asignarUsuario);
-            this.boton2.setEnabled(true);
-            this.contenedorBotones.setVisibility(View.VISIBLE);
-        }else{
-            setRecursoSeleccionado(null);
-            habilitaRecursos();
-            recurso.getIcono().setImageResource(R.drawable.ic_montacargas2);
-            recurso.getIcono().setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
-            recurso.setEstado( Recurso.ESTADO.inicial );
-            this.contenedorBotones.setVisibility(View.GONE);
+    private void accionIconoMontacargas(int posicion){
+        for( OperadorMontacargas montacargas : this.listaMontacargas ){
+            if( montacargas.getIdMontacargaPreseleccion() == posicion ){
+                if( montacargas.getEstado() == Constantes.ESTADO.inicial ){
+                    setMontacargasSeleccionado(montacargas);
+                    deshabilitaRecursos();
+                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            .setImageResource(R.drawable.ic_montacargas1);
+                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                    montacargas.setEstado( Constantes.ESTADO.seleccionado );
+                    this.boton1.setText(R.string.liberarUsuario);
+                    this.boton1.setEnabled(false);
+                    this.boton1.setOnClickListener(null);
+                    this.boton2.setText(R.string.asignarUsuario);
+                    this.boton2.setEnabled(true);
+                    this.boton2.setOnClickListener(this.eventoAsignarMontacargas);
+                    this.contenedorBotones.setVisibility(View.VISIBLE);
+                }else{
+                    if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setMontacargasSeleccionado(null);
+                        habilitaRecursos();
+                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                .setImageResource(R.drawable.ic_montacargas2);
+                        if( montacargas.getLibre() ){
+                            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                            montacargas.setEstado( Constantes.ESTADO.inicial );
+                        }else{
+                            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                            montacargas.setEstado( Constantes.ESTADO.asignado );
+                        }
+                        this.contenedorBotones.setVisibility(View.GONE);
+                    }else{
+                        setMontacargasSeleccionado(montacargas);
+                        deshabilitaRecursos();
+                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                .setImageResource(R.drawable.ic_montacargas1);
+                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                        montacargas.setEstado( Constantes.ESTADO.seleccionado );
+                        this.boton1.setText(R.string.liberarUsuario);
+                        this.boton1.setEnabled(true);
+                        this.boton1.setOnClickListener(this.eventoLiberarMontacargas);
+                        this.boton2.setText(R.string.asignarUsuario);
+                        this.boton2.setEnabled(false);
+                        this.boton2.setOnClickListener(null);
+                        this.contenedorBotones.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+            }
         }
-    }*/
+    }
 
     public Fragment getFragment() {
         return fragment;
@@ -492,7 +551,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         if( getMontacargasSeleccionado() != null ){
-
+            accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
         }
 
         ObtenAsignados obtenAsignados = new ObtenAsignados( getFragment() );
@@ -994,6 +1053,38 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             }
         });
 
+        this.montacargas1 = this.vista.findViewById(R.id.montacargas1);
+        this.montacargas1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(1);
+            }
+        });
+
+        this.montacargas2 = this.vista.findViewById(R.id.montacargas2);
+        this.montacargas2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(2);
+            }
+        });
+
+        this.montacargas3 = this.vista.findViewById(R.id.montacargas3);
+        this.montacargas3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(3);
+            }
+        });
+
+        this.montacargas4 = this.vista.findViewById(R.id.montacargas4);
+        this.montacargas4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(4);
+            }
+        });
+
         getAsignados();
     }
 
@@ -1020,7 +1111,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            //montacargas.getIcono().setEnabled(false);
+            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(false);
         }
 
         if( getTinaSeleccionada() != null ){
@@ -1030,7 +1121,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
             }else{
                 if( getMontacargasSeleccionado() != null ){
-                    //HABILITAR MONTACARGAS SELECCIONADO
+                    getIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ).setEnabled(true);
                 }
             }
         }
@@ -1046,7 +1137,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            //montacargas.getIcono().setEnabled(true);
+            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(true);
         }
     }
 
