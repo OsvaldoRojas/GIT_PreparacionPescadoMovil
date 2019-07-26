@@ -413,7 +413,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         terminaProcesando();
-        solicitaTurno();
+        if(turno == 0){
+            solicitaTurno();
+        }
     }
 
     private void solicitaTurno(){
