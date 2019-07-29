@@ -27,6 +27,8 @@
     <string name="asignarMontacargas">Usuario - Montacargas</string>
     <string name="asignarTurno">Asignar turno</string>
 
+    <string name="mensajeMezclar">Seleccionar tinas para mezclar en la tina seleccionada</string>
+
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
 

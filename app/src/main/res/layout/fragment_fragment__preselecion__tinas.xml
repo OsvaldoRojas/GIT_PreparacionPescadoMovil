@@ -425,6 +425,27 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/contenedorMensaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|center_horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="3dp"
+                        android:paddingTop="3dp"
+                        android:background="@color/no_selecion"
+                        android:textColor="@color/blanco"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/mensajeMezclar" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

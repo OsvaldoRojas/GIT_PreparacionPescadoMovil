@@ -67,6 +67,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     View vista;
 
     private LinearLayout contenedorBotones;
+    private LinearLayout contenedorMensaje;
 
     private Button boton1;
     private Button boton2;
@@ -106,6 +107,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private OperadorBascula operadorSeleccionado;
     private OperadorMontacargas montacargasSeleccionado;
 
+    private List<Tina> listaMezclarTinas = new ArrayList<>();
     private List<Tina> listaTinas = new ArrayList<>();
     private List<OperadorBascula> listaOperadores = new ArrayList<>();
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
@@ -120,6 +122,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private View.OnClickListener eventoAsignarOperador;
     private View.OnClickListener eventoLiberarMontacargas;
     private View.OnClickListener eventoAsignarMontacargas;
+    private View.OnClickListener eventoCancelarMezclar;
+    private View.OnClickListener eventoAceptarMezclar;
 
     private AlertDialog ventanaError;
     private AlertDialog ventanaTurno;
@@ -134,6 +138,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private String fechaActual;
     private int turno = 0;
     private boolean esMontacargas;
+    private boolean esMezclar;
 
     private OnFragmentInteractionListener mListener;
 
@@ -541,8 +546,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
-                        setTinaSeleccionada(null);
-                        habilitaRecursos();
                         getIconoTina( tina.getIdPosicion() )
                                 .setImageResource(R.drawable.ic_tina2);
                         if( tina.getLibre() ){
@@ -554,22 +557,46 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             tina.setEstado( Constantes.ESTADO.asignado );
                         }
-                        this.contenedorBotones.setVisibility(View.GONE);
+
+                        if(esMezclar){
+                            this.listaMezclarTinas.remove(tina);
+                            if(this.listaMezclarTinas.size() == 0){
+                                this.contenedorBotones.setVisibility(View.GONE);
+                                this.contenedorMensaje.setVisibility(View.VISIBLE);
+                            }
+                        }else{
+                            setTinaSeleccionada(null);
+                            habilitaRecursos();
+                            this.contenedorBotones.setVisibility(View.GONE);
+                        }
                     }else{
-                        setTinaSeleccionada(tina);
-                        deshabilitaRecursos();
                         getIconoTina( tina.getIdPosicion() )
                                 .setImageResource(R.drawable.ic_tina1);
                         getIconoTina( tina.getIdPosicion() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         tina.setEstado( Constantes.ESTADO.seleccionado );
-                        this.boton1.setText(R.string.liberarTina);
-                        this.boton1.setEnabled(true);
-                        this.boton1.setOnClickListener(this.eventoLiberarTina);
-                        this.boton2.setText(R.string.mezclarTina);
-                        this.boton2.setEnabled(true);
-                        this.boton2.setOnClickListener(this.eventoMezclarTina);
-                        this.contenedorBotones.setVisibility(View.VISIBLE);
+
+                        if(esMezclar){
+                            this.listaMezclarTinas.add(tina);
+                            this.contenedorMensaje.setVisibility(View.GONE);
+                            this.boton1.setText(R.string.cancelar);
+                            this.boton1.setEnabled(true);
+                            this.boton1.setOnClickListener(this.eventoCancelarMezclar);
+                            this.boton2.setText(R.string.aceptar);
+                            this.boton2.setEnabled(true);
+                            this.boton2.setOnClickListener(this.eventoAceptarMezclar);
+                            this.contenedorBotones.setVisibility(View.VISIBLE);
+                        }else{
+                            setTinaSeleccionada(tina);
+                            deshabilitaRecursos();
+                            this.boton1.setText(R.string.liberarTina);
+                            this.boton1.setEnabled(true);
+                            this.boton1.setOnClickListener(this.eventoLiberarTina);
+                            this.boton2.setText(R.string.mezclarTina);
+                            this.boton2.setEnabled(true);
+                            this.boton2.setOnClickListener(this.eventoMezclarTina);
+                            this.contenedorBotones.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
                 break;
@@ -757,7 +784,21 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void mezclarTina(){
-        System.out.println("MEZCLAR TINA..........");
+        this.esMezclar = true;
+        this.listaMezclarTinas = new ArrayList<>();
+        this.contenedorBotones.setVisibility(View.GONE);
+        this.contenedorMensaje.setVisibility(View.VISIBLE);
+
+        habilitaTinas();
+    }
+
+    private void habilitaTinas(){
+        for(Tina tina : this.listaTinas){
+            if( !tina.getLibre() ){
+                getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+            }
+        }
+        getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(false);
     }
 
     private void asignarOperador(){
@@ -872,6 +913,18 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void liberarMontacargas(){
         System.out.println("LIBERAR MONTACARGAS...........");
+    }
+
+    private void cancelaMezclar(){
+        this.esMezclar = false;
+        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+        for( Tina tina : this.listaMezclarTinas ){
+            accionIconoTina( tina.getIdPosicion() );
+        }
+    }
+
+    private void aceptaMezclar(){
+
     }
 
     private void validaGafete(String codigo){
@@ -1066,6 +1119,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);
         this.boton1 = this.vista.findViewById(R.id.boton1);
         this.boton2 = this.vista.findViewById(R.id.boton2);
+
+        this.contenedorMensaje = this.vista.findViewById(R.id.contenedorMensaje);
+
+        this.eventoCancelarMezclar = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelaMezclar();
+            }
+        };
+
+        this.eventoAceptarMezclar = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                aceptaMezclar();
+            }
+        };
 
         this.eventoAsignarTina = new View.OnClickListener() {
             @Override
