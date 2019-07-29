@@ -66,7 +66,8 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
         if(aBoolean){
             ( (Fragment_Preselecion_Tinas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
         }else{
-            ( (Fragment_Preselecion_Tinas) this.pantalla ).errorServicio(this.errorMensaje);
+            ( (Fragment_Preselecion_Tinas) this.pantalla ).terminaProcesandoEmergente();
+            ( (Fragment_Preselecion_Tinas) this.pantalla ).errorServicioAsignados(this.errorMensaje);
         }
     }
 }

@@ -95,8 +95,6 @@ public class Contenedor extends Fragment {
                     }
                 });
                 pestañas.setupWithViewPager(viewPager);
-
-
             }
         }else{
             Utilidades.rotacion=1;
@@ -116,9 +114,9 @@ public class Contenedor extends Fragment {
 
     private void llenarview(ViewPager viewPager) {
         SesionesAdapter adatartes= new SesionesAdapter(getFragmentManager());
-        adatartes.addfragments(new Fragment_Preselecion_Tinas(),"Tinas ");
-        adatartes.addfragments(new Fragment_Preselecion_TiempoMuerto(),"Tiempo muerto");
-        adatartes.addfragments(new Fragment_Preselecion_OM(),"OM");
+        adatartes.addfragments(new Fragment_Preselecion_Tinas(), getResources().getString(R.string.Preselecion_tinas));
+        adatartes.addfragments(new Fragment_Preselecion_TiempoMuerto(), getResources().getString(R.string.TiempoMuerto));
+        adatartes.addfragments(new Fragment_Preselecion_OM(), getResources().getString(R.string.OM));
         viewPager.setAdapter(adatartes);
     }
 
