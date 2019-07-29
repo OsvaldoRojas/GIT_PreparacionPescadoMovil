@@ -133,6 +133,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private String fechaActual;
     private int turno = 0;
+    private boolean esMontacargas;
 
     private OnFragmentInteractionListener mListener;
 
@@ -806,6 +807,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
                     @Override
                     public void afterTextChanged(Editable editable) {
+                        esMontacargas = false;
                         validaGafete( editable.toString() );
                     }
                 });
@@ -844,6 +846,25 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
                 TextView etiquetaPosicion = ventanaAsignarMontacargas.findViewById(R.id.etiquetaPosicion);
                 etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ) );
+
+                EditText campoEscaner = ventanaAsignarMontacargas.findViewById(R.id.campoEscaner);
+                campoEscaner.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        esMontacargas = true;
+                        validaGafete( editable.toString() );
+                    }
+                });
             }
         });
         this.ventanaAsignarMontacargas.show();
@@ -859,26 +880,41 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             ValidaGafete validaGafete = new ValidaGafete(this, codigo);
             validaGafete.execute();
         }else{
-            EditText campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
+            EditText campoNombre;
+            if(this.esMontacargas){
+                campoNombre = this.ventanaAsignarMontacargas.findViewById(R.id.campoNombre);
+            }else{
+                campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
+            }
             campoNombre.setText("Código no valido");
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
     public void resultadoEscaneoGafete(Gafete resultadoGafete){
-        EditText campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
+        EditText campoNombre;
+        if(this.esMontacargas){
+            campoNombre = this.ventanaAsignarMontacargas.findViewById(R.id.campoNombre);
+        }else{
+            campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
+        }
         if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
             campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
             campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
 
-            getOperadorSeleccionado().getEmpleado()
-                    .setClaveEmpleado( resultadoGafete.getEmpleado().getCla_trab() );
-            getOperadorSeleccionado().getEmpleado()
-                    .setNombre( resultadoGafete.getEmpleado().getNom_trab() );
-            getOperadorSeleccionado().getEmpleado()
-                    .setApellidoPaterno( resultadoGafete.getEmpleado().getAp_paterno() );
-            getOperadorSeleccionado().getEmpleado()
-                    .setApellidoMaterno( resultadoGafete.getEmpleado().getAp_materno() );
+            if(this.esMontacargas){
+                //RELACIONAR EL ID DEL EMPLEADO DEL GAFETE ESCANEADO CON EL MONTACARGAS SELECCIONADO.
+                //getMontacargasSeleccionado().setIdEmpleado();
+            }else{
+                getOperadorSeleccionado().getEmpleado()
+                        .setClaveEmpleado( resultadoGafete.getEmpleado().getCla_trab() );
+                getOperadorSeleccionado().getEmpleado()
+                        .setNombre( resultadoGafete.getEmpleado().getNom_trab() );
+                getOperadorSeleccionado().getEmpleado()
+                        .setApellidoPaterno( resultadoGafete.getEmpleado().getAp_paterno() );
+                getOperadorSeleccionado().getEmpleado()
+                        .setApellidoMaterno( resultadoGafete.getEmpleado().getAp_materno() );
+            }
         }else{
             campoNombre.setText("Código no valido");
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
