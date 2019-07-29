@@ -14,13 +14,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.clases.Metodos_Retonables;
 import com.example.simulador_pescado.clases.Utilidades;
+import com.example.simulador_pescado.vista.Bascula;
+import com.example.simulador_pescado.vista.OperadorBascula;
+import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.Tina;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +43,7 @@ import com.example.simulador_pescado.clases.Utilidades;
  * Use the {@link Fragment_Preselecion_TiempoMuerto#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_Preselecion_TiempoMuerto extends Fragment implements View.OnClickListener {
+public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,19 +53,105 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment implements View.
     private String mParam1;
     private String mParam2;
     View vista;
-    private Button t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12;
-    private Button emple1,emple2,emple3,emple4,emple5,emple6,emple7,emple8,emple9,emple10;
-    private Button bas1,bas2,bas3,bas4,bas5,bas6,bas7,bas8,bas9,bas10;
-    private Button monta1,monta2,monta3,monta4;
-    private Button para1,para2;
 
+    private LinearLayout contenedorBotones;
 
+    private ImageView tina1;
+    private ImageView tina2;
+    private ImageView tina3;
+    private ImageView tina4;
+    private ImageView tina5;
+    private ImageView tina6;
+    private ImageView tina7;
+    private ImageView tina8;
+    private ImageView tina9;
+    private ImageView tina10;
+    private ImageView tina11;
+    private ImageView tina12;
 
+    private ImageView operador1;
+    private ImageView operador2;
+    private ImageView operador3;
+    private ImageView operador4;
+    private ImageView operador5;
+    private ImageView operador6;
+    private ImageView operador7;
+    private ImageView operador8;
+    private ImageView operador9;
+    private ImageView operador10;
+
+    private ImageView bascula1;
+    private ImageView bascula2;
+    private ImageView bascula3;
+    private ImageView bascula4;
+    private ImageView bascula5;
+    private ImageView bascula6;
+    private ImageView bascula7;
+    private ImageView bascula8;
+    private ImageView bascula9;
+    private ImageView bascula10;
+
+    private ImageView montacargas1;
+    private ImageView montacargas2;
+    private ImageView montacargas3;
+    private ImageView montacargas4;
+
+    private Tina tinaSeleccionada;
+    private OperadorBascula operadorSeleccionado;
+    private OperadorMontacargas montacargasSeleccionado;
+    private Bascula basculaSeleccionada;
+
+    private List<Tina> listaTinas = new ArrayList<>();
+    private List<OperadorBascula> listaOperadores = new ArrayList<>();
+    private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
+    private List<Bascula> listaBasculas = new ArrayList<>();
+
+    private ProgressBar barraProgreso;
+    private Button botonCrear;
+
+    private View.OnClickListener eventoCreaOrdenTina;
+    private View.OnClickListener eventoCreaOrdenOperador;
+    private View.OnClickListener eventoCreaOrdenMontacargas;
+    private View.OnClickListener eventoCreaOrdenBascula;
+
+    private String fechaActual;
 
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_TiempoMuerto() {
         // Required empty public constructor
+    }
+
+    public Tina getTinaSeleccionada() {
+        return tinaSeleccionada;
+    }
+
+    public void setTinaSeleccionada(Tina tinaSeleccionada) {
+        this.tinaSeleccionada = tinaSeleccionada;
+    }
+
+    public OperadorBascula getOperadorSeleccionado() {
+        return operadorSeleccionado;
+    }
+
+    public void setOperadorSeleccionado(OperadorBascula operadorSeleccionado) {
+        this.operadorSeleccionado = operadorSeleccionado;
+    }
+
+    public OperadorMontacargas getMontacargasSeleccionado() {
+        return montacargasSeleccionado;
+    }
+
+    public void setMontacargasSeleccionado(OperadorMontacargas montacargasSeleccionado) {
+        this.montacargasSeleccionado = montacargasSeleccionado;
+    }
+
+    public Bascula getBasculaSeleccionada() {
+        return basculaSeleccionada;
+    }
+
+    public void setBasculaSeleccionada(Bascula basculaSeleccionada) {
+        this.basculaSeleccionada = basculaSeleccionada;
     }
 
     /**
@@ -88,91 +187,626 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment implements View.
         // Inflate the layout for this fragment
         vista=inflater.inflate(R.layout.fragment_fragment__preselecion__tiempo_muerto, container, false);
 
-        //asignacion de variables tinas
-        t1= vista.findViewById(R.id.tina1);
-        t2= vista.findViewById(R.id.tina2);
-        t3= vista.findViewById(R.id.tina3);
-        t4= vista.findViewById(R.id.tina4);
-        t5= vista.findViewById(R.id.tina5);
-        t6= vista.findViewById(R.id.tina6);
-        t7= vista.findViewById(R.id.tina7);
-        t8= vista.findViewById(R.id.tina8);
-        t9= vista.findViewById(R.id.tina9);
-        t10= vista.findViewById(R.id.tina10);
-        t11= vista.findViewById(R.id.tina11);
-        t12= vista.findViewById(R.id.tina12);
+        iniciaComponentes();
+        return vista;
+    }
 
-        //asignacion variables empleados
+    private void creaOrdenTina(){
 
-        emple1=vista.findViewById(R.id.emple1);
-        emple2=vista.findViewById(R.id.emple2);
-        emple3=vista.findViewById(R.id.emple3);
-        emple4=vista.findViewById(R.id.emple4);
-        emple5=vista.findViewById(R.id.emple5);
-        emple6=vista.findViewById(R.id.emple6);
-        emple7=vista.findViewById(R.id.emple7);
-        emple8=vista.findViewById(R.id.emple8);
-        emple9=vista.findViewById(R.id.emple9);
-        emple10=vista.findViewById(R.id.emple10);
-        //asignacion variables montacargas
+    }
 
-        monta1=vista.findViewById(R.id.monta1);
-        monta2=vista.findViewById(R.id.monta2);
-        monta3=vista.findViewById(R.id.monta3);
-        monta4=vista.findViewById(R.id.monta4);
+    private void creaOrdenOperador(){
 
-        //asignacion variables de botones
-        para1=vista.findViewById(R.id.btnPrametro1);
+    }
 
+    private void creaOrdenBascula(){
 
-        //asignacion de de metodo onclick en botones de tinas
-        t1.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t2.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t3.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t4.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t5.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t6.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t7.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t8.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t9.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t10.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t11.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        t12.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        //asignacion de de metodo onclick en botones de tinas
-        emple1.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple2.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple3.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple4.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple5.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple6.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple7.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple8.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple9.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        emple10.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        //asigancion del metodo onclick
-        monta1.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        monta2.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        monta3.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
-        monta4.setOnClickListener(Fragment_Preselecion_TiempoMuerto.this);
+    }
 
-        //reiniciar variable de boton precionado
-        Utilidades.boton_presionado_Preselecion_tiempo_muerto="ninguno";
+    private void creaOrdenMontacargas(){
 
+    }
 
+    private void iniciaComponentes(){
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        this.fechaActual = formatoFecha.format( new Date() );
 
-        para1.setOnClickListener(new View.OnClickListener() {
+        this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+
+        this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);
+        this.botonCrear = this.vista.findViewById(R.id.botonOrden);
+
+        this.eventoCreaOrdenTina = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String parametro =para1.getText().toString();
-                crear_dialog(view);
+                creaOrdenTina();
+            }
+        };
 
+        this.eventoCreaOrdenOperador = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                creaOrdenOperador();
+            }
+        };
+
+        this.eventoCreaOrdenBascula = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                creaOrdenBascula();
+            }
+        };
+
+        this.eventoCreaOrdenMontacargas = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                creaOrdenMontacargas();
+            }
+        };
+
+        this.tina1 = this.vista.findViewById(R.id.tina1);
+        this.tina1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(1);
             }
         });
 
+        this.tina2 = this.vista.findViewById(R.id.tina2);
+        this.tina2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(2);
+            }
+        });
 
+        this.tina3 = this.vista.findViewById(R.id.tina3);
+        this.tina3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(3);
+            }
+        });
 
+        this.tina4 = this.vista.findViewById(R.id.tina4);
+        this.tina4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(4);
+            }
+        });
 
-        return vista;
+        this.tina5 = this.vista.findViewById(R.id.tina5);
+        this.tina5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(5);
+            }
+        });
+
+        this.tina6 = this.vista.findViewById(R.id.tina6);
+        this.tina6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(6);
+            }
+        });
+
+        this.tina7 = this.vista.findViewById(R.id.tina7);
+        this.tina7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(7);
+            }
+        });
+
+        this.tina8 = this.vista.findViewById(R.id.tina8);
+        this.tina8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(8);
+            }
+        });
+
+        this.tina9 = this.vista.findViewById(R.id.tina9);
+        this.tina9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(9);
+            }
+        });
+
+        this.tina10 = this.vista.findViewById(R.id.tina10);
+        this.tina10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(10);
+            }
+        });
+
+        this.tina11 = this.vista.findViewById(R.id.tina11);
+        this.tina11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(11);
+            }
+        });
+
+        this.tina12 = this.vista.findViewById(R.id.tina12);
+        this.tina12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(12);
+            }
+        });
+
+        this.operador1 = this.vista.findViewById(R.id.operador1);
+        this.operador1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(1);
+            }
+        });
+
+        this.operador2 = this.vista.findViewById(R.id.operador2);
+        this.operador2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(2);
+            }
+        });
+
+        this.operador3 = this.vista.findViewById(R.id.operador3);
+        this.operador3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(3);
+            }
+        });
+
+        this.operador4 = this.vista.findViewById(R.id.operador4);
+        this.operador4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(4);
+            }
+        });
+
+        this.operador5 = this.vista.findViewById(R.id.operador5);
+        this.operador5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(5);
+            }
+        });
+
+        this.operador6 = this.vista.findViewById(R.id.operador6);
+        this.operador6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(6);
+            }
+        });
+
+        this.operador7 = this.vista.findViewById(R.id.operador7);
+        this.operador7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(7);
+            }
+        });
+
+        this.operador8 = this.vista.findViewById(R.id.operador8);
+        this.operador8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(8);
+            }
+        });
+
+        this.operador9 = this.vista.findViewById(R.id.operador9);
+        this.operador9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(9);
+            }
+        });
+
+        this.operador10 = this.vista.findViewById(R.id.operador10);
+        this.operador10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoOperador(10);
+            }
+        });
+
+        this.bascula1 = this.vista.findViewById(R.id.bascula1);
+        this.bascula1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(1);
+            }
+        });
+
+        this.bascula2 = this.vista.findViewById(R.id.bascula2);
+        this.bascula2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(2);
+            }
+        });
+
+        this.bascula3 = this.vista.findViewById(R.id.bascula3);
+        this.bascula3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(3);
+            }
+        });
+
+        this.bascula4 = this.vista.findViewById(R.id.bascula4);
+        this.bascula4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(4);
+            }
+        });
+
+        this.bascula5 = this.vista.findViewById(R.id.bascula5);
+        this.bascula5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(5);
+            }
+        });
+
+        this.bascula6 = this.vista.findViewById(R.id.bascula6);
+        this.bascula6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(6);
+            }
+        });
+
+        this.bascula7 = this.vista.findViewById(R.id.bascula7);
+        this.bascula7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(7);
+            }
+        });
+
+        this.bascula8 = this.vista.findViewById(R.id.bascula8);
+        this.bascula8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(8);
+            }
+        });
+
+        this.bascula9 = this.vista.findViewById(R.id.bascula9);
+        this.bascula9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(9);
+            }
+        });
+
+        this.bascula10 = this.vista.findViewById(R.id.bascula10);
+        this.bascula10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoBascula(10);
+            }
+        });
+
+        this.montacargas1 = this.vista.findViewById(R.id.montacargas1);
+        this.montacargas1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(1);
+            }
+        });
+
+        this.montacargas2 = this.vista.findViewById(R.id.montacargas2);
+        this.montacargas2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(2);
+            }
+        });
+
+        this.montacargas3 = this.vista.findViewById(R.id.montacargas3);
+        this.montacargas3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(3);
+            }
+        });
+
+        this.montacargas4 = this.vista.findViewById(R.id.montacargas4);
+        this.montacargas4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(4);
+            }
+        });
+
+        creaObjetosVacios();
+    }
+
+    private void creaObjetosVacios(){
+        if( this.listaTinas.isEmpty() ){
+            for( int posicion = 1; posicion <= 12; posicion++ ){
+                final Tina recursoTina = new Tina();
+                recursoTina.setIdPosicion(posicion);
+                recursoTina.setEstado(Constantes.ESTADO.inicial);
+                this.listaTinas.add(recursoTina);
+            }
+        }
+
+        if( this.listaOperadores.isEmpty() ){
+            for( int posicion = 1; posicion <= 10; posicion++ ){
+                final OperadorBascula recursoOperador = new OperadorBascula();
+                recursoOperador.setIdEstacion(posicion);
+                recursoOperador.setEstado(Constantes.ESTADO.inicial);
+                this.listaOperadores.add(recursoOperador);
+            }
+        }
+
+        if( this.listaMontacargas.isEmpty() ){
+            for( int posicion = 1; posicion <= 4; posicion++ ){
+                OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
+                recursoMontacargas.setIdMontacargaPreseleccion(posicion);
+                recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
+                this.listaMontacargas.add(recursoMontacargas);
+            }
+        }
+
+        if( this.listaBasculas.isEmpty() ){
+            for( int posicion = 1; posicion <=10; posicion++ ){
+                Bascula recursoBascula = new Bascula();
+                recursoBascula.setIdBascula(posicion);
+                recursoBascula.setEstado(Constantes.ESTADO.inicial);
+                this.listaBasculas.add(recursoBascula);
+            }
+        }
+    }
+
+    private void habilitaRecursos(){
+        for(Tina tina : this.listaTinas){
+            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+        }
+
+        for(OperadorBascula operador : this.listaOperadores){
+            getIconoOperador( operador.getIdEstacion() ).setEnabled(true);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(true);
+        }
+
+        for(Bascula bascula : this.listaBasculas){
+            getIconoBascula( bascula.getIdBascula() ).setEnabled(true);
+        }
+    }
+
+    private void deshabilitaRecursos(){
+        for(Tina tina : this.listaTinas){
+            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+        }
+
+        for(OperadorBascula operador : this.listaOperadores){
+            getIconoOperador( operador.getIdEstacion() ).setEnabled(false);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(false);
+        }
+
+        for(Bascula bascula : this.listaBasculas){
+            getIconoBascula( bascula.getIdBascula() ).setEnabled(false);
+        }
+
+        if( getTinaSeleccionada() != null ){
+            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+        }else{
+            if( getOperadorSeleccionado() != null ){
+                getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
+            }else{
+                if( getMontacargasSeleccionado() != null ){
+                    getIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ).setEnabled(true);
+                }else{
+                    if( getBasculaSeleccionada() != null ){
+                        getIconoBascula( getBasculaSeleccionada().getIdBascula() ).setEnabled(true);
+                    }
+                }
+            }
+        }
+    }
+
+    private ImageView getIconoTina(int posicion){
+        switch (posicion){
+            case 1: return this.tina1;
+            case 2: return this.tina2;
+            case 3: return this.tina3;
+            case 4: return this.tina4;
+            case 5: return this.tina5;
+            case 6: return this.tina6;
+            case 7: return this.tina7;
+            case 8: return this.tina8;
+            case 9: return this.tina9;
+            case 10: return this.tina10;
+            case 11: return this.tina11;
+            case 12: return this.tina12;
+        }
+        return null;
+    }
+
+    private ImageView getIconoOperador(int posicion){
+        switch (posicion){
+            case 1: return this.operador1;
+            case 2: return this.operador2;
+            case 3: return this.operador3;
+            case 4: return this.operador4;
+            case 5: return this.operador5;
+            case 6: return this.operador6;
+            case 7: return this.operador7;
+            case 8: return this.operador8;
+            case 9: return this.operador9;
+            case 10: return this.operador10;
+        }
+        return null;
+    }
+
+    private ImageView getIconoMontacargas(int posicion){
+        switch (posicion){
+            case 1: return this.montacargas1;
+            case 2: return this.montacargas2;
+            case 3: return this.montacargas3;
+            case 4: return this.montacargas4;
+        }
+        return null;
+    }
+
+    private ImageView getIconoBascula(int posicion){
+        switch (posicion){
+            case 1: return this.bascula1;
+            case 2: return this.bascula2;
+            case 3: return this.bascula3;
+            case 4: return this.bascula4;
+            case 5: return this.bascula5;
+            case 6: return this.bascula6;
+            case 7: return this.bascula7;
+            case 8: return this.bascula8;
+            case 9: return this.bascula9;
+            case 10: return this.bascula10;
+        }
+        return null;
+    }
+
+    private void accionIconoTina(int posicion){
+        for( Tina tina : this.listaTinas ){
+            if( tina.getIdPosicion() == posicion ){
+                if( tina.getEstado() == Constantes.ESTADO.inicial ){
+                    setTinaSeleccionada(tina);
+                    deshabilitaRecursos();
+                    getIconoTina( tina.getIdPosicion() )
+                            .setImageResource(R.drawable.ic_tina1);
+                    getIconoTina( tina.getIdPosicion() )
+                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                    tina.setEstado(Constantes.ESTADO.seleccionado);
+                    this.botonCrear.setOnClickListener(this.eventoCreaOrdenTina);
+                    this.contenedorBotones.setVisibility(View.VISIBLE);
+                }else{
+                    if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setTinaSeleccionada(null);
+                        habilitaRecursos();
+                        getIconoTina( tina.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_tina2);
+                        getIconoTina( tina.getIdPosicion() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
+                        tina.setEstado(Constantes.ESTADO.inicial);
+                        this.botonCrear.setOnClickListener(null);
+                        this.contenedorBotones.setVisibility(View.GONE);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void accionIconoOperador(int posicion){
+        for( OperadorBascula operador : this.listaOperadores ){
+            if( operador.getIdEstacion() == posicion ){
+                if( operador.getEstado() == Constantes.ESTADO.inicial ){
+                    setOperadorSeleccionado(operador);
+                    deshabilitaRecursos();
+                    getIconoOperador( operador.getIdEstacion() )
+                            .setImageResource(R.drawable.ic_operador1);
+                    getIconoOperador( operador.getIdEstacion() )
+                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                    operador.setEstado(Constantes.ESTADO.seleccionado);
+                    this.botonCrear.setOnClickListener(this.eventoCreaOrdenOperador);
+                    this.contenedorBotones.setVisibility(View.VISIBLE);
+                }else{
+                    if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setOperadorSeleccionado(null);
+                        habilitaRecursos();
+                        getIconoOperador( operador.getIdEstacion() )
+                                .setImageResource(R.drawable.ic_operador2);
+                        getIconoOperador( operador.getIdEstacion() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
+                        operador.setEstado(Constantes.ESTADO.inicial);
+                        this.botonCrear.setOnClickListener(null);
+                        this.contenedorBotones.setVisibility(View.GONE);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void accionIconoBascula(int posicion){
+        for( Bascula bascula : this.listaBasculas ){
+            if( bascula.getIdBascula() == posicion ){
+                if( bascula.getEstado() == Constantes.ESTADO.inicial ){
+                    setBasculaSeleccionada(bascula);
+                    deshabilitaRecursos();
+                    getIconoBascula( bascula.getIdBascula() )
+                            .setImageResource(R.drawable.ic_bascula1);
+                    getIconoBascula( bascula.getIdBascula() )
+                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                    bascula.setEstado(Constantes.ESTADO.seleccionado);
+                    this.botonCrear.setOnClickListener(this.eventoCreaOrdenBascula);
+                    this.contenedorBotones.setVisibility(View.VISIBLE);
+                }else{
+                    if( bascula.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setBasculaSeleccionada(null);
+                        habilitaRecursos();
+                        getIconoBascula( bascula.getIdBascula() )
+                                .setImageResource(R.drawable.ic_bascula2);
+                        getIconoBascula( bascula.getIdBascula() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
+                        bascula.setEstado(Constantes.ESTADO.inicial);
+                        this.botonCrear.setOnClickListener(null);
+                        this.contenedorBotones.setVisibility(View.GONE);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void accionIconoMontacargas(int posicion){
+        for( OperadorMontacargas montacargas : this.listaMontacargas ){
+            if( montacargas.getIdMontacargaPreseleccion() == posicion ){
+                if( montacargas.getEstado() == Constantes.ESTADO.inicial ){
+                    setMontacargasSeleccionado(montacargas);
+                    deshabilitaRecursos();
+                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            .setImageResource(R.drawable.ic_montacargas1);
+                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                    montacargas.setEstado(Constantes.ESTADO.seleccionado);
+                    this.botonCrear.setOnClickListener(this.eventoCreaOrdenMontacargas);
+                    this.contenedorBotones.setVisibility(View.VISIBLE);
+                }else{
+                    if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setMontacargasSeleccionado(null);
+                        habilitaRecursos();
+                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                .setImageResource(R.drawable.ic_montacargas2);
+                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
+                        montacargas.setEstado(Constantes.ESTADO.inicial);
+                        this.botonCrear.setOnClickListener(null);
+                        this.contenedorBotones.setVisibility(View.GONE);
+                    }
+                }
+                break;
+            }
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -199,553 +833,9 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment implements View.
         mListener = null;
     }
 
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.tina1:
-                seleccionar_desperfecto("tina 1",t1);
-                Utilidades.posision_tina="F1";
-
-                break;
-            case R.id.tina2:
-                seleccionar_desperfecto("tina 2",t2);
-                Utilidades.posision_tina="E1";
-                break;
-
-            case R.id.tina3:
-                seleccionar_desperfecto("tina 3",t3);
-                Utilidades.posision_tina="D1";
-                break;
-            case R.id.tina4:
-                seleccionar_desperfecto("tina 4",t4);
-                Utilidades.posision_tina="C1";
-                break;
-            case R.id.tina5:
-                seleccionar_desperfecto("tina 5",t5);
-                Utilidades.posision_tina="B1";
-                break;
-            case R.id.tina6:
-                seleccionar_desperfecto("tina 6",t6);
-                Utilidades.posision_tina="A1";
-                break;
-            case R.id.tina7:
-                seleccionar_desperfecto("tina 7",t7);
-                Utilidades.posision_tina="F2";
-                break;
-            case R.id.tina8:
-                seleccionar_desperfecto("tina 8",t8);
-                Utilidades.posision_tina="E2";
-                break;
-            case R.id.tina9:
-                seleccionar_desperfecto("tina 9",t9);
-                Utilidades.posision_tina="D2";
-                break;
-            case R.id.tina10:
-                seleccionar_desperfecto("tina 10",t10);
-                Utilidades.posision_tina="C2";
-                break;
-            case R.id.tina11:
-                seleccionar_desperfecto("tina 11",t11);
-                Utilidades.posision_tina="B2";
-                break;
-            case R.id.tina12:
-                seleccionar_desperfecto("tina 12",t12);
-                Utilidades.posision_tina="A2";
-                break;
-
-//----------------------------------------------------botones de empleados--------------------------------------------------------
-            case R.id.emple1:
-                seleccionar_desperfecto("empleado 1",emple1);
-
-                break;
-            case R.id.emple2:
-                seleccionar_desperfecto("empleado 2",emple2);
-
-
-                break;
-
-            case R.id.emple3:
-                seleccionar_desperfecto("empleado 3",emple3);
-
-
-                break;
-            case R.id.emple4:
-                seleccionar_desperfecto("empleado 4",emple4);
-
-
-                break;
-            case R.id.emple5:
-                seleccionar_desperfecto("empleado 5",emple5);
-
-
-                break;
-            case R.id.emple6:
-                seleccionar_desperfecto("empleado 6",emple6);
-
-
-                break;
-            case R.id.emple7:
-                seleccionar_desperfecto("empleado 7",emple7);
-
-
-                break;
-            case R.id.emple8:
-                seleccionar_desperfecto("empleado 8",emple8);
-
-
-                break;
-            case R.id.emple9:
-                seleccionar_desperfecto("empleado 9",emple9);
-
-
-                break;
-            case R.id.emple10:
-                seleccionar_desperfecto("empleado 10",emple10);
-                break;
-//------------------------------------Montacargas---------------------------------------------------------------------
-
-            case R.id.monta1:
-                seleccionar_desperfecto("montacargas 1",monta1);
-
-
-                break;
-            case R.id.monta2:
-                seleccionar_desperfecto("montacargas 2",monta2);
-
-
-                break;
-            case R.id.monta3:
-                seleccionar_desperfecto("montacargas 3",monta3);
-
-
-                break;
-            case R.id.monta4:
-                seleccionar_desperfecto("montacargas 4",monta4);
-                break;
-
-        }
-
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-
-    /* private void seleccionar_desperfecto(String tina,Button bton,String tipo_boton){
-        Button aux=null;
-        aux=btn_selecionado();
-        Metodos_Retonables asignacion = new Metodos_Retonables();
-
-        Boolean asignada_atual=asignacion.Tina_asignada(tina);
-        Boolean asignada_anterior=asignacion.Tina_asignada((Utilidades.boton_presionado));
-        //solo si no se selecionado ninguna tina la cula este seleciona entra
-
-        if (!asignada_atual&&!asignada_anterior) {
-
-            if (Utilidades.boton_presionado.equals("ninguno")) {
-                bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.selecion));
-                Utilidades.boton_presionado = tina;
-                Utilidades.tipo_de_boton=tipo_boton;
-
-
-            } else {
-                if (Utilidades.boton_presionado.equals(tina)) {
-                    bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.no_selecion));
-                    Utilidades.boton_presionado = "ninguno";
-                    Utilidades.posision_tina = "ninguno";
-                    Utilidades.tipo_de_boton=tipo_boton;
-
-                } else {
-                    bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.selecion));
-                    aux.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.no_selecion));
-                    Utilidades.boton_presionado = tina;
-                    Utilidades.tipo_de_boton=tipo_boton;
-
-
-                }
-            }
-        }else{
-            if (Utilidades.boton_presionado.equals("ninguno")) {
-                bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Tina_asignada_presionada));
-                Utilidades.boton_presionado = tina;
-                Utilidades.tipo_de_boton=tipo_boton;
-
-
-            } else {
-                if (Utilidades.boton_presionado.equals(tina)) {
-                    bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.Tina_asignada));
-                    Utilidades.boton_presionado = "ninguno";
-                    Utilidades.posision_tina = "ninguno";
-                    Utilidades.tipo_de_boton=tipo_boton;
-
-                } else {
-                    if (!asignada_anterior&& asignada_atual){
-                        bton.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.Tina_asignada_presionada));
-                        aux.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.no_selecion));
-                        Utilidades.boton_presionado = tina;
-                        Utilidades.tipo_de_boton=tipo_boton;
-
-
-                    }else{
-                        if (asignada_anterior&&!asignada_atual){
-                            bton.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.selecion));
-                            aux.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.Tina_asignada));
-                            Utilidades.boton_presionado = tina;
-                            Utilidades.tipo_de_boton=tipo_boton;
-
-                        }else{
-                            if (asignada_anterior&&asignada_atual){
-                                bton.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.Tina_asignada_presionada));
-                                aux.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.Tina_asignada));
-                                Utilidades.boton_presionado = tina;
-                                Utilidades.tipo_de_boton=tipo_boton;
-
-
-
-                            }else{
-                                Toast.makeText(getContext(), "ni idea para donde fue que se fue", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-
-                }
-            }
-
-        }
-    }
-
-    */
-    private void seleccionar_desperfecto(String boton,Button bton){
-
-
-        Button aux=null;
-        aux=btn_selecionado();
-        Metodos_Retonables asignacion = new Metodos_Retonables();
-
-        Boolean asignada_atual=asignacion.Tina_asignada(boton);
-
-        //solo si no se selecionado ninguna tina la cula este seleciona entra
-
-
-
-        if (Utilidades.boton_presionado_Preselecion_tiempo_muerto.equals("ninguno")) {
-
-            bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.selecion));
-            Utilidades.boton_presionado_Preselecion_tiempo_muerto = boton;
-            boton_inferior();
-
-
-        } else {
-            if (Utilidades.boton_presionado_Preselecion_tiempo_muerto.equals(boton)) {
-                bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.no_selecion));
-                Utilidades.boton_presionado_Preselecion_tiempo_muerto = "ninguno";
-                boton_inferior();
-
-
-            } else {
-                bton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.selecion));
-                aux.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.no_selecion));
-                Utilidades.boton_presionado_Preselecion_tiempo_muerto = boton;
-                boton_inferior();
-
-
-            }
-        }
-    }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-    private void crear_dialog(View view){
-
-        {
-            final Spinner spinner;
-            final Button auxi=btn_selecionado();
-            Metodos_Retonables obtner_fecha= new Metodos_Retonables();
-            AlertDialog.Builder alerta= new AlertDialog.Builder(view.getContext());
-            View vista= getActivity().getLayoutInflater().inflate(R.layout.dialog_orden_mantenimiento,null);
-            final TextView dialogfecha= vista.findViewById(R.id.fecha);
-            spinner=vista.findViewById(R.id.spiner_mantenimiento);
-            ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(),R.array.maquinaria, android.R.layout.simple_spinner_item);
-            spinner.setAdapter(adapter);
-
-
-            String fechaActual= obtner_fecha.Obtener_fecha();
-            dialogfecha.setText(fechaActual);
-
-            alerta.setCancelable(true).setPositiveButton("SI",
-                    new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
-
-                        }
-                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
-            alerta.setView(vista);
-            alerta.show();
-            //return alerta.create();
-
-        }
-    }
-
-    private Button btn_selecionado(){
-        Button aux=null;
-        String a ="T_1_asignada";
-        switch (Utilidades.boton_presionado_Preselecion_tiempo_muerto){
-            case "ninguno":
-                break;
-            case "tina 1":
-                aux=t1;
-
-                break;
-            case "tina 2":
-                aux=t2;
-
-                break;
-            case "tina 3":
-                aux=t3;
-
-                break;
-            case "tina 4":
-                aux=t4;
-
-                break;
-            case "tina 5":
-                aux=t5;
-
-                break;
-            case "tina 6":
-                aux=t6;
-
-                break;
-            case "tina 7":
-                aux=t7;
-
-                break;
-            case "tina 8":
-                aux=t8;
-
-                break;
-            case "tina 9":
-                aux=t9;
-
-                break;
-            case "tina 10":
-                aux=t10;
-
-                break;
-            case "tina 11":
-                aux=t11;
-
-                break;
-            case "tina 12":
-                aux=t12;
-
-                break;
-
-            case "empleado 1":
-                aux=emple1;
-
-
-                break;
-            case "empleado 2":
-                aux=emple2;
-
-                break;
-            case "empleado 3":
-                aux=emple3;
-
-                break;
-            case "empleado 4":
-                aux=emple4;
-
-                break;
-            case "empleado 5":
-                aux=emple5;
-
-                break;
-            case "empleado 6":
-                aux=emple6;
-
-                break;
-            case "empleado 7":
-                aux=emple7;
-
-                break;
-            case "empleado 8":
-                aux=emple8;
-
-                break;
-            case "empleado 9":
-                aux=emple9;
-
-                break;
-            case "empleado 10":
-                aux=emple10;
-
-                break;
-
-            case "montacargas 1":
-                aux=monta1;
-
-                break;
-            case "montacargas 2":
-                aux=monta2;
-
-                break;
-            case "montacargas 3":
-                aux=monta3;
-
-                break;
-            case "montacargas 4":
-                aux=monta4;
-
-                break;
-        }
-        return aux;
-    }
-    private void tina_asignacion(String tina){
-
-        switch (tina){
-            case "ninguno":
-                break;
-            case "tina 1":
-                Utilidades.T_1_asignada=true;
-
-
-                break;
-            case "tina 2":
-                Utilidades.T_2_asignada=true;
-
-                break;
-            case "tina 3":
-                Utilidades.T_3_asignada=true;
-
-                break;
-            case "tina 4":
-                Utilidades.T_4_asignada=true;
-
-                break;
-            case "tina 5":
-                Utilidades.T_5_asignada=true;
-
-                break;
-            case "tina 6":
-                Utilidades.T_6_asignada=true;
-
-                break;
-            case "tina 7":
-                Utilidades.T_7_asignada=true;
-
-                break;
-            case "tina 8":
-                Utilidades.T_8_asignada=true;
-
-                break;
-            case "tina 9":
-                Utilidades.T_9_asignada=true;
-
-                break;
-            case "tina 10":
-                Utilidades.T_10_asignada=true;
-
-                break;
-            case "tina 11":
-                Utilidades.T_11_asignada=true;
-
-                break;
-            case "tina 12":
-                Utilidades.T_12_asignada=true;
-
-                break;
-    //----------------------------------------------------------------------------------------------
-            case "empleado 1":
-                Utilidades.emple_1_asignado=true;
-
-
-                break;
-            case "empleado 2":
-                Utilidades.emple_2_asignado=true;
-
-                break;
-            case "empleado 3":
-                Utilidades.emple_3_asignado=true;
-
-                break;
-            case "empleado 4":
-                Utilidades.emple_4_asignado=true;
-
-                break;
-            case "empleado 5":
-                Utilidades.emple_5_asignado=true;
-
-                break;
-            case "empleado 6":
-                Utilidades.emple_6_asignado=true;
-
-                break;
-            case "empleado 7":
-                Utilidades.emple_7_asignado=true;
-
-                break;
-            case "empleado 8":
-                Utilidades.emple_8_asignado=true;
-
-                break;
-            case "empleado 9":
-                Utilidades.emple_9_asignado=true;
-
-                break;
-            case "empleado 10":
-                Utilidades.emple_10_asignado=true;
-
-                break;
-//--------------------------------------------------------------------------------------------------
-            case "montacargas 1":
-                Utilidades.montacargas_1_asignada=true;
-
-
-                break;
-            case "montacargas 2":
-                Utilidades.montacargas_2_asignada=true;
-
-                break;
-            case "montacargas 3":
-                Utilidades.montacargas_3_asignada=true;
-
-                break;
-            case "montacargas 4":
-                Utilidades.montacargas_4_asignada=true;
-
-                break;
-        }
-    }
-
-    private void boton_inferior(){
-        if (!Utilidades.boton_presionado_Preselecion_tiempo_muerto.equals("ninguno")){
-            para1.setEnabled(true);
-        }else{
-            para1.setEnabled(false);
-        }
-    }
-
 
 }

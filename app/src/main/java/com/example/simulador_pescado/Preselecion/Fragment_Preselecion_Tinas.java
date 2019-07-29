@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -126,11 +128,12 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private View.OnClickListener eventoAceptarMezclar;
 
     private AlertDialog ventanaError;
-    private AlertDialog ventanaTurno;
+    private AlertDialog ventanaEmergente;
+    /*private AlertDialog ventanaTurno;
     private AlertDialog ventanaLiberaTurno;
     private AlertDialog ventanaAsignarTina;
     private AlertDialog ventanaAsignarOperador;
-    private AlertDialog ventanaAsignarMontacargas;
+    private AlertDialog ventanaAsignarMontacargas;*/
     private ProgressBar barraProgreso;
     private SwipeRefreshLayout actualizar;
     private Fragment fragment;
@@ -139,6 +142,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private int turno = 0;
     private boolean esMontacargas;
     private boolean esMezclar;
+    private boolean esInicio;
 
     private OnFragmentInteractionListener mListener;
 
@@ -307,6 +311,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             terminaProcesando();
             solicitaTurno();
         }
+
+        this.iconoTurno.setVisibility(View.VISIBLE);
+        if(this.turno == 1){
+            this.iconoTurno.setText("T1");
+        }else{
+            this.iconoTurno.setText("T2");
+        }
         terminaProcesando();
     }
 
@@ -338,6 +349,40 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     public void onClick(View view) {
                         ventanaError.dismiss();
                         creaObjetosVacios();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
+    }
+
+    public void errorServicioAsignados(ErrorServicio errorMensaje){
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
                     }
                 });
             }
@@ -424,8 +469,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         terminaProcesando();
-        if(turno == 0){
+        if(this.turno == 0){
             solicitaTurno();
+        }else{
+            this.iconoTurno.setVisibility(View.VISIBLE);
+            if(this.turno == 1){
+                this.iconoTurno.setText("T1");
+            }else{
+                this.iconoTurno.setText("T2");
+            }
         }
     }
 
@@ -437,12 +489,12 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
-        this.ventanaTurno = builder.create();
-        this.ventanaTurno.setOnShowListener(new DialogInterface.OnShowListener() {
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                final RadioGroup grupoTurno = ventanaTurno.findViewById(R.id.grupoTurno);
-                Button botonAceptar = ventanaTurno.findViewById(R.id.boton1);
+                final RadioGroup grupoTurno = ventanaEmergente.findViewById(R.id.grupoTurno);
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
                 botonAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -453,13 +505,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                                 turno = 1;
                                 iconoTurno.setText("T1");
                                 iconoTurno.setVisibility(View.VISIBLE);
-                                ventanaTurno.dismiss();
+                                ventanaEmergente.dismiss();
                             }else{
                                 if( grupoTurno.getCheckedRadioButtonId() == R.id.turno2 ){
                                     turno = 2;
                                     iconoTurno.setText("T2");
                                     iconoTurno.setVisibility(View.VISIBLE);
-                                    ventanaTurno.dismiss();
+                                    ventanaEmergente.dismiss();
                                 }
                             }
                         }
@@ -467,7 +519,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
             }
         });
-        this.ventanaTurno.show();
+        this.ventanaEmergente.show();
     }
 
     private void accionIconoOperador(int posicion){
@@ -714,20 +766,20 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
-        this.ventanaAsignarTina = builder.create();
-        this.ventanaAsignarTina.setOnShowListener(new DialogInterface.OnShowListener() {
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaAsignarTina.findViewById(R.id.boton1);
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
                 botonCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         accionIconoTina( getTinaSeleccionada().getIdPosicion() );
-                        ventanaAsignarTina.dismiss();
+                        ventanaEmergente.dismiss();
                     }
                 });
 
-                Spinner seleccionSubtalla = ventanaAsignarTina.findViewById(R.id.seleccionSubtalla);
+                Spinner seleccionSubtalla = ventanaEmergente.findViewById(R.id.seleccionSubtalla);
                 seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), listaSubtalla ) );
                 seleccionSubtalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -741,7 +793,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     }
                 });
 
-                Spinner seleccionTalla = ventanaAsignarTina.findViewById(R.id.seleccionTalla);
+                Spinner seleccionTalla = ventanaEmergente.findViewById(R.id.seleccionTalla);
                 seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), listaTalla ) );
                 seleccionTalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -755,7 +807,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     }
                 });
 
-                Spinner seleccionEspecie = ventanaAsignarTina.findViewById(R.id.seleccionEspecie);
+                Spinner seleccionEspecie = ventanaEmergente.findViewById(R.id.seleccionEspecie);
                 seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), listaGrupoEspecie ) );
                 seleccionEspecie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -769,14 +821,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     }
                 });
 
-                TextView etiquetaPosicion = ventanaAsignarTina.findViewById(R.id.etiquetaPosicion);
+                TextView etiquetaPosicion = ventanaEmergente.findViewById(R.id.etiquetaPosicion);
                 etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getEtiquetaMovil() ) );
 
-                TextView etiquetaFecha = ventanaAsignarTina.findViewById(R.id.etiquetaFecha);
+                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
                 etiquetaFecha.setText(fechaActual);
             }
         });
-        this.ventanaAsignarTina.show();
+        this.ventanaEmergente.show();
     }
 
     private void liberarTina(){
@@ -809,32 +861,32 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
-        this.ventanaAsignarOperador = builder.create();
-        this.ventanaAsignarOperador.setOnShowListener(new DialogInterface.OnShowListener() {
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaAsignarOperador.findViewById(R.id.boton1);
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
                 botonCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
-                        ventanaAsignarOperador.dismiss();
+                        ventanaEmergente.dismiss();
                     }
                 });
 
-                TextView etiquetaFecha = ventanaAsignarOperador.findViewById(R.id.etiquetaFecha);
+                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
                 etiquetaFecha.setText(fechaActual);
 
-                TextView etiquetaPosicion = ventanaAsignarOperador.findViewById(R.id.etiquetaPosicion);
+                TextView etiquetaPosicion = ventanaEmergente.findViewById(R.id.etiquetaPosicion);
                 etiquetaPosicion.setText( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) );
 
-                TextView etiquetaTinaPrincipal = ventanaAsignarOperador.findViewById(R.id.etiquetaTinaPrincipal);
+                TextView etiquetaTinaPrincipal = ventanaEmergente.findViewById(R.id.etiquetaTinaPrincipal);
                 etiquetaTinaPrincipal.setText( getTinaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
 
-                TextView etiquetaTinaSecundaria = ventanaAsignarOperador.findViewById(R.id.etiquetaTinaSecundaria);
+                TextView etiquetaTinaSecundaria = ventanaEmergente.findViewById(R.id.etiquetaTinaSecundaria);
                 etiquetaTinaSecundaria.setText( getTinaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
 
-                EditText campoEscaner = ventanaAsignarOperador.findViewById(R.id.campoEscaner);
+                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
                 campoEscaner.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -854,7 +906,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
             }
         });
-        this.ventanaAsignarOperador.show();
+        this.ventanaEmergente.show();
     }
 
     private void liberarOperador(){
@@ -869,26 +921,26 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
-        this.ventanaAsignarMontacargas = builder.create();
-        this.ventanaAsignarMontacargas.setOnShowListener(new DialogInterface.OnShowListener() {
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaAsignarMontacargas.findViewById(R.id.boton1);
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
                 botonCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
-                        ventanaAsignarMontacargas.dismiss();
+                        ventanaEmergente.dismiss();
                     }
                 });
 
-                TextView etiquetaFecha = ventanaAsignarMontacargas.findViewById(R.id.etiquetaFecha);
+                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
                 etiquetaFecha.setText(fechaActual);
 
-                TextView etiquetaPosicion = ventanaAsignarMontacargas.findViewById(R.id.etiquetaPosicion);
+                TextView etiquetaPosicion = ventanaEmergente.findViewById(R.id.etiquetaPosicion);
                 etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ) );
 
-                EditText campoEscaner = ventanaAsignarMontacargas.findViewById(R.id.campoEscaner);
+                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
                 campoEscaner.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -908,7 +960,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
             }
         });
-        this.ventanaAsignarMontacargas.show();
+        this.ventanaEmergente.show();
     }
 
     private void liberarMontacargas(){
@@ -929,28 +981,19 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void validaGafete(String codigo){
         if( codigo.length() >= 7 ){
-            iniciaProcesando();
+            iniciaProcesandoEmergente();
             ValidaGafete validaGafete = new ValidaGafete(this, codigo);
             validaGafete.execute();
         }else{
-            EditText campoNombre;
-            if(this.esMontacargas){
-                campoNombre = this.ventanaAsignarMontacargas.findViewById(R.id.campoNombre);
-            }else{
-                campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
-            }
+            EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
             campoNombre.setText("Código no valido");
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
     public void resultadoEscaneoGafete(Gafete resultadoGafete){
-        EditText campoNombre;
-        if(this.esMontacargas){
-            campoNombre = this.ventanaAsignarMontacargas.findViewById(R.id.campoNombre);
-        }else{
-            campoNombre = this.ventanaAsignarOperador.findViewById(R.id.campoNombre);
-        }
+        EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
+
         if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
             campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
             campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
@@ -972,7 +1015,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             campoNombre.setText("Código no valido");
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
-        terminaProcesando();
+
+        terminaProcesandoEmergente();
     }
 
     private void liberaTurno(){
@@ -983,34 +1027,34 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
-        this.ventanaLiberaTurno = builder.create();
-        this.ventanaLiberaTurno.setOnShowListener(new DialogInterface.OnShowListener() {
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                TextView etiquetaMensaje = ventanaLiberaTurno.findViewById(R.id.etiquetaMensaje);
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
                 etiquetaMensaje.setText("¿Desea terminar el turno?");
 
-                Button botonAceptar = ventanaLiberaTurno.findViewById(R.id.boton2);
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
                 botonAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         turno = 0;
                         iconoTurno.setVisibility(View.GONE);
-                        ventanaLiberaTurno.dismiss();
+                        ventanaEmergente.dismiss();
                         solicitaTurno();
                     }
                 });
 
-                Button botonCancelar = ventanaLiberaTurno.findViewById(R.id.boton1);
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
                 botonCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ventanaLiberaTurno.dismiss();
+                        ventanaEmergente.dismiss();
                     }
                 });
             }
         });
-        this.ventanaLiberaTurno.show();
+        this.ventanaEmergente.show();
     }
 
     private String getTinaPrincipalOperador(int posicionOperador){
@@ -1397,15 +1441,27 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void iniciaProcesando(){
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void iniciaProcesandoEmergente(){
+        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.ventanaEmergente.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesandoEmergente(){
+        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.ventanaEmergente.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.GONE);
     }
 
     public void terminaProcesando(){
         if( this.actualizar.isRefreshing() ){
             this.actualizar.setRefreshing(false);
         }
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.GONE);
     }
 
