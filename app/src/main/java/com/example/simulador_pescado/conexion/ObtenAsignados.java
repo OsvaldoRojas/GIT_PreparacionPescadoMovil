@@ -112,7 +112,8 @@ public class ObtenAsignados extends AsyncTask<Void,Integer,Boolean> {
             ( (Fragment_Preselecion_Tinas) this.pantalla ).ordenaTinas(this.listaTinas);
             ( (Fragment_Preselecion_Tinas) this.pantalla ).ordenaOperadoresBascula(this.listaOperadores);
             ( (Fragment_Preselecion_Tinas) this.pantalla ).ordenaOperadoresMontacargas(this.listaMontacargas);
-            ( (Fragment_Preselecion_Tinas) this.pantalla ).validaPeticionTurno();
+            ( (Fragment_Preselecion_Tinas) this.pantalla ).marcaTurno();
+            ( (Fragment_Preselecion_Tinas) this.pantalla ).terminaProcesando();
         }else{
             ( (Fragment_Preselecion_Tinas) this.pantalla ).terminaProcesando();
             ( (Fragment_Preselecion_Tinas) this.pantalla ).errorServicio(this.errorMensaje);
