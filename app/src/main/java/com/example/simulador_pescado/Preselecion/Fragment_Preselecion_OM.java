@@ -3,21 +3,25 @@ package com.example.simulador_pescado.Preselecion;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.text.TextUtils;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SearchView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.adaptadores.AdaptadorRecycler;
-import com.example.simulador_pescado.clases.ParametrosRecycler;
+import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
+import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +41,13 @@ public class Fragment_Preselecion_OM extends Fragment {
     private String mParam1;
     private String mParam2;
     View vista;
-    ArrayList<ParametrosRecycler> listaPersonajes;
-    RecyclerView recycler_per;
+
+    private ListView listaVistaOrden;
+    private SearchView campoBusqueda;
+
+    private AdaptadorOrdenMantenimiento adaptadorOrden;
+    private List<OrdenMantenimiento> listaOrden = new ArrayList<>();
+
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_OM() {
@@ -75,13 +84,66 @@ public class Fragment_Preselecion_OM extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         vista=inflater.inflate(R.layout.fragment_fragment__preselecion__om, container, false);
 
-        ordenar();
+        iniciaComponentes();
         return vista;
-
     }
+
+    private void iniciaComponentes(){
+        this.listaOrden = new ArrayList<>();
+        this.listaOrden.add( new OrdenMantenimiento(8888, "01/05/2020", "Montacargas", "Pedro Octavio Vazquez Jalomo ") );
+        this.listaOrden.add( new OrdenMantenimiento(9999, "01/05/2020", "Báscula", "Juan Lopez") );
+        this.listaOrden.add( new OrdenMantenimiento(7777, "01/05/2020", "Tina", "Carlos Ramirez") );
+
+        this.campoBusqueda = this.vista.findViewById(R.id.campoBusqueda);
+        this.campoBusqueda.setIconifiedByDefault(false);
+        this.campoBusqueda.setSubmitButtonEnabled(false);
+        this.campoBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String texto) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String texto) {
+                adaptadorOrden.filtro(texto);
+                return false;
+            }
+        });
+
+        this.adaptadorOrden = new AdaptadorOrdenMantenimiento( getContext(), this.listaOrden );
+        this.listaVistaOrden = this.vista.findViewById(R.id.listaOrden);
+        this.listaVistaOrden.setAdapter(this.adaptadorOrden);
+        this.listaVistaOrden.setTextFilterEnabled(true);
+        registerForContextMenu(this.listaVistaOrden);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_lista_orden, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch ( item.getItemId() ){
+            case R.id.asignarMecanico:
+                System.out.println("ASIGNAR MECANICO......");
+                return true;
+            case R.id.cerrarTiempo:
+                System.out.println("CERRAR TIEMPO....");
+                return true;
+            case R.id.detalle:
+                System.out.println("DETALLE.....");
+                return true;
+                default:
+                    return super.onContextItemSelected(item);
+        }
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -120,50 +182,5 @@ public class Fragment_Preselecion_OM extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-    private void llenarDatos() {
-
-        listaPersonajes.add(new ParametrosRecycler("166","12/07/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("2234","7/03/2019","tina","jorge "));
-        listaPersonajes.add(new ParametrosRecycler("34","2/03/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("166","12/07/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("2234","7/03/2019","tina","jorge "));
-        listaPersonajes.add(new ParametrosRecycler("34","2/03/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("166","12/07/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("2234","7/03/2019","tina","jorge "));
-        listaPersonajes.add(new ParametrosRecycler("34","2/03/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("166","12/07/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("2234","7/03/2019","tina","jorge "));
-        listaPersonajes.add(new ParametrosRecycler("34","2/03/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("166","12/07/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("2234","7/03/2019","tina","jorge "));
-        listaPersonajes.add(new ParametrosRecycler("34","2/03/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("166","12/07/2019","maquinaria","jorge luis"));
-        listaPersonajes.add(new ParametrosRecycler("2234","7/03/2019","tina","jorge "));
-        listaPersonajes.add(new ParametrosRecycler("34","2/03/2019","maquinaria","jorge luis"));
-
-
-    }
-
-    public  void ordenar(){
-        listaPersonajes= new ArrayList<>();
-        recycler_per= vista.findViewById(R.id.recycler_Preselecion);
-
-
-
-        //recycler_per.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler_per.setLayoutManager(new GridLayoutManager(vista.getContext(),1));
-
-
-        llenarDatos();
-        AdaptadorRecycler adaptador22= new AdaptadorRecycler(listaPersonajes);
-        adaptador22.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "se seleciono  "+listaPersonajes.
-                        get(recycler_per.getChildAdapterPosition(view)).getMecanico(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        recycler_per.setAdapter(adaptador22);
     }
 }

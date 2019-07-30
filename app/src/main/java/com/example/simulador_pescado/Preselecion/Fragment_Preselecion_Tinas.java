@@ -457,6 +457,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             }
         }
 
+        marcaTurno();
         terminaProcesando();
     }
 
