@@ -294,7 +294,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                 etiquetaFecha.setText(fechaActual);
 
                 TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText( "Bascula ".concat( getEtiquetaBascula( getBasculaSeleccionada().getIdBascula() ) ) );
+                etiquetaEquipo.setText( "Báscula ".concat( getEtiquetaBascula( getBasculaSeleccionada().getIdBascula() ) ) );
             }
         });
         this.ventanaEmergente.show();

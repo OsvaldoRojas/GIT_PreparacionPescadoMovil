@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/asignarMecanico"
+        android:orderInCategory="1"
+        android:title="@string/asignarMecanico"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/cerrarTiempo"
+        android:orderInCategory="2"
+        android:title="@string/cerrarTiempo"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/detalle"
+        android:orderInCategory="3"
+        android:title="@string/detalle"
+        app:showAsAction="withText" />
+
+</menu>
