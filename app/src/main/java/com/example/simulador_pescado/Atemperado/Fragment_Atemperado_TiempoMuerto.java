@@ -1192,33 +1192,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
 
     private void crear_dialog(View view) {
         {
-            final Spinner spinner;
-            final Button auxi=btn_selecionado();
-            Metodos_Retonables obtner_fecha= new Metodos_Retonables();
-            AlertDialog.Builder alerta= new AlertDialog.Builder(view.getContext());
-            View vista= getActivity().getLayoutInflater().inflate(R.layout.dialog_orden_mantenimiento,null);
-            final TextView dialogfecha= vista.findViewById(R.id.fecha);
-            spinner=vista.findViewById(R.id.spiner_mantenimiento);
-            ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(),R.array.maquinaria, android.R.layout.simple_spinner_item);
-            spinner.setAdapter(adapter);
 
-
-
-            String fechaActual= obtner_fecha.Obtener_fecha();
-            dialogfecha.setText(fechaActual);
-
-
-            alerta.setCancelable(true).setPositiveButton("Aceptar",
-                    new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //no hace nada basicamente
-                        }
-                    });
-            alerta.setView(vista);
-            alerta.show();
-            //return alerta.create();
 
         }
     }

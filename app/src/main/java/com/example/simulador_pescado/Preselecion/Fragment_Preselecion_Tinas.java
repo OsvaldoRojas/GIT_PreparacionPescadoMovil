@@ -129,11 +129,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private AlertDialog ventanaError;
     private AlertDialog ventanaEmergente;
-    /*private AlertDialog ventanaTurno;
-    private AlertDialog ventanaLiberaTurno;
-    private AlertDialog ventanaAsignarTina;
-    private AlertDialog ventanaAsignarOperador;
-    private AlertDialog ventanaAsignarMontacargas;*/
     private ProgressBar barraProgreso;
     private SwipeRefreshLayout actualizar;
     private Fragment fragment;
@@ -290,35 +285,29 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
     }
 
-    public void validaPeticionTurno(){
-        if(turno == 0){
+    public void marcaTurno(){
+        if(this.turno == 0){
             for( OperadorBascula operador : this.listaOperadores ){
                 if( !operador.getLibre() ){
                     if( operador.getTurno() ){
                         this.turno = 1;
-                        this.iconoTurno.setText("T1");
-                        this.iconoTurno.setVisibility(View.VISIBLE);
                     }else{
                         this.turno = 2;
-                        this.iconoTurno.setText("T2");
-                        this.iconoTurno.setVisibility(View.VISIBLE);
                     }
-                    terminaProcesando();
-                    return;
+                    break;
                 }
             }
-
-            terminaProcesando();
-            solicitaTurno();
         }
 
-        this.iconoTurno.setVisibility(View.VISIBLE);
         if(this.turno == 1){
             this.iconoTurno.setText("T1");
-        }else{
-            this.iconoTurno.setText("T2");
+            this.iconoTurno.setVisibility(View.VISIBLE);
         }
-        terminaProcesando();
+
+        if(this.turno == 2){
+            this.iconoTurno.setText("T2");
+            this.iconoTurno.setVisibility(View.VISIBLE);
+        }
     }
 
     public void errorServicio(ErrorServicio errorMensaje){
@@ -469,16 +458,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         terminaProcesando();
-        if(this.turno == 0){
-            solicitaTurno();
-        }else{
-            this.iconoTurno.setVisibility(View.VISIBLE);
-            if(this.turno == 1){
-                this.iconoTurno.setText("T1");
-            }else{
-                this.iconoTurno.setText("T2");
-            }
-        }
     }
 
     private void solicitaTurno(){
@@ -514,6 +493,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                                     ventanaEmergente.dismiss();
                                 }
                             }
+                            asignarOperador();
                         }
                     }
                 });
@@ -854,6 +834,11 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarOperador(){
+        if(this.turno == 0){
+            solicitaTurno();
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -1041,7 +1026,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         turno = 0;
                         iconoTurno.setVisibility(View.GONE);
                         ventanaEmergente.dismiss();
-                        solicitaTurno();
                     }
                 });
 
