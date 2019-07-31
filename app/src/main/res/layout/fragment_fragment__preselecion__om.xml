@@ -9,97 +9,97 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/actualizar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <SearchView
+                android:id="@+id/campoBusqueda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:queryHint="Búsqueda"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <SearchView
-                    android:id="@+id/campoBusqueda"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:queryHint="Búsqueda"/>
+                    android:layout_weight="2.1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Folio"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1.8"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Fecha"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.1"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="center_vertical"
-                        android:text="Folio"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/blanco" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.7"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Equipo"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.8"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="center_vertical"
-                        android:text="Fecha"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/blanco" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.6"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Mecánico"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.7"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="center_vertical"
-                        android:text="Equipo"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/blanco" />
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.6"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:gravity="center_vertical"
-                        android:text="Mecánico"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        android:background="@color/colorPrimary"
-                        android:textColor="@color/blanco" />
-
-                </LinearLayout>
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/actualizar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ListView
                     android:id="@+id/listaOrden"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-            </LinearLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
 
     </FrameLayout>
 
