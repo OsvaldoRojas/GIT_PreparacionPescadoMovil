@@ -97,7 +97,35 @@
                     android:paddingTop="4dp"/>
 
                 <TextView
+                    android:id="@+id/etiquetaSubtallaPrincipal"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <TextView
                     android:id="@+id/etiquetaTinaSecundaria"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaSubtallaSecundaria"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:textColor="@color/negro"

@@ -423,6 +423,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         return "";
     }
 
+    private String getEtiquetaBasculaOperador(int posicion){
+        switch (posicion){
+            case 1: return "A9";
+            case 2: return "A7";
+            case 3: return "A5";
+            case 4: return "A3";
+            case 5: return "A1";
+            case 6: return "B2";
+            case 7: return "B4";
+            case 8: return "B6";
+            case 9: return "B8";
+            case 10: return "B10";
+        }
+        return "";
+    }
+
     private void creaObjetosVacios(){
         iniciaProcesando();
 
@@ -866,11 +882,20 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 TextView etiquetaPosicion = ventanaEmergente.findViewById(R.id.etiquetaPosicion);
                 etiquetaPosicion.setText( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) );
 
+                TextView etiquetaBascula = ventanaEmergente.findViewById(R.id.etiquetaBascula);
+                etiquetaBascula.setText( getEtiquetaBasculaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+
                 TextView etiquetaTinaPrincipal = ventanaEmergente.findViewById(R.id.etiquetaTinaPrincipal);
                 etiquetaTinaPrincipal.setText( getTinaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
 
+                TextView etiquetaSubtallaPrincipal = ventanaEmergente.findViewById(R.id.etiquetaSubtallaPrincipal);
+                etiquetaSubtallaPrincipal.setText( getSubtallaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
+
                 TextView etiquetaTinaSecundaria = ventanaEmergente.findViewById(R.id.etiquetaTinaSecundaria);
                 etiquetaTinaSecundaria.setText( getTinaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+
+                TextView etiquetaSubtallaSecundaria = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSecundaria);
+                etiquetaSubtallaSecundaria.setText( getSubtallaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
 
                 EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
                 campoEscaner.addTextChangedListener(new TextWatcher() {
@@ -1054,6 +1079,18 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         return "";
     }
 
+    private String getSubtallaPrincipalOperador(int posicionOperador){
+        for( Tina tina : this.listaTinas ){
+            if( tina.getIdPosicion() == posicionOperador + 1 ){
+                if( !tina.getLibre() ){
+                    return tina.getSubtalla().getDescripcion();
+                }
+                break;
+            }
+        }
+        return "";
+    }
+
     private String getTinaSecundariaOperador(int posicionOperador){
         Tina tinaSecundaria;
         switch (posicionOperador){
@@ -1106,6 +1143,63 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 tinaSecundaria = getTina(12);
                 if( !tinaSecundaria.getLibre() ){
                     return tinaSecundaria.getTina().getDescripcion();
+                }
+        }
+        return "";
+    }
+
+    private String getSubtallaSecundariaOperador(int posicionOperador){
+        Tina tinaSecundaria;
+        switch (posicionOperador){
+            case 1:
+                tinaSecundaria = getTina(1);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 2:
+                tinaSecundaria = getTina(2);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 3:
+                tinaSecundaria = getTina(3);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 4:
+                tinaSecundaria = getTina(4);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 5:
+                tinaSecundaria = getTina(5);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 6:
+                tinaSecundaria = getTina(8);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 7:
+                tinaSecundaria = getTina(9);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 8:
+                tinaSecundaria = getTina(10);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 9:
+                tinaSecundaria = getTina(11);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
+                }
+            case 10:
+                tinaSecundaria = getTina(12);
+                if( !tinaSecundaria.getLibre() ){
+                    return tinaSecundaria.getSubtalla().getDescripcion();
                 }
         }
         return "";
