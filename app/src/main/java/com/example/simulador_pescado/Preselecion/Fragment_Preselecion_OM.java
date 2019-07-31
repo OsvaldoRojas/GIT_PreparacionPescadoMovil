@@ -1,26 +1,39 @@
 package com.example.simulador_pescado.Preselecion;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
+import com.example.simulador_pescado.conexion.ValidaGafete;
+import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,14 +57,37 @@ public class Fragment_Preselecion_OM extends Fragment {
 
     private ListView listaVistaOrden;
     private SearchView campoBusqueda;
+    private AlertDialog ventanaEmergente;
+    private AlertDialog ventanaError;
 
     private AdaptadorOrdenMantenimiento adaptadorOrden;
     private List<OrdenMantenimiento> listaOrden = new ArrayList<>();
+
+    private Gafete gafeteEscaneado;
+
+    private String fechaActual;
+    private int posicionSeleccionada;
 
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_OM() {
         // Required empty public constructor
+    }
+
+    public Gafete getGafeteEscaneado() {
+        return gafeteEscaneado;
+    }
+
+    public void setGafeteEscaneado(Gafete gafeteEscaneado) {
+        this.gafeteEscaneado = gafeteEscaneado;
+    }
+
+    public int getPosicionSeleccionada() {
+        return posicionSeleccionada;
+    }
+
+    public void setPosicionSeleccionada(int posicionSeleccionada) {
+        this.posicionSeleccionada = posicionSeleccionada;
     }
 
     /**
@@ -92,9 +128,25 @@ public class Fragment_Preselecion_OM extends Fragment {
 
     private void iniciaComponentes(){
         this.listaOrden = new ArrayList<>();
-        this.listaOrden.add( new OrdenMantenimiento(8888, "01/05/2020", "Montacargas", "Pedro Octavio Vazquez Jalomo ") );
-        this.listaOrden.add( new OrdenMantenimiento(9999, "01/05/2020", "Báscula", "Juan Lopez") );
-        this.listaOrden.add( new OrdenMantenimiento(7777, "01/05/2020", "Tina", "Carlos Ramirez") );
+        this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2019", "Montacargas", "") );
+        this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "") );
+        this.listaOrden.add( new OrdenMantenimiento(3, "30/07/2019", "Bnda", "") );
+        this.listaOrden.add( new OrdenMantenimiento(4, "30/07/2019", "Tina", "") );
+        this.listaOrden.add( new OrdenMantenimiento(5, "30/07/2019", "Recepción", "") );
+        this.listaOrden.add( new OrdenMantenimiento(6, "30/07/2019", "Estiba", "") );
+        this.listaOrden.add( new OrdenMantenimiento(7, "30/07/2019", "Tina sin talla", "") );
+        this.listaOrden.add( new OrdenMantenimiento(8, "30/07/2019", "Montacargas", "") );
+        this.listaOrden.add( new OrdenMantenimiento(9, "30/07/2019", "Recepción", "") );
+        this.listaOrden.add( new OrdenMantenimiento(10, "31/07/2019", "Tina", "") );
+        this.listaOrden.add( new OrdenMantenimiento(11, "31/07/2019", "Báscula", "") );
+        this.listaOrden.add( new OrdenMantenimiento(12, "31/07/2019", "Recepción", "") );
+        this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "") );
+        this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "") );
+        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "") );
+
+        setGafeteEscaneado(null);
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        this.fechaActual = formatoFecha.format( new Date() );
 
         this.campoBusqueda = this.vista.findViewById(R.id.campoBusqueda);
         this.campoBusqueda.setIconifiedByDefault(false);
@@ -131,7 +183,8 @@ public class Fragment_Preselecion_OM extends Fragment {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch ( item.getItemId() ){
             case R.id.asignarMecanico:
-                System.out.println("ASIGNAR MECANICO......");
+                setPosicionSeleccionada(info.position);
+                asignaMecanico();
                 return true;
             case R.id.cerrarTiempo:
                 System.out.println("CERRAR TIEMPO....");
@@ -144,6 +197,141 @@ public class Fragment_Preselecion_OM extends Fragment {
         }
     }
 
+    private void asignaMecanico(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_mecanico, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(getGafeteEscaneado() != null){
+                            listaOrden.get( getPosicionSeleccionada() ).setMecanico( getGafeteEscaneado().getEmpleado().getNom_trab() );
+                            adaptadorOrden.notifyDataSetChanged();
+                            setGafeteEscaneado(null);
+                        }
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
+                etiquetaFecha.setText(fechaActual);
+
+                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
+                campoEscaner.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        validaGafete( editable.toString() );
+                    }
+                });
+            }
+        });
+        this.ventanaEmergente.show();
+    }
+
+    private void validaGafete(String codigo){
+        setGafeteEscaneado(null);
+        if( codigo.length() >= 7 ){
+            iniciaProcesandoEmergente();
+            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
+            validaGafete.execute();
+        }else{
+            EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
+            campoNombre.setText("Código no valido");
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
+        }
+    }
+
+    public void resultadoEscaneoGafete(Gafete resultadoGafete){
+        EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
+
+        if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
+            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
+            campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
+            setGafeteEscaneado(resultadoGafete);
+        }else{
+            setGafeteEscaneado(null);
+            campoNombre.setText("Código no valido");
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
+        }
+
+        terminaProcesandoEmergente();
+    }
+
+    public void errorServicioAsignados(ErrorServicio errorMensaje){
+        setGafeteEscaneado(null);
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
+    }
+
+    public void iniciaProcesandoEmergente(){
+        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.ventanaEmergente.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesandoEmergente(){
+        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.ventanaEmergente.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.GONE);
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

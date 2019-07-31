@@ -7,11 +7,11 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/casa_24"
-            android:title="@string/menu_home" />
+            android:title="Inicio" />
         <item
             android:id="@+id/nav_preselecion"
             android:icon="@drawable/ic_tina1"
-            android:title="Preselecion" />
+            android:title="Preselección" />
         <item
             android:id="@+id/nav_desconglado"
             android:icon="@drawable/ic_termometro"
