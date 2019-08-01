@@ -22,12 +22,12 @@
             android:title="Atemperado" />
     </group>
 
-    <item android:title="Sesion">
+    <item android:title="Sesión">
         <menu>
             <item
                 android:id="@+id/cerrar_sesion"
                 android:icon="@drawable/ic_logout"
-                android:title="Cerrar sesion" />
+                android:title="Cerrar sesión" />
 
         </menu>
     </item>

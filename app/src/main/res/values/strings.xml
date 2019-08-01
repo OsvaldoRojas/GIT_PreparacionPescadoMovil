@@ -30,7 +30,10 @@
 
     <string name="crearOrden">Crear orden de mantenimiento</string>
 
-    <string name="mensajeMezclar">Seleccionar tinas para mezclar en la tina seleccionada</string>
+    <string name="mensajeMezclar">Marcar tinas para mezclar con la tina seleccionada</string>
+    <string name="decisionMezclar">¿Estás de acuerdo en mezclar tinas de sub tallas distintas?</string>
+    <string name="mensajeTinasMezcladas">Tinas mezcladas</string>
+    <string name="mensajeErrorEscaneo">Código no válido</string>
 
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
@@ -41,7 +44,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_navegador">Navegador</string>
+    <string name="title_activity_navegador">Nombre Usuario</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

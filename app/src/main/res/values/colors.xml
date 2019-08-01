@@ -22,6 +22,8 @@
     <color name="fondo_gris">#6B6E70</color>
     <color name="fondo_asignar">#828788</color>
 
+    <color name="fondo_tina_principal">#555758</color>
+
     <color name="Tina_asignada">#2CAF08</color>
     <color name="Tina_asignada_presionada">#145502</color>
 
