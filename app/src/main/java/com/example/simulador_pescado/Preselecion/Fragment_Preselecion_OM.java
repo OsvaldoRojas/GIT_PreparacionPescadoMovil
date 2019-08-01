@@ -263,7 +263,7 @@ public class Fragment_Preselecion_OM extends Fragment {
             validaGafete.execute();
         }else{
             EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
-            campoNombre.setText("Código no valido");
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
@@ -277,7 +277,7 @@ public class Fragment_Preselecion_OM extends Fragment {
             setGafeteEscaneado(resultadoGafete);
         }else{
             setGafeteEscaneado(null);
-            campoNombre.setText("Código no valido");
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
 

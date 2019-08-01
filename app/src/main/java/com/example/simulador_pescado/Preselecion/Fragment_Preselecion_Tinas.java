@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -30,6 +32,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
+import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
 import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.CargaCatalogos;
@@ -43,6 +46,7 @@ import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
+import com.example.simulador_pescado.vista.TinaPosicion;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -446,10 +450,21 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             for( int posicion = 1; posicion <= 12; posicion++ ){
                 final Tina recursoTina = new Tina();
                 recursoTina.setIdPosicion(posicion);
-                recursoTina.setLibre(true);
+                //recursoTina.setLibre(true);
+                recursoTina.setLibre(false);
                 recursoTina.setEtiquetaMovil( getEtiquetaMovil(posicion) );
-                recursoTina.setEstado(Constantes.ESTADO.inicial);
+                //recursoTina.setEstado(Constantes.ESTADO.inicial);
+                recursoTina.setEstado(Constantes.ESTADO.seleccionado);
                 this.listaTinas.add(recursoTina);
+                //quitar despues de pruebas
+                TinaPosicion tp = new TinaPosicion();
+                tp.setDescripcion("Tina Descripcion " + posicion);
+                Subtalla st = new Subtalla();
+                st.setDescripcion("Subtalla Descripcion " + posicion);
+                recursoTina.setTina(tp);
+                recursoTina.setSubtalla(st);
+                accionIconoTina(posicion);
+                //quitar despues de pruebas
             }
         }
 
@@ -987,7 +1002,81 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void aceptaMezclar(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        View vistaAsignar = inflater.inflate(R.layout.dialog_decision_mezclar, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                        resultadoMezclaTinas();
+                    }
+                });
+
+                TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
+                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getEtiquetaMovil() );
+
+                TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
+                etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
+
+                AdaptadorMezclarSubtallas adaptador = new AdaptadorMezclarSubtallas(getContext(), listaMezclarTinas);
+                ListView listaPosicionSubtalla = ventanaEmergente.findViewById(R.id.listaSubtallas);
+                listaPosicionSubtalla.setAdapter(adaptador);
+                setAlturaLista(listaPosicionSubtalla, 349);
+            }
+        });
+        this.ventanaEmergente.show();
+    }
+
+    public static boolean setAlturaLista(ListView listView, int tamañoMaximo) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null){
+            int numberOfItems = listAdapter.getCount();
+
+            //Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                float px = 500 * (listView.getResources().getDisplayMetrics().density);
+                item.measure(View.MeasureSpec.makeMeasureSpec((int)px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            //Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+            //Get padding
+            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
+
+            //Set list height.
+            int totalAltura = totalItemsHeight + totalDividersHeight + totalPadding;
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            if(totalAltura > tamañoMaximo){
+                totalAltura = tamañoMaximo;
+            }
+            params.height = totalAltura;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+            return true;
+        }
+        return false;
     }
 
     private void validaGafete(String codigo){
@@ -997,9 +1086,45 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             validaGafete.execute();
         }else{
             EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
-            campoNombre.setText("Código no valido");
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
+    }
+
+    public void resultadoMezclaTinas(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_mezclar, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cancelaMezclar();
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
+                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getEtiquetaMovil() );
+
+                TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
+                etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
+
+                AdaptadorMezclarSubtallas adaptador = new AdaptadorMezclarSubtallas(getContext(), listaMezclarTinas);
+                ListView listaPosicionSubtalla = ventanaEmergente.findViewById(R.id.listaSubtallas);
+                listaPosicionSubtalla.setAdapter(adaptador);
+                setAlturaLista(listaPosicionSubtalla, 349);
+            }
+        });
+        this.ventanaEmergente.show();
     }
 
     public void resultadoEscaneoGafete(Gafete resultadoGafete){
@@ -1023,7 +1148,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         .setApellidoMaterno( resultadoGafete.getEmpleado().getAp_materno() );
             }
         }else{
-            campoNombre.setText("Código no valido");
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
 
