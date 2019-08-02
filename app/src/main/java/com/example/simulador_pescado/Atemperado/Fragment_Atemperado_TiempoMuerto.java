@@ -1,6 +1,8 @@
 package com.example.simulador_pescado.Atemperado;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,7 +22,9 @@ import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Tina;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -135,6 +140,9 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     private Tina tinaSeleccionada;
     private OperadorMontacargas montacargasSeleccionado;
 
+    private View.OnClickListener eventoCreaOrdenTina;
+    private View.OnClickListener eventoCreaOrdenMontacargas;
+
     private List<Tina> listaTinas = new ArrayList<>();
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
 
@@ -142,6 +150,9 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
     private Button botonCrearOrden;
+    private AlertDialog ventanaEmergente;
+
+    private String fechaActual;
 
     private OnFragmentInteractionListener mListener;
 
@@ -205,15 +216,29 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
         /*this.fragment = this;
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
         iniciaProcesando();
+        */
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         this.fechaActual = formatoFecha.format( new Date() );
-        */
 
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
         this.botonera = this.vista.findViewById(R.id.botonera);
         this.botonCrearOrden = this.vista.findViewById(R.id.botonCrearOrden);
+
+        this.eventoCreaOrdenTina = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                creaOrdenTina();
+            }
+        };
+
+        this.eventoCreaOrdenMontacargas = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                creaOrdenMontacargas();
+            }
+        };
 
         this.tina1 = this.vista.findViewById(R.id.tina1);
         this.tina1.setOnClickListener(new View.OnClickListener() {
@@ -949,6 +974,68 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
         }
     }
 
+    private void creaOrdenTina(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
+                etiquetaFecha.setText(fechaActual);
+
+                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
+                etiquetaEquipo.setText("Tina");
+            }
+        });
+        this.ventanaEmergente.show();
+    }
+
+    private void creaOrdenMontacargas(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
+                etiquetaFecha.setText(fechaActual);
+
+                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
+                etiquetaEquipo.setText("Montacargas");
+            }
+        });
+        this.ventanaEmergente.show();
+    }
+
     private void accionIconoTina(int posicion){
         for( Tina tina : this.listaTinas ){
             if( tina.getIdPosicion() == posicion ){
@@ -961,6 +1048,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     tina.setEstado(Constantes.ESTADO.seleccionado);
                     ajustaTamañoVista(501);
+                    this.botonCrearOrden.setOnClickListener(this.eventoCreaOrdenTina);
                     this.botonera.setVisibility(View.VISIBLE);
                 }else{
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -993,6 +1081,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
                     ajustaTamañoVista(501);
+                    this.botonCrearOrden.setOnClickListener(this.eventoCreaOrdenMontacargas);
                     this.botonera.setVisibility(View.VISIBLE);
                 }else{
                     if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
