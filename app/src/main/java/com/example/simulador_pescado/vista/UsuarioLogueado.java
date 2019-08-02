@@ -9,12 +9,21 @@ public class UsuarioLogueado {
     private String nombre;
     private String apellido_paterno;
     private String apellido_materno;
+    private int turno;
 
     public static UsuarioLogueado getUsuarioLogueado(UsuarioLogueado usuario){
         if( USUARIO_LOGUEADO == null ){
             USUARIO_LOGUEADO = usuario;
         }
         return USUARIO_LOGUEADO;
+    }
+
+    public int getTurno() {
+        return turno;
+    }
+
+    public void setTurno(int turno) {
+        this.turno = turno;
     }
 
     public int getId_usuario() {

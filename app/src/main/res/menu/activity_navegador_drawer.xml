@@ -13,13 +13,13 @@
             android:icon="@drawable/ic_tina1"
             android:title="Preselección" />
         <item
-            android:id="@+id/nav_desconglado"
-            android:icon="@drawable/ic_termometro"
-            android:title="Descongelado" />
-        <item
             android:id="@+id/nav_atemperado"
             android:icon="@drawable/ic_termometro"
             android:title="Atemperado" />
+        <item
+            android:id="@+id/nav_desconglado"
+            android:icon="@drawable/ic_termometro"
+            android:title="Descongelado" />
     </group>
 
     <item android:title="Sesión">

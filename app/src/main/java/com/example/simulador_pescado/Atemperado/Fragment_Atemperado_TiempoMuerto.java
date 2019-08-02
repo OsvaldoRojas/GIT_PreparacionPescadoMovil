@@ -1,26 +1,26 @@
 package com.example.simulador_pescado.Atemperado;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.clases.Metodos_Retonables;
-import com.example.simulador_pescado.clases.Utilidades;
+import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.Tina;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,51 +40,129 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     private String mParam1;
     private String mParam2;
     private View vista;
-    private Button estiba1,estiba2,estiba3,estiba4,estiba5,estiba6,estiba7,estiba8,estiba9
-            ,estiba10 ,estiba11
-            ,estiba12,estiba13
-            ,estiba14,estiba15
-            ,estiba16,estiba17,
-            estiba18,estiba19,estiba20
-            ,estiba21,estiba22
-            ,estiba23,estiba24
-            ,estiba25,estiba26
-            ,estiba27,estiba28
-            ,estiba29,estiba30
-            ,estiba31,estiba32
-            ,estiba33,estiba34
-            ,estiba35,estiba36
-            ,estiba37,estiba38
-            ,estiba39,estiba40
-            ,estiba41,estiba42
-            ,estiba43,estiba44
-            ,estiba45,estiba46
-            ,estiba47,estiba48
-            ,estiba49,estiba50
-            ,estiba51,estiba52
-            ,estiba53,estiba54
-            ,estiba55,estiba56
-            ,estiba57,estiba58
-            ,estiba59,estiba60
-            ,estiba61,estiba62
-            ,estiba63,estiba64
-            ,estiba65,estiba66
-            ,estiba67,estiba68
-            ,estiba69,estiba70
-            ,estiba71,estiba72
-            ,estiba73,estiba74
-            ,estiba75,estiba76
-            ,estiba77,estiba78
-            ,estiba79,estiba80
-            ,estiba81,estiba82
-            ,estiba83,estiba84
-            ,estiba85,estiba86
-            ,estiba87,estiba88
-           ,btn_mantenimiento;
+
+    private ImageView tina1;
+    private ImageView tina2;
+    private ImageView tina3;
+    private ImageView tina4;
+    private ImageView tina5;
+    private ImageView tina6;
+    private ImageView tina7;
+    private ImageView tina8;
+    private ImageView tina9;
+    private ImageView tina10;
+    private ImageView tina11;
+    private ImageView tina12;
+    private ImageView tina13;
+    private ImageView tina14;
+    private ImageView tina15;
+    private ImageView tina16;
+    private ImageView tina17;
+    private ImageView tina18;
+    private ImageView tina19;
+    private ImageView tina20;
+    private ImageView tina21;
+    private ImageView tina22;
+    private ImageView tina23;
+    private ImageView tina24;
+    private ImageView tina25;
+    private ImageView tina26;
+    private ImageView tina27;
+    private ImageView tina28;
+    private ImageView tina29;
+    private ImageView tina30;
+    private ImageView tina31;
+    private ImageView tina32;
+    private ImageView tina33;
+    private ImageView tina34;
+    private ImageView tina35;
+    private ImageView tina36;
+    private ImageView tina37;
+    private ImageView tina38;
+    private ImageView tina39;
+    private ImageView tina40;
+    private ImageView tina41;
+    private ImageView tina42;
+    private ImageView tina43;
+    private ImageView tina44;
+    private ImageView tina45;
+    private ImageView tina46;
+    private ImageView tina47;
+    private ImageView tina48;
+    private ImageView tina49;
+    private ImageView tina50;
+    private ImageView tina51;
+    private ImageView tina52;
+    private ImageView tina53;
+    private ImageView tina54;
+    private ImageView tina55;
+    private ImageView tina56;
+    private ImageView tina57;
+    private ImageView tina58;
+    private ImageView tina59;
+    private ImageView tina60;
+    private ImageView tina61;
+    private ImageView tina62;
+    private ImageView tina63;
+    private ImageView tina64;
+    private ImageView tina65;
+    private ImageView tina66;
+    private ImageView tina67;
+    private ImageView tina68;
+    private ImageView tina69;
+    private ImageView tina70;
+    private ImageView tina71;
+    private ImageView tina72;
+    private ImageView tina73;
+    private ImageView tina74;
+    private ImageView tina75;
+    private ImageView tina76;
+    private ImageView tina77;
+    private ImageView tina78;
+    private ImageView tina79;
+    private ImageView tina80;
+    private ImageView tina81;
+    private ImageView tina82;
+    private ImageView tina83;
+    private ImageView tina84;
+    private ImageView tina85;
+    private ImageView tina86;
+    private ImageView tina87;
+    private ImageView tina88;
+
+    private ImageView montacargas;
+
+    private Tina tinaSeleccionada;
+    private OperadorMontacargas montacargasSeleccionado;
+
+    private List<Tina> listaTinas = new ArrayList<>();
+    private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
+
+    private LinearLayout botonera;
+    private ScrollView vistaIconos;
+    private SwipeRefreshLayout actualizar;
+    private Button botonCrearOrden;
+
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Atemperado_TiempoMuerto() {
         // Required empty public constructor
+    }
+
+    public Tina getTinaSeleccionada() {
+        return tinaSeleccionada;
+    }
+
+    public void setTinaSeleccionada(Tina tinaSeleccionada) {
+        this.tinaSeleccionada = tinaSeleccionada;
+    }
+
+    public OperadorMontacargas getMontacargasSeleccionado() {
+        return montacargasSeleccionado;
+    }
+
+    public void setMontacargasSeleccionado(OperadorMontacargas montacargasSeleccionado) {
+        this.montacargasSeleccionado = montacargasSeleccionado;
     }
 
     /**
@@ -117,640 +195,977 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        vista=inflater.inflate(R.layout.fragment_fragment__atemperado__tiempo_muerto, container, false);
-        btn_mantenimiento= vista.findViewById(R.id.crear_orden_mantenimiento);
-        estiba1=vista.findViewById(R.id.Atemperado_nivel_1);
-        estiba2=vista.findViewById(R.id.Atemperado_nivel_2);
-        estiba3=vista.findViewById(R.id.Atemperado_nivel_3);
-        estiba4=vista.findViewById(R.id.Atemperado_nivel_4);
-        estiba5=vista.findViewById(R.id.Atemperado_nivel_5);
-        estiba6=vista.findViewById(R.id.Atemperado_nivel_6);
-        estiba7=vista.findViewById(R.id.Atemperado_nivel_7);
-        estiba8=vista.findViewById(R.id.Atemperado_nivel_8);
-        estiba9=vista.findViewById(R.id.Atemperado_nivel_9);
-        estiba10=vista.findViewById(R.id.Atemperado_nivel_10);
-        estiba11=vista.findViewById(R.id.Atemperado_nivel_11);
-        estiba12=vista.findViewById(R.id.Atemperado_nivel_12);
-        estiba13=vista.findViewById(R.id.Atemperado_nivel_13);
-        estiba14=vista.findViewById(R.id.Atemperado_nivel_14);
-        estiba15=vista.findViewById(R.id.Atemperado_nivel_15);
-        estiba16=vista.findViewById(R.id.Atemperado_nivel_16);
-        estiba17=vista.findViewById(R.id.Atemperado_nivel_17);
-        estiba18=vista.findViewById(R.id.Atemperado_nivel_18);
-        estiba19=vista.findViewById(R.id.Atemperado_nivel_19);
-        estiba20=vista.findViewById(R.id.Atemperado_nivel_20);
-        estiba21=vista.findViewById(R.id.Atemperado_nivel_21);
-        estiba22=vista.findViewById(R.id.Atemperado_nivel_22);
-        estiba23=vista.findViewById(R.id.Atemperado_nivel_23);
-        estiba24=vista.findViewById(R.id.Atemperado_nivel_24);
-        estiba25=vista.findViewById(R.id.Atemperado_nivel_25);
-        estiba26=vista.findViewById(R.id.Atemperado_nivel_26);
-        estiba27=vista.findViewById(R.id.Atemperado_nivel_27);
-        estiba28=vista.findViewById(R.id.Atemperado_nivel_28);
-        estiba29=vista.findViewById(R.id.Atemperado_nivel_29);
-        estiba30=vista.findViewById(R.id.Atemperado_nivel_30);
-        estiba31=vista.findViewById(R.id.Atemperado_nivel_31);
-        estiba32=vista.findViewById(R.id.Atemperado_nivel_32);
-        estiba33=vista.findViewById(R.id.Atemperado_nivel_33);
-        estiba34=vista.findViewById(R.id.Atemperado_nivel_34);
-        estiba35=vista.findViewById(R.id.Atemperado_nivel_35);
-        estiba36=vista.findViewById(R.id.Atemperado_nivel_36);
-        estiba37=vista.findViewById(R.id.Atemperado_nivel_37);
-        estiba38=vista.findViewById(R.id.Atemperado_nivel_38);
-        estiba39=vista.findViewById(R.id.Atemperado_nivel_39);
-        estiba40=vista.findViewById(R.id.Atemperado_nivel_40);
-        estiba41=vista.findViewById(R.id.Atemperado_nivel_41);
-        estiba42=vista.findViewById(R.id.Atemperado_nivel_42);
-        estiba43=vista.findViewById(R.id.Atemperado_nivel_43);
-        estiba44=vista.findViewById(R.id.Atemperado_nivel_44);
-        estiba45=vista.findViewById(R.id.Atemperado_nivel_45);
-        estiba46=vista.findViewById(R.id.Atemperado_nivel_46);
-        estiba47=vista.findViewById(R.id.Atemperado_nivel_47);
-        estiba48=vista.findViewById(R.id.Atemperado_nivel_48);
-        estiba49=vista.findViewById(R.id.Atemperado_nivel_49);
-        estiba50=vista.findViewById(R.id.Atemperado_nivel_50);
-        estiba51=vista.findViewById(R.id.Atemperado_nivel_51);
-        estiba52=vista.findViewById(R.id.Atemperado_nivel_52);
-        estiba53=vista.findViewById(R.id.Atemperado_nivel_53);
-        estiba54=vista.findViewById(R.id.Atemperado_nivel_54);
-        estiba55=vista.findViewById(R.id.Atemperado_nivel_55);
-        estiba56=vista.findViewById(R.id.Atemperado_nivel_56);
-        estiba57=vista.findViewById(R.id.Atemperado_nivel_57);
-        estiba58=vista.findViewById(R.id.Atemperado_nivel_58);
-        estiba59=vista.findViewById(R.id.Atemperado_nivel_59);
-        estiba60=vista.findViewById(R.id.Atemperado_nivel_60);
-        estiba61=vista.findViewById(R.id.Atemperado_nivel_61);
-        estiba62=vista.findViewById(R.id.Atemperado_nivel_62);
-        estiba63=vista.findViewById(R.id.Atemperado_nivel_63);
-        estiba64=vista.findViewById(R.id.Atemperado_nivel_64);
-        estiba65=vista.findViewById(R.id.Atemperado_nivel_65);
-        estiba66=vista.findViewById(R.id.Atemperado_nivel_66);
-        estiba67=vista.findViewById(R.id.Atemperado_nivel_67);
-        estiba68=vista.findViewById(R.id.Atemperado_nivel_68);
-        estiba69=vista.findViewById(R.id.Atemperado_nivel_69);
-        estiba70=vista.findViewById(R.id.Atemperado_nivel_70);
-        estiba71=vista.findViewById(R.id.Atemperado_nivel_71);
-        estiba72=vista.findViewById(R.id.Atemperado_nivel_72);
-        estiba73=vista.findViewById(R.id.Atemperado_nivel_73);
-        estiba74=vista.findViewById(R.id.Atemperado_nivel_74);
-        estiba75=vista.findViewById(R.id.Atemperado_nivel_75);
-        estiba76=vista.findViewById(R.id.Atemperado_nivel_76);
-        estiba77=vista.findViewById(R.id.Atemperado_nivel_77);
-        estiba78=vista.findViewById(R.id.Atemperado_nivel_78);
-        estiba79=vista.findViewById(R.id.Atemperado_nivel_79);
-        estiba79=vista.findViewById(R.id.Atemperado_nivel_79);
-        estiba80=vista.findViewById(R.id.Atemperado_nivel_80);
-        estiba81=vista.findViewById(R.id.Atemperado_nivel_81);
-        estiba82=vista.findViewById(R.id.Atemperado_nivel_82);
-        estiba83=vista.findViewById(R.id.Atemperado_nivel_83);
-        estiba84=vista.findViewById(R.id.Atemperado_nivel_84);
-        estiba85=vista.findViewById(R.id.Atemperado_nivel_85);
-        estiba86=vista.findViewById(R.id.Atemperado_nivel_86);
-        estiba87=vista.findViewById(R.id.Atemperado_nivel_87);
-        estiba88=vista.findViewById(R.id.Atemperado_nivel_88);
+        this.vista = inflater.inflate(R.layout.fragment_fragment__atemperado__tiempo_muerto, container, false);
 
-        //se inicia el onclick
-        btn_mantenimiento.setOnClickListener(new View.OnClickListener() {
+        iniciaComponentes();
+        return this.vista;
+    }
+
+    private void iniciaComponentes(){
+        /*this.fragment = this;
+        this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        iniciaProcesando();
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        this.fechaActual = formatoFecha.format( new Date() );
+        */
+
+        this.actualizar = this.vista.findViewById(R.id.actualizar);
+        this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
+        this.botonera = this.vista.findViewById(R.id.botonera);
+        this.botonCrearOrden = this.vista.findViewById(R.id.botonCrearOrden);
+
+        this.tina1 = this.vista.findViewById(R.id.tina1);
+        this.tina1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                crear_dialog(view);
-
-
-
-            }
-        });
-        estiba1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 1",estiba1,view);
+                accionIconoTina(1);
             }
         });
 
-        estiba2.setOnClickListener(new View.OnClickListener() {
+        this.tina2 = this.vista.findViewById(R.id.tina2);
+        this.tina2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selecion_tina("estiba 2",estiba2,view);
+                accionIconoTina(2);
             }
         });
 
-        estiba3.setOnClickListener(new View.OnClickListener() {
+        this.tina3 = this.vista.findViewById(R.id.tina3);
+        this.tina3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selecion_tina("estiba 3",estiba3,view);
-            }
-        });
-        estiba4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 4",estiba4,view);
-            }
-        });
-        estiba5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 5",estiba5,view);
-            }
-        });
-        estiba6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 6",estiba6,view);
-            }
-        });estiba7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 7",estiba7,view);
-            }
-        });
-        estiba8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 8",estiba8,view);
-            }
-        });
-        estiba9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 9",estiba9,view);
-            }
-        });
-        estiba10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 10",estiba10,view);
-            }
-        });
-        estiba11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 11",estiba11,view);
-            }
-        });
-        estiba12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 12",estiba12,view);
-            }
-        });
-        estiba13.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 13",estiba13,view);
-            }
-        });
-        estiba14.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 14",estiba14,view);
-            }
-        });
-        estiba15.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 15",estiba15,view);
-            }
-        });
-        estiba16.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 16",estiba16,view);
-            }
-        });
-        estiba17.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 17",estiba17,view);
-            }
-        });
-        estiba18.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 18",estiba18,view);
-            }
-        });
-        estiba19.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 19",estiba19,view);
-            }
-        });
-        estiba20.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 20",estiba20,view);
-            }
-        });
-        estiba21.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 21",estiba21,view);
-            }
-        });
-        estiba22.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 22",estiba22,view);
-            }
-        });
-        estiba23.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 23",estiba23,view);
-            }
-        });
-        estiba24.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 24",estiba24,view);
-            }
-        });
-        estiba25.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 25",estiba25,view);
-            }
-        });
-        estiba26.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 26",estiba26,view);
-            }
-        });
-        estiba27.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 27",estiba27,view);
-            }
-        });
-        estiba28.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 28",estiba28,view);
-            }
-        });
-        estiba29.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 29",estiba29,view);
-            }
-        });
-        estiba30.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 30",estiba30,view);
-            }
-        });
-        estiba31.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 31",estiba31,view);
-            }
-        });
-        estiba32.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 32",estiba32,view);
-            }
-        });
-        estiba33.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 33",estiba33,view);
-            }
-        });
-        estiba34.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 34",estiba34,view);
-            }
-        });
-        estiba35.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 35",estiba35,view);
-            }
-        });
-        estiba36.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 36",estiba36,view);
-            }
-        });
-        estiba37.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 37",estiba37,view);
-            }
-        });
-        estiba38.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 38",estiba38,view);
-            }
-        });
-        estiba39.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 39",estiba39,view);
-            }
-        });
-        estiba40.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 40",estiba40,view);
-            }
-        });
-        estiba41.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 41",estiba41,view);
-            }
-        });
-        estiba42.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 42",estiba42,view);
-            }
-        });
-        estiba43.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 43",estiba43,view);
-            }
-        });
-        estiba44.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 44",estiba44,view);
-            }
-        });
-        estiba45.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 45",estiba45,view);
-            }
-        });
-        estiba46.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 46",estiba46,view);
-            }
-        });
-        estiba47.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 47",estiba47,view);
-            }
-        });
-        estiba48.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 48",estiba48,view);
-            }
-        });
-        estiba49.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 49",estiba49,view);
-            }
-        });
-        estiba50.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 50",estiba50,view);
-            }
-        });
-        estiba51.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 51",estiba51,view);
-            }
-        });
-        estiba52.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 52",estiba52,view);
-            }
-        });
-        estiba53.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 53",estiba53,view);
-            }
-        });
-        estiba54.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 54",estiba54,view);
-            }
-        });
-        estiba55.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 55",estiba55,view);
-            }
-        });
-        estiba56.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 56",estiba56,view);
-            }
-        });
-        estiba57.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 57",estiba57,view);
-            }
-        });
-        estiba58.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 58",estiba58,view);
-            }
-        });
-        estiba59.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 59",estiba59,view);
-            }
-        });
-        estiba60.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 60",estiba60,view);
-            }
-        });
-        estiba61.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 61",estiba61,view);
-            }
-        });
-        estiba62.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 62",estiba62,view);
-            }
-        });
-        estiba63.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 63",estiba63,view);
-            }
-        });
-        estiba64.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 64",estiba64,view);
-            }
-        });
-        estiba65.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 65",estiba65,view);
-            }
-        });
-        estiba66.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 66",estiba66,view);
-            }
-        });
-        estiba67.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 67",estiba67,view);
-            }
-        });
-        estiba68.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 68",estiba68,view);
-            }
-        });
-        estiba69.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 69",estiba69,view);
-            }
-        });
-        estiba70.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 70",estiba70,view);
-            }
-        });
-        estiba71.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 71",estiba71,view);
-            }
-        });
-        estiba72.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 72",estiba72,view);
-            }
-        });
-        estiba73.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 73",estiba73,view);
-            }
-        });
-        estiba74.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 74",estiba74,view);
-            }
-        });
-        estiba75.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 75",estiba75,view);
-            }
-        });
-        estiba76.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 76",estiba76,view);
-            }
-        });
-        estiba77.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 77",estiba77,view);
-            }
-        });
-        estiba78.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 78",estiba78,view);
-            }
-        });
-        estiba79.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 79",estiba79,view);
-            }
-        });
-        estiba80.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 70",estiba70,view);
-            }
-        });
-        estiba81.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 81",estiba81,view);
-            }
-        });
-        estiba82.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 82",estiba82,view);
-            }
-        });
-        estiba83.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 83",estiba83,view);
-            }
-        });
-        estiba84.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 84",estiba84,view);
-            }
-        });
-        estiba85.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 85",estiba85,view);
-            }
-        });
-        estiba86.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 86",estiba86,view);
-            }
-        });
-        estiba87.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 87",estiba87,view);
-            }
-        });
-        estiba88.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selecion_tina("estiba 88",estiba88,view);
+                accionIconoTina(3);
             }
         });
 
-        return vista;
+        this.tina4 = this.vista.findViewById(R.id.tina4);
+        this.tina4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(4);
+            }
+        });
+
+        this.tina5 = this.vista.findViewById(R.id.tina5);
+        this.tina5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(5);
+            }
+        });
+
+        this.tina6 = this.vista.findViewById(R.id.tina6);
+        this.tina6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(6);
+            }
+        });
+
+        this.tina7 = this.vista.findViewById(R.id.tina7);
+        this.tina7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(7);
+            }
+        });
+
+        this.tina8 = this.vista.findViewById(R.id.tina8);
+        this.tina8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(8);
+            }
+        });
+
+        this.tina9 = this.vista.findViewById(R.id.tina9);
+        this.tina9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(9);
+            }
+        });
+
+        this.tina10 = this.vista.findViewById(R.id.tina10);
+        this.tina10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(10);
+            }
+        });
+
+        this.tina11 = this.vista.findViewById(R.id.tina11);
+        this.tina11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(11);
+            }
+        });
+
+        this.tina12 = this.vista.findViewById(R.id.tina12);
+        this.tina12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(12);
+            }
+        });
+
+        this.tina13 = this.vista.findViewById(R.id.tina13);
+        this.tina13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(13);
+            }
+        });
+
+        this.tina14 = this.vista.findViewById(R.id.tina14);
+        this.tina14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(14);
+            }
+        });
+
+        this.tina15 = this.vista.findViewById(R.id.tina15);
+        this.tina15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(15);
+            }
+        });
+
+        this.tina16 = this.vista.findViewById(R.id.tina16);
+        this.tina16.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(16);
+            }
+        });
+
+        this.tina17 = this.vista.findViewById(R.id.tina17);
+        this.tina17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(17);
+            }
+        });
+
+        this.tina18 = this.vista.findViewById(R.id.tina18);
+        this.tina18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(18);
+            }
+        });
+
+        this.tina19 = this.vista.findViewById(R.id.tina19);
+        this.tina19.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(19);
+            }
+        });
+
+        this.tina20 = this.vista.findViewById(R.id.tina20);
+        this.tina20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(20);
+            }
+        });
+
+        this.tina21 = this.vista.findViewById(R.id.tina21);
+        this.tina21.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(21);
+            }
+        });
+
+        this.tina22 = this.vista.findViewById(R.id.tina22);
+        this.tina22.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(22);
+            }
+        });
+
+        this.tina23 = this.vista.findViewById(R.id.tina23);
+        this.tina23.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(23);
+            }
+        });
+
+        this.tina24 = this.vista.findViewById(R.id.tina24);
+        this.tina24.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(24);
+            }
+        });
+
+        this.tina25 = this.vista.findViewById(R.id.tina25);
+        this.tina25.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(25);
+            }
+        });
+
+        this.tina26 = this.vista.findViewById(R.id.tina26);
+        this.tina26.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(26);
+            }
+        });
+
+        this.tina27 = this.vista.findViewById(R.id.tina27);
+        this.tina27.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(27);
+            }
+        });
+
+        this.tina28 = this.vista.findViewById(R.id.tina28);
+        this.tina28.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(28);
+            }
+        });
+
+        this.tina29 = this.vista.findViewById(R.id.tina29);
+        this.tina29.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(29);
+            }
+        });
+
+        this.tina30 = this.vista.findViewById(R.id.tina30);
+        this.tina30.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(30);
+            }
+        });
+
+        this.tina31 = this.vista.findViewById(R.id.tina31);
+        this.tina31.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(31);
+            }
+        });
+
+        this.tina32 = this.vista.findViewById(R.id.tina32);
+        this.tina32.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(32);
+            }
+        });
+
+        this.tina33 = this.vista.findViewById(R.id.tina33);
+        this.tina33.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(33);
+            }
+        });
+
+        this.tina34 = this.vista.findViewById(R.id.tina34);
+        this.tina34.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(34);
+            }
+        });
+
+        this.tina35 = this.vista.findViewById(R.id.tina35);
+        this.tina35.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(35);
+            }
+        });
+
+        this.tina36 = this.vista.findViewById(R.id.tina36);
+        this.tina36.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(36);
+            }
+        });
+
+        this.tina37 = this.vista.findViewById(R.id.tina37);
+        this.tina37.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(37);
+            }
+        });
+
+        this.tina38 = this.vista.findViewById(R.id.tina38);
+        this.tina38.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(38);
+            }
+        });
+
+        this.tina39 = this.vista.findViewById(R.id.tina39);
+        this.tina39.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(39);
+            }
+        });
+
+        this.tina40 = this.vista.findViewById(R.id.tina40);
+        this.tina40.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(40);
+            }
+        });
+
+        this.tina41 = this.vista.findViewById(R.id.tina41);
+        this.tina41.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(41);
+            }
+        });
+
+        this.tina42 = this.vista.findViewById(R.id.tina42);
+        this.tina42.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(42);
+            }
+        });
+
+        this.tina43 = this.vista.findViewById(R.id.tina43);
+        this.tina43.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(43);
+            }
+        });
+
+        this.tina44 = this.vista.findViewById(R.id.tina44);
+        this.tina44.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(44);
+            }
+        });
+
+        this.tina45 = this.vista.findViewById(R.id.tina45);
+        this.tina45.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(45);
+            }
+        });
+
+        this.tina46 = this.vista.findViewById(R.id.tina46);
+        this.tina46.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(46);
+            }
+        });
+
+        this.tina47 = this.vista.findViewById(R.id.tina47);
+        this.tina47.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(47);
+            }
+        });
+
+        this.tina48 = this.vista.findViewById(R.id.tina48);
+        this.tina48.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(48);
+            }
+        });
+
+        this.tina49 = this.vista.findViewById(R.id.tina49);
+        this.tina49.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(49);
+            }
+        });
+
+        this.tina50 = this.vista.findViewById(R.id.tina50);
+        this.tina50.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(50);
+            }
+        });
+
+        this.tina51 = this.vista.findViewById(R.id.tina51);
+        this.tina51.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(51);
+            }
+        });
+
+        this.tina52 = this.vista.findViewById(R.id.tina52);
+        this.tina52.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(52);
+            }
+        });
+
+        this.tina53 = this.vista.findViewById(R.id.tina53);
+        this.tina53.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(53);
+            }
+        });
+
+        this.tina54 = this.vista.findViewById(R.id.tina54);
+        this.tina54.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(54);
+            }
+        });
+
+        this.tina55 = this.vista.findViewById(R.id.tina55);
+        this.tina55.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(55);
+            }
+        });
+
+        this.tina56 = this.vista.findViewById(R.id.tina56);
+        this.tina56.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(56);
+            }
+        });
+
+        this.tina57 = this.vista.findViewById(R.id.tina57);
+        this.tina57.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(57);
+            }
+        });
+
+        this.tina58 = this.vista.findViewById(R.id.tina58);
+        this.tina58.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(58);
+            }
+        });
+
+        this.tina59 = this.vista.findViewById(R.id.tina59);
+        this.tina59.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(59);
+            }
+        });
+
+        this.tina60 = this.vista.findViewById(R.id.tina60);
+        this.tina60.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(60);
+            }
+        });
+
+        this.tina61 = this.vista.findViewById(R.id.tina61);
+        this.tina61.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(61);
+            }
+        });
+
+        this.tina62 = this.vista.findViewById(R.id.tina62);
+        this.tina62.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(62);
+            }
+        });
+
+        this.tina63 = this.vista.findViewById(R.id.tina63);
+        this.tina63.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(63);
+            }
+        });
+
+        this.tina64 = this.vista.findViewById(R.id.tina64);
+        this.tina64.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(64);
+            }
+        });
+
+        this.tina65 = this.vista.findViewById(R.id.tina65);
+        this.tina65.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(65);
+            }
+        });
+
+        this.tina66 = this.vista.findViewById(R.id.tina66);
+        this.tina66.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(66);
+            }
+        });
+
+        this.tina67 = this.vista.findViewById(R.id.tina67);
+        this.tina67.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(67);
+            }
+        });
+
+        this.tina68 = this.vista.findViewById(R.id.tina68);
+        this.tina68.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(68);
+            }
+        });
+
+        this.tina69 = this.vista.findViewById(R.id.tina69);
+        this.tina69.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(69);
+            }
+        });
+
+        this.tina70 = this.vista.findViewById(R.id.tina70);
+        this.tina70.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(70);
+            }
+        });
+
+        this.tina71 = this.vista.findViewById(R.id.tina71);
+        this.tina71.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(71);
+            }
+        });
+
+        this.tina72 = this.vista.findViewById(R.id.tina72);
+        this.tina72.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(72);
+            }
+        });
+
+        this.tina73 = this.vista.findViewById(R.id.tina73);
+        this.tina73.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(73);
+            }
+        });
+
+        this.tina74 = this.vista.findViewById(R.id.tina74);
+        this.tina74.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(74);
+            }
+        });
+
+        this.tina75 = this.vista.findViewById(R.id.tina75);
+        this.tina75.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(75);
+            }
+        });
+
+        this.tina76 = this.vista.findViewById(R.id.tina76);
+        this.tina76.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(76);
+            }
+        });
+
+        this.tina77 = this.vista.findViewById(R.id.tina77);
+        this.tina77.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(77);
+            }
+        });
+
+        this.tina78 = this.vista.findViewById(R.id.tina78);
+        this.tina78.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(78);
+            }
+        });
+
+        this.tina79 = this.vista.findViewById(R.id.tina79);
+        this.tina79.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(79);
+            }
+        });
+
+        this.tina80 = this.vista.findViewById(R.id.tina80);
+        this.tina80.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(80);
+            }
+        });
+
+        this.tina81 = this.vista.findViewById(R.id.tina81);
+        this.tina81.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(81);
+            }
+        });
+
+        this.tina82 = this.vista.findViewById(R.id.tina82);
+        this.tina82.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(82);
+            }
+        });
+
+        this.tina83 = this.vista.findViewById(R.id.tina83);
+        this.tina83.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(83);
+            }
+        });
+
+        this.tina84 = this.vista.findViewById(R.id.tina84);
+        this.tina84.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(84);
+            }
+        });
+
+        this.tina85 = this.vista.findViewById(R.id.tina85);
+        this.tina85.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(85);
+            }
+        });
+
+        this.tina86 = this.vista.findViewById(R.id.tina86);
+        this.tina86.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(86);
+            }
+        });
+
+        this.tina87 = this.vista.findViewById(R.id.tina87);
+        this.tina87.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(87);
+            }
+        });
+
+        this.tina88 = this.vista.findViewById(R.id.tina88);
+        this.tina88.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoTina(88);
+            }
+        });
+
+        this.montacargas = this.vista.findViewById(R.id.montacargas);
+        this.montacargas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoMontacargas(1);
+            }
+        });
+        creaObjetosVacios();
+    }
+
+    private void creaObjetosVacios(){
+        if( this.listaTinas.isEmpty() ){
+            for( int posicion = 1; posicion <= 88; posicion++ ){
+                Tina recursoTina = new Tina();
+                recursoTina.setIdPosicion(posicion);
+                recursoTina.setEstado(Constantes.ESTADO.inicial);
+                this.listaTinas.add(recursoTina);
+            }
+        }
+
+        if( this.listaMontacargas.isEmpty() ){
+            for( int posicion = 1; posicion <= 1; posicion++ ){
+                OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
+                recursoMontacargas.setIdMontacargaPreseleccion(posicion);
+                recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
+                this.listaMontacargas.add(recursoMontacargas);
+            }
+        }
+    }
+
+    private void accionIconoTina(int posicion){
+        for( Tina tina : this.listaTinas ){
+            if( tina.getIdPosicion() == posicion ){
+                if( tina.getEstado() == Constantes.ESTADO.inicial ){
+                    setTinaSeleccionada(tina);
+                    deshabilitaRecursos();
+                    getIconoTina( tina.getIdPosicion() )
+                            .setImageResource(R.drawable.ic_tina1);
+                    getIconoTina( tina.getIdPosicion() )
+                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                    tina.setEstado(Constantes.ESTADO.seleccionado);
+                    ajustaTamañoVista(501);
+                    this.botonera.setVisibility(View.VISIBLE);
+                }else{
+                    if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setTinaSeleccionada(null);
+                        habilitaRecursos();
+                        getIconoTina( tina.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_tina2);
+                        getIconoTina( tina.getIdPosicion() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
+                        tina.setEstado(Constantes.ESTADO.inicial);
+                        this.botonCrearOrden.setOnClickListener(null);
+                        this.botonera.setVisibility(View.GONE);
+                        ajustaTamañoVista(578);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void accionIconoMontacargas(int posicion){
+        for( OperadorMontacargas montacargas : this.listaMontacargas ){
+            if( montacargas.getIdMontacargaPreseleccion() == posicion ){
+                if( montacargas.getEstado() == Constantes.ESTADO.inicial ){
+                    setMontacargasSeleccionado(montacargas);
+                    deshabilitaRecursos();
+                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            .setImageResource(R.drawable.ic_montacargas1);
+                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                    montacargas.setEstado(Constantes.ESTADO.seleccionado);
+                    ajustaTamañoVista(501);
+                    this.botonera.setVisibility(View.VISIBLE);
+                }else{
+                    if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setMontacargasSeleccionado(null);
+                        habilitaRecursos();
+                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                .setImageResource(R.drawable.ic_montacargas2);
+                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
+                        montacargas.setEstado(Constantes.ESTADO.inicial);
+                        this.botonCrearOrden.setOnClickListener(null);
+                        this.botonera.setVisibility(View.GONE);
+                        ajustaTamañoVista(578);
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void ajustaTamañoVista(int altura){
+        ViewGroup.LayoutParams params = this.actualizar.getLayoutParams();
+        System.out.println(params.height);
+        params.height = altura;
+        this.actualizar.setLayoutParams(params);
+        this.actualizar.requestLayout();
+
+        if( getTinaSeleccionada() != null ){
+            if( getTinaSeleccionada().getIdPosicion() <= 12
+                    || ( getTinaSeleccionada().getIdPosicion() >= 49
+                    && getTinaSeleccionada().getIdPosicion() <= 60 )  ){
+                this.vistaIconos.post(new Runnable() {
+                    public void run() {
+                        vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
+                    }
+                });
+                return;
+            }
+        }
+        this.vistaIconos.post(new Runnable() {
+            public void run() {
+                vistaIconos.fullScroll(vistaIconos.FOCUS_DOWN);
+            }
+        });
+    }
+
+    private void habilitaRecursos(){
+        for(Tina tina : this.listaTinas){
+            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(true);
+        }
+    }
+
+    private void deshabilitaRecursos(){
+        for(Tina tina : this.listaTinas){
+            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(false);
+        }
+
+        if( getTinaSeleccionada() != null ){
+            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+        }else{
+            if( getMontacargasSeleccionado() != null ){
+                getIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ).setEnabled(true);
+            }
+        }
+    }
+
+    private ImageView getIconoMontacargas(int posicion){
+        switch (posicion){
+            case 1: return this.montacargas;
+        }
+        return null;
+    }
+
+    private ImageView getIconoTina(int posicion){
+        switch (posicion){
+            case 1: return this.tina1;
+            case 2: return this.tina2;
+            case 3: return this.tina3;
+            case 4: return this.tina4;
+            case 5: return this.tina5;
+            case 6: return this.tina6;
+            case 7: return this.tina7;
+            case 8: return this.tina8;
+            case 9: return this.tina9;
+            case 10: return this.tina10;
+            case 11: return this.tina11;
+            case 12: return this.tina12;
+            case 13: return this.tina13;
+            case 14: return this.tina14;
+            case 15: return this.tina15;
+            case 16: return this.tina16;
+            case 17: return this.tina17;
+            case 18: return this.tina18;
+            case 19: return this.tina19;
+            case 20: return this.tina20;
+            case 21: return this.tina21;
+            case 22: return this.tina22;
+            case 23: return this.tina23;
+            case 24: return this.tina24;
+            case 25: return this.tina25;
+            case 26: return this.tina26;
+            case 27: return this.tina27;
+            case 28: return this.tina28;
+            case 29: return this.tina29;
+            case 30: return this.tina30;
+            case 31: return this.tina31;
+            case 32: return this.tina32;
+            case 33: return this.tina33;
+            case 34: return this.tina34;
+            case 35: return this.tina35;
+            case 36: return this.tina36;
+            case 37: return this.tina37;
+            case 38: return this.tina38;
+            case 39: return this.tina39;
+            case 40: return this.tina40;
+            case 41: return this.tina41;
+            case 42: return this.tina42;
+            case 43: return this.tina43;
+            case 44: return this.tina44;
+            case 45: return this.tina45;
+            case 46: return this.tina46;
+            case 47: return this.tina47;
+            case 48: return this.tina48;
+            case 49: return this.tina49;
+            case 50: return this.tina50;
+            case 51: return this.tina51;
+            case 52: return this.tina52;
+            case 53: return this.tina53;
+            case 54: return this.tina54;
+            case 55: return this.tina55;
+            case 56: return this.tina56;
+            case 57: return this.tina57;
+            case 58: return this.tina58;
+            case 59: return this.tina59;
+            case 60: return this.tina60;
+            case 61: return this.tina61;
+            case 62: return this.tina62;
+            case 63: return this.tina63;
+            case 64: return this.tina64;
+            case 65: return this.tina65;
+            case 66: return this.tina66;
+            case 67: return this.tina67;
+            case 68: return this.tina68;
+            case 69: return this.tina69;
+            case 70: return this.tina70;
+            case 71: return this.tina71;
+            case 72: return this.tina72;
+            case 73: return this.tina73;
+            case 74: return this.tina74;
+            case 75: return this.tina75;
+            case 76: return this.tina76;
+            case 77: return this.tina77;
+            case 78: return this.tina78;
+            case 79: return this.tina79;
+            case 80: return this.tina80;
+            case 81: return this.tina81;
+            case 82: return this.tina82;
+            case 83: return this.tina83;
+            case 84: return this.tina84;
+            case 85: return this.tina85;
+            case 86: return this.tina86;
+            case 87: return this.tina87;
+            case 88: return this.tina88;
+        }
+        return null;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -775,434 +1190,6 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    private void selecion_tina(String boton,Button bton,View view){
-
-
-        Button aux=null;
-        aux=btn_selecionado();
-        Metodos_Retonables asignacion = new Metodos_Retonables();
-
-        Boolean asignada_atual=asignacion.Tina_asignada(boton);
-
-        //solo si no se selecionado ninguna tina la cula este seleciona entra
-
-
-
-        if (Utilidades.Boton_presionado_atemperado_tiempo_muerto.equals("ninguno")) {
-
-            bton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.selecion));
-            Utilidades.Boton_presionado_atemperado_tiempo_muerto = boton;
-
-
-
-        } else {
-            if (Utilidades.Boton_presionado_atemperado_tiempo_muerto.equals(boton)) {
-                bton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.no_selecion));
-                Utilidades.Boton_presionado_atemperado_tiempo_muerto = "ninguno";
-
-
-
-            } else {
-                bton.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.selecion));
-                aux.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.no_selecion));
-                Utilidades.Boton_presionado_atemperado_tiempo_muerto = boton;
-
-
-
-            }
-        }
-    }
-    private Button btn_selecionado(){
-        Button aux=null;
-
-        switch (Utilidades.Boton_presionado_atemperado_tiempo_muerto){
-            case "ninguno":
-                break;
-            case "estiba 1":
-                aux=estiba1;
-
-                break;
-            case "estiba 2":
-                aux=estiba2;
-
-                break;
-            case "estiba 3":
-                aux=estiba3;
-
-                break;
-            case "estiba 4":
-                aux=estiba4;
-
-                break;
-            case "estiba 5":
-                aux=estiba5;
-
-                break;
-            case "estiba 6":
-                aux=estiba6;
-
-                break;
-            case "estiba 7":
-                aux=estiba7;
-
-                break;
-            case "estiba 8":
-                aux=estiba8;
-
-                break;
-            case "estiba 9":
-                aux=estiba9;
-
-                break;
-            case "estiba 10":
-                aux=estiba10;
-                break;
-
-            case "estiba 11":
-                aux=estiba11;
-                break;
-
-
-            case "estiba 12":
-                aux=estiba12;
-
-                break;
-            case "estiba 13":
-                aux=estiba13;
-
-                break;
-            case "estiba 14":
-                aux=estiba14;
-
-                break;
-            case "estiba 15":
-                aux=estiba15;
-
-                break;
-            case "estiba 16":
-                aux=estiba16;
-
-                break;
-            case "estiba 17":
-                aux=estiba17;
-
-                break;
-            case "estiba 18":
-                aux=estiba18;
-
-                break;
-            case "estiba 19":
-                aux=estiba19;
-
-                break;
-            case "estiba 20":
-                aux=estiba20;
-
-                break;
-            case "estiba 21":
-                aux=estiba21;
-
-                break;
-            case "estiba 22":
-                aux=estiba22;
-
-                break;
-            case "estiba 23":
-                aux=estiba23;
-
-                break;
-            case "estiba 24":
-                aux=estiba24;
-
-                break;
-            case "estiba 25":
-                aux=estiba25;
-
-                break;
-            case "estiba 26":
-                aux=estiba26;
-
-                break;
-            case "estiba 27":
-                aux=estiba27;
-
-                break;
-            case "estiba 28":
-                aux=estiba28;
-
-                break;
-            case "estiba 29":
-                aux=estiba29;
-
-                break;
-            case "estiba 30":
-                aux=estiba30;
-
-                break;
-            case "estiba 31":
-                aux=estiba31;
-
-                break;
-            case "estiba 32":
-                aux=estiba32;
-
-                break;
-            case "estiba 33":
-                aux=estiba33;
-
-                break;
-            case "estiba 34":
-                aux=estiba34;
-
-                break;
-            case "estiba 35":
-                aux=estiba35;
-
-                break;
-            case "estiba 36":
-                aux=estiba36;
-
-                break;
-            case "estiba 37":
-                aux=estiba37;
-
-                break;
-            case "estiba 38":
-                aux=estiba38;
-
-                break;
-            case "estiba 39":
-                aux=estiba39;
-
-                break;
-            case "estiba 40":
-                aux=estiba40;
-
-                break;
-            case "estiba 41":
-                aux=estiba41;
-
-                break;
-            case "estiba 42":
-                aux=estiba42;
-
-                break;
-            case "estiba 43":
-                aux=estiba43;
-
-                break;
-            case "estiba 44":
-                aux=estiba44;
-
-                break;
-            case "estiba 45":
-                aux=estiba45;
-
-                break;
-            case "estiba 46":
-                aux=estiba46;
-
-                break;
-            case "estiba 47":
-                aux=estiba47;
-
-                break;
-            case "estiba 48":
-                aux=estiba48;
-
-                break;
-            case "estiba 49":
-                aux=estiba49;
-
-                break;
-
-            case "estiba 50":
-                aux=estiba50;
-
-                break;
-            case "estiba 51":
-                aux=estiba51;
-
-                break;
-            case "estiba 52":
-                aux=estiba52;
-
-                break;
-            case "estiba 53":
-                aux=estiba53;
-
-                break;
-            case "estiba 54":
-                aux=estiba54;
-
-                break;
-            case "estiba 55":
-                aux=estiba55;
-
-                break;
-            case "estiba 56":
-                aux=estiba56;
-
-                break;
-            case "estiba 57":
-                aux=estiba57;
-
-                break;
-            case "estiba 58":
-                aux=estiba58;
-
-                break;
-            case "estiba 59":
-                aux=estiba59;
-
-                break;
-            case "estiba 60":
-                aux=estiba60;
-
-                break;
-            case "estiba 61":
-                aux=estiba61;
-
-                break;
-            case "estiba 62":
-                aux=estiba62;
-
-                break;
-            case "estiba 63":
-                aux=estiba63;
-
-                break;
-            case "estiba 64":
-                aux=estiba64;
-
-                break;
-            case "estiba 65":
-                aux=estiba65;
-
-                break;
-            case "estiba 66":
-                aux=estiba66;
-
-                break;
-            case "estiba 67":
-                aux=estiba67;
-
-                break;
-            case "estiba 68":
-                aux=estiba68;
-
-                break;
-            case "estiba 69":
-                aux=estiba69;
-
-                break;
-            case "estiba 70":
-                aux=estiba70;
-
-                break;
-            case "estiba 71":
-                aux=estiba71;
-
-                break;
-            case "estiba 72":
-                aux=estiba72;
-
-                break;
-            case "estiba 73":
-                aux=estiba73;
-
-                break;
-            case "estiba 74":
-                aux=estiba74;
-
-                break;
-            case "estiba 75":
-                aux=estiba75;
-
-                break;
-            case "estiba 76":
-                aux=estiba76;
-
-                break;
-            case "estiba 77":
-                aux=estiba77;
-
-                break;
-            case "estiba 78":
-                aux=estiba78;
-
-                break;
-            case "estiba 79":
-                aux=estiba79;
-
-                break;
-            case "estiba 80":
-                aux=estiba80;
-
-                break;
-            case "estiba 81":
-                aux=estiba81;
-
-                break;
-            case "estiba 82":
-                aux=estiba82;
-
-                break;
-            case "estiba 83":
-                aux=estiba83;
-
-                break;
-            case "estiba 84":
-                aux=estiba84;
-
-                break;
-            case "estiba 85":
-                aux=estiba85;
-
-                break;
-            case "estiba 86":
-                aux=estiba86;
-
-                break;
-            case "estiba 87":
-                aux=estiba87;
-
-                break;
-            case "estiba 88":
-                aux=estiba88;
-
-                break;
-
-        }
-        return aux;
-    }
-
-
-    private void crear_dialog(View view) {
-        {
-
-
-        }
-    }
-    private void boton_inferior(){
-        if (!Utilidades.Boton_presionado_descongelado_tiempo_muerto.equals("ninguno")){
-
-            btn_mantenimiento.setEnabled(true);
-        }else{
-            btn_mantenimiento.setEnabled(false);
-        }
     }
 
     public interface OnFragmentInteractionListener {

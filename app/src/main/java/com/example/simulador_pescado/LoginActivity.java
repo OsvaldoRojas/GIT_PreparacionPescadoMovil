@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -27,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
      private ProgressBar barraProgreso;
      private LoginActivity actividad;
      private AlertDialog ventanaEmergente;
+     private Switch switchTurno;
+
+     private int turno = 1;
 
     public LoginActivity getActividad() {
         return actividad;
@@ -46,6 +51,17 @@ public class LoginActivity extends AppCompatActivity {
         this.textoUsuario = findViewById(R.id.usuario);
         this.textoContrasena = findViewById(R.id.contrasena);
         this.botonAcceder = findViewById(R.id.acceder);
+        this.switchTurno = findViewById(R.id.switchTurno);
+        this.switchTurno.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    turno = 2;
+                }else{
+                    turno = 1;
+                }
+            }
+        });
 
         this.botonAcceder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 textoUsuario.setEnabled(false);
                 textoContrasena.setEnabled(false);
                 botonAcceder.setEnabled(false);
+                switchTurno.setEnabled(false);
 
                 /*InicioSesion login = new InicioSesion(
                         textoUsuario.getText().toString(),//"usuarioerp"
@@ -63,8 +80,12 @@ public class LoginActivity extends AppCompatActivity {
                 );
                 login.execute();*/
 
-                Intent intent = new Intent(getApplicationContext(), Navegador.class);
-                startActivity(intent);
+                Usuario u = new Usuario();
+                UsuarioLogueado ul = new UsuarioLogueado();
+                ul.setNombre("Prueba");
+                ul.setApellido_paterno("Nombre");
+                u.setUsuario(ul);
+                iniciaSesion(u);
             }
         });
     }
@@ -74,7 +95,9 @@ public class LoginActivity extends AppCompatActivity {
         this.textoUsuario.setEnabled(true);
         this.textoContrasena.setEnabled(true);
         this.botonAcceder.setEnabled(true);
+        this.switchTurno.setEnabled(true);
         UsuarioLogueado.getUsuarioLogueado( usuarioLogueado.getUsuario() );
+        UsuarioLogueado.getUsuarioLogueado(null).setTurno(this.turno);
 
         Intent intent = new Intent(getApplicationContext(), Navegador.class);
         startActivity(intent);
@@ -102,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                         textoUsuario.setEnabled(true);
                         textoContrasena.setEnabled(true);
                         botonAcceder.setEnabled(true);
+                        switchTurno.setEnabled(true);
                         ventanaEmergente.dismiss();
                     }
                 });

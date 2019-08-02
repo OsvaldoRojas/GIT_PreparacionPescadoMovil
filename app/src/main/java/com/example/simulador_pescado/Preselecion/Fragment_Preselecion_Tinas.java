@@ -47,6 +47,7 @@ import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.TinaPosicion;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -138,7 +139,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private Fragment fragment;
 
     private String fechaActual;
-    private int turno = 0;
     private boolean esMontacargas;
     private boolean esMezclar;
     private boolean esInicio;
@@ -290,25 +290,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void marcaTurno(){
-        if(this.turno == 0){
-            for( OperadorBascula operador : this.listaOperadores ){
-                if( !operador.getLibre() ){
-                    if( operador.getTurno() ){
-                        this.turno = 1;
-                    }else{
-                        this.turno = 2;
-                    }
-                    break;
-                }
-            }
-        }
-
-        if(this.turno == 1){
+        if(UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1){
             this.iconoTurno.setText("T1");
             this.iconoTurno.setVisibility(View.VISIBLE);
-        }
-
-        if(this.turno == 2){
+        }else{
             this.iconoTurno.setText("T2");
             this.iconoTurno.setVisibility(View.VISIBLE);
         }
@@ -490,48 +475,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
         marcaTurno();
         terminaProcesando();
-    }
-
-    private void solicitaTurno(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_turno, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                final RadioGroup grupoTurno = ventanaEmergente.findViewById(R.id.grupoTurno);
-                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( grupoTurno.getCheckedRadioButtonId() == -1 ) {
-                            Toast.makeText(getContext(), "Es necesario seleccionar un turno.", Toast.LENGTH_SHORT).show();
-                        }else{
-                            if( grupoTurno.getCheckedRadioButtonId() == R.id.turno1 ){
-                                turno = 1;
-                                iconoTurno.setText("T1");
-                                iconoTurno.setVisibility(View.VISIBLE);
-                                ventanaEmergente.dismiss();
-                            }else{
-                                if( grupoTurno.getCheckedRadioButtonId() == R.id.turno2 ){
-                                    turno = 2;
-                                    iconoTurno.setText("T2");
-                                    iconoTurno.setVisibility(View.VISIBLE);
-                                    ventanaEmergente.dismiss();
-                                }
-                            }
-                            asignarOperador();
-                        }
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
     }
 
     private void accionIconoOperador(int posicion){
@@ -866,11 +809,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarOperador(){
-        if(this.turno == 0){
-            solicitaTurno();
-            return;
-        }
-
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -1174,8 +1112,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 botonAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        turno = 0;
-                        iconoTurno.setVisibility(View.GONE);
                         ventanaEmergente.dismiss();
                     }
                 });

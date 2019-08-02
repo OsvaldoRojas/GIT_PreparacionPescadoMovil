@@ -100,6 +100,15 @@
         <item name="android:padding">2dp</item>
     </style>
 
+    <style name="tinaAtemperado">
+        <item name="android:layout_height">27dp</item>
+        <item name="android:layout_width">27dp</item>
+        <item name="android:background">@drawable/contenedor_icono</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:src">@drawable/ic_tina2</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
