@@ -112,9 +112,9 @@ public class Contenedor_Atemperado extends Fragment {
 
     private void llenar(ViewPager viewPager) {
         SesionesAdapter adapter= new SesionesAdapter(getFragmentManager());
-        adapter.addfragments(new Fragment_Atemperado_Plan(),"Diseño del plan");
-        adapter.addfragments(new Fragment_Atemperado_TiempoMuerto(),"Tiempo muerto");
-        adapter.addfragments(new Fragment_Atemperado_OM(),"OM");
+        adapter.addfragments(new Fragment_Atemperado_Plan(), getResources().getString(R.string.Preselecion_tinas));
+        adapter.addfragments(new Fragment_Atemperado_TiempoMuerto(), getResources().getString(R.string.TiempoMuerto));
+        adapter.addfragments(new Fragment_Atemperado_OM(), getResources().getString(R.string.OM));
        viewPager.setAdapter(adapter);
     }
 
