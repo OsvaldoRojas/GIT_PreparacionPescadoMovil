@@ -1104,7 +1104,6 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
 
     private void ajustaTamañoVista(int altura){
         ViewGroup.LayoutParams params = this.actualizar.getLayoutParams();
-        System.out.println(params.height);
         params.height = altura;
         this.actualizar.setLayoutParams(params);
         this.actualizar.requestLayout();

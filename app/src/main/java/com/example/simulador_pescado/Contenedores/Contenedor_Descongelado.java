@@ -113,10 +113,9 @@ public class Contenedor_Descongelado extends Fragment {
 
     private void llenarview(ViewPager viewPager) {
         SesionesAdapter adatartes2= new SesionesAdapter(getFragmentManager());
-        adatartes2.addfragments(new Fragment_Descongelado_Plan(),"Diseño del plan");
-        adatartes2.addfragments(new Fragment_Descongelado_TiempoMuerto(),"Tiempo muerto");
-
-        adatartes2.addfragments(new Fragment_Descongelado_OM(),"OM");
+        adatartes2.addfragments(new Fragment_Descongelado_Plan(), getResources().getString(R.string.Preselecion_tinas));
+        adatartes2.addfragments(new Fragment_Descongelado_TiempoMuerto(), getResources().getString(R.string.TiempoMuerto));
+        adatartes2.addfragments(new Fragment_Descongelado_OM(), getResources().getString(R.string.OM));
         viewPager.setAdapter(adatartes2);
     }
     // TODO: Rename method, update argument and hook method into UI event
