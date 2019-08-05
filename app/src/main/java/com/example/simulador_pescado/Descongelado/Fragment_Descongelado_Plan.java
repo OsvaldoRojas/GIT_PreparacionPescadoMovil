@@ -21,6 +21,8 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.Tina;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1018,6 +1020,66 @@ public class Fragment_Descongelado_Plan extends Fragment{
 
                 TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
                 etiquetaFecha.setText(fechaActual);
+
+                final TextView etiquetaPosicion1 = ventanaEmergente.findViewById(R.id.etiquetaPosicion1);
+                etiquetaPosicion1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if( etiquetaPosicion1.getText().toString().contains("disponible") ){
+                            etiquetaPosicion1.setText("Posición 1 ocupada");
+                        }else{
+                            etiquetaPosicion1.setText("Posición 1 disponible");
+                        }
+                    }
+                });
+
+                final TextView etiquetaPosicion2 = ventanaEmergente.findViewById(R.id.etiquetaPosicion2);
+                etiquetaPosicion2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if( etiquetaPosicion2.getText().toString().contains("disponible") ){
+                            etiquetaPosicion2.setText("Posición 2 ocupada");
+                        }else{
+                            etiquetaPosicion2.setText("Posición 2 disponible");
+                        }
+                    }
+                });
+
+                final TextView etiquetaPosicion3 = ventanaEmergente.findViewById(R.id.etiquetaPosicion3);
+                etiquetaPosicion3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if( etiquetaPosicion3.getText().toString().contains("disponible") ){
+                            etiquetaPosicion3.setText("Posición 3 ocupada");
+                        }else{
+                            etiquetaPosicion3.setText("Posición 3 disponible");
+                        }
+                    }
+                });
+
+                final TextView etiquetaPosicion4 = ventanaEmergente.findViewById(R.id.etiquetaPosicion4);
+                etiquetaPosicion4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if( etiquetaPosicion4.getText().toString().contains("disponible") ){
+                            etiquetaPosicion4.setText("Posición 4 ocupada");
+                        }else{
+                            etiquetaPosicion4.setText("Posición 4 disponible");
+                        }
+                    }
+                });
+
+                final TextView etiquetaPosicion5 = ventanaEmergente.findViewById(R.id.etiquetaPosicion5);
+                etiquetaPosicion5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if( etiquetaPosicion5.getText().toString().contains("disponible") ){
+                            etiquetaPosicion5.setText("Posición 5 ocupada");
+                        }else{
+                            etiquetaPosicion5.setText("Posición 5 disponible");
+                        }
+                    }
+                });
             }
         });
         this.ventanaEmergente.show();

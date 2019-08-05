@@ -1,157 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tina_dia"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/fondo_asignar"
+    tools:context=".Preselecion.Fragment_Preselecion_Tinas">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="288dp"
-        android:layout_height="396dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
-        >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:textSize="15dp"
-            android:background="@android:color/white"
-            android:id="@+id/fecha"
-            android:layout_width="117dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="32dp"
-            android:text="TextView"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/nivel_4"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="136dp"
-            android:background="@android:color/white"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            android:gravity="center_vertical"
-            android:text="Posision 4 Libre"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/nivel_3"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detalleEstiba"
+                    android:textColor="@color/blanco"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:textSize="17dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:textColor="@color/blanco"
+                    android:gravity="center"
+                    android:layout_marginTop="1dp"
+                    android:textSize="13dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaHora"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="00:00"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaPosicion5"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="Posición 5 disponible"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaPosicion4"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="Posición 4 disponible"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaPosicion3"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="Posición 3 disponible"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaPosicion2"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="Posición 2 disponible"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaPosicion1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="Posición 1 disponible"
+                    android:background="@color/no_selecion"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="bottom">
+
+                <Button
+                    android:id="@+id/boton1"
+                    android:text="@string/cancelar"
+                    style="@style/botonAccion"/>
+
+                <Button
+                    android:id="@+id/boton2"
+                    android:text="@string/completa"
+                    style="@style/botonAccion"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="168dp"
-            android:background="@android:color/white"
-            android:textSize="20dp"
-            android:text="Posision 3 Libre"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/nivel_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="200dp"
-            android:background="@android:color/white"
-            android:text="Posision 2 Libre"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ProgressBar
+                android:id="@+id/barraProgreso"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="180dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateTint="@color/colorPrimary"/>
 
-        <TextView
-            android:id="@+id/nivel_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="232dp"
-            android:background="@android:color/white"
-            android:text="Posision 1 Libre"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
-        <TextView
-            android:textSize="20dp"
-            android:id="@+id/nivel_5"
-            android:background="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="104dp"
-            android:text="Posision 5 Libre"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:textAlignment="center"
-            android:textSize="15dp"
-            android:background="@android:color/white"
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DETALLE ESTIBA"
-            />
-
-
-
-        <TextView
-            android:id="@+id/relog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="56dp"
-            android:background="@android:color/white"
-            android:textAlignment="center"
-            android:textSize="15dp"
-            android:text="Tiempo 88:88"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
