@@ -226,7 +226,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
             @Override
             public void onClick(View view) {
 
-                crear_dialog_detalle(view);
+
 
 
 
@@ -885,33 +885,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
             }
         }
     }
-    private void crear_dialog_detalle(View view) {
-        {
 
-            Metodos_Retonables obtner_fecha= new Metodos_Retonables();
-            AlertDialog.Builder alerta= new AlertDialog.Builder(view.getContext());
-            View vista= getActivity().getLayoutInflater().inflate(R.layout.dialog_orden_mantenimiento,null);
-            final TextView dialogfecha= vista.findViewById(R.id.fecha);
-
-
-            String fechaActual= obtner_fecha.Obtener_fecha();
-            dialogfecha.setText(fechaActual);
-
-
-            alerta.setCancelable(true).setPositiveButton("Aceptar",
-                    new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //no hace nada basicamente
-                        }
-                    });
-            alerta.setView(vista);
-            alerta.show();
-            //return alerta.create();
-
-        }
-    }
     private Button btn_selecionado(){
         Button aux=null;
 
