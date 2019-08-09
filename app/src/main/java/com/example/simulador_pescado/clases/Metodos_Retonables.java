@@ -748,7 +748,7 @@ public class Metodos_Retonables {
     public Button regresar_boton(String boton,View view){
 
         Button button=null;
-        button=view.findViewById(R.id.estiba1);
+        //button=view.findViewById(R.id.estiba1);
 
         return button;
     }

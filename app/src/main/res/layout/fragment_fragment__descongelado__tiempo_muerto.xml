@@ -1,1441 +1,580 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="400dp"
-    tools:context=".Descongelado.Fragment_Descongelado_TiempoMuerto">
+    android:layout_height="match_parent"
+    tools:context=".Preselecion.Fragment_Preselecion_Tinas">
 
-    <!-- TODO: Update blank fragment layout -->
-    <HorizontalScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/estiba1"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba5"
-                app:layout_constraintTop_toBottomOf="@+id/estiba3" />
-
-            <Button
-                android:id="@+id/estiba2"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba4"
-                app:layout_constraintTop_toBottomOf="@+id/estiba1" />
-
-            <Button
-                android:id="@+id/estiba3"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba6"
-                app:layout_constraintTop_toBottomOf="@+id/estiba7" />
-
-            <Button
-                android:id="@+id/estiba4"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba9"
-                app:layout_constraintTop_toBottomOf="@+id/estiba5" />
-
-            <Button
-                android:id="@+id/estiba5"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba10"
-                app:layout_constraintTop_toBottomOf="@+id/estiba6" />
-
-            <Button
-                android:id="@+id/estiba6"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba11"
-                app:layout_constraintTop_toBottomOf="@+id/estiba8" />
-
-            <Button
-                android:id="@+id/estiba7"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba8"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba8"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba12"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba9"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba13"
-                app:layout_constraintTop_toBottomOf="@+id/estiba10" />
-
-            <Button
-                android:id="@+id/estiba10"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba14"
-                app:layout_constraintTop_toBottomOf="@+id/estiba11" />
-
-            <Button
-                android:id="@+id/estiba11"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba15"
-                app:layout_constraintTop_toBottomOf="@+id/estiba12" />
-
-            <Button
-                android:id="@+id/estiba12"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba16"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba13"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba49"
-                app:layout_constraintTop_toBottomOf="@+id/estiba14" />
-
-            <Button
-                android:id="@+id/estiba14"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba52"
-                app:layout_constraintTop_toBottomOf="@+id/estiba15" />
-
-            <Button
-                android:id="@+id/estiba15"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba57"
-                app:layout_constraintTop_toBottomOf="@+id/estiba16" />
-
-            <Button
-                android:id="@+id/estiba16"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba61"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba17"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba18"
-                app:layout_constraintTop_toBottomOf="@+id/estiba21" />
-
-            <Button
-                android:id="@+id/estiba18"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba19"
-                app:layout_constraintTop_toBottomOf="@+id/estiba22" />
-
-            <Button
-                android:id="@+id/estiba19"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba20"
-                app:layout_constraintTop_toBottomOf="@+id/estiba23" />
-
-            <Button
-                android:id="@+id/estiba20"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba24" />
-
-            <Button
-                android:id="@+id/estiba21"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba22"
-                app:layout_constraintTop_toBottomOf="@+id/estiba25" />
-
-            <Button
-                android:id="@+id/estiba22"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba23"
-                app:layout_constraintTop_toBottomOf="@+id/estiba26" />
-
-            <Button
-                android:id="@+id/estiba23"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba24"
-                app:layout_constraintTop_toBottomOf="@+id/estiba27" />
-
-            <Button
-                android:id="@+id/estiba24"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba28" />
-
-            <Button
-                android:id="@+id/estiba25"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba26"
-                app:layout_constraintTop_toBottomOf="@+id/estiba29" />
-
-            <Button
-                android:id="@+id/estiba26"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba27"
-                app:layout_constraintTop_toBottomOf="@+id/estiba30" />
-
-            <Button
-                android:id="@+id/estiba27"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba28"
-                app:layout_constraintTop_toBottomOf="@+id/estiba31" />
-
-            <Button
-                android:id="@+id/estiba28"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba44" />
-
-            <Button
-                android:id="@+id/estiba29"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba30"
-                app:layout_constraintTop_toBottomOf="@+id/estiba32" />
-
-            <Button
-                android:id="@+id/estiba30"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba31"
-                app:layout_constraintTop_toBottomOf="@+id/estiba33" />
-
-            <Button
-                android:id="@+id/estiba31"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba44"
-                app:layout_constraintTop_toBottomOf="@+id/estiba34" />
-
-            <Button
-                android:id="@+id/estiba32"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba33"
-                app:layout_constraintTop_toBottomOf="@+id/estiba35" />
-
-            <Button
-                android:id="@+id/estiba33"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba34"
-                app:layout_constraintTop_toBottomOf="@+id/estiba36" />
-
-            <Button
-                android:id="@+id/estiba34"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba45"
-                app:layout_constraintTop_toBottomOf="@+id/estiba37" />
-
-            <Button
-                android:id="@+id/estiba35"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba36"
-                app:layout_constraintTop_toBottomOf="@+id/estiba38" />
-
-            <Button
-                android:id="@+id/estiba36"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba37"
-                app:layout_constraintTop_toBottomOf="@+id/estiba39" />
-
-            <Button
-                android:id="@+id/estiba37"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba46"
-                app:layout_constraintTop_toBottomOf="@+id/estiba40" />
-
-            <Button
-                android:id="@+id/estiba38"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba39"
-                app:layout_constraintTop_toBottomOf="@+id/estiba41" />
-
-            <Button
-                android:id="@+id/estiba39"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba40"
-                app:layout_constraintTop_toBottomOf="@+id/estiba42" />
-
-            <Button
-                android:id="@+id/estiba40"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba47"
-                app:layout_constraintTop_toBottomOf="@+id/estiba43" />
-
-            <Button
-                android:id="@+id/estiba41"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba42"
-                app:layout_constraintTop_toBottomOf="@+id/estiba49" />
-
-            <Button
-                android:id="@+id/estiba42"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba43"
-                app:layout_constraintTop_toBottomOf="@+id/estiba50" />
-
-            <Button
-                android:id="@+id/estiba43"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba48"
-                app:layout_constraintTop_toBottomOf="@+id/estiba51" />
-
-            <Button
-                android:id="@+id/estiba44"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba45" />
-
-            <Button
-                android:id="@+id/estiba45"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba46" />
-
-            <Button
-                android:id="@+id/estiba46"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba47" />
-
-            <Button
-                android:id="@+id/estiba47"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba48" />
-
-            <Button
-                android:id="@+id/estiba48"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba55" />
-
-            <Button
-                android:id="@+id/estiba49"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba50"
-                app:layout_constraintTop_toBottomOf="@+id/estiba52" />
-
-            <Button
-                android:id="@+id/estiba50"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba51"
-                app:layout_constraintTop_toBottomOf="@+id/estiba53" />
-
-            <Button
-                android:id="@+id/estiba51"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba55"
-                app:layout_constraintTop_toBottomOf="@+id/estiba54" />
-
-            <Button
-                android:id="@+id/estiba52"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba53"
-                app:layout_constraintTop_toBottomOf="@+id/estiba57" />
-
-            <Button
-                android:id="@+id/estiba53"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba54"
-                app:layout_constraintTop_toBottomOf="@+id/estiba58" />
-
-            <Button
-                android:id="@+id/estiba54"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba56"
-                app:layout_constraintTop_toBottomOf="@+id/estiba59" />
-
-            <Button
-                android:id="@+id/estiba55"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba56" />
-
-            <Button
-                android:id="@+id/estiba56"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba60" />
-
-            <Button
-                android:id="@+id/estiba57"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba58"
-                app:layout_constraintTop_toBottomOf="@+id/estiba61" />
-
-            <Button
-                android:id="@+id/estiba58"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba59"
-                app:layout_constraintTop_toBottomOf="@+id/estiba62" />
-
-            <Button
-                android:id="@+id/estiba59"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba60"
-                app:layout_constraintTop_toBottomOf="@+id/estiba63" />
-
-            <Button
-                android:id="@+id/estiba60"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/estiba64" />
-
-            <Button
-                android:id="@+id/estiba61"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba62"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba62"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba63"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba63"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba64"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba64"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="112dp"
-                android:layout_marginLeft="112dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/estiba65"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba41"
-                app:layout_constraintTop_toBottomOf="@+id/estiba13" />
-
-            <Button
-                android:id="@+id/estiba66"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba67"
-                app:layout_constraintTop_toBottomOf="@+id/estiba69" />
-
-            <Button
-                android:id="@+id/estiba67"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba68"
-                app:layout_constraintTop_toBottomOf="@+id/estiba70" />
-
-            <Button
-                android:id="@+id/estiba68"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba90"
-                app:layout_constraintTop_toBottomOf="@+id/estiba71" />
-
-            <Button
-                android:id="@+id/estiba69"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba70"
-                app:layout_constraintTop_toBottomOf="@+id/estiba72" />
-
-            <Button
-                android:id="@+id/estiba70"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba71"
-                app:layout_constraintTop_toBottomOf="@+id/estiba73" />
-
-            <Button
-                android:id="@+id/estiba71"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba91"
-                app:layout_constraintTop_toBottomOf="@+id/estiba74" />
-
-            <Button
-                android:id="@+id/estiba72"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba73"
-                app:layout_constraintTop_toBottomOf="@+id/estiba75" />
-
-            <Button
-                android:id="@+id/estiba73"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba74"
-                app:layout_constraintTop_toBottomOf="@+id/estiba76" />
-
-            <Button
-                android:id="@+id/estiba74"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba92"
-                app:layout_constraintTop_toBottomOf="@+id/estiba77" />
-
-            <Button
-                android:id="@+id/estiba75"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba76"
-                app:layout_constraintTop_toBottomOf="@+id/estiba78" />
-
-            <Button
-                android:id="@+id/estiba76"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba77"
-                app:layout_constraintTop_toBottomOf="@+id/estiba79" />
-
-            <Button
-                android:id="@+id/estiba77"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba93"
-                app:layout_constraintTop_toBottomOf="@+id/estiba84" />
-
-            <Button
-                android:id="@+id/estiba78"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba79"
-                app:layout_constraintTop_toBottomOf="@+id/estiba80" />
-
-            <Button
-                android:id="@+id/estiba79"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba84"
-                app:layout_constraintTop_toBottomOf="@+id/estiba81" />
-
-            <Button
-                android:id="@+id/estiba80"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba81"
-                app:layout_constraintTop_toBottomOf="@+id/estiba82" />
-
-            <Button
-                android:id="@+id/estiba81"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba85"
-                app:layout_constraintTop_toBottomOf="@+id/estiba83" />
-
-            <Button
-                android:id="@+id/estiba82"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba83"
-                app:layout_constraintTop_toBottomOf="@+id/estiba87" />
-
-            <Button
-                android:id="@+id/estiba83"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba86"
-                app:layout_constraintTop_toBottomOf="@+id/estiba88" />
-
-            <Button
-                android:id="@+id/estiba84"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba94"
-                app:layout_constraintTop_toBottomOf="@+id/estiba85" />
-
-            <Button
-                android:id="@+id/estiba85"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba95"
-                app:layout_constraintTop_toBottomOf="@+id/estiba86" />
-
-            <Button
-                android:id="@+id/estiba86"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba96"
-                app:layout_constraintTop_toBottomOf="@+id/estiba89" />
-
-            <Button
-                android:id="@+id/estiba87"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba88"
-                app:layout_constraintTop_toBottomOf="@+id/estiba2" />
-
-            <Button
-                android:id="@+id/estiba88"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba89"
-                app:layout_constraintTop_toBottomOf="@+id/estiba4" />
-
-            <Button
-                android:id="@+id/estiba89"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba65"
-                app:layout_constraintTop_toBottomOf="@+id/estiba9" />
-
-            <Button
-                android:id="@+id/estiba90"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba17"
-                app:layout_constraintTop_toBottomOf="@+id/estiba91" />
-
-            <Button
-                android:id="@+id/estiba91"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba21"
-                app:layout_constraintTop_toBottomOf="@+id/estiba92" />
-
-            <Button
-                android:id="@+id/estiba92"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba25"
-                app:layout_constraintTop_toBottomOf="@+id/estiba93" />
-
-            <Button
-                android:id="@+id/estiba93"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba29"
-                app:layout_constraintTop_toBottomOf="@+id/estiba94" />
-
-            <Button
-                android:id="@+id/estiba94"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba32"
-                app:layout_constraintTop_toBottomOf="@+id/estiba95" />
-
-            <Button
-                android:id="@+id/estiba95"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba35"
-                app:layout_constraintTop_toBottomOf="@+id/estiba96" />
-
-            <Button
-                android:id="@+id/estiba96"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/no_selecion"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/estiba38"
-                app:layout_constraintTop_toBottomOf="@+id/estiba65" />
-
-            <Button
-                android:id="@+id/carrito1"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="CA"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carrito2" />
-
-            <Button
-                android:id="@+id/carrito2"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="CA"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carrito3" />
-
-            <Button
-                android:id="@+id/carrito3"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/no_selecion"
-                android:text="CA"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carrito4" />
-
-            <Button
-                android:id="@+id/carrito4"
-                android:layout_width="29dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="124dp"
-                android:background="@color/no_selecion"
-                android:text="CA"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </HorizontalScrollView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="309dp"
-        android:layout_height="42dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/orden_mante"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="orden de mantenimiento"
+            android:orientation="vertical">
 
-            />
-    </LinearLayout>
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/actualizar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <ScrollView
+                    android:id="@+id/vistaIconos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:id="@+id/montacargas"
+                                android:layout_width="27dp"
+                                android:layout_height="27dp"
+                                style="@style/montacargas"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina1"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina2"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina3"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina4"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina5"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina6"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina7"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina8"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina9"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina10"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina11"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina12"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina13"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina14"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina15"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina16"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina17"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina18"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina19"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina20"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina21"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina22"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina23"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina24"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina25"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina26"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina27"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina28"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina29"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina30"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina31"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina32"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina33"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina34"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina35"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina36"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina37"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina38"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina39"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina40"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina41"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina42"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina43"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina44"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina45"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina46"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina47"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina48"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina49"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina50"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina51"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina52"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina53"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina54"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina55"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina56"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina57"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina58"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina59"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina60"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina61"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina62"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina63"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina64"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina65"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina66"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina67"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina68"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina69"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina70"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina71"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina72"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina73"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina74"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina75"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina76"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina77"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina78"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina79"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina80"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina81"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina82"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina83"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina84"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina85"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina86"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina87"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina88"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:id="@+id/tina89"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina90"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina91"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina92"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina93"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina94"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina95"
+                                    style="@style/tinaAtemperado"/>
+
+                                <ImageView
+                                    android:id="@+id/tina96"
+                                    style="@style/tinaAtemperado"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <LinearLayout
+                android:id="@+id/botonera"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/botonCrearOrden"
+                    android:text="@string/crearOrden"
+                    style="@style/botonAccion"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/barraProgreso"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateTint="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
