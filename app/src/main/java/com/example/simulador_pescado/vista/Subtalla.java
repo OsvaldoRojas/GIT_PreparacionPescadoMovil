@@ -7,7 +7,7 @@ public class Subtalla {
     private int piezas;
     private float pesoPromedioPieza;
     private Boolean activo;
-    private Boolean borrado;
+    private Boolean simulador;
 
     public int getIdSubtalla() {
         return idSubtalla;
@@ -49,11 +49,11 @@ public class Subtalla {
         this.activo = activo;
     }
 
-    public Boolean getBorrado() {
-        return borrado;
+    public Boolean getSimulador() {
+        return simulador;
     }
 
-    public void setBorrado(Boolean borrado) {
-        this.borrado = borrado;
+    public void setSimulador(Boolean simulador) {
+        this.simulador = simulador;
     }
 }

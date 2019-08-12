@@ -5,7 +5,7 @@ public class Talla {
     private int idTalla;
     private String descripcion;
     private Boolean activo;
-    private Boolean borrado;
+    private Boolean simulador;
 
     public int getIdTalla() {
         return idTalla;
@@ -31,11 +31,11 @@ public class Talla {
         this.activo = activo;
     }
 
-    public Boolean getBorrado() {
-        return borrado;
+    public Boolean getSimulador() {
+        return simulador;
     }
 
-    public void setBorrado(Boolean borrado) {
-        this.borrado = borrado;
+    public void setSimulador(Boolean simulador) {
+        this.simulador = simulador;
     }
 }
