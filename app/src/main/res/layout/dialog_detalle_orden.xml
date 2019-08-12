@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_asignar">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:id="@+id/vistaGeneral"
+                android:layout_width="match_parent"
+                android:layout_height="360dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ordenMantenimiento"
+                        android:textColor="@color/blanco"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:textSize="17dp"/>
+
+                    <TextView
+                        android:id="@+id/etiquetaFecha"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:textColor="@color/blanco"
+                        android:gravity="center"
+                        android:layout_marginTop="1dp"
+                        android:textSize="13dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/no_selecion">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:textColor="@color/negro"
+                            android:gravity="center_horizontal"
+                            android:textSize="15dp"
+                            android:text="Folio:"
+                            android:paddingBottom="4dp"
+                            android:paddingTop="4dp"
+                            android:paddingLeft="5dp"/>
+
+                        <TextView
+                            android:id="@+id/etiquetaFolio"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:textColor="@color/negro"
+                            android:gravity="right"
+                            android:textSize="15dp"
+                            android:paddingBottom="4dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="5dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/etiquetaHoraInicio"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/no_selecion"
+                            android:textColor="@color/negro"
+                            android:gravity="center"
+                            android:textSize="15dp"
+                            android:text="00:00"
+                            android:paddingBottom="4dp"
+                            android:paddingTop="4dp" />
+
+                        <TextView
+                            android:id="@+id/etiquetaHoraFin"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="5dp"
+                            android:background="@color/blanco"
+                            android:textColor="@color/negro"
+                            android:gravity="center"
+                            android:textSize="15dp"
+                            android:text="00:00"
+                            android:paddingBottom="4dp"
+                            android:paddingTop="4dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/etiquetaDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:textColor="@color/negro"
+                        android:background="@color/no_selecion"
+                        android:textSize="15dp"
+                        android:paddingTop="4dp"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="4dp">
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/campoSolucion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:hint="Solución"
+                        android:gravity="top"
+                        android:textColor="@color/negro"
+                        android:background="@color/blanco"
+                        android:textSize="15dp"
+                        android:paddingTop="4dp"
+                        android:paddingLeft="5dp"
+                        android:paddingBottom="4dp"
+                        android:lines="6">
+                        <requestFocus/>
+                    </EditText>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="10dp">
+
+                        <Button
+                            android:id="@+id/botonAgregar"
+                            android:text="+"
+                            android:textSize="30dp"
+                            android:layout_gravity="right"
+                            android:gravity="center"
+                            android:layout_width="35dp"
+                            android:layout_height="45dp"
+                            android:layout_marginBottom="2dp"
+                            android:textColor="@color/blanco"
+                            android:background="@drawable/boton_accion"/>
+
+                        <ListView
+                            android:id="@+id/listaArtefactos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="bottom">
+
+                <Button
+                    android:id="@+id/boton1"
+                    android:text="@string/cancelar"
+                    style="@style/botonAccion"/>
+
+                <Button
+                    android:id="@+id/boton2"
+                    android:text="@string/aceptar"
+                    style="@style/botonAccion"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/barraProgreso"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="100dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:indeterminateTint="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

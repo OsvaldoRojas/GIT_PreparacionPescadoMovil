@@ -64,7 +64,7 @@
                     android:background="@color/blanco"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
-                    android:paddingLeft="4dp"
+                    android:paddingLeft="5dp"
                     android:paddingBottom="4dp"
                     android:lines="10">
                     <requestFocus/>

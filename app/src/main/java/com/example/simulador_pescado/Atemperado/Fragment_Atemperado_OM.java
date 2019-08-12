@@ -137,21 +137,21 @@ public class Fragment_Atemperado_OM extends Fragment {
 
     private void iniciaComponentes(){
         this.listaOrden = new ArrayList<>();
-        this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2019", "Montacargas", "") );
-        this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "") );
-        this.listaOrden.add( new OrdenMantenimiento(3, "30/07/2019", "Bnda", "") );
-        this.listaOrden.add( new OrdenMantenimiento(4, "30/07/2019", "Tina", "") );
-        this.listaOrden.add( new OrdenMantenimiento(5, "30/07/2019", "Recepción", "") );
-        this.listaOrden.add( new OrdenMantenimiento(6, "30/07/2019", "Estiba", "") );
-        this.listaOrden.add( new OrdenMantenimiento(7, "30/07/2019", "Tina sin talla", "") );
-        this.listaOrden.add( new OrdenMantenimiento(8, "30/07/2019", "Montacargas", "") );
-        this.listaOrden.add( new OrdenMantenimiento(9, "30/07/2019", "Recepción", "") );
-        this.listaOrden.add( new OrdenMantenimiento(10, "31/07/2019", "Tina", "") );
-        this.listaOrden.add( new OrdenMantenimiento(11, "31/07/2019", "Báscula", "") );
-        this.listaOrden.add( new OrdenMantenimiento(12, "31/07/2019", "Recepción", "") );
-        this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "") );
-        this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "") );
-        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "") );
+        this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2019", "Montacargas", "", "Prueba descripción 1") );
+        this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "", "Prueba descripción 2") );
+        this.listaOrden.add( new OrdenMantenimiento(3, "30/07/2019", "Bnda", "", "Prueba descripción 3") );
+        this.listaOrden.add( new OrdenMantenimiento(4, "30/07/2019", "Tina", "", "Prueba descripción 4") );
+        this.listaOrden.add( new OrdenMantenimiento(5, "30/07/2019", "Recepción", "", "Prueba descripción 5") );
+        this.listaOrden.add( new OrdenMantenimiento(6, "30/07/2019", "Estiba", "", "Prueba descripción 6") );
+        this.listaOrden.add( new OrdenMantenimiento(7, "30/07/2019", "Tina sin talla", "", "Prueba descripción 7") );
+        this.listaOrden.add( new OrdenMantenimiento(8, "30/07/2019", "Montacargas", "", "Prueba descripción 8") );
+        this.listaOrden.add( new OrdenMantenimiento(9, "30/07/2019", "Recepción", "", "Prueba descripción 9") );
+        this.listaOrden.add( new OrdenMantenimiento(10, "31/07/2019", "Tina", "", "Prueba descripción 10") );
+        this.listaOrden.add( new OrdenMantenimiento(11, "31/07/2019", "Báscula", "", "Prueba descripción 11") );
+        this.listaOrden.add( new OrdenMantenimiento(12, "31/07/2019", "Recepción", "", "Prueba descripción 12") );
+        this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "", "Prueba descripción 13") );
+        this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "", "Prueba descripción 14") );
+        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "", "Prueba descripción 15") );
 
         setGafeteEscaneado(null);
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
