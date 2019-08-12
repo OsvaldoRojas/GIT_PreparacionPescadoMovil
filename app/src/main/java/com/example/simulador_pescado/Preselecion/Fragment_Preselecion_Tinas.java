@@ -435,13 +435,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             for( int posicion = 1; posicion <= 12; posicion++ ){
                 final Tina recursoTina = new Tina();
                 recursoTina.setIdPosicion(posicion);
-                //recursoTina.setLibre(true);
-                recursoTina.setLibre(false);
+                recursoTina.setLibre(true);
+                //recursoTina.setLibre(false);
                 recursoTina.setEtiquetaMovil( getEtiquetaMovil(posicion) );
-                //recursoTina.setEstado(Constantes.ESTADO.inicial);
-                recursoTina.setEstado(Constantes.ESTADO.seleccionado);
+                recursoTina.setEstado(Constantes.ESTADO.inicial);
+                //recursoTina.setEstado(Constantes.ESTADO.seleccionado);
                 this.listaTinas.add(recursoTina);
-                //quitar despues de pruebas
+                /*quitar despues de pruebas
                 TinaPosicion tp = new TinaPosicion();
                 tp.setDescripcion("Tina Descripcion " + posicion);
                 Subtalla st = new Subtalla();
@@ -449,7 +449,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 recursoTina.setTina(tp);
                 recursoTina.setSubtalla(st);
                 accionIconoTina(posicion);
-                //quitar despues de pruebas
+                //quitar despues de pruebas*/
             }
         }
 

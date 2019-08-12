@@ -24,9 +24,9 @@ import java.util.List;
 
 public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL_TALLA = "http://10.50.1.15:7080/api_simulador_prep_pescado/v1/catalogos/tallas";
-    private static final String URL_SUBTALLA = "http://10.50.1.15:7080/api_simulador_prep_pescado/v1/catalogos/subtallas";
-    private static final String URL_ESPECIE = "";
+    private static final String URL_TALLA = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/tallas";
+    private static final String URL_SUBTALLA = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/subtallas";
+    private static final String URL_ESPECIE = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/grupos-especies";
     private List<Talla> listaTallas = new ArrayList<>();
     private List<Subtalla> listaSubtallas = new ArrayList<>();
     private List<GrupoEspecie> listaEspecies = new ArrayList<>();
@@ -41,9 +41,11 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
         HttpClient conexion = new DefaultHttpClient();
         HttpGet peticionTalla = new HttpGet(this.URL_TALLA);
         HttpGet peticionSubtalla = new HttpGet(this.URL_SUBTALLA);
+        HttpGet peticionEspecie = new HttpGet(this.URL_ESPECIE);
 
         peticionTalla.setHeader("content-type", "application/json");
         peticionSubtalla.setHeader("content-type", "application/json");
+        peticionEspecie.setHeader("content-type", "application/json");
 
         try {
             HttpResponse respuesta = conexion.execute(peticionTalla);
@@ -64,6 +66,18 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
             if( respuesta.getStatusLine().getStatusCode() == 200 ){
                 Type listaPlantilla = new TypeToken<List<Subtalla>>(){}.getType();
                 this.listaSubtallas = gson.fromJson(respuestaJson, listaPlantilla);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            HttpResponse respuesta = conexion.execute(peticionEspecie);
+            String respuestaJson = EntityUtils.toString( respuesta.getEntity() );
+            Gson gson = new Gson();
+            if( respuesta.getStatusLine().getStatusCode() == 200 ){
+                Type listaPlantilla = new TypeToken<List<GrupoEspecie>>(){}.getType();
+                this.listaEspecies = gson.fromJson(respuestaJson, listaPlantilla);
             }
         } catch (IOException e) {
             e.printStackTrace();
