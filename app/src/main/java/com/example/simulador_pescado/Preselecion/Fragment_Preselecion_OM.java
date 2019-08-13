@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.SearchView;
@@ -35,6 +36,7 @@ import com.example.simulador_pescado.vista.ArtefactoLista;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
@@ -60,7 +62,7 @@ public class Fragment_Preselecion_OM extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    View vista;
+    private View vista;
 
     private ListView listaVistaOrden;
     private SearchView campoBusqueda;
@@ -182,33 +184,35 @@ public class Fragment_Preselecion_OM extends Fragment {
         this.listaVistaOrden = this.vista.findViewById(R.id.listaOrden);
         this.listaVistaOrden.setAdapter(this.adaptadorOrden);
         this.listaVistaOrden.setTextFilterEnabled(true);
-        registerForContextMenu(this.listaVistaOrden);
-    }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_lista_orden, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        setPosicionSeleccionada(info.position);
-        switch ( item.getItemId() ){
-            case R.id.asignarMecanico:
-                asignaMecanico();
-                return true;
-            case R.id.cerrarTiempo:
-                System.out.println("CERRAR TIEMPO....");
-                return true;
-            case R.id.detalle:
-                muestraDetalle();
-                return true;
-                default:
-                    return super.onContextItemSelected(item);
-        }
+        this.listaVistaOrden.setLongClickable(true);
+        this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
+                setPosicionSeleccionada(posicion);
+                PopupMenu menu = new PopupMenu(getContext(), vista);
+                menu.getMenuInflater().inflate( R.menu.menu_lista_orden, menu.getMenu() );
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch ( item.getItemId() ){
+                            case R.id.asignarMecanico:
+                                asignaMecanico();
+                                return true;
+                            case R.id.cerrarTiempo:
+                                System.out.println("CERRAR TIEMPO....");
+                                return true;
+                            case R.id.detalle:
+                                muestraDetalle();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+                menu.show();
+                return false;
+            }
+        });
     }
 
     private void muestraDetalle(){
@@ -227,7 +231,7 @@ public class Fragment_Preselecion_OM extends Fragment {
                 botonCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //limpiarCampos();
+                        limpiarCampos();
                         ventanaEmergente.dismiss();
                     }
                 });
@@ -236,7 +240,7 @@ public class Fragment_Preselecion_OM extends Fragment {
                 botonAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //limpiarCampos();
+                        limpiarCampos();
                         ventanaEmergente.dismiss();
                     }
                 });
@@ -261,7 +265,7 @@ public class Fragment_Preselecion_OM extends Fragment {
 
                 final ScrollView vistaScroll = ventanaEmergente.findViewById(R.id.vistaGeneral);
 
-                Button botonAgregar = ventanaEmergente.findViewById(R.id.botonAgregar);
+                FloatingActionButton botonAgregar = ventanaEmergente.findViewById(R.id.botonAgregar);
                 botonAgregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -315,10 +319,15 @@ public class Fragment_Preselecion_OM extends Fragment {
 
     private void limpiarCampos(){
         OrdenMantenimiento orden = listaOrden.get( getPosicionSeleccionada() );
+        List<ArtefactoLista> lista = new ArrayList<>();
         for( ArtefactoLista artefactoLista : orden.getListaArtefactos() ){
             if( artefactoLista.getArtefacto().getDescripcion().equalsIgnoreCase("Artefacto") ){
-                orden.getListaArtefactos().remove(artefactoLista);
+                lista.add(artefactoLista);
             }
+        }
+
+        for(ArtefactoLista artefactoLista : lista){
+            orden.getListaArtefactos().remove(artefactoLista);
         }
     }
 
