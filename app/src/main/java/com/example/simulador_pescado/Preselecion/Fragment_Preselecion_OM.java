@@ -17,19 +17,28 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoLista;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
 import com.example.simulador_pescado.conexion.ValidaGafete;
+import com.example.simulador_pescado.vista.Artefacto;
+import com.example.simulador_pescado.vista.ArtefactoLista;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +62,7 @@ public class Fragment_Preselecion_OM extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    View vista;
+    private View vista;
 
     private ListView listaVistaOrden;
     private SearchView campoBusqueda;
@@ -62,6 +71,7 @@ public class Fragment_Preselecion_OM extends Fragment {
 
     private AdaptadorOrdenMantenimiento adaptadorOrden;
     private List<OrdenMantenimiento> listaOrden = new ArrayList<>();
+    private List<Artefacto> listaArtefactos = new ArrayList<>();
 
     private Gafete gafeteEscaneado;
 
@@ -127,22 +137,28 @@ public class Fragment_Preselecion_OM extends Fragment {
     }
 
     private void iniciaComponentes(){
+        this.listaArtefactos = new ArrayList<>();
+        this.listaArtefactos.add( new Artefacto(0, "Artefacto") );
+        this.listaArtefactos.add( new Artefacto(1, "Artefacto 1") );
+        this.listaArtefactos.add( new Artefacto(2, "Artefacto 2") );
+        this.listaArtefactos.add( new Artefacto(3, "Artefacto 3") );
+
         this.listaOrden = new ArrayList<>();
-        this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2019", "Montacargas", "") );
-        this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "") );
-        this.listaOrden.add( new OrdenMantenimiento(3, "30/07/2019", "Bnda", "") );
-        this.listaOrden.add( new OrdenMantenimiento(4, "30/07/2019", "Tina", "") );
-        this.listaOrden.add( new OrdenMantenimiento(5, "30/07/2019", "Recepción", "") );
-        this.listaOrden.add( new OrdenMantenimiento(6, "30/07/2019", "Estiba", "") );
-        this.listaOrden.add( new OrdenMantenimiento(7, "30/07/2019", "Tina sin talla", "") );
-        this.listaOrden.add( new OrdenMantenimiento(8, "30/07/2019", "Montacargas", "") );
-        this.listaOrden.add( new OrdenMantenimiento(9, "30/07/2019", "Recepción", "") );
-        this.listaOrden.add( new OrdenMantenimiento(10, "31/07/2019", "Tina", "") );
-        this.listaOrden.add( new OrdenMantenimiento(11, "31/07/2019", "Báscula", "") );
-        this.listaOrden.add( new OrdenMantenimiento(12, "31/07/2019", "Recepción", "") );
-        this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "") );
-        this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "") );
-        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "") );
+        this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2019", "Montacargas", "", "Prueba descripción 1") );
+        this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "", "Prueba descripción 2") );
+        this.listaOrden.add( new OrdenMantenimiento(3, "30/07/2019", "Bnda", "", "Prueba descripción 3") );
+        this.listaOrden.add( new OrdenMantenimiento(4, "30/07/2019", "Tina", "", "Prueba descripción 4") );
+        this.listaOrden.add( new OrdenMantenimiento(5, "30/07/2019", "Recepción", "", "Prueba descripción 5") );
+        this.listaOrden.add( new OrdenMantenimiento(6, "30/07/2019", "Estiba", "", "Prueba descripción 6") );
+        this.listaOrden.add( new OrdenMantenimiento(7, "30/07/2019", "Tina sin talla", "", "Prueba descripción 7") );
+        this.listaOrden.add( new OrdenMantenimiento(8, "30/07/2019", "Montacargas", "", "Prueba descripción 8") );
+        this.listaOrden.add( new OrdenMantenimiento(9, "30/07/2019", "Recepción", "", "Prueba descripción 9") );
+        this.listaOrden.add( new OrdenMantenimiento(10, "31/07/2019", "Tina", "", "Prueba descripción 10") );
+        this.listaOrden.add( new OrdenMantenimiento(11, "31/07/2019", "Báscula", "", "Prueba descripción 11") );
+        this.listaOrden.add( new OrdenMantenimiento(12, "31/07/2019", "Recepción", "", "Prueba descripción 12") );
+        this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "", "Prueba descripción 13") );
+        this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "", "Prueba descripción 14") );
+        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "", "Prueba descripción 15") );
 
         setGafeteEscaneado(null);
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -168,32 +184,150 @@ public class Fragment_Preselecion_OM extends Fragment {
         this.listaVistaOrden = this.vista.findViewById(R.id.listaOrden);
         this.listaVistaOrden.setAdapter(this.adaptadorOrden);
         this.listaVistaOrden.setTextFilterEnabled(true);
-        registerForContextMenu(this.listaVistaOrden);
+
+        this.listaVistaOrden.setLongClickable(true);
+        this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
+                setPosicionSeleccionada(posicion);
+                PopupMenu menu = new PopupMenu(getContext(), vista);
+                menu.getMenuInflater().inflate( R.menu.menu_lista_orden, menu.getMenu() );
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch ( item.getItemId() ){
+                            case R.id.asignarMecanico:
+                                asignaMecanico();
+                                return true;
+                            case R.id.cerrarTiempo:
+                                System.out.println("CERRAR TIEMPO....");
+                                return true;
+                            case R.id.detalle:
+                                muestraDetalle();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+                menu.show();
+                return false;
+            }
+        });
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_lista_orden, menu);
+    private void muestraDetalle(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_detalle_orden, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        limpiarCampos();
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        limpiarCampos();
+                        ventanaEmergente.dismiss();
+                    }
+                });
+
+                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
+                etiquetaFecha.setText(fechaActual);
+
+                TextView etiquetaFolio = ventanaEmergente.findViewById(R.id.etiquetaFolio);
+                etiquetaFolio.setText( String.valueOf( listaOrden.get( getPosicionSeleccionada() ).getFolio() ) );
+
+                TextView etiquetaDescripcion = ventanaEmergente.findViewById(R.id.etiquetaDescripcion);
+                etiquetaDescripcion.setText( listaOrden.get( getPosicionSeleccionada() ).getDescripcion() );
+
+                final AdaptadorArtefactoLista adaptadorArtefactoLista = new AdaptadorArtefactoLista(
+                        getContext(),
+                        listaOrden.get( getPosicionSeleccionada() ).getListaArtefactos(),
+                        listaArtefactos
+                );
+                final ListView listaArtefactosVista = ventanaEmergente.findViewById(R.id.listaArtefactos);
+                listaArtefactosVista.setAdapter(adaptadorArtefactoLista);
+                setAlturaLista(listaArtefactosVista);
+
+                final ScrollView vistaScroll = ventanaEmergente.findViewById(R.id.vistaGeneral);
+
+                FloatingActionButton botonAgregar = ventanaEmergente.findViewById(R.id.botonAgregar);
+                botonAgregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listaOrden.get( getPosicionSeleccionada() ).getListaArtefactos()
+                                .add( new ArtefactoLista( new Artefacto(), 0 ) );
+                        adaptadorArtefactoLista.notifyDataSetChanged();
+                        setAlturaLista(listaArtefactosVista);
+
+                        vistaScroll.post(new Runnable() {
+                            public void run() {
+                                vistaScroll.fullScroll(vistaScroll.FOCUS_DOWN);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        this.ventanaEmergente.show();
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch ( item.getItemId() ){
-            case R.id.asignarMecanico:
-                setPosicionSeleccionada(info.position);
-                asignaMecanico();
-                return true;
-            case R.id.cerrarTiempo:
-                System.out.println("CERRAR TIEMPO....");
-                return true;
-            case R.id.detalle:
-                System.out.println("DETALLE.....");
-                return true;
-                default:
-                    return super.onContextItemSelected(item);
+    public static boolean setAlturaLista(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null){
+            int numberOfItems = listAdapter.getCount();
+
+            //Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                float px = 500 * (listView.getResources().getDisplayMetrics().density);
+                item.measure(View.MeasureSpec.makeMeasureSpec((int)px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            //Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+            //Get padding
+            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
+
+            //Set list height.
+            int totalAltura = totalItemsHeight + totalDividersHeight + totalPadding;
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalAltura;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+            return true;
+        }
+        return false;
+    }
+
+    private void limpiarCampos(){
+        OrdenMantenimiento orden = listaOrden.get( getPosicionSeleccionada() );
+        List<ArtefactoLista> lista = new ArrayList<>();
+        for( ArtefactoLista artefactoLista : orden.getListaArtefactos() ){
+            if( artefactoLista.getArtefacto().getDescripcion().equalsIgnoreCase("Artefacto") ){
+                lista.add(artefactoLista);
+            }
+        }
+
+        for(ArtefactoLista artefactoLista : lista){
+            orden.getListaArtefactos().remove(artefactoLista);
         }
     }
 

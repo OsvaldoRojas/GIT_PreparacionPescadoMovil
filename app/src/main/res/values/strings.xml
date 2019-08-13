@@ -29,6 +29,7 @@
     <string name="asignarTurno">Asignar turno</string>
 
     <string name="crearOrden">Crear orden de mantenimiento</string>
+    <string name="ordenMantenimiento">Orden de mantenimiento</string>
 
     <string name="mensajeMezclar">Marcar tinas para mezclar con la tina seleccionada</string>
     <string name="decisionMezclar">¿Estás de acuerdo en mezclar tinas de sub tallas distintas?</string>

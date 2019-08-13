@@ -17,7 +17,7 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/actualizar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="578dp">
 
                 <ScrollView
                     android:id="@+id/vistaIconos"
