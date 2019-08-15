@@ -3,20 +3,18 @@ package com.example.simulador_pescado.Contenedores;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_Plan;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_TiempoMuerto;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
-import com.example.simulador_pescado.clases.Utilidades;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -80,34 +78,30 @@ public class Contenedor_Atemperado extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_contenedor__atemperado, container, false);
-        if(Utilidades.rotacion==0){
-           View parent= (View) container.getParent();
-           if (appbar==null){
-               appbar=parent.findViewById(R.id.appbar);
-               pestañas= new TabLayout(getActivity());
-               appbar.addView(pestañas);
-               viewPager=vista.findViewById(R.id.ViewPagerConte);
-               llenar(viewPager);
-               viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-                   @Override
-                   public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                       super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                   }
-               });
-               pestañas.setupWithViewPager(viewPager);
-           }
-        }else{
-            Utilidades.rotacion=1;
+
+        View parent= (View) container.getParent();
+        if (appbar==null){
+            appbar=parent.findViewById(R.id.appbar);
+            pestañas= new TabLayout(getActivity());
+            appbar.addView(pestañas);
+            viewPager=vista.findViewById(R.id.ViewPagerConte);
+            llenar(viewPager);
+            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
+            });
+            pestañas.setupWithViewPager(viewPager);
         }
+
         return vista;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (Utilidades.rotacion==0){
-            appbar.removeView(pestañas);
-        }
+        appbar.removeView(pestañas);
     }
 
     private void llenar(ViewPager viewPager) {
@@ -115,7 +109,7 @@ public class Contenedor_Atemperado extends Fragment {
         adapter.addfragments(new Fragment_Atemperado_Plan(), getResources().getString(R.string.Preselecion_tinas));
         adapter.addfragments(new Fragment_Atemperado_TiempoMuerto(), getResources().getString(R.string.TiempoMuerto));
         adapter.addfragments(new Fragment_Atemperado_OM(), getResources().getString(R.string.OM));
-       viewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

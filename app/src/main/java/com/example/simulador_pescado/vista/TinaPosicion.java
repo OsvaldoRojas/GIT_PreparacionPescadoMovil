@@ -2,14 +2,14 @@ package com.example.simulador_pescado.vista;
 
 public class TinaPosicion {
 
-    private int idTina;
+    private long idTina;
     private String descripcion;
 
-    public int getIdTina() {
+    public long getIdTina() {
         return idTina;
     }
 
-    public void setIdTina(int idTina) {
+    public void setIdTina(long idTina) {
         this.idTina = idTina;
     }
 

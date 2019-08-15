@@ -38,6 +38,7 @@ import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.CargaCatalogos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.conexion.ValidaGafete;
+import com.example.simulador_pescado.conexion.ValidaTina;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.GrupoEspecie;
@@ -46,6 +47,7 @@ import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
+import com.example.simulador_pescado.vista.TinaEscaneo;
 import com.example.simulador_pescado.vista.TinaPosicion;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
@@ -781,6 +783,24 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
                 TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
                 etiquetaFecha.setText(fechaActual);
+
+                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
+                campoEscaner.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        validaTina( editable.toString() );
+                    }
+                });
             }
         });
         this.ventanaEmergente.show();
@@ -1015,6 +1035,35 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             return true;
         }
         return false;
+    }
+
+    private void validaTina(String codigo){
+        if( codigo.length() >= 15 ){
+            iniciaProcesandoEmergente();
+            ValidaTina validaTina = new ValidaTina(codigo, this);
+            validaTina.execute();
+        }else{
+            EditText campoDescripcion = this.ventanaEmergente.findViewById(R.id.campoDescripcion);
+            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
+            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+        }
+    }
+
+    public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
+        EditText campoDescripcion = this.ventanaEmergente.findViewById(R.id.campoDescripcion);
+
+        if( resultadoTina.getIdTinaDes() != null ){
+            campoDescripcion.setText( resultadoTina.getTinaDes() );
+            campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
+
+            getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );
+            getTinaSeleccionada().getTina().setDescripcion( resultadoTina.getTinaDes() );
+        } else{
+            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
+            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+        }
+
+        terminaProcesandoEmergente();
     }
 
     private void validaGafete(String codigo){

@@ -3,20 +3,18 @@ package com.example.simulador_pescado.Contenedores;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_Plan;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_TiempoMuerto;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
-import com.example.simulador_pescado.clases.Utilidades;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -78,37 +76,32 @@ public class Contenedor_Descongelado extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista=inflater.inflate(R.layout.fragment_contenedor__descongelado, container, false);
-        if (Utilidades.rotacion==0){
-            View parent= (View) container.getParent();
-            if (appbar==null){
-                appbar= parent.findViewById(R.id.appbar);
-                pestañas = new TabLayout(getActivity());
-                appbar.addView(pestañas);
-                viewPager = vista.findViewById(R.id.ViewPagerConte);
-                llenarview(viewPager);
-                viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                        super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                    }
-                });
-                pestañas.setupWithViewPager(viewPager);
+
+        View parent= (View) container.getParent();
+        if (appbar==null){
+            appbar= parent.findViewById(R.id.appbar);
+            pestañas = new TabLayout(getActivity());
+            appbar.addView(pestañas);
+            viewPager = vista.findViewById(R.id.ViewPagerConte);
+            llenarview(viewPager);
+            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
+            });
+            pestañas.setupWithViewPager(viewPager);
 
 
-            }
-        }else{
-            Utilidades.rotacion=1;
         }
 
         return vista;
-}
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (Utilidades.rotacion==0){
-            appbar.removeView(pestañas);
-        }
+        appbar.removeView(pestañas);
     }
 
     private void llenarview(ViewPager viewPager) {

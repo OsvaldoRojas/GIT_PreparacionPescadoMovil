@@ -40,16 +40,18 @@
                 <EditText
                     android:id="@+id/campoDescripcion"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:hint="Descripción de la tina"
-                    android:gravity="center_horizontal|bottom"
+                    android:gravity="center_horizontal"
                     android:textColor="@color/negro"
                     android:background="@color/blanco"
                     android:textSize="15dp"
-                    android:lines="2"/>
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:focusable="true"/>
 
                 <TextView
                     android:id="@+id/etiquetaPosicion"
