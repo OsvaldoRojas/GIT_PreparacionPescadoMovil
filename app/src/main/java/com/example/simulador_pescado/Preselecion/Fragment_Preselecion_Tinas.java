@@ -31,6 +31,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
 import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
 import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
@@ -997,44 +998,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 AdaptadorMezclarSubtallas adaptador = new AdaptadorMezclarSubtallas(getContext(), listaMezclarTinas);
                 ListView listaPosicionSubtalla = ventanaEmergente.findViewById(R.id.listaSubtallas);
                 listaPosicionSubtalla.setAdapter(adaptador);
-                setAlturaLista(listaPosicionSubtalla, 349);
+                Utilerias.setAlturaLista(listaPosicionSubtalla, 349);
             }
         });
         this.ventanaEmergente.show();
-    }
-
-    public static boolean setAlturaLista(ListView listView, int tamañoMaximo) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter != null){
-            int numberOfItems = listAdapter.getCount();
-
-            //Get total height of all items.
-            int totalItemsHeight = 0;
-            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-                View item = listAdapter.getView(itemPos, null, listView);
-                float px = 500 * (listView.getResources().getDisplayMetrics().density);
-                item.measure(View.MeasureSpec.makeMeasureSpec((int)px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-                totalItemsHeight += item.getMeasuredHeight();
-            }
-
-            //Get total height of all item dividers.
-            int totalDividersHeight = listView.getDividerHeight() *
-                    (numberOfItems - 1);
-            //Get padding
-            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
-
-            //Set list height.
-            int totalAltura = totalItemsHeight + totalDividersHeight + totalPadding;
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            if(totalAltura > tamañoMaximo){
-                totalAltura = tamañoMaximo;
-            }
-            params.height = totalAltura;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-            return true;
-        }
-        return false;
     }
 
     private void validaTina(String codigo){
@@ -1108,7 +1075,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 AdaptadorMezclarSubtallas adaptador = new AdaptadorMezclarSubtallas(getContext(), listaMezclarTinas);
                 ListView listaPosicionSubtalla = ventanaEmergente.findViewById(R.id.listaSubtallas);
                 listaPosicionSubtalla.setAdapter(adaptador);
-                setAlturaLista(listaPosicionSubtalla, 349);
+                Utilerias.setAlturaLista(listaPosicionSubtalla, 349);
             }
         });
         this.ventanaEmergente.show();

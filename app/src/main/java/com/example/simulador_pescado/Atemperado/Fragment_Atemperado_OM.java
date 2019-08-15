@@ -27,6 +27,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoLista;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
 import com.example.simulador_pescado.conexion.ValidaGafete;
@@ -258,7 +259,7 @@ public class Fragment_Atemperado_OM extends Fragment {
                 );
                 final ListView listaArtefactosVista = ventanaEmergente.findViewById(R.id.listaArtefactos);
                 listaArtefactosVista.setAdapter(adaptadorArtefactoLista);
-                setAlturaLista(listaArtefactosVista);
+                Utilerias.setAlturaLista(listaArtefactosVista, 0);
 
                 final ScrollView vistaScroll = ventanaEmergente.findViewById(R.id.vistaGeneral);
 
@@ -269,7 +270,7 @@ public class Fragment_Atemperado_OM extends Fragment {
                         listaOrden.get( getPosicionSeleccionada() ).getListaArtefactos()
                                 .add( new ArtefactoLista( new Artefacto(), 0 ) );
                         adaptadorArtefactoLista.notifyDataSetChanged();
-                        setAlturaLista(listaArtefactosVista);
+                        Utilerias.setAlturaLista(listaArtefactosVista, 0);
 
                         vistaScroll.post(new Runnable() {
                             public void run() {
@@ -281,37 +282,6 @@ public class Fragment_Atemperado_OM extends Fragment {
             }
         });
         this.ventanaEmergente.show();
-    }
-
-    public static boolean setAlturaLista(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter != null){
-            int numberOfItems = listAdapter.getCount();
-
-            //Get total height of all items.
-            int totalItemsHeight = 0;
-            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-                View item = listAdapter.getView(itemPos, null, listView);
-                float px = 500 * (listView.getResources().getDisplayMetrics().density);
-                item.measure(View.MeasureSpec.makeMeasureSpec((int)px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-                totalItemsHeight += item.getMeasuredHeight();
-            }
-
-            //Get total height of all item dividers.
-            int totalDividersHeight = listView.getDividerHeight() *
-                    (numberOfItems - 1);
-            //Get padding
-            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
-
-            //Set list height.
-            int totalAltura = totalItemsHeight + totalDividersHeight + totalPadding;
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalAltura;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-            return true;
-        }
-        return false;
     }
 
     private void limpiarCampos(){
