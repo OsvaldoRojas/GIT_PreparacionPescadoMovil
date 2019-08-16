@@ -489,18 +489,22 @@
 
                                     <ImageView
                                         android:id="@+id/tina69"
+                                        android:src="@drawable/ic_uno2"
                                         style="@style/tinaAtemperado"/>
 
                                     <ImageView
                                         android:id="@+id/tina70"
+                                        android:src="@drawable/ic_dos2"
                                         style="@style/tinaAtemperado"/>
 
                                     <ImageView
                                         android:id="@+id/tina71"
+                                        android:src="@drawable/ic_tres2"
                                         style="@style/tinaAtemperado"/>
 
                                     <ImageView
                                         android:id="@+id/tina72"
+                                        android:src="@drawable/ic_cuatro2"
                                         style="@style/tinaAtemperado"/>
 
                                 </LinearLayout>
@@ -513,6 +517,7 @@
 
                                     <ImageView
                                         android:id="@+id/tina73"
+                                        android:src="@drawable/ic_cinco2"
                                         style="@style/tinaAtemperado"/>
 
                                     <ImageView
