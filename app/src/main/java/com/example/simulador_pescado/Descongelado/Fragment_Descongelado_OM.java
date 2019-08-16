@@ -16,18 +16,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoLista;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
 import com.example.simulador_pescado.conexion.ValidaGafete;
@@ -68,13 +72,14 @@ public class Fragment_Descongelado_OM extends Fragment {
     private AlertDialog ventanaError;
 
     private AdaptadorOrdenMantenimiento adaptadorOrden;
+    private OrdenMantenimiento ordenSeleccionada;
     private List<OrdenMantenimiento> listaOrden = new ArrayList<>();
     private List<Artefacto> listaArtefactos = new ArrayList<>();
+    private String[] listaCodigos = {"Código","001","002","003"};
 
     private Gafete gafeteEscaneado;
 
     private String fechaActual;
-    private int posicionSeleccionada;
 
     private OnFragmentInteractionListener mListener;
 
@@ -90,12 +95,12 @@ public class Fragment_Descongelado_OM extends Fragment {
         this.gafeteEscaneado = gafeteEscaneado;
     }
 
-    public int getPosicionSeleccionada() {
-        return posicionSeleccionada;
+    public OrdenMantenimiento getOrdenSeleccionada() {
+        return ordenSeleccionada;
     }
 
-    public void setPosicionSeleccionada(int posicionSeleccionada) {
-        this.posicionSeleccionada = posicionSeleccionada;
+    public void setOrdenSeleccionada(OrdenMantenimiento ordenSeleccionada) {
+        this.ordenSeleccionada = ordenSeleccionada;
     }
 
     /**
@@ -188,7 +193,7 @@ public class Fragment_Descongelado_OM extends Fragment {
         this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
-                setPosicionSeleccionada(posicion);
+                setOrdenSeleccionada( listaOrden.get(posicion) );
                 PopupMenu menu = new PopupMenu(getContext(), vista);
                 menu.getMenuInflater().inflate( R.menu.menu_lista_orden, menu.getMenu() );
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -205,6 +210,7 @@ public class Fragment_Descongelado_OM extends Fragment {
                                 muestraDetalle();
                                 return true;
                         }
+                        setOrdenSeleccionada(null);
                         return false;
                     }
                 });
@@ -231,6 +237,7 @@ public class Fragment_Descongelado_OM extends Fragment {
                     @Override
                     public void onClick(View view) {
                         limpiarCampos();
+                        setOrdenSeleccionada(null);
                         ventanaEmergente.dismiss();
                     }
                 });
@@ -240,6 +247,7 @@ public class Fragment_Descongelado_OM extends Fragment {
                     @Override
                     public void onClick(View view) {
                         limpiarCampos();
+                        setOrdenSeleccionada(null);
                         ventanaEmergente.dismiss();
                     }
                 });
@@ -248,19 +256,34 @@ public class Fragment_Descongelado_OM extends Fragment {
                 etiquetaFecha.setText(fechaActual);
 
                 TextView etiquetaFolio = ventanaEmergente.findViewById(R.id.etiquetaFolio);
-                etiquetaFolio.setText( String.valueOf( listaOrden.get( getPosicionSeleccionada() ).getFolio() ) );
+                etiquetaFolio.setText( String.valueOf( getOrdenSeleccionada().getFolio() ) );
+
+                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
+                etiquetaEquipo.setText( getOrdenSeleccionada().getEquipo() );
 
                 TextView etiquetaDescripcion = ventanaEmergente.findViewById(R.id.etiquetaDescripcion);
-                etiquetaDescripcion.setText( listaOrden.get( getPosicionSeleccionada() ).getDescripcion() );
+                etiquetaDescripcion.setText( getOrdenSeleccionada().getDescripcion() );
+
+                final EditText campoCantidad = ventanaEmergente.findViewById(R.id.campoCantidad);
+
+                final Spinner campoCodigo = ventanaEmergente.findViewById(R.id.campoCodigo);
+                campoCodigo.setAdapter( new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaCodigos) );
+
+                final Spinner campoArtefacto = ventanaEmergente.findViewById(R.id.campoArtefacto);
+                campoArtefacto.setAdapter( new AdaptadorArtefacto( getContext(), listaArtefactos ) );
 
                 final AdaptadorArtefactoLista adaptadorArtefactoLista = new AdaptadorArtefactoLista(
                         getContext(),
-                        listaOrden.get( getPosicionSeleccionada() ).getListaArtefactos(),
-                        listaArtefactos
+                        getOrdenSeleccionada().getListaArtefactos()
                 );
                 final ListView listaArtefactosVista = ventanaEmergente.findViewById(R.id.listaArtefactos);
                 listaArtefactosVista.setAdapter(adaptadorArtefactoLista);
                 Utilerias.setAlturaLista(listaArtefactosVista, 0);
+
+                final LinearLayout contenedorEncabezados = ventanaEmergente.findViewById(R.id.contenedorEncabezados);
+                if( !getOrdenSeleccionada().getListaArtefactos().isEmpty() ){
+                    contenedorEncabezados.setVisibility(View.VISIBLE);
+                }
 
                 final ScrollView vistaScroll = ventanaEmergente.findViewById(R.id.vistaGeneral);
 
@@ -268,8 +291,14 @@ public class Fragment_Descongelado_OM extends Fragment {
                 botonAgregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        listaOrden.get( getPosicionSeleccionada() ).getListaArtefactos()
-                                .add( new ArtefactoLista( new Artefacto(), 0 ) );
+                        contenedorEncabezados.setVisibility(View.VISIBLE);
+                        getOrdenSeleccionada().getListaArtefactos().add(
+                                new ArtefactoLista(
+                                        (Artefacto) campoArtefacto.getSelectedItem(),
+                                        Integer.valueOf( campoCantidad.getText().toString() ),
+                                        campoCodigo.getSelectedItem().toString()
+                                )
+                        );
                         adaptadorArtefactoLista.notifyDataSetChanged();
                         Utilerias.setAlturaLista(listaArtefactosVista, 0);
 
@@ -278,6 +307,10 @@ public class Fragment_Descongelado_OM extends Fragment {
                                 vistaScroll.fullScroll(vistaScroll.FOCUS_DOWN);
                             }
                         });
+
+                        campoCantidad.setText("");
+                        campoArtefacto.setSelection(0);
+                        campoCodigo.setSelection(0);
                     }
                 });
             }
@@ -286,7 +319,7 @@ public class Fragment_Descongelado_OM extends Fragment {
     }
 
     private void limpiarCampos(){
-        OrdenMantenimiento orden = listaOrden.get( getPosicionSeleccionada() );
+        OrdenMantenimiento orden = getOrdenSeleccionada();
         List<ArtefactoLista> lista = new ArrayList<>();
         for( ArtefactoLista artefactoLista : orden.getListaArtefactos() ){
             if( artefactoLista.getArtefacto().getDescripcion().equalsIgnoreCase("Artefacto") ){
@@ -315,6 +348,7 @@ public class Fragment_Descongelado_OM extends Fragment {
                 botonCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        setOrdenSeleccionada(null);
                         ventanaEmergente.dismiss();
                     }
                 });
@@ -324,10 +358,11 @@ public class Fragment_Descongelado_OM extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if(getGafeteEscaneado() != null){
-                            listaOrden.get( getPosicionSeleccionada() ).setMecanico( getGafeteEscaneado().getEmpleado().getNom_trab() );
+                            getOrdenSeleccionada().setMecanico( getGafeteEscaneado().getEmpleado().getNom_trab() );
                             adaptadorOrden.notifyDataSetChanged();
                             setGafeteEscaneado(null);
                         }
+                        setOrdenSeleccionada(null);
                         ventanaEmergente.dismiss();
                     }
                 });
