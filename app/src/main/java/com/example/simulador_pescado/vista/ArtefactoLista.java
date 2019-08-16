@@ -4,12 +4,22 @@ public class ArtefactoLista {
 
     private Artefacto artefacto;
     private int cantidad;
+    private String codigo;
 
     public ArtefactoLista(){}
 
-    public ArtefactoLista(Artefacto artefacto, int cantidad){
+    public ArtefactoLista(Artefacto artefacto, int cantidad, String codigo){
         this.artefacto = artefacto;
         this.cantidad = cantidad;
+        this.codigo = codigo;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public Artefacto getArtefacto() {
