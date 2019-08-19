@@ -75,7 +75,7 @@ public class Contenedor_Descongelado extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        vista=inflater.inflate(R.layout.fragment_contenedor__descongelado, container, false);
+        vista=inflater.inflate(R.layout.fragment_contenedor_descongelado, container, false);
 
         View parent= (View) container.getParent();
         if (appbar==null){

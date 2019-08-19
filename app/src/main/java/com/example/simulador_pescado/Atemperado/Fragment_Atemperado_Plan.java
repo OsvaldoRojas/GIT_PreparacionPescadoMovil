@@ -193,7 +193,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.vista = inflater.inflate(R.layout.fragment_fragment__atemperado__plan, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_atemperado_plan, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -1063,7 +1063,9 @@ public class Fragment_Atemperado_Plan extends Fragment {
 
         if( getTinaSeleccionada() != null ){
             vista.height = vista.height - (botonera.height*5);
-            if( getTinaSeleccionada().getIdPosicion() <= 24 ){
+            if( getTinaSeleccionada().getIdPosicion() <= 12
+                    || ( getTinaSeleccionada().getIdPosicion() >= 49
+                    && getTinaSeleccionada().getIdPosicion() <= 60 ) ){
                 this.vistaIconos.post(new Runnable() {
                     public void run() {
                         vistaIconos.fullScroll(vistaIconos.FOCUS_UP);

@@ -41,7 +41,7 @@ Contenedor.OnFragmentInteractionListener, Contenedor_Descongelado.OnFragmentInte
         Fragment_Atemperado_TiempoMuerto.OnFragmentInteractionListener,Contenedor_Atemperado.OnFragmentInteractionListener, Fragment_Descongelado_Plan.OnFragmentInteractionListener,
         Fragment_Atemperado_Plan.OnFragmentInteractionListener, AsignarTina.OnFragmentInteractionListener, AsignarOperador.OnFragmentInteractionListener,
         AsignarMontacargas.OnFragmentInteractionListener, CreaOrdenMantenimiento.OnFragmentInteractionListener, AsignarMecanico.OnFragmentInteractionListener,
-        DetalleOrden.OnFragmentInteractionListener {
+        DetalleOrden.OnFragmentInteractionListener, com.example.simulador_pescado.Atemperado.CreaOrdenMantenimiento.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

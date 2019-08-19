@@ -133,7 +133,7 @@ public class Fragment_Descongelado_OM extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.vista=inflater.inflate(R.layout.fragment_fragment__descongelado__om, container, false);
+        this.vista=inflater.inflate(R.layout.fragment_descongelado_om, container, false);
 
         iniciaComponentes();
         return this.vista;

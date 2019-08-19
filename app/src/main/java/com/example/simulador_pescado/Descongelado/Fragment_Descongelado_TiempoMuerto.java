@@ -212,7 +212,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.vista = inflater.inflate(R.layout.fragment_fragment__descongelado__tiempo_muerto, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_descongelado_tiempo_muerto, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -1184,7 +1184,16 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                 });
             }
         }else{
-            vista.height = vista.height + (botonera.height*5);
+            if( getMontacargasSeleccionado() != null ){
+                vista.height = vista.height - (botonera.height*5);
+                this.vistaIconos.post(new Runnable() {
+                    public void run() {
+                        vistaIconos.fullScroll(vistaIconos.FOCUS_DOWN);
+                    }
+                });
+            }else{
+                vista.height = vista.height + (botonera.height*5);
+            }
         }
 
         this.actualizar.requestLayout();

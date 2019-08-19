@@ -21,8 +21,6 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.Tina;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -201,7 +199,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.vista = inflater.inflate(R.layout.fragment_fragment__descongelado__plan, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_descongelado_plan, container, false);
         iniciaComponentes();
         return this.vista;
     }

@@ -132,7 +132,7 @@ public class Fragment_Atemperado_OM extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista = inflater.inflate(R.layout.fragment_fragment__atemperado__om, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_atemperado_om, container, false);
 
         iniciaComponentes();
         return this.vista;
