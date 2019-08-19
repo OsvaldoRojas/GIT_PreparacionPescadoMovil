@@ -8,18 +8,6 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/casa_24"
             android:title="Inicio" />
-        <item
-            android:id="@+id/nav_preselecion"
-            android:icon="@drawable/ic_tina1"
-            android:title="Preselección" />
-        <item
-            android:id="@+id/nav_atemperado"
-            android:icon="@drawable/ic_termometro"
-            android:title="Atemperado" />
-        <item
-            android:id="@+id/nav_desconglado"
-            android:icon="@drawable/ic_termometro"
-            android:title="Descongelado" />
     </group>
 
     <item android:title="Sesión">

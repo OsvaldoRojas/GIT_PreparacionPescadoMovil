@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.Preselecion.AsignarTina;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.TinaEscaneo;
@@ -64,10 +65,10 @@ public class ValidaTina extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            ( (Fragment_Preselecion_Tinas) this.pantalla ).resultadoEscaneoTina(this.resultadoTina);
+            ( (AsignarTina) this.pantalla ).resultadoEscaneoTina(this.resultadoTina);
         }else{
-            ( (Fragment_Preselecion_Tinas) this.pantalla ).terminaProcesandoEmergente();
-            ( (Fragment_Preselecion_Tinas) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+            ( (AsignarTina) this.pantalla ).terminaProcesando();
+            ( (AsignarTina) this.pantalla ).errorEscaneoTina(this.errorMensaje);
         }
     }
 }

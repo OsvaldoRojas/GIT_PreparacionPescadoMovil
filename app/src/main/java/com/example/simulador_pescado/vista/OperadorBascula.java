@@ -2,7 +2,9 @@ package com.example.simulador_pescado.vista;
 
 import com.example.simulador_pescado.Utilerias.Constantes;
 
-public class OperadorBascula {
+import java.io.Serializable;
+
+public class OperadorBascula implements Serializable {
 
     private int idEstacion;
     private TinaPosicion principal;

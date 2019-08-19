@@ -17,11 +17,6 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
         <activity
-            android:name=".Navegador"
-            android:label="@string/title_activity_navegador"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".Preselecion.Tabs_Preselecion"
             android:label="@string/title_activity_tabs__preselecion"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -34,9 +29,9 @@
             android:label="@string/title_activity_tabs__atemperado"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppThemeAcceder">
+            android:name=".Navegador"
+            android:label="@string/title_activity_navegador"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

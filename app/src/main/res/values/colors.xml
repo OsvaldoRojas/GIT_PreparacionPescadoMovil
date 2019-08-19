@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#053091</color>
-    <color name="colorPrimaryDark">#032169</color>
-    <color name="colorAccent">#053091</color>
+    <color name="colorPrimary">#6B6E70</color>
+    <color name="colorPrimaryDark">#4C4E50</color>
+    <color name="colorAccent">#6B6E70</color>
 
     <color name="blanco">#FFFFFF</color>
     <color name="negro">#000000</color>
@@ -16,16 +16,18 @@
     <color name="principalDeshabilitadoContenido">#7C7C7C</color>
     <color name="principalDeshabilitadoSombra">#5F5F5F</color>
 
+    <color name="botonMenuNormal">#B8BDC4</color>
+    <color name="botonMenuPresionado">#8E9096</color>
+    <color name="botonMenuDeshabilitado">#E4E7E9</color>
+
     <color name="no_selecion">#D6D7D7</color>
     <color name="selecion">#6B6E70</color>
 
+    <color name="fondo_gris_obscuro">#4C4E50</color>
     <color name="fondo_gris">#6B6E70</color>
     <color name="fondo_asignar">#828788</color>
 
     <color name="fondo_tina_principal">#555758</color>
-
-    <color name="Tina_asignada">#2CAF08</color>
-    <color name="Tina_asignada_presionada">#145502</color>
 
     <color name="noValido">#CF0808</color>
     <color name="siValido">#0EB82B</color>

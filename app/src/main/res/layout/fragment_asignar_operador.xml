@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo_asignar"
-    tools:context=".Preselecion.Fragment_Preselecion_Tinas">
+    android:background="@color/no_selecion">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/asignarUsuario"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/negro"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
                     android:textSize="17dp"/>
@@ -33,7 +32,7 @@
                     android:id="@+id/etiquetaFecha"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/negro"
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
@@ -43,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:hint="Nombre del usuario"
                     android:gravity="center_horizontal"
                     android:textColor="@color/negro"
@@ -58,15 +57,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/no_selecion">
+                    android:background="@color/blanco">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Usuario:"
@@ -78,7 +77,7 @@
                         android:id="@+id/etiquetaPosicion"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -91,15 +90,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/no_selecion">
+                    android:background="@color/blanco">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Báscula:"
@@ -111,7 +110,7 @@
                         android:id="@+id/etiquetaBascula"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -124,15 +123,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/no_selecion">
+                    android:background="@color/blanco">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Tina P.:"
@@ -144,7 +143,7 @@
                         android:id="@+id/etiquetaTinaPrincipal"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -157,15 +156,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/no_selecion">
+                    android:background="@color/blanco">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Subtalla P.:"
@@ -177,7 +176,7 @@
                         android:id="@+id/etiquetaSubtallaPrincipal"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -190,15 +189,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/no_selecion">
+                    android:background="@color/blanco">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Tina S.:"
@@ -210,7 +209,7 @@
                         android:id="@+id/etiquetaTinaSecundaria"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -223,15 +222,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/no_selecion">
+                    android:background="@color/blanco">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Subtalla S.:"
@@ -243,7 +242,7 @@
                         android:id="@+id/etiquetaSubtallaSecundaria"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -257,8 +256,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:hint="Escanear gafete"
                     android:gravity="center_horizontal"
                     android:textColor="@color/negro"
@@ -274,13 +273,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:gravity="bottom">
 
                 <Button
@@ -313,7 +309,6 @@
                 style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="180dp"
                 android:indeterminate="true"
                 android:visibility="gone"
                 android:indeterminateTint="@color/colorPrimary"/>

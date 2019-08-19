@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Sombra -->
-    <item android:top="4dp">
-        <shape>
-            <solid android:color="@color/principalPresionadoSombra" />
-            <corners android:radius="10dp" />
-        </shape>
-    </item>
     <!-- Contenido -->
-    <item android:bottom="4dp">
+    <item>
         <shape>
-            <solid android:color="@color/principalPresionadoContenido" />
-            <corners android:radius="10dp" />
+            <solid android:color="@color/botonMenuPresionado" />
+            <corners android:radius="0dp" />
         </shape>
     </item>
 </layer-list>

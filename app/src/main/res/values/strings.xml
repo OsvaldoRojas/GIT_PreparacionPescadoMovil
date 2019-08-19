@@ -40,6 +40,13 @@
     <string name="cancelar">Cancelar</string>
     <string name="completa">Completa</string>
 
+    <string name="preseleccion">Preselección</string>
+    <string name="atemperador">Atemperado</string>
+    <string name="descongelado">Descongelado</string>
+    <string name="eviscerar">Eviscerar</string>
+    <string name="cocimiento">Cocimiento</string>
+    <string name="enfriamiento">Enfriamiento</string>
+
     <string name="asignarMecanico">Asignar mecánico</string>
     <string name="cerrarTiempo">Cerrar tiempo</string>
     <string name="detalle">Detalle</string>

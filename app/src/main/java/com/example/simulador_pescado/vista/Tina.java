@@ -2,7 +2,9 @@ package com.example.simulador_pescado.vista;
 
 import com.example.simulador_pescado.Utilerias.Constantes;
 
-public class Tina {
+import java.io.Serializable;
+
+public class Tina implements Serializable {
 
     private int idPosicion;
     private TinaPosicion tina;
