@@ -254,7 +254,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.listaOperadores = listaOperadores;
         for( final OperadorBascula recursoOperador : this.listaOperadores ){
             recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
-            accionIconoOperador( recursoOperador.getIdEstacion() );
+            accionIconoOperador( recursoOperador.getIdPreseleccionEstacion() );
         }
     }
 
@@ -311,7 +311,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaError.show();
     }
 
-    private String getEtiquetaMovil(int posicion){
+    private String getEtiquetaTina(int posicion){
         switch (posicion){
             case 1: return "A6";
             case 2: return "A5";
@@ -329,6 +329,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         return "";
     }
 
+    private String getEtiquetaOperador(int posicion){
+        switch (posicion){
+            case 1: return "A5";
+            case 2: return "A4";
+            case 3: return "A3";
+            case 4: return "A2";
+            case 5: return "A1";
+            case 6: return "B1";
+            case 7: return "B2";
+            case 8: return "B3";
+            case 9: return "B4";
+            case 10: return "B5";
+        }
+        return "";
+    }
+
     private void creaObjetosVacios(){
         iniciaProcesando();
 
@@ -338,7 +354,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 recursoTina.setIdPosicion(posicion);
                 //recursoTina.setLibre(true);
                 recursoTina.setLibre(false);
-                recursoTina.setEtiquetaMovil( getEtiquetaMovil(posicion) );
+                recursoTina.setEtiquetaMovil( getEtiquetaTina(posicion) );
                 //recursoTina.setEstado(Constantes.ESTADO.inicial);
                 recursoTina.setEstado(Constantes.ESTADO.seleccionado);
                 this.listaTinas.add(recursoTina);
@@ -357,8 +373,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         if( this.listaOperadores.isEmpty() ){
             for( int posicion = 1; posicion <= 10; posicion++ ){
                 final OperadorBascula recursoOperador = new OperadorBascula();
-                recursoOperador.setIdEstacion(posicion);
+                recursoOperador.setIdPreseleccionEstacion(posicion);
                 recursoOperador.setLibre(true);
+                recursoOperador.setEstacion( getEtiquetaOperador(posicion) );
                 recursoOperador.setEstado(Constantes.ESTADO.inicial);
                 this.listaOperadores.add(recursoOperador);
             }
@@ -380,13 +397,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void accionIconoOperador(int posicion){
         for( OperadorBascula operador : this.listaOperadores ){
-            if( operador.getIdEstacion() == posicion ){
+            if( operador.getIdPreseleccionEstacion() == posicion ){
                 if( operador.getEstado() == Constantes.ESTADO.inicial ){
                     setOperadorSeleccionado(operador);
                     deshabilitaRecursos();
-                    getIconoOperador( operador.getIdEstacion() )
+                    getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setImageResource(R.drawable.ic_operador1);
-                    getIconoOperador( operador.getIdEstacion() )
+                    getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     operador.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarUsuario);
@@ -400,14 +417,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
                         habilitaRecursos();
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setImageResource(R.drawable.ic_operador2);
                         if( operador.getLibre() ){
-                            getIconoOperador( operador.getIdEstacion() )
+                            getIconoOperador( operador.getIdPreseleccionEstacion() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             operador.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoOperador( operador.getIdEstacion() )
+                            getIconoOperador( operador.getIdPreseleccionEstacion() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             operador.setEstado( Constantes.ESTADO.asignado );
                         }
@@ -415,9 +432,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     }else{
                         setOperadorSeleccionado(operador);
                         deshabilitaRecursos();
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setImageResource(R.drawable.ic_operador1);
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         operador.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarUsuario);
@@ -578,7 +595,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         if( getOperadorSeleccionado() != null ){
-            accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
+            accionIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() );
         }
 
         if( getMontacargasSeleccionado() != null ){
@@ -1107,7 +1124,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         for(OperadorBascula operador : this.listaOperadores){
-            getIconoOperador( operador.getIdEstacion() ).setEnabled(false);
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(false);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
@@ -1118,7 +1135,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
         }else{
             if( getOperadorSeleccionado() != null ){
-                getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
+                getIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() ).setEnabled(true);
             }else{
                 if( getMontacargasSeleccionado() != null ){
                     getIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ).setEnabled(true);
@@ -1133,7 +1150,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         for(OperadorBascula operador : this.listaOperadores){
-            getIconoOperador( operador.getIdEstacion() ).setEnabled(true);
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(true);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
