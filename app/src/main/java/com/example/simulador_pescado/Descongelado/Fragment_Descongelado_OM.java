@@ -223,7 +223,7 @@ public class Fragment_Descongelado_OM extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View vistaAsignar = inflater.inflate(R.layout.dialog_detalle_orden, null);
+        View vistaAsignar = inflater.inflate(R.layout.fragment_detalle_orden, null);
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
