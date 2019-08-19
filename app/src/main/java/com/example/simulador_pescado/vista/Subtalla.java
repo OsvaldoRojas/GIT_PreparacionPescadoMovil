@@ -1,6 +1,8 @@
 package com.example.simulador_pescado.vista;
 
-public class Subtalla {
+import java.io.Serializable;
+
+public class Subtalla implements Serializable {
 
     private int idSubtalla;
     private String descripcion;

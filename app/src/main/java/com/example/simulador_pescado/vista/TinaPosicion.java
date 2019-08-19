@@ -1,6 +1,8 @@
 package com.example.simulador_pescado.vista;
 
-public class TinaPosicion {
+import java.io.Serializable;
+
+public class TinaPosicion implements Serializable {
 
     private long idTina;
     private String descripcion;

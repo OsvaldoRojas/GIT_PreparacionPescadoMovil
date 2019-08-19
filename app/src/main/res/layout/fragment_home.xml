@@ -7,12 +7,47 @@
     android:gravity="center"
     tools:context=".home">
 
-    <!-- TODO: Update blank fragment layout -->
-<!--  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:src="@drawable/pinsa_sin_fondo" />
+        <Button
+            android:id="@+id/botonPreseleccion"
+            style="@style/botonMenu"
+            android:text="@string/preseleccion"/>
+
+        <Button
+            android:id="@+id/botonAtemperado"
+            style="@style/botonMenu"
+            android:layout_marginTop="15dp"
+            android:text="@string/atemperador"/>
+
+        <Button
+            android:id="@+id/botonDescongelado"
+            style="@style/botonMenu"
+            android:layout_marginTop="15dp"
+            android:text="@string/descongelado"/>
+
+        <Button
+            android:id="@+id/botonEviscerar"
+            style="@style/botonMenu"
+            android:layout_marginTop="15dp"
+            android:text="@string/eviscerar"/>
+
+        <Button
+            android:id="@+id/botonCocimiento"
+            style="@style/botonMenu"
+            android:layout_marginTop="15dp"
+            android:text="@string/cocimiento"/>
+
+        <Button
+            android:id="@+id/botonEnfriamiento"
+            style="@style/botonMenu"
+            android:layout_marginTop="15dp"
+            android:text="@string/enfriamiento"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

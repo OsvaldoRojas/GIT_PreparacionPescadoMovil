@@ -1,6 +1,8 @@
 package com.example.simulador_pescado.vista;
 
-public class Empleado {
+import java.io.Serializable;
+
+public class Empleado implements Serializable {
 
     private int idEmpleado;
     private int claveEmpleado;

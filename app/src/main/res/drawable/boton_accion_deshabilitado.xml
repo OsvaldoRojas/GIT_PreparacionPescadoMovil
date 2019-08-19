@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Contenido -->
-    <item >
+    <item>
         <shape>
             <solid android:color="@color/botonMenuDeshabilitado" />
-            <corners android:radius="5dp" />
+            <corners android:radius="0dp" />
         </shape>
     </item>
 </layer-list>

@@ -10,21 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,14 +25,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.Utilerias.Utilerias;
-import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
 import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
-import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
-import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.CargaCatalogos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.conexion.ValidaGafete;
-import com.example.simulador_pescado.conexion.ValidaTina;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.GrupoEspecie;
@@ -48,10 +37,10 @@ import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
-import com.example.simulador_pescado.vista.TinaEscaneo;
 import com.example.simulador_pescado.vista.TinaPosicion;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -144,7 +133,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private String fechaActual;
     private boolean esMontacargas;
     private boolean esMezclar;
-    private boolean esInicio;
 
     private OnFragmentInteractionListener mListener;
 
@@ -337,40 +325,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaError.show();
     }
 
-    public void errorServicioAsignados(ErrorServicio errorMensaje){
-        String mensajeMostrar = errorMensaje.getMessage();
-        if( errorMensaje.getMensaje() != null &&
-                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
-            mensajeMostrar = errorMensaje.getMensaje();
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaError = builder.create();
-        final String finalMensajeMostrar = mensajeMostrar;
-        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText(finalMensajeMostrar);
-
-                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ventanaError.dismiss();
-                    }
-                });
-            }
-        });
-        this.ventanaError.show();
-    }
-
     private String getEtiquetaMovil(int posicion){
         switch (posicion){
             case 1: return "A6";
@@ -385,48 +339,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             case 10: return "B4";
             case 11: return "B5";
             case 12: return "B6";
-        }
-        return "";
-    }
-
-    private String getEtiquetaOperador(int posicion){
-        switch (posicion){
-            case 1: return "A5";
-            case 2: return "A4";
-            case 3: return "A3";
-            case 4: return "A2";
-            case 5: return "A1";
-            case 6: return "B1";
-            case 7: return "B2";
-            case 8: return "B3";
-            case 9: return "B4";
-            case 10: return "B5";
-        }
-        return "";
-    }
-
-    private String getEtiquetaMontacargas(int posicion){
-        switch (posicion){
-            case 1: return "A1";
-            case 2: return "A2";
-            case 3: return "B1";
-            case 4: return "B2";
-        }
-        return "";
-    }
-
-    private String getEtiquetaBasculaOperador(int posicion){
-        switch (posicion){
-            case 1: return "A9";
-            case 2: return "A7";
-            case 3: return "A5";
-            case 4: return "A3";
-            case 5: return "A1";
-            case 6: return "B2";
-            case 7: return "B4";
-            case 8: return "B6";
-            case 9: return "B8";
-            case 10: return "B10";
         }
         return "";
     }
@@ -717,94 +629,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarTina(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_tina, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                Spinner seleccionSubtalla = ventanaEmergente.findViewById(R.id.seleccionSubtalla);
-                seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), listaSubtalla ) );
-                seleccionSubtalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                        getTinaSeleccionada().setSubtalla( (Subtalla) adaptadorVista.getItemAtPosition(posicion) );
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
-                Spinner seleccionTalla = ventanaEmergente.findViewById(R.id.seleccionTalla);
-                seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), listaTalla ) );
-                seleccionTalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                        getTinaSeleccionada().setTalla( (Talla) adaptadorVista.getItemAtPosition(posicion) );
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
-                Spinner seleccionEspecie = ventanaEmergente.findViewById(R.id.seleccionEspecie);
-                seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), listaGrupoEspecie ) );
-                seleccionEspecie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                        getTinaSeleccionada().setEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
-                TextView etiquetaPosicion = ventanaEmergente.findViewById(R.id.etiquetaPosicion);
-                etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getEtiquetaMovil() ) );
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
-                campoEscaner.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        validaTina( editable.toString() );
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new AsignarTina()
+                .newInstance(
+                        getTinaSeleccionada(),
+                        (Serializable) this.listaTalla,
+                        (Serializable) this.listaSubtalla,
+                        (Serializable) this.listaGrupoEspecie
+                );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void liberarTina(){
@@ -830,68 +662,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarOperador(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_empleado, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaPosicion = ventanaEmergente.findViewById(R.id.etiquetaPosicion);
-                etiquetaPosicion.setText( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) );
-
-                TextView etiquetaBascula = ventanaEmergente.findViewById(R.id.etiquetaBascula);
-                etiquetaBascula.setText( getEtiquetaBasculaOperador( getOperadorSeleccionado().getIdEstacion() ) );
-
-                TextView etiquetaTinaPrincipal = ventanaEmergente.findViewById(R.id.etiquetaTinaPrincipal);
-                etiquetaTinaPrincipal.setText( getTinaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
-
-                TextView etiquetaSubtallaPrincipal = ventanaEmergente.findViewById(R.id.etiquetaSubtallaPrincipal);
-                etiquetaSubtallaPrincipal.setText( getSubtallaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
-
-                TextView etiquetaTinaSecundaria = ventanaEmergente.findViewById(R.id.etiquetaTinaSecundaria);
-                etiquetaTinaSecundaria.setText( getTinaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
-
-                TextView etiquetaSubtallaSecundaria = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSecundaria);
-                etiquetaSubtallaSecundaria.setText( getSubtallaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
-
-                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
-                campoEscaner.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        esMontacargas = false;
-                        validaGafete( editable.toString() );
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new AsignarOperador().newInstance( getOperadorSeleccionado(), (Serializable) this.listaTinas );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void liberarOperador(){
@@ -899,53 +671,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarMontacargas(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_montacargas, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaPosicion = ventanaEmergente.findViewById(R.id.etiquetaPosicion);
-                etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ) );
-
-                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
-                campoEscaner.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        esMontacargas = true;
-                        validaGafete( editable.toString() );
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new AsignarMontacargas().newInstance( getMontacargasSeleccionado() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void liberarMontacargas(){
@@ -1004,47 +731,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaEmergente.show();
     }
 
-    private void validaTina(String codigo){
-        if( codigo.length() >= 15 ){
-            iniciaProcesandoEmergente();
-            ValidaTina validaTina = new ValidaTina(codigo, this);
-            validaTina.execute();
-        }else{
-            EditText campoDescripcion = this.ventanaEmergente.findViewById(R.id.campoDescripcion);
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-    }
-
-    public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
-        EditText campoDescripcion = this.ventanaEmergente.findViewById(R.id.campoDescripcion);
-
-        if( resultadoTina.getIdTinaDes() != null ){
-            campoDescripcion.setText( resultadoTina.getTinaDes() );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
-
-            getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );
-            getTinaSeleccionada().getTina().setDescripcion( resultadoTina.getTinaDes() );
-        } else{
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-
-        terminaProcesandoEmergente();
-    }
-
-    private void validaGafete(String codigo){
-        if( codigo.length() >= 7 ){
-            iniciaProcesandoEmergente();
-            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
-            validaGafete.execute();
-        }else{
-            EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
-            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-    }
-
     public void resultadoMezclaTinas(){
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -1081,34 +767,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaEmergente.show();
     }
 
-    public void resultadoEscaneoGafete(Gafete resultadoGafete){
-        EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
-
-        if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
-            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
-            campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
-
-            if(this.esMontacargas){
-                //RELACIONAR EL ID DEL EMPLEADO DEL GAFETE ESCANEADO CON EL MONTACARGAS SELECCIONADO.
-                //getMontacargasSeleccionado().setIdEmpleado();
-            }else{
-                getOperadorSeleccionado().getEmpleado()
-                        .setClaveEmpleado( resultadoGafete.getEmpleado().getCla_trab() );
-                getOperadorSeleccionado().getEmpleado()
-                        .setNombre( resultadoGafete.getEmpleado().getNom_trab() );
-                getOperadorSeleccionado().getEmpleado()
-                        .setApellidoPaterno( resultadoGafete.getEmpleado().getAp_paterno() );
-                getOperadorSeleccionado().getEmpleado()
-                        .setApellidoMaterno( resultadoGafete.getEmpleado().getAp_materno() );
-            }
-        }else{
-            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-
-        terminaProcesandoEmergente();
-    }
-
     private void liberaTurno(){
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -1142,153 +800,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             }
         });
         this.ventanaEmergente.show();
-    }
-
-    private String getTinaPrincipalOperador(int posicionOperador){
-        for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicionOperador + 1 ){
-                if( !tina.getLibre() ){
-                    return tina.getEtiquetaMovil();
-                }
-                break;
-            }
-        }
-        return "";
-    }
-
-    private String getSubtallaPrincipalOperador(int posicionOperador){
-        for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicionOperador + 1 ){
-                if( !tina.getLibre() ){
-                    return tina.getSubtalla().getDescripcion();
-                }
-                break;
-            }
-        }
-        return "";
-    }
-
-    private String getTinaSecundariaOperador(int posicionOperador){
-        Tina tinaSecundaria;
-        switch (posicionOperador){
-            case 1:
-                tinaSecundaria = getTina(1);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 2:
-                tinaSecundaria = getTina(2);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 3:
-                tinaSecundaria = getTina(3);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 4:
-                tinaSecundaria = getTina(4);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 5:
-                tinaSecundaria = getTina(5);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 6:
-                tinaSecundaria = getTina(8);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 7:
-                tinaSecundaria = getTina(9);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 8:
-                tinaSecundaria = getTina(10);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 9:
-                tinaSecundaria = getTina(11);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 10:
-                tinaSecundaria = getTina(12);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-        }
-        return "";
-    }
-
-    private String getSubtallaSecundariaOperador(int posicionOperador){
-        Tina tinaSecundaria;
-        switch (posicionOperador){
-            case 1:
-                tinaSecundaria = getTina(1);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 2:
-                tinaSecundaria = getTina(2);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 3:
-                tinaSecundaria = getTina(3);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 4:
-                tinaSecundaria = getTina(4);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 5:
-                tinaSecundaria = getTina(5);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 6:
-                tinaSecundaria = getTina(8);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 7:
-                tinaSecundaria = getTina(9);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 8:
-                tinaSecundaria = getTina(10);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 9:
-                tinaSecundaria = getTina(11);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 10:
-                tinaSecundaria = getTina(12);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-        }
-        return "";
-    }
-
-    private Tina getTina(int posicion){
-        for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicion ){
-                return tina;
-            }
-        }
-        return null;
     }
 
     private void iniciaComponentes(){
@@ -1598,20 +1109,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     public void iniciaProcesando(){
         this.barraProgreso.setVisibility(View.VISIBLE);
-    }
-
-    public void iniciaProcesandoEmergente(){
-        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.ventanaEmergente.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        barraProgreso.setVisibility(View.VISIBLE);
-    }
-
-    public void terminaProcesandoEmergente(){
-        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.ventanaEmergente.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        barraProgreso.setVisibility(View.GONE);
     }
 
     public void terminaProcesando(){

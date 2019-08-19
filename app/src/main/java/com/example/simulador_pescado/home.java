@@ -9,6 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.example.simulador_pescado.Contenedores.Contenedor;
+import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
+import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
 
 
 /**
@@ -28,6 +33,7 @@ public class home extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View vista;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,8 +71,44 @@ public class home extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_home, container, false);
+        iniciaComponentes();
+        return this.vista;
+    }
+
+    private void iniciaComponentes(){
+        Button botonPreseleccion = this.vista.findViewById(R.id.botonPreseleccion);
+        botonPreseleccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor()).commit();
+            }
+        });
+
+        Button botonAtemperado = this.vista.findViewById(R.id.botonAtemperado);
+        botonAtemperado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor_Atemperado()).commit();
+            }
+        });
+
+        Button botonDescongelado = this.vista.findViewById(R.id.botonDescongelado);
+        botonDescongelado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor_Descongelado()).commit();
+            }
+        });
+
+        Button botonEviscerar = this.vista.findViewById(R.id.botonEviscerar);
+        botonEviscerar.setEnabled(false);
+
+        Button botonCocimiento = this.vista.findViewById(R.id.botonCocimiento);
+        botonCocimiento.setEnabled(false);
+
+        Button botonEnfriamiento = this.vista.findViewById(R.id.botonEnfriamiento);
+        botonEnfriamiento.setEnabled(false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

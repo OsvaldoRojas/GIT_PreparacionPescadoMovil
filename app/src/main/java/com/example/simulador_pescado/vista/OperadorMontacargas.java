@@ -2,7 +2,9 @@ package com.example.simulador_pescado.vista;
 
 import com.example.simulador_pescado.Utilerias.Constantes;
 
-public class OperadorMontacargas {
+import java.io.Serializable;
+
+public class OperadorMontacargas implements Serializable {
 
     private int idMontacargaPreseleccion;
     private String idEmpleado;

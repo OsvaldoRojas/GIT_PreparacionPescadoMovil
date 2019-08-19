@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
+import com.example.simulador_pescado.Preselecion.AsignarMontacargas;
+import com.example.simulador_pescado.Preselecion.AsignarOperador;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
 import com.example.simulador_pescado.vista.ErrorServicio;
@@ -67,38 +69,47 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            if(this.pantalla instanceof Fragment_Preselecion_Tinas){
-                ( (Fragment_Preselecion_Tinas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+            if(this.pantalla instanceof AsignarOperador){
+                ( (AsignarOperador) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
             }else{
-                if(this.pantalla instanceof Fragment_Preselecion_OM){
-                    ( (Fragment_Preselecion_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
-                }
-                else{
-                    if(this.pantalla instanceof Fragment_Atemperado_OM){
-                        ( (Fragment_Atemperado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
-                    }else{
-                        if(this.pantalla instanceof Fragment_Descongelado_OM){
-                            ( (Fragment_Descongelado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                if(this.pantalla instanceof AsignarMontacargas){
+                    ( (AsignarMontacargas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                }else{
+                    if(this.pantalla instanceof Fragment_Preselecion_OM){
+                        ( (Fragment_Preselecion_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                    }
+                    else{
+                        if(this.pantalla instanceof Fragment_Atemperado_OM){
+                            ( (Fragment_Atemperado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                        }else{
+                            if(this.pantalla instanceof Fragment_Descongelado_OM){
+                                ( (Fragment_Descongelado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                            }
                         }
                     }
                 }
             }
         }else{
-            if(this.pantalla instanceof Fragment_Preselecion_Tinas){
-                ( (Fragment_Preselecion_Tinas) this.pantalla ).terminaProcesandoEmergente();
-                ( (Fragment_Preselecion_Tinas) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+            if(this.pantalla instanceof AsignarOperador){
+                ( (AsignarOperador) this.pantalla ).terminaProcesando();
+                ( (AsignarOperador) this.pantalla ).errorEscaneoGafete(this.errorMensaje);
             }else{
-                if(this.pantalla instanceof Fragment_Preselecion_OM){
-                    ( (Fragment_Preselecion_OM) this.pantalla ).terminaProcesandoEmergente();
-                    ( (Fragment_Preselecion_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                if(this.pantalla instanceof AsignarMontacargas){
+                    ( (AsignarMontacargas) this.pantalla ).terminaProcesando();
+                    ( (AsignarMontacargas) this.pantalla ).errorEscaneoGafete(this.errorMensaje);
                 }else{
-                    if(this.pantalla instanceof Fragment_Atemperado_OM){
-                        ( (Fragment_Atemperado_OM) this.pantalla ).terminaProcesandoEmergente();
-                        ( (Fragment_Atemperado_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                    if(this.pantalla instanceof Fragment_Preselecion_OM){
+                        ( (Fragment_Preselecion_OM) this.pantalla ).terminaProcesandoEmergente();
+                        ( (Fragment_Preselecion_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
                     }else{
-                        if(this.pantalla instanceof Fragment_Descongelado_OM){
-                            ( (Fragment_Descongelado_OM) this.pantalla ).terminaProcesandoEmergente();
-                            ( (Fragment_Descongelado_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                        if(this.pantalla instanceof Fragment_Atemperado_OM){
+                            ( (Fragment_Atemperado_OM) this.pantalla ).terminaProcesandoEmergente();
+                            ( (Fragment_Atemperado_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                        }else{
+                            if(this.pantalla instanceof Fragment_Descongelado_OM){
+                                ( (Fragment_Descongelado_OM) this.pantalla ).terminaProcesandoEmergente();
+                                ( (Fragment_Descongelado_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                            }
                         }
                     }
                 }
