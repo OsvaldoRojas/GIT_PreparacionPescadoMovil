@@ -1030,7 +1030,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
+        View vistaAsignar = inflater.inflate(R.layout.fragment_orden_mantenimiento, null);
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
@@ -1061,7 +1061,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
+        View vistaAsignar = inflater.inflate(R.layout.fragment_orden_mantenimiento, null);
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
