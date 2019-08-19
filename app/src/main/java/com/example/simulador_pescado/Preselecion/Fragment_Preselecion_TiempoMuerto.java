@@ -24,6 +24,7 @@ import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Tina;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,8 +110,6 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     private View.OnClickListener eventoCreaOrdenMontacargas;
     private View.OnClickListener eventoCreaOrdenBascula;
 
-    private String fechaActual;
-
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_TiempoMuerto() {
@@ -186,148 +185,27 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         return vista;
     }
 
-    public void iniciaProcesandoEmergente(){
-        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.ventanaEmergente.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        barraProgreso.setVisibility(View.VISIBLE);
-    }
-
-    public void terminaProcesandoEmergente(){
-        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.ventanaEmergente.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        barraProgreso.setVisibility(View.GONE);
-    }
-
     private void creaOrdenTina(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText( "Tina ".concat( getEtiquetaMovil( getTinaSeleccionada().getIdPosicion() ) ) );
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenOperador(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText( "Operador ".concat( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) ) );
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenBascula(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoBascula( getBasculaSeleccionada().getIdBascula() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText( "Báscula ".concat( getEtiquetaBascula( getBasculaSeleccionada().getIdBascula() ) ) );
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenMontacargas(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText( "Montacargas ".concat( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ) ) );
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void iniciaComponentes(){
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
 
         this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);
@@ -740,66 +618,6 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                 }
             }
         }
-    }
-
-    private String getEtiquetaMovil(int posicion){
-        switch (posicion){
-            case 1: return "A6";
-            case 2: return "A5";
-            case 3: return "A4";
-            case 4: return "A3";
-            case 5: return "A2";
-            case 6: return "A1";
-            case 7: return "B1";
-            case 8: return "B2";
-            case 9: return "B3";
-            case 10: return "B4";
-            case 11: return "B5";
-            case 12: return "B6";
-        }
-        return "";
-    }
-
-    private String getEtiquetaOperador(int posicion){
-        switch (posicion){
-            case 1: return "A5";
-            case 2: return "A4";
-            case 3: return "A3";
-            case 4: return "A2";
-            case 5: return "A1";
-            case 6: return "B1";
-            case 7: return "B2";
-            case 8: return "B3";
-            case 9: return "B4";
-            case 10: return "B5";
-        }
-        return "";
-    }
-
-    private String getEtiquetaMontacargas(int posicion){
-        switch (posicion){
-            case 1: return "A1";
-            case 2: return "A2";
-            case 3: return "B1";
-            case 4: return "B2";
-        }
-        return "";
-    }
-
-    private String getEtiquetaBascula(int posicion){
-        switch (posicion){
-            case 1: return "A9";
-            case 2: return "A7";
-            case 3: return "A5";
-            case 4: return "A3";
-            case 5: return "A1";
-            case 6: return "B2";
-            case 7: return "B4";
-            case 8: return "B6";
-            case 9: return "B8";
-            case 10: return "B10";
-        }
-        return "";
     }
 
     private ImageView getIconoTina(int posicion){

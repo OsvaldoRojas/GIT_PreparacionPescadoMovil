@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo_asignar">
+    android:background="@color/no_selecion">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             <ScrollView
                 android:id="@+id/vistaGeneral"
                 android:layout_width="match_parent"
-                android:layout_height="360dp">
+                android:layout_height="385dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/ordenMantenimiento"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/negro"
                         android:gravity="center"
                         android:layout_marginTop="5dp"
                         android:textSize="17dp"/>
@@ -38,7 +38,7 @@
                         android:id="@+id/etiquetaFecha"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:textColor="@color/blanco"
+                        android:textColor="@color/negro"
                         android:gravity="center"
                         android:layout_marginTop="1dp"
                         android:textSize="13dp"/>
@@ -47,15 +47,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:background="@color/no_selecion">
+                        android:background="@color/blanco">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:textColor="@color/negro"
+                            android:textColor="@color/no_selecion"
                             android:gravity="center_horizontal"
                             android:textSize="15dp"
                             android:text="Folio:"
@@ -67,7 +67,7 @@
                             android:id="@+id/etiquetaFolio"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:textColor="@color/negro"
+                            android:textColor="@color/no_selecion"
                             android:gravity="right"
                             android:textSize="15dp"
                             android:paddingBottom="4dp"
@@ -80,13 +80,13 @@
                         android:id="@+id/etiquetaEquipo"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:layout_marginTop="10dp"
                         android:textSize="15dp"
-                        android:background="@color/no_selecion"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:background="@color/blanco"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"/>
 
@@ -94,8 +94,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp">
 
                         <TextView
@@ -103,9 +103,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:layout_marginRight="5dp"
-                            android:background="@color/no_selecion"
-                            android:textColor="@color/negro"
+                            android:background="@color/blanco"
+                            android:textColor="@color/no_selecion"
                             android:gravity="center"
                             android:textSize="15dp"
                             android:text="00:00"
@@ -117,9 +116,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:layout_marginLeft="5dp"
-                            android:background="@color/no_selecion"
-                            android:textColor="@color/negro"
+                            android:background="@color/blanco"
+                            android:textColor="@color/no_selecion"
                             android:gravity="center"
                             android:textSize="15dp"
                             android:text="00:00"
@@ -133,10 +131,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:textColor="@color/negro"
-                        android:background="@color/no_selecion"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:textColor="@color/no_selecion"
+                        android:background="@color/blanco"
                         android:textSize="15dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"
@@ -147,8 +145,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:hint="Solución"
                         android:gravity="top"
                         android:textColor="@color/negro"
@@ -165,8 +163,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp">
 
                         <LinearLayout
@@ -178,7 +176,7 @@
                                 android:id="@+id/campoCantidad"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
-                                android:layout_weight="1"
+                                android:layout_weight="1.2"
                                 android:layout_marginRight="5dp"
                                 android:hint="Cant."
                                 android:gravity="center_horizontal"
@@ -229,7 +227,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="1.2"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp"
                                 android:paddingTop="8dp"
@@ -284,13 +282,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:gravity="bottom">
 
                 <Button
@@ -323,7 +318,6 @@
                 style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="100dp"
                 android:indeterminate="true"
                 android:visibility="gone"
                 android:indeterminateTint="@color/colorPrimary"/>

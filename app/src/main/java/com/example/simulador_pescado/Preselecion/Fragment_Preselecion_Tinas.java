@@ -130,8 +130,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private SwipeRefreshLayout actualizar;
     private Fragment fragment;
 
-    private String fechaActual;
-    private boolean esMontacargas;
     private boolean esMezclar;
 
     private OnFragmentInteractionListener mListener;
@@ -802,9 +800,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 liberaTurno();
             }
         });
-
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
 
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

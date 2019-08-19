@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
+import com.example.simulador_pescado.Preselecion.AsignarMecanico;
 import com.example.simulador_pescado.Preselecion.AsignarMontacargas;
 import com.example.simulador_pescado.Preselecion.AsignarOperador;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_OM;
@@ -75,8 +76,8 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
                 if(this.pantalla instanceof AsignarMontacargas){
                     ( (AsignarMontacargas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                 }else{
-                    if(this.pantalla instanceof Fragment_Preselecion_OM){
-                        ( (Fragment_Preselecion_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                    if(this.pantalla instanceof AsignarMecanico){
+                        ( (AsignarMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                     }
                     else{
                         if(this.pantalla instanceof Fragment_Atemperado_OM){
@@ -98,9 +99,9 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
                     ( (AsignarMontacargas) this.pantalla ).terminaProcesando();
                     ( (AsignarMontacargas) this.pantalla ).errorServicio(this.errorMensaje);
                 }else{
-                    if(this.pantalla instanceof Fragment_Preselecion_OM){
-                        ( (Fragment_Preselecion_OM) this.pantalla ).terminaProcesandoEmergente();
-                        ( (Fragment_Preselecion_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                    if(this.pantalla instanceof AsignarMecanico){
+                        ( (AsignarMecanico) this.pantalla ).terminaProcesando();
+                        ( (AsignarMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                     }else{
                         if(this.pantalla instanceof Fragment_Atemperado_OM){
                             ( (Fragment_Atemperado_OM) this.pantalla ).terminaProcesandoEmergente();

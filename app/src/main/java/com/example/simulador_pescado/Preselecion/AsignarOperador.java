@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
@@ -44,7 +45,6 @@ public class AsignarOperador extends Fragment {
 
     private View vista;
 
-    private String fechaActual;
     private AlertDialog ventanaError;
 
     private OperadorBascula operadorSeleccionado;
@@ -142,9 +142,6 @@ public class AsignarOperador extends Fragment {
         setOperadorSeleccionado( (OperadorBascula) this.mParam1);
         this.listaTinas = (List<Tina>) this.mParam2;
 
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +152,7 @@ public class AsignarOperador extends Fragment {
         });
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
-        etiquetaFecha.setText(this.fechaActual);
+        etiquetaFecha.setText( Utilerias.fechaActual() );
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
         etiquetaPosicion.setText( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) );

@@ -1,6 +1,8 @@
 package com.example.simulador_pescado.vista;
 
-public class ArtefactoLista {
+import java.io.Serializable;
+
+public class ArtefactoLista implements Serializable {
 
     private Artefacto artefacto;
     private int cantidad;
