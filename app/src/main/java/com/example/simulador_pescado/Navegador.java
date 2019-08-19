@@ -21,6 +21,7 @@ import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_Plan;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_TiempoMuerto;
+import com.example.simulador_pescado.Preselecion.AsignarMecanico;
 import com.example.simulador_pescado.Preselecion.AsignarMontacargas;
 import com.example.simulador_pescado.Preselecion.AsignarOperador;
 import com.example.simulador_pescado.Preselecion.AsignarTina;
@@ -38,7 +39,7 @@ Contenedor.OnFragmentInteractionListener, Contenedor_Descongelado.OnFragmentInte
         Fragment_Descongelado_OM.OnFragmentInteractionListener,home.OnFragmentInteractionListener, Fragment_Atemperado_OM.OnFragmentInteractionListener,
         Fragment_Atemperado_TiempoMuerto.OnFragmentInteractionListener,Contenedor_Atemperado.OnFragmentInteractionListener, Fragment_Descongelado_Plan.OnFragmentInteractionListener,
         Fragment_Atemperado_Plan.OnFragmentInteractionListener, AsignarTina.OnFragmentInteractionListener, AsignarOperador.OnFragmentInteractionListener,
-        AsignarMontacargas.OnFragmentInteractionListener, CreaOrdenMantenimiento.OnFragmentInteractionListener {
+        AsignarMontacargas.OnFragmentInteractionListener, CreaOrdenMantenimiento.OnFragmentInteractionListener, AsignarMecanico.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

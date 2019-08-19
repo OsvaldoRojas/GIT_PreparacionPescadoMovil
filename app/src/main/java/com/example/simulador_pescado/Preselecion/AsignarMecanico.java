@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,49 +21,33 @@ import androidx.fragment.app.Fragment;
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
-import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
-import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
-import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
-import com.example.simulador_pescado.conexion.ValidaTina;
+import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.GrupoEspecie;
-import com.example.simulador_pescado.vista.Subtalla;
-import com.example.simulador_pescado.vista.Talla;
-import com.example.simulador_pescado.vista.Tina;
-import com.example.simulador_pescado.vista.TinaEscaneo;
+import com.example.simulador_pescado.vista.Gafete;
+import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-public class AsignarTina extends Fragment {
+public class AsignarMecanico extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_PARAM3 = "param3";
-    private static final String ARG_PARAM4 = "param4";
 
     // TODO: Rename and change types of parameters
     private Serializable mParam1;
-    private Serializable mParam2;
-    private Serializable mParam3;
-    private Serializable mParam4;
 
     private View vista;
 
     private AlertDialog ventanaError;
 
-    private Tina tinaSeleccionada;
-    private List<Talla> listaTalla;
-    private List<Subtalla> listaSubtalla;
-    private List<GrupoEspecie> listaGrupoEspecie;
+    private OrdenMantenimiento ordenSeleccionada;
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarTina() {
+    public AsignarMecanico() {
         // Required empty public constructor
     }
 
@@ -74,17 +56,13 @@ public class AsignarTina extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarTina newInstance(Serializable param1, Serializable param2, Serializable param3, Serializable param4) {
-        AsignarTina fragment = new AsignarTina();
+    public static AsignarMecanico newInstance(Serializable param1) {
+        AsignarMecanico fragment = new AsignarMecanico();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
-        args.putSerializable(ARG_PARAM2, param2);
-        args.putSerializable(ARG_PARAM3, param3);
-        args.putSerializable(ARG_PARAM4, param4);
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,16 +72,13 @@ public class AsignarTina extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getSerializable(ARG_PARAM1);
-            mParam2 = getArguments().getSerializable(ARG_PARAM2);
-            mParam3 = getArguments().getSerializable(ARG_PARAM3);
-            mParam4 = getArguments().getSerializable(ARG_PARAM4);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista=inflater.inflate(R.layout.fragment_asignar_tina, container, false);
+        this.vista=inflater.inflate(R.layout.fragment_asignar_mecanico, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -148,97 +123,33 @@ public class AsignarTina extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public Tina getTinaSeleccionada() {
-        return tinaSeleccionada;
+    public OrdenMantenimiento getOrdenSeleccionada() {
+        return ordenSeleccionada;
     }
 
-    public void setTinaSeleccionada(Tina tinaSeleccionada) {
-        this.tinaSeleccionada = tinaSeleccionada;
-    }
-
-    public List<Talla> getListaTalla() {
-        return listaTalla;
-    }
-
-    public void setListaTalla(List<Talla> listaTalla) {
-        this.listaTalla = listaTalla;
-    }
-
-    public List<Subtalla> getListaSubtalla() {
-        return listaSubtalla;
-    }
-
-    public void setListaSubtalla(List<Subtalla> listaSubtalla) {
-        this.listaSubtalla = listaSubtalla;
-    }
-
-    public List<GrupoEspecie> getListaGrupoEspecie() {
-        return listaGrupoEspecie;
-    }
-
-    public void setListaGrupoEspecie(List<GrupoEspecie> listaGrupoEspecie) {
-        this.listaGrupoEspecie = listaGrupoEspecie;
+    public void setOrdenSeleccionada(OrdenMantenimiento ordenSeleccionada) {
+        this.ordenSeleccionada = ordenSeleccionada;
     }
 
     private void iniciaComponentes(){
-        setTinaSeleccionada( (Tina) mParam1 );
-        setListaTalla( (List<Talla>) mParam2 );
-        setListaSubtalla( (List<Subtalla>) mParam3 );
-        setListaGrupoEspecie( (List<GrupoEspecie>) mParam4 );
+        setOrdenSeleccionada( (OrdenMantenimiento) this.mParam1 );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor().newInstance(0);
+                Fragment fragment = new Contenedor().newInstance(2);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });
 
-        Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
-        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), getListaSubtalla() ) );
-        seleccionSubtalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setSubtalla( (Subtalla) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onClick(View view) {
 
             }
         });
-
-        Spinner seleccionTalla = this.vista.findViewById(R.id.seleccionTalla);
-        seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), getListaTalla() ) );
-        seleccionTalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setTalla( (Talla) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        Spinner seleccionEspecie = this.vista.findViewById(R.id.seleccionEspecie);
-        seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), getListaGrupoEspecie() ) );
-        seleccionEspecie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
-        etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getEtiquetaMovil() ) );
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText( Utilerias.fechaActual() );
@@ -257,41 +168,40 @@ public class AsignarTina extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                validaTina( editable.toString() );
+                validaGafete( editable.toString() );
             }
         });
     }
 
-    private void validaTina(String codigo){
-        if( codigo.length() >= 15 ){
+    private void validaGafete(String codigo){
+        if( codigo.length() >= 7 ){
             iniciaProcesando();
-            ValidaTina validaTina = new ValidaTina(codigo, this);
-            validaTina.execute();
+            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
+            validaGafete.execute();
         }else{
-            EditText campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+            EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
-    public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
-        EditText campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+    public void resultadoEscaneoGafete(Gafete resultadoGafete){
+        EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
 
-        if( resultadoTina.getIdTinaDes() != null ){
-            campoDescripcion.setText( resultadoTina.getTinaDes() );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
+        if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
+            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
+            campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
 
-            getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );
-            getTinaSeleccionada().getTina().setDescripcion( resultadoTina.getTinaDes() );
-        } else{
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+            getOrdenSeleccionada().setMecanico( resultadoGafete.getEmpleado().getNom_trab() );
+        }else{
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
 
         terminaProcesando();
     }
 
-    public void errorEscaneoTina(ErrorServicio errorMensaje){
+    public void errorServicio(ErrorServicio errorMensaje){
         String mensajeMostrar = errorMensaje.getMessage();
         if( errorMensaje.getMensaje() != null &&
                 !errorMensaje.getMensaje().equalsIgnoreCase("") ){

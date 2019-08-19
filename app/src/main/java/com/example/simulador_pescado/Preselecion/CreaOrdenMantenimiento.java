@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.vista.Bascula;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
@@ -33,9 +34,6 @@ public class CreaOrdenMantenimiento extends Fragment {
     private Serializable mParam1;
 
     private View vista;
-
-    private String fechaActual;
-    private AlertDialog ventanaError;
 
     private Tina tinaSeleccionada;
     private OperadorBascula operadorSeleccionado;
@@ -153,9 +151,6 @@ public class CreaOrdenMantenimiento extends Fragment {
     }
 
     private void iniciaComponentes(){
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +161,7 @@ public class CreaOrdenMantenimiento extends Fragment {
         });
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
-        etiquetaFecha.setText(this.fechaActual);
+        etiquetaFecha.setText( Utilerias.fechaActual() );
 
         TextView etiquetaEquipo = this.vista.findViewById(R.id.etiquetaEquipo);
 

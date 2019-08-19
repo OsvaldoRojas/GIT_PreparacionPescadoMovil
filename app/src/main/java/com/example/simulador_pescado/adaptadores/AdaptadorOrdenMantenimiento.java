@@ -42,6 +42,18 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<OrdenMantenimiento
         etiquetaEquipo.setText( ordenMantenimiento.getEquipo() );
         etiquetaMecanico.setText( ordenMantenimiento.getMecanico() );
 
+        if( (posicion % 2) == 0 ){
+            etiquetaFolio.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            etiquetaFecha.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            etiquetaEquipo.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            etiquetaMecanico.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+        }else{
+            etiquetaFolio.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            etiquetaFecha.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            etiquetaEquipo.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            etiquetaMecanico.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+        }
+
         return vista;
     }
 

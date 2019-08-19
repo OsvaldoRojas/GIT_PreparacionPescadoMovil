@@ -20,6 +20,7 @@
     <color name="botonMenuPresionado">#8E9096</color>
     <color name="botonMenuDeshabilitado">#E4E7E9</color>
 
+    <color name="no_selecion_dos">#E2E2E2</color>
     <color name="no_selecion">#D6D7D7</color>
     <color name="selecion">#6B6E70</color>
 

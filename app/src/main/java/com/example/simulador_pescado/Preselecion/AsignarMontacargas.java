@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.conexion.AsignaMontacargas;
 import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
@@ -41,7 +42,6 @@ public class AsignarMontacargas extends Fragment {
 
     private View vista;
 
-    private String fechaActual;
     private AlertDialog ventanaError;
 
     private OperadorMontacargas montacargasSeleccionado;
@@ -135,9 +135,6 @@ public class AsignarMontacargas extends Fragment {
     private void iniciaComponentes(){
         setMontacargasSeleccionado( (OperadorMontacargas) this.mParam1 );
 
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +153,7 @@ public class AsignarMontacargas extends Fragment {
         });
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
-        etiquetaFecha.setText(this.fechaActual);
+        etiquetaFecha.setText( Utilerias.fechaActual() );
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
         etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ) );

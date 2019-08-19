@@ -110,8 +110,6 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     private View.OnClickListener eventoCreaOrdenMontacargas;
     private View.OnClickListener eventoCreaOrdenBascula;
 
-    private String fechaActual;
-
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_TiempoMuerto() {
@@ -208,9 +206,6 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     }
 
     private void iniciaComponentes(){
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
 
         this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);

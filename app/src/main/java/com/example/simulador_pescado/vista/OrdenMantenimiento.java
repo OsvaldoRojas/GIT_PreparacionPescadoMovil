@@ -1,9 +1,10 @@
 package com.example.simulador_pescado.vista;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdenMantenimiento {
+public class OrdenMantenimiento implements Serializable {
 
     private int folio;
     private String fecha;

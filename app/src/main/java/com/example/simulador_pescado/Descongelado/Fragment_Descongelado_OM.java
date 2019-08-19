@@ -20,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -336,7 +335,7 @@ public class Fragment_Descongelado_OM extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View vistaAsignar = inflater.inflate(R.layout.dialog_asignar_mecanico, null);
+        View vistaAsignar = inflater.inflate(R.layout.fragment_asignar_mecanico, null);
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 
