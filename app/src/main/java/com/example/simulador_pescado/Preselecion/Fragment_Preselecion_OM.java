@@ -168,12 +168,12 @@ public class Fragment_Preselecion_OM extends Fragment {
     }
 
     private void muestraDetalle(){
-        Fragment fragment = new DetalleOrden().newInstance( getOrdenSeleccionada() );
+        Fragment fragment = new DetalleOrdenPreseleccion().newInstance( getOrdenSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void asignaMecanico(){
-        Fragment fragment = new AsignarMecanico().newInstance( getOrdenSeleccionada() );
+        Fragment fragment = new AsignarMecanicoPreseleccion().newInstance( getOrdenSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 

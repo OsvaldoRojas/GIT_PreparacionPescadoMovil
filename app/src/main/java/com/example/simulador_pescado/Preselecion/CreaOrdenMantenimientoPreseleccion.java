@@ -1,4 +1,4 @@
-package com.example.simulador_pescado.Atemperado;
+package com.example.simulador_pescado.Preselecion;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
-import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.vista.Bascula;
@@ -22,7 +21,7 @@ import com.example.simulador_pescado.vista.Tina;
 
 import java.io.Serializable;
 
-public class CreaOrdenMantenimiento extends Fragment {
+public class CreaOrdenMantenimientoPreseleccion extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,11 +33,13 @@ public class CreaOrdenMantenimiento extends Fragment {
     private View vista;
 
     private Tina tinaSeleccionada;
+    private OperadorBascula operadorSeleccionado;
     private OperadorMontacargas montacargasSeleccionado;
+    private Bascula basculaSeleccionada;
 
     private OnFragmentInteractionListener mListener;
 
-    public CreaOrdenMantenimiento() {
+    public CreaOrdenMantenimientoPreseleccion() {
         // Required empty public constructor
     }
 
@@ -50,8 +51,8 @@ public class CreaOrdenMantenimiento extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreaOrdenMantenimiento newInstance(Serializable param1) {
-        CreaOrdenMantenimiento fragment = new CreaOrdenMantenimiento();
+    public static CreaOrdenMantenimientoPreseleccion newInstance(Serializable param1) {
+        CreaOrdenMantenimientoPreseleccion fragment = new CreaOrdenMantenimientoPreseleccion();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -122,6 +123,14 @@ public class CreaOrdenMantenimiento extends Fragment {
         this.tinaSeleccionada = tinaSeleccionada;
     }
 
+    public OperadorBascula getOperadorSeleccionado() {
+        return operadorSeleccionado;
+    }
+
+    public void setOperadorSeleccionado(OperadorBascula operadorSeleccionado) {
+        this.operadorSeleccionado = operadorSeleccionado;
+    }
+
     public OperadorMontacargas getMontacargasSeleccionado() {
         return montacargasSeleccionado;
     }
@@ -130,12 +139,20 @@ public class CreaOrdenMantenimiento extends Fragment {
         this.montacargasSeleccionado = montacargasSeleccionado;
     }
 
+    public Bascula getBasculaSeleccionada() {
+        return basculaSeleccionada;
+    }
+
+    public void setBasculaSeleccionada(Bascula basculaSeleccionada) {
+        this.basculaSeleccionada = basculaSeleccionada;
+    }
+
     private void iniciaComponentes(){
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor_Atemperado().newInstance(1);
+                Fragment fragment = new Contenedor().newInstance(1);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });
@@ -147,12 +164,48 @@ public class CreaOrdenMantenimiento extends Fragment {
 
         if( this.mParam1 instanceof Tina ){
             setTinaSeleccionada( (Tina) this.mParam1 );
-            etiquetaEquipo.setText("Tina");
+            etiquetaEquipo.setText( "Tina ".concat( getTinaSeleccionada().getEtiquetaMovil() ) );
         }else{
-            if( this.mParam1 instanceof OperadorMontacargas ){
-                setMontacargasSeleccionado( (OperadorMontacargas) this.mParam1 );
-                etiquetaEquipo.setText("Montacargas");
+            if( this.mParam1 instanceof OperadorBascula ){
+                setOperadorSeleccionado( (OperadorBascula) this.mParam1 );
+                etiquetaEquipo.setText( "Operador ".concat( getOperadorSeleccionado().getEstacion() ) );
+            }else{
+                if( this.mParam1 instanceof OperadorMontacargas ){
+                    setMontacargasSeleccionado( (OperadorMontacargas) this.mParam1 );
+                    etiquetaEquipo.setText( "Montacargas ".concat( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ) ) );
+                }else{
+                    if( this.mParam1 instanceof Bascula ){
+                        setBasculaSeleccionada( (Bascula) this.mParam1 );
+                        etiquetaEquipo.setText( "Báscula ".concat( getEtiquetaBascula( getBasculaSeleccionada().getIdBascula() ) ) );
+                    }
+                }
             }
         }
+    }
+
+    private String getEtiquetaMontacargas(int posicion){
+        switch (posicion){
+            case 1: return "A1";
+            case 2: return "A2";
+            case 3: return "B1";
+            case 4: return "B2";
+        }
+        return "";
+    }
+
+    private String getEtiquetaBascula(int posicion){
+        switch (posicion){
+            case 1: return "A9";
+            case 2: return "A7";
+            case 3: return "A5";
+            case 4: return "A3";
+            case 5: return "A1";
+            case 6: return "B2";
+            case 7: return "B4";
+            case 8: return "B6";
+            case 9: return "B8";
+            case 10: return "B10";
+        }
+        return "";
     }
 }

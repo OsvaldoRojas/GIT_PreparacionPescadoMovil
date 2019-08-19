@@ -1,18 +1,18 @@
 package com.example.simulador_pescado.Preselecion;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Spinner;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,18 +21,14 @@ import androidx.fragment.app.Fragment;
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
-import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
-import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoLista;
-import com.example.simulador_pescado.vista.Artefacto;
-import com.example.simulador_pescado.vista.ArtefactoLista;
+import com.example.simulador_pescado.conexion.ValidaGafete;
+import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-public class DetalleOrden extends Fragment {
+public class AsignarMecanicoPreseleccion extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +45,7 @@ public class DetalleOrden extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public DetalleOrden() {
+    public AsignarMecanicoPreseleccion() {
         // Required empty public constructor
     }
 
@@ -61,8 +57,8 @@ public class DetalleOrden extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetalleOrden newInstance(Serializable param1) {
-        DetalleOrden fragment = new DetalleOrden();
+    public static AsignarMecanicoPreseleccion newInstance(Serializable param1) {
+        AsignarMecanicoPreseleccion fragment = new AsignarMecanicoPreseleccion();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -80,7 +76,7 @@ public class DetalleOrden extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista=inflater.inflate(R.layout.fragment_detalle_orden, container, false);
+        this.vista=inflater.inflate(R.layout.fragment_asignar_mecanico, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -134,14 +130,6 @@ public class DetalleOrden extends Fragment {
     }
 
     private void iniciaComponentes(){
-        List<Artefacto> listaArtefactos = new ArrayList<>();
-        listaArtefactos.add( new Artefacto(0, "Artefacto") );
-        listaArtefactos.add( new Artefacto(1, "Artefacto 1") );
-        listaArtefactos.add( new Artefacto(2, "Artefacto 2") );
-        listaArtefactos.add( new Artefacto(3, "Artefacto 3") );
-
-        String[] listaCodigos = {"Código","001","002","003"};
-
         setOrdenSeleccionada( (OrdenMantenimiento) this.mParam1 );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
@@ -157,84 +145,103 @@ public class DetalleOrden extends Fragment {
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //limpiarCampos();
+
             }
         });
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText( Utilerias.fechaActual() );
 
-        TextView etiquetaFolio = this.vista.findViewById(R.id.etiquetaFolio);
-        etiquetaFolio.setText( String.valueOf( getOrdenSeleccionada().getFolio() ) );
-
-        TextView etiquetaEquipo = this.vista.findViewById(R.id.etiquetaEquipo);
-        etiquetaEquipo.setText( getOrdenSeleccionada().getEquipo() );
-
-        TextView etiquetaDescripcion = this.vista.findViewById(R.id.etiquetaDescripcion);
-        etiquetaDescripcion.setText( getOrdenSeleccionada().getDescripcion() );
-
-        final EditText campoCantidad = this.vista.findViewById(R.id.campoCantidad);
-
-        final Spinner campoCodigo = this.vista.findViewById(R.id.campoCodigo);
-        campoCodigo.setAdapter( new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaCodigos) );
-
-        final Spinner campoArtefacto = this.vista.findViewById(R.id.campoArtefacto);
-        campoArtefacto.setAdapter( new AdaptadorArtefacto( getContext(), listaArtefactos ) );
-
-        final AdaptadorArtefactoLista adaptadorArtefactoLista = new AdaptadorArtefactoLista(
-                getContext(),
-                getOrdenSeleccionada().getListaArtefactos()
-        );
-        final ListView listaArtefactosVista = this.vista.findViewById(R.id.listaArtefactos);
-        listaArtefactosVista.setAdapter(adaptadorArtefactoLista);
-        Utilerias.setAlturaLista(listaArtefactosVista, 0);
-
-        final LinearLayout contenedorEncabezados = this.vista.findViewById(R.id.contenedorEncabezados);
-        if( !getOrdenSeleccionada().getListaArtefactos().isEmpty() ){
-            contenedorEncabezados.setVisibility(View.VISIBLE);
-        }
-
-        final ScrollView vistaScroll = this.vista.findViewById(R.id.vistaGeneral);
-
-        FloatingActionButton botonAgregar = this.vista.findViewById(R.id.botonAgregar);
-        botonAgregar.setOnClickListener(new View.OnClickListener() {
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        campoEscaner.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                contenedorEncabezados.setVisibility(View.VISIBLE);
-                getOrdenSeleccionada().getListaArtefactos().add(
-                        new ArtefactoLista(
-                                (Artefacto) campoArtefacto.getSelectedItem(),
-                                Integer.valueOf( campoCantidad.getText().toString() ),
-                                campoCodigo.getSelectedItem().toString()
-                        )
-                );
-                adaptadorArtefactoLista.notifyDataSetChanged();
-                Utilerias.setAlturaLista(listaArtefactosVista, 0);
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                vistaScroll.post(new Runnable() {
-                    public void run() {
-                        vistaScroll.fullScroll(vistaScroll.FOCUS_DOWN);
-                    }
-                });
+            }
 
-                campoCantidad.setText("");
-                campoArtefacto.setSelection(0);
-                campoCodigo.setSelection(0);
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                validaGafete( editable.toString() );
             }
         });
     }
 
-    private void limpiarCampos(){
-        OrdenMantenimiento orden = getOrdenSeleccionada();
-        List<ArtefactoLista> lista = new ArrayList<>();
-        for( ArtefactoLista artefactoLista : orden.getListaArtefactos() ){
-            if( artefactoLista.getArtefacto().getDescripcion().equalsIgnoreCase("Artefacto") ){
-                lista.add(artefactoLista);
-            }
+    private void validaGafete(String codigo){
+        if( codigo.length() >= 7 ){
+            iniciaProcesando();
+            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
+            validaGafete.execute();
+        }else{
+            EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
+        }
+    }
+
+    public void resultadoEscaneoGafete(Gafete resultadoGafete){
+        EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+
+        if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
+            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
+            campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
+
+            getOrdenSeleccionada().setMecanico( resultadoGafete.getEmpleado().getNom_trab() );
+        }else{
+            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
+            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
 
-        for(ArtefactoLista artefactoLista : lista){
-            orden.getListaArtefactos().remove(artefactoLista);
+        terminaProcesando();
+    }
+
+    public void errorServicio(ErrorServicio errorMensaje){
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
+    }
+
+    public void iniciaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.GONE);
     }
 }

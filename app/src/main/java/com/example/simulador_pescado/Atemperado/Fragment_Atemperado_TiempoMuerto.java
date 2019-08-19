@@ -959,12 +959,12 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenTina(){
-        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
+        Fragment fragment = new CreaOrdenMantenimientoAtemperado().newInstance( getTinaSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenMontacargas(){
-        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
+        Fragment fragment = new CreaOrdenMantenimientoAtemperado().newInstance( getMontacargasSeleccionado() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 

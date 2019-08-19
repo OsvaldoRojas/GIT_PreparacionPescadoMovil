@@ -180,22 +180,22 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenTina(){
-        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
+        Fragment fragment = new CreaOrdenMantenimientoPreseleccion().newInstance( getTinaSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenOperador(){
-        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado() );
+        Fragment fragment = new CreaOrdenMantenimientoPreseleccion().newInstance( getOperadorSeleccionado() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenBascula(){
-        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada() );
+        Fragment fragment = new CreaOrdenMantenimientoPreseleccion().newInstance( getBasculaSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenMontacargas(){
-        Fragment fragment = new CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
+        Fragment fragment = new CreaOrdenMantenimientoPreseleccion().newInstance( getMontacargasSeleccionado() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
