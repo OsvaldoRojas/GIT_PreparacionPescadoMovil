@@ -96,7 +96,7 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
             }else{
                 if(this.pantalla instanceof AsignarMontacargas){
                     ( (AsignarMontacargas) this.pantalla ).terminaProcesando();
-                    ( (AsignarMontacargas) this.pantalla ).errorEscaneoGafete(this.errorMensaje);
+                    ( (AsignarMontacargas) this.pantalla ).errorServicio(this.errorMensaje);
                 }else{
                     if(this.pantalla instanceof Fragment_Preselecion_OM){
                         ( (Fragment_Preselecion_OM) this.pantalla ).terminaProcesandoEmergente();
