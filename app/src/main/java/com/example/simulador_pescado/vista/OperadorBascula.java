@@ -6,18 +6,14 @@ import java.io.Serializable;
 
 public class OperadorBascula implements Serializable {
 
-    private int idEstacion;
-    private TinaPosicion principal;
-    private TinaPosicion alterna;
-    private Empleado empleado;
-    private Boolean turno;
+    private int idPreseleccionEstacion;
+    private int idEmpleado;
+    private int idPosicionPrincipal;
+    private int idPosicionAlterna;
     private Boolean libre;
+    private Boolean turno;
     private Boolean activo;
-    private String fechaCreador;
-    private String usuarioCreador;
-    private String fechaModifico;
-    private String usuarioModifico;
-    private Boolean borrado;
+    private String estacion;
 
     private Constantes.ESTADO estado;
 
@@ -29,44 +25,36 @@ public class OperadorBascula implements Serializable {
         this.estado = estado;
     }
 
-    public TinaPosicion getPrincipal() {
-        return principal;
+    public int getIdPreseleccionEstacion() {
+        return idPreseleccionEstacion;
     }
 
-    public void setPrincipal(TinaPosicion principal) {
-        this.principal = principal;
+    public void setIdPreseleccionEstacion(int idPreseleccionEstacion) {
+        this.idPreseleccionEstacion = idPreseleccionEstacion;
     }
 
-    public TinaPosicion getAlterna() {
-        return alterna;
+    public int getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setAlterna(TinaPosicion alterna) {
-        this.alterna = alterna;
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public int getIdPosicionPrincipal() {
+        return idPosicionPrincipal;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setIdPosicionPrincipal(int idPosicionPrincipal) {
+        this.idPosicionPrincipal = idPosicionPrincipal;
     }
 
-    public int getIdEstacion() {
-        return idEstacion;
+    public int getIdPosicionAlterna() {
+        return idPosicionAlterna;
     }
 
-    public void setIdEstacion(int idEstacion) {
-        this.idEstacion = idEstacion;
-    }
-
-    public Boolean getTurno() {
-        return turno;
-    }
-
-    public void setTurno(Boolean turno) {
-        this.turno = turno;
+    public void setIdPosicionAlterna(int idPosicionAlterna) {
+        this.idPosicionAlterna = idPosicionAlterna;
     }
 
     public Boolean getLibre() {
@@ -77,6 +65,14 @@ public class OperadorBascula implements Serializable {
         this.libre = libre;
     }
 
+    public Boolean getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Boolean turno) {
+        this.turno = turno;
+    }
+
     public Boolean getActivo() {
         return activo;
     }
@@ -85,43 +81,11 @@ public class OperadorBascula implements Serializable {
         this.activo = activo;
     }
 
-    public String getFechaCreador() {
-        return fechaCreador;
+    public String getEstacion() {
+        return estacion;
     }
 
-    public void setFechaCreador(String fechaCreador) {
-        this.fechaCreador = fechaCreador;
-    }
-
-    public String getUsuarioCreador() {
-        return usuarioCreador;
-    }
-
-    public void setUsuarioCreador(String usuarioCreador) {
-        this.usuarioCreador = usuarioCreador;
-    }
-
-    public String getFechaModifico() {
-        return fechaModifico;
-    }
-
-    public void setFechaModifico(String fechaModifico) {
-        this.fechaModifico = fechaModifico;
-    }
-
-    public String getUsuarioModifico() {
-        return usuarioModifico;
-    }
-
-    public void setUsuarioModifico(String usuarioModifico) {
-        this.usuarioModifico = usuarioModifico;
-    }
-
-    public Boolean getBorrado() {
-        return borrado;
-    }
-
-    public void setBorrado(Boolean borrado) {
-        this.borrado = borrado;
+    public void setEstacion(String estacion) {
+        this.estacion = estacion;
     }
 }

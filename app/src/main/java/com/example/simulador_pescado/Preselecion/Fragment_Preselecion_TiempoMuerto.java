@@ -535,6 +535,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
             for( int posicion = 1; posicion <= 12; posicion++ ){
                 final Tina recursoTina = new Tina();
                 recursoTina.setIdPosicion(posicion);
+                recursoTina.setEtiquetaMovil( getEtiquetaTina(posicion) );
                 recursoTina.setEstado(Constantes.ESTADO.inicial);
                 this.listaTinas.add(recursoTina);
             }
@@ -543,7 +544,8 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         if( this.listaOperadores.isEmpty() ){
             for( int posicion = 1; posicion <= 10; posicion++ ){
                 final OperadorBascula recursoOperador = new OperadorBascula();
-                recursoOperador.setIdEstacion(posicion);
+                recursoOperador.setIdPreseleccionEstacion(posicion);
+                recursoOperador.setEstacion( getEtiquetaOperador(posicion) );
                 recursoOperador.setEstado(Constantes.ESTADO.inicial);
                 this.listaOperadores.add(recursoOperador);
             }
@@ -568,13 +570,47 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         }
     }
 
+    private String getEtiquetaTina(int posicion){
+        switch (posicion){
+            case 1: return "A6";
+            case 2: return "A5";
+            case 3: return "A4";
+            case 4: return "A3";
+            case 5: return "A2";
+            case 6: return "A1";
+            case 7: return "B1";
+            case 8: return "B2";
+            case 9: return "B3";
+            case 10: return "B4";
+            case 11: return "B5";
+            case 12: return "B6";
+        }
+        return "";
+    }
+
+    private String getEtiquetaOperador(int posicion){
+        switch (posicion){
+            case 1: return "A5";
+            case 2: return "A4";
+            case 3: return "A3";
+            case 4: return "A2";
+            case 5: return "A1";
+            case 6: return "B1";
+            case 7: return "B2";
+            case 8: return "B3";
+            case 9: return "B4";
+            case 10: return "B5";
+        }
+        return "";
+    }
+
     private void habilitaRecursos(){
         for(Tina tina : this.listaTinas){
             getIconoTina( tina.getIdPosicion() ).setEnabled(true);
         }
 
         for(OperadorBascula operador : this.listaOperadores){
-            getIconoOperador( operador.getIdEstacion() ).setEnabled(true);
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(true);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
@@ -592,7 +628,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         }
 
         for(OperadorBascula operador : this.listaOperadores){
-            getIconoOperador( operador.getIdEstacion() ).setEnabled(false);
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(false);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
@@ -607,7 +643,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
             getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
         }else{
             if( getOperadorSeleccionado() != null ){
-                getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
+                getIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() ).setEnabled(true);
             }else{
                 if( getMontacargasSeleccionado() != null ){
                     getIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ).setEnabled(true);
@@ -713,13 +749,13 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
     private void accionIconoOperador(int posicion){
         for( OperadorBascula operador : this.listaOperadores ){
-            if( operador.getIdEstacion() == posicion ){
+            if( operador.getIdPreseleccionEstacion() == posicion ){
                 if( operador.getEstado() == Constantes.ESTADO.inicial ){
                     setOperadorSeleccionado(operador);
                     deshabilitaRecursos();
-                    getIconoOperador( operador.getIdEstacion() )
+                    getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setImageResource(R.drawable.ic_operador1);
-                    getIconoOperador( operador.getIdEstacion() )
+                    getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     operador.setEstado(Constantes.ESTADO.seleccionado);
                     this.botonCrear.setOnClickListener(this.eventoCreaOrdenOperador);
@@ -728,9 +764,9 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
                         habilitaRecursos();
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setImageResource(R.drawable.ic_operador2);
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         operador.setEstado(Constantes.ESTADO.inicial);
                         this.botonCrear.setOnClickListener(null);

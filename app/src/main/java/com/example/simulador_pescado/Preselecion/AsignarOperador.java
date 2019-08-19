@@ -155,22 +155,22 @@ public class AsignarOperador extends Fragment {
         etiquetaFecha.setText( Utilerias.fechaActual() );
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
-        etiquetaPosicion.setText( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+        etiquetaPosicion.setText( getOperadorSeleccionado().getEstacion() );
 
         TextView etiquetaBascula = this.vista.findViewById(R.id.etiquetaBascula);
-        etiquetaBascula.setText( getEtiquetaBasculaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+        etiquetaBascula.setText( getEtiquetaBasculaOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() ) );
 
         TextView etiquetaTinaPrincipal = this.vista.findViewById(R.id.etiquetaTinaPrincipal);
-        etiquetaTinaPrincipal.setText( getTinaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
+        etiquetaTinaPrincipal.setText( getTinaPrincipalOperador( getOperadorSeleccionado().getIdPosicionPrincipal() ) );
 
         TextView etiquetaSubtallaPrincipal = this.vista.findViewById(R.id.etiquetaSubtallaPrincipal);
-        etiquetaSubtallaPrincipal.setText( getSubtallaPrincipalOperador( getOperadorSeleccionado().getIdEstacion() ) );
+        etiquetaSubtallaPrincipal.setText( getSubtallaPrincipalOperador( getOperadorSeleccionado().getIdPosicionPrincipal() ) );
 
         TextView etiquetaTinaSecundaria = this.vista.findViewById(R.id.etiquetaTinaSecundaria);
-        etiquetaTinaSecundaria.setText( getTinaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+        etiquetaTinaSecundaria.setText( getTinaSecundariaOperador( getOperadorSeleccionado().getIdPosicionAlterna() ) );
 
         TextView etiquetaSubtallaSecundaria = this.vista.findViewById(R.id.etiquetaSubtallaSecundaria);
-        etiquetaSubtallaSecundaria.setText( getSubtallaSecundariaOperador( getOperadorSeleccionado().getIdEstacion() ) );
+        etiquetaSubtallaSecundaria.setText( getSubtallaSecundariaOperador( getOperadorSeleccionado().getIdPosicionAlterna() ) );
 
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
         campoEscaner.addTextChangedListener(new TextWatcher() {
@@ -210,14 +210,7 @@ public class AsignarOperador extends Fragment {
             campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
             campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
 
-            getOperadorSeleccionado().getEmpleado()
-                    .setClaveEmpleado( resultadoGafete.getEmpleado().getCla_trab() );
-            getOperadorSeleccionado().getEmpleado()
-                    .setNombre( resultadoGafete.getEmpleado().getNom_trab() );
-            getOperadorSeleccionado().getEmpleado()
-                    .setApellidoPaterno( resultadoGafete.getEmpleado().getAp_paterno() );
-            getOperadorSeleccionado().getEmpleado()
-                    .setApellidoMaterno( resultadoGafete.getEmpleado().getAp_materno() );
+            getOperadorSeleccionado().setIdEmpleado( resultadoGafete.getEmpleado().getCla_trab() );
         }else{
             campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
@@ -260,22 +253,6 @@ public class AsignarOperador extends Fragment {
         this.ventanaError.show();
     }
 
-    private String getEtiquetaOperador(int posicion){
-        switch (posicion){
-            case 1: return "A5";
-            case 2: return "A4";
-            case 3: return "A3";
-            case 4: return "A2";
-            case 5: return "A1";
-            case 6: return "B1";
-            case 7: return "B2";
-            case 8: return "B3";
-            case 9: return "B4";
-            case 10: return "B5";
-        }
-        return "";
-    }
-
     private String getEtiquetaBasculaOperador(int posicion){
         switch (posicion){
             case 1: return "A9";
@@ -292,21 +269,18 @@ public class AsignarOperador extends Fragment {
         return "";
     }
 
-    private String getTinaPrincipalOperador(int posicionOperador){
+    private String getTinaPrincipalOperador(int posicionTina){
         for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicionOperador + 1 ){
-                if( !tina.getLibre() ){
-                    return tina.getEtiquetaMovil();
-                }
-                break;
+            if( tina.getIdPosicion() == posicionTina ){
+                return tina.getEtiquetaMovil();
             }
         }
         return "";
     }
 
-    private String getSubtallaPrincipalOperador(int posicionOperador){
+    private String getSubtallaPrincipalOperador(int posicionTina){
         for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicionOperador + 1 ){
+            if( tina.getIdPosicion() == posicionTina ){
                 if( !tina.getLibre() ){
                     return tina.getSubtalla().getDescripcion();
                 }
@@ -316,127 +290,25 @@ public class AsignarOperador extends Fragment {
         return "";
     }
 
-    private String getTinaSecundariaOperador(int posicionOperador){
-        Tina tinaSecundaria;
-        switch (posicionOperador){
-            case 1:
-                tinaSecundaria = getTina(1);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 2:
-                tinaSecundaria = getTina(2);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 3:
-                tinaSecundaria = getTina(3);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 4:
-                tinaSecundaria = getTina(4);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 5:
-                tinaSecundaria = getTina(5);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 6:
-                tinaSecundaria = getTina(8);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 7:
-                tinaSecundaria = getTina(9);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 8:
-                tinaSecundaria = getTina(10);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 9:
-                tinaSecundaria = getTina(11);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-            case 10:
-                tinaSecundaria = getTina(12);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getEtiquetaMovil();
-                }
-        }
-        return "";
-    }
-
-    private String getSubtallaSecundariaOperador(int posicionOperador){
-        Tina tinaSecundaria;
-        switch (posicionOperador){
-            case 1:
-                tinaSecundaria = getTina(1);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 2:
-                tinaSecundaria = getTina(2);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 3:
-                tinaSecundaria = getTina(3);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 4:
-                tinaSecundaria = getTina(4);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 5:
-                tinaSecundaria = getTina(5);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 6:
-                tinaSecundaria = getTina(8);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 7:
-                tinaSecundaria = getTina(9);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 8:
-                tinaSecundaria = getTina(10);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 9:
-                tinaSecundaria = getTina(11);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-            case 10:
-                tinaSecundaria = getTina(12);
-                if( !tinaSecundaria.getLibre() ){
-                    return tinaSecundaria.getSubtalla().getDescripcion();
-                }
-        }
-        return "";
-    }
-
-    private Tina getTina(int posicion){
+    private String getTinaSecundariaOperador(int posicionTina){
         for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicion ){
-                return tina;
+            if( tina.getIdPosicion() == posicionTina ){
+                return tina.getEtiquetaMovil();
             }
         }
-        return null;
+        return "";
+    }
+
+    private String getSubtallaSecundariaOperador(int posicionTina){
+        for( Tina tina : this.listaTinas ){
+            if( tina.getIdPosicion() == posicionTina ){
+                if( !tina.getLibre() ){
+                    return tina.getSubtalla().getDescripcion();
+                }
+                break;
+            }
+        }
+        return "";
     }
 
     public void iniciaProcesando(){

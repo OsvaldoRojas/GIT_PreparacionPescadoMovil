@@ -167,11 +167,11 @@ public class CreaOrdenMantenimiento extends Fragment {
 
         if( this.mParam1 instanceof Tina ){
             setTinaSeleccionada( (Tina) this.mParam1 );
-            etiquetaEquipo.setText( "Tina ".concat( getEtiquetaTina( getTinaSeleccionada().getIdPosicion() ) ) );
+            etiquetaEquipo.setText( "Tina ".concat( getTinaSeleccionada().getEtiquetaMovil() ) );
         }else{
             if( this.mParam1 instanceof OperadorBascula ){
                 setOperadorSeleccionado( (OperadorBascula) this.mParam1 );
-                etiquetaEquipo.setText( "Operador ".concat( getEtiquetaOperador( getOperadorSeleccionado().getIdEstacion() ) ) );
+                etiquetaEquipo.setText( "Operador ".concat( getOperadorSeleccionado().getEstacion() ) );
             }else{
                 if( this.mParam1 instanceof OperadorMontacargas ){
                     setMontacargasSeleccionado( (OperadorMontacargas) this.mParam1 );
@@ -184,41 +184,6 @@ public class CreaOrdenMantenimiento extends Fragment {
                 }
             }
         }
-
-    }
-
-    private String getEtiquetaTina(int posicion){
-        switch (posicion){
-            case 1: return "A6";
-            case 2: return "A5";
-            case 3: return "A4";
-            case 4: return "A3";
-            case 5: return "A2";
-            case 6: return "A1";
-            case 7: return "B1";
-            case 8: return "B2";
-            case 9: return "B3";
-            case 10: return "B4";
-            case 11: return "B5";
-            case 12: return "B6";
-        }
-        return "";
-    }
-
-    private String getEtiquetaOperador(int posicion){
-        switch (posicion){
-            case 1: return "A5";
-            case 2: return "A4";
-            case 3: return "A3";
-            case 4: return "A2";
-            case 5: return "A1";
-            case 6: return "B1";
-            case 7: return "B2";
-            case 8: return "B3";
-            case 9: return "B4";
-            case 10: return "B5";
-        }
-        return "";
     }
 
     private String getEtiquetaMontacargas(int posicion){
