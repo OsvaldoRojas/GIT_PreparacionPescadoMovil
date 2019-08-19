@@ -309,7 +309,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                 botonCancelar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
+                        accionIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() );
                         ventanaEmergente.dismiss();
                     }
                 });
@@ -318,7 +318,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                 etiquetaFecha.setText(fechaActual);
 
                 TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText( "Montacargas ".concat( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ) ) );
+                etiquetaEquipo.setText( "Montacargas ".concat( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ) ) );
             }
         });
         this.ventanaEmergente.show();
@@ -674,7 +674,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         if( this.listaMontacargas.isEmpty() ){
             for( int posicion = 1; posicion <= 4; posicion++ ){
                 OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
-                recursoMontacargas.setIdMontacargaPreseleccion(posicion);
+                recursoMontacargas.setIdPreseleccionMontacarga(posicion);
                 recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
                 this.listaMontacargas.add(recursoMontacargas);
             }
@@ -700,7 +700,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(true);
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(true);
         }
 
         for(Bascula bascula : this.listaBasculas){
@@ -718,7 +718,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(false);
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(false);
         }
 
         for(Bascula bascula : this.listaBasculas){
@@ -732,7 +732,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                 getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
             }else{
                 if( getMontacargasSeleccionado() != null ){
-                    getIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ).setEnabled(true);
+                    getIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ).setEnabled(true);
                 }else{
                     if( getBasculaSeleccionada() != null ){
                         getIconoBascula( getBasculaSeleccionada().getIdBascula() ).setEnabled(true);
@@ -957,13 +957,13 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
     private void accionIconoMontacargas(int posicion){
         for( OperadorMontacargas montacargas : this.listaMontacargas ){
-            if( montacargas.getIdMontacargaPreseleccion() == posicion ){
+            if( montacargas.getIdPreseleccionMontacarga() == posicion ){
                 if( montacargas.getEstado() == Constantes.ESTADO.inicial ){
                     setMontacargasSeleccionado(montacargas);
                     deshabilitaRecursos();
-                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                    getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setImageResource(R.drawable.ic_montacargas1);
-                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                    getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
                     this.botonCrear.setOnClickListener(this.eventoCreaOrdenMontacargas);
@@ -972,9 +972,9 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                     if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
                         setMontacargasSeleccionado(null);
                         habilitaRecursos();
-                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setImageResource(R.drawable.ic_montacargas2);
-                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         montacargas.setEstado(Constantes.ESTADO.inicial);
                         this.botonCrear.setOnClickListener(null);

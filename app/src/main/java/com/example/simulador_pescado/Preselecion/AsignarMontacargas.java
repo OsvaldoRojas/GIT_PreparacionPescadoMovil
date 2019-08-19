@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.conexion.AsignaMontacargas;
 import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
@@ -146,11 +147,19 @@ public class AsignarMontacargas extends Fragment {
             }
         });
 
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validaAsignacion();
+            }
+        });
+
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText(this.fechaActual);
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
-        etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ) );
+        etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ) );
 
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
         campoEscaner.addTextChangedListener(new TextWatcher() {
@@ -169,6 +178,27 @@ public class AsignarMontacargas extends Fragment {
                 validaGafete( editable.toString() );
             }
         });
+    }
+
+    private void validaAsignacion(){
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+
+        if( !campoEscaner.getText().equals("") &&
+                !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) ){
+            iniciaProcesando();
+            getMontacargasSeleccionado().setLibre(false);
+            AsignaMontacargas asignaMontacargas = new AsignaMontacargas(this, getMontacargasSeleccionado() );
+            asignaMontacargas.execute();
+        }else{
+            errorValidacion();
+        }
+    }
+
+    public void resultadoAsignacion(){
+        terminaProcesando();
+        Fragment fragment = new Contenedor().newInstance(0);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void validaGafete(String codigo){
@@ -190,8 +220,8 @@ public class AsignarMontacargas extends Fragment {
             campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
             campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
 
-            //RELACIONAR EL ID DEL EMPLEADO DEL GAFETE ESCANEADO CON EL MONTACARGAS SELECCIONADO.
-            //getMontacargasSeleccionado().setIdEmpleado();
+            getMontacargasSeleccionado()
+                    .setIdEmpleado( String.valueOf( resultadoGafete.getEmpleado().getCla_trab() ) );
         }else{
             campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
@@ -200,7 +230,7 @@ public class AsignarMontacargas extends Fragment {
         terminaProcesando();
     }
 
-    public void errorEscaneoGafete(ErrorServicio errorMensaje){
+    public void errorServicio(ErrorServicio errorMensaje){
         String mensajeMostrar = errorMensaje.getMessage();
         if( errorMensaje.getMensaje() != null &&
                 !errorMensaje.getMensaje().equalsIgnoreCase("") ){
@@ -232,6 +262,32 @@ public class AsignarMontacargas extends Fragment {
             }
         });
         this.ventanaError.show();
+    }
+
+    public void errorValidacion(){
+        final AlertDialog ventanaEmergente;
+        AlertDialog.Builder builder = new AlertDialog.Builder( getContext() );
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        ventanaEmergente = builder.create();
+        ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText( "Es necesario capturar un operador." );
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        ventanaEmergente.show();
     }
 
     private String getEtiquetaMontacargas(int posicion){
