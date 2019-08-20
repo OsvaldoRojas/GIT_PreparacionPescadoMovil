@@ -25,6 +25,7 @@ import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
 import com.example.simulador_pescado.conexion.CargaCatalogos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
@@ -105,6 +106,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private List<Subtalla> listaSubtalla = new ArrayList<>();
     private List<Talla> listaTalla = new ArrayList<>();
     private List<GrupoEspecie> listaGrupoEspecie = new ArrayList<>();
+    private List<Especialidad> listaEspecialidad = new ArrayList<>();
 
     private View.OnClickListener eventoLiberarTina;
     private View.OnClickListener eventoAsignarTina;
@@ -601,10 +603,12 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         cargaCatalogos.execute();
     }
 
-    public void actualizaCatalogos(List<Talla> listaTalla, List<Subtalla> listaSubtalla, List<GrupoEspecie> listaEspecie){
+    public void actualizaCatalogos(List<Talla> listaTalla, List<Subtalla> listaSubtalla,
+                                   List<GrupoEspecie> listaEspecie, List<Especialidad> listaEspecialidad){
         this.listaTalla = new ArrayList<>();
         this.listaSubtalla = new ArrayList<>();
         this.listaGrupoEspecie = new ArrayList<>();
+        this.listaEspecialidad = new ArrayList<>();
 
         Talla talla = new Talla();
         talla.setDescripcion("Talla");
@@ -618,9 +622,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         especie.setDescripcion("Especie");
         this.listaGrupoEspecie.add(especie);
 
+        Especialidad especialidad = new Especialidad();
+        especialidad.setDescripcion("Especialidad");
+        this.listaEspecialidad.add(especialidad);
+
         this.listaTalla.addAll(listaTalla);
         this.listaSubtalla.addAll(listaSubtalla);
         this.listaGrupoEspecie.addAll(listaEspecie);
+        this.listaEspecialidad.addAll(listaEspecialidad);
     }
 
     private void asignarTina(){
@@ -629,7 +638,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         getTinaSeleccionada(),
                         (Serializable) this.listaTalla,
                         (Serializable) this.listaSubtalla,
-                        (Serializable) this.listaGrupoEspecie
+                        (Serializable) this.listaGrupoEspecie,
+                        (Serializable) this.listaEspecialidad
                 );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
