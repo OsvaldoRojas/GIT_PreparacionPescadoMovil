@@ -39,6 +39,16 @@ public class AdaptadorArtefactoLista extends ArrayAdapter<ArtefactoLista> {
         campoCodigo.setText( artefactoLista.getCodigo() );
         campoArtefacto.setText( artefactoLista.getArtefacto().getDescripcion() );
 
+        if( (posicion % 2) == 0 ){
+            campoCantidad.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            campoCodigo.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            campoArtefacto.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+        }else{
+            campoCantidad.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            campoCodigo.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            campoArtefacto.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+        }
+
         return vista;
     }
 }

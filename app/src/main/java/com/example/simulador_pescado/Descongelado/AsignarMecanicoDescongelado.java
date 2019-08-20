@@ -1,4 +1,4 @@
-package com.example.simulador_pescado.Preselecion;
+package com.example.simulador_pescado.Descongelado;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,7 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor;
+import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.conexion.ValidaGafete;
@@ -28,7 +28,7 @@ import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.io.Serializable;
 
-public class AsignarMecanico extends Fragment {
+public class AsignarMecanicoDescongelado extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,7 +45,7 @@ public class AsignarMecanico extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarMecanico() {
+    public AsignarMecanicoDescongelado() {
         // Required empty public constructor
     }
 
@@ -57,8 +57,8 @@ public class AsignarMecanico extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarMecanico newInstance(Serializable param1) {
-        AsignarMecanico fragment = new AsignarMecanico();
+    public static AsignarMecanicoDescongelado newInstance(Serializable param1) {
+        AsignarMecanicoDescongelado fragment = new AsignarMecanicoDescongelado();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -136,7 +136,7 @@ public class AsignarMecanico extends Fragment {
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor().newInstance(2);
+                Fragment fragment = new Contenedor_Descongelado().newInstance(2);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });

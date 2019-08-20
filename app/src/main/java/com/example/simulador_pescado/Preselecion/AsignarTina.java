@@ -23,11 +23,13 @@ import androidx.fragment.app.Fragment;
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.adaptadores.AdaptadorEspecialidad;
 import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
 import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.ValidaTina;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
@@ -35,8 +37,6 @@ import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.TinaEscaneo;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class AsignarTina extends Fragment {
@@ -47,12 +47,14 @@ public class AsignarTina extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
+    private static final String ARG_PARAM5 = "param5";
 
     // TODO: Rename and change types of parameters
     private Serializable mParam1;
     private Serializable mParam2;
     private Serializable mParam3;
     private Serializable mParam4;
+    private Serializable mParam5;
 
     private View vista;
 
@@ -62,6 +64,7 @@ public class AsignarTina extends Fragment {
     private List<Talla> listaTalla;
     private List<Subtalla> listaSubtalla;
     private List<GrupoEspecie> listaGrupoEspecie;
+    private List<Especialidad> listaEspecialidad;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,13 +81,15 @@ public class AsignarTina extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarTina newInstance(Serializable param1, Serializable param2, Serializable param3, Serializable param4) {
+    public static AsignarTina newInstance(Serializable param1, Serializable param2,
+                                          Serializable param3, Serializable param4, Serializable param5) {
         AsignarTina fragment = new AsignarTina();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         args.putSerializable(ARG_PARAM2, param2);
         args.putSerializable(ARG_PARAM3, param3);
         args.putSerializable(ARG_PARAM4, param4);
+        args.putSerializable(ARG_PARAM5, param5);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,6 +102,7 @@ public class AsignarTina extends Fragment {
             mParam2 = getArguments().getSerializable(ARG_PARAM2);
             mParam3 = getArguments().getSerializable(ARG_PARAM3);
             mParam4 = getArguments().getSerializable(ARG_PARAM4);
+            mParam5 = getArguments().getSerializable(ARG_PARAM5);
         }
     }
 
@@ -180,11 +186,20 @@ public class AsignarTina extends Fragment {
         this.listaGrupoEspecie = listaGrupoEspecie;
     }
 
+    public List<Especialidad> getListaEspecialidad() {
+        return listaEspecialidad;
+    }
+
+    public void setListaEspecialidad(List<Especialidad> listaEspecialidad) {
+        this.listaEspecialidad = listaEspecialidad;
+    }
+
     private void iniciaComponentes(){
         setTinaSeleccionada( (Tina) mParam1 );
         setListaTalla( (List<Talla>) mParam2 );
         setListaSubtalla( (List<Subtalla>) mParam3 );
         setListaGrupoEspecie( (List<GrupoEspecie>) mParam4 );
+        setListaEspecialidad( (List<Especialidad>) mParam5 );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +244,20 @@ public class AsignarTina extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
                 getTinaSeleccionada().setEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner seleccionEspecialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
+        seleccionEspecialidad.setAdapter( new AdaptadorEspecialidad( getContext(), getListaEspecialidad() ) );
+        seleccionEspecialidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
+                getTinaSeleccionada().setEspecialidad( (Especialidad) adaptadorVista.getItemAtPosition(posicion) );
             }
 
             @Override

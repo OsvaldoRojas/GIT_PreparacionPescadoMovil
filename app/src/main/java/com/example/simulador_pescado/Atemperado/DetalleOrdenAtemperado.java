@@ -1,4 +1,4 @@
-package com.example.simulador_pescado.Preselecion;
+package com.example.simulador_pescado.Atemperado;
 
 import android.content.Context;
 import android.net.Uri;
@@ -18,7 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor;
+import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
@@ -32,7 +32,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetalleOrden extends Fragment {
+public class DetalleOrdenAtemperado extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +49,7 @@ public class DetalleOrden extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public DetalleOrden() {
+    public DetalleOrdenAtemperado() {
         // Required empty public constructor
     }
 
@@ -61,8 +61,8 @@ public class DetalleOrden extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetalleOrden newInstance(Serializable param1) {
-        DetalleOrden fragment = new DetalleOrden();
+    public static DetalleOrdenAtemperado newInstance(Serializable param1) {
+        DetalleOrdenAtemperado fragment = new DetalleOrdenAtemperado();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -148,7 +148,7 @@ public class DetalleOrden extends Fragment {
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor().newInstance(2);
+                Fragment fragment = new Contenedor_Atemperado().newInstance(2);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });
@@ -238,3 +238,4 @@ public class DetalleOrden extends Fragment {
         }
     }
 }
+

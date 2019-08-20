@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
@@ -27,9 +28,11 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
     private static final String URL_TALLA = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/tallas";
     private static final String URL_SUBTALLA = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/subtallas";
     private static final String URL_ESPECIE = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/grupos-especies";
+    private static final String URL_ESPECIALIDAD = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/grupos-especies";
     private List<Talla> listaTallas = new ArrayList<>();
     private List<Subtalla> listaSubtallas = new ArrayList<>();
     private List<GrupoEspecie> listaEspecies = new ArrayList<>();
+    private List<Especialidad> listaEspecialidad = new ArrayList<>();
     private Fragment fragment;
 
     public CargaCatalogos(Fragment fragment){
@@ -42,10 +45,12 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
         HttpGet peticionTalla = new HttpGet(this.URL_TALLA);
         HttpGet peticionSubtalla = new HttpGet(this.URL_SUBTALLA);
         HttpGet peticionEspecie = new HttpGet(this.URL_ESPECIE);
+        HttpGet peticionEspecialidad = new HttpGet(this.URL_ESPECIALIDAD);
 
         peticionTalla.setHeader("content-type", "application/json");
         peticionSubtalla.setHeader("content-type", "application/json");
         peticionEspecie.setHeader("content-type", "application/json");
+        peticionEspecialidad.setHeader("content-type", "application/json");
 
         try {
             HttpResponse respuesta = conexion.execute(peticionTalla);
@@ -83,12 +88,24 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
             e.printStackTrace();
         }
 
+        try {
+            HttpResponse respuesta = conexion.execute(peticionEspecialidad);
+            String respuestaJson = EntityUtils.toString( respuesta.getEntity() );
+            Gson gson = new Gson();
+            if( respuesta.getStatusLine().getStatusCode() == 200 ){
+                Type listaPlantilla = new TypeToken<List<Especialidad>>(){}.getType();
+                this.listaEspecialidad = gson.fromJson(respuestaJson, listaPlantilla);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         ( (Fragment_Preselecion_Tinas) this.fragment )
-                .actualizaCatalogos(this.listaTallas, this.listaSubtallas, this.listaEspecies);
+                .actualizaCatalogos(this.listaTallas, this.listaSubtallas, this.listaEspecies, this.listaEspecialidad);
     }
 }

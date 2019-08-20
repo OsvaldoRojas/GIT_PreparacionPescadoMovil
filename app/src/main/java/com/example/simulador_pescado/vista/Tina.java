@@ -11,6 +11,7 @@ public class Tina implements Serializable {
     private Subtalla subtalla;
     private Talla talla;
     private GrupoEspecie especie;
+    private Especialidad especialidad;
     private int npiezas;
     private int peso;
     private Boolean libre;
@@ -42,6 +43,14 @@ public class Tina implements Serializable {
 
     public void setEspecie(GrupoEspecie especie) {
         this.especie = especie;
+    }
+
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
     }
 
     public void setEstado(Constantes.ESTADO estado) {
