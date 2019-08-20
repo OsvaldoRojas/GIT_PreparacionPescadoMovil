@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.conexion.AsignaOperador;
 import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
@@ -151,6 +152,14 @@ public class AsignarOperador extends Fragment {
             }
         });
 
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validaAsignacion();
+            }
+        });
+
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText( Utilerias.fechaActual() );
 
@@ -189,6 +198,27 @@ public class AsignarOperador extends Fragment {
                 validaGafete( editable.toString() );
             }
         });
+    }
+
+    private void validaAsignacion(){
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+
+        if( !campoEscaner.getText().equals("") &&
+                !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) ){
+            iniciaProcesando();
+            getOperadorSeleccionado().setLibre(false);
+            AsignaOperador asignaOperador = new AsignaOperador(this, getOperadorSeleccionado() );
+            asignaOperador.execute();
+        }else{
+            errorValidacion();
+        }
+    }
+
+    public void resultadoAsignacion(){
+        terminaProcesando();
+        Fragment fragment = new Contenedor().newInstance(0);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void validaGafete(String codigo){
@@ -251,6 +281,32 @@ public class AsignarOperador extends Fragment {
             }
         });
         this.ventanaError.show();
+    }
+
+    public void errorValidacion(){
+        final AlertDialog ventanaEmergente;
+        AlertDialog.Builder builder = new AlertDialog.Builder( getContext() );
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        ventanaEmergente = builder.create();
+        ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText( "Es necesario capturar un operador." );
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        ventanaEmergente.show();
     }
 
     private String getEtiquetaBasculaOperador(int posicion){
