@@ -23,6 +23,7 @@ import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.Descongelado.AsignarMecanicoDescongelado;
 import com.example.simulador_pescado.Descongelado.CreaOrdenMantenimientoDescongelado;
+import com.example.simulador_pescado.Descongelado.DetalleOrdenDescongelado;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_Plan;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_TiempoMuerto;
@@ -38,16 +39,15 @@ import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.google.android.material.navigation.NavigationView;
 
-public class Navegador extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Fragment_Preselecion_OM.OnFragmentInteractionListener,
-        Fragment_Preselecion_Tinas.OnFragmentInteractionListener, Fragment_Preselecion_TiempoMuerto.OnFragmentInteractionListener,
-Contenedor.OnFragmentInteractionListener, Contenedor_Descongelado.OnFragmentInteractionListener, Fragment_Descongelado_TiempoMuerto.OnFragmentInteractionListener,
-        Fragment_Descongelado_OM.OnFragmentInteractionListener,home.OnFragmentInteractionListener, Fragment_Atemperado_OM.OnFragmentInteractionListener,
-        Fragment_Atemperado_TiempoMuerto.OnFragmentInteractionListener,Contenedor_Atemperado.OnFragmentInteractionListener, Fragment_Descongelado_Plan.OnFragmentInteractionListener,
-        Fragment_Atemperado_Plan.OnFragmentInteractionListener, AsignarTina.OnFragmentInteractionListener, AsignarOperador.OnFragmentInteractionListener,
-        AsignarMontacargas.OnFragmentInteractionListener, CreaOrdenMantenimientoPreseleccion.OnFragmentInteractionListener, AsignarMecanicoPreseleccion.OnFragmentInteractionListener,
-        DetalleOrdenPreseleccion.OnFragmentInteractionListener, CreaOrdenMantenimientoAtemperado.OnFragmentInteractionListener, CreaOrdenMantenimientoDescongelado.OnFragmentInteractionListener,
-        AsignarMecanicoAtemperado.OnFragmentInteractionListener, DetalleOrdenAtemperado.OnFragmentInteractionListener, AsignarMecanicoDescongelado.OnFragmentInteractionListener {
+public class Navegador extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Fragment_Preselecion_OM.OnFragmentInteractionListener,
+        Fragment_Preselecion_Tinas.OnFragmentInteractionListener, Fragment_Preselecion_TiempoMuerto.OnFragmentInteractionListener, Contenedor.OnFragmentInteractionListener,
+        Contenedor_Descongelado.OnFragmentInteractionListener, Fragment_Descongelado_TiempoMuerto.OnFragmentInteractionListener, Fragment_Descongelado_OM.OnFragmentInteractionListener,
+        home.OnFragmentInteractionListener, Fragment_Atemperado_OM.OnFragmentInteractionListener, Fragment_Atemperado_TiempoMuerto.OnFragmentInteractionListener,
+        Contenedor_Atemperado.OnFragmentInteractionListener, Fragment_Descongelado_Plan.OnFragmentInteractionListener, Fragment_Atemperado_Plan.OnFragmentInteractionListener,
+        AsignarTina.OnFragmentInteractionListener, AsignarOperador.OnFragmentInteractionListener, AsignarMontacargas.OnFragmentInteractionListener,
+        CreaOrdenMantenimientoPreseleccion.OnFragmentInteractionListener, AsignarMecanicoPreseleccion.OnFragmentInteractionListener, DetalleOrdenPreseleccion.OnFragmentInteractionListener,
+        CreaOrdenMantenimientoAtemperado.OnFragmentInteractionListener, CreaOrdenMantenimientoDescongelado.OnFragmentInteractionListener, AsignarMecanicoAtemperado.OnFragmentInteractionListener,
+        DetalleOrdenAtemperado.OnFragmentInteractionListener, AsignarMecanicoDescongelado.OnFragmentInteractionListener, DetalleOrdenDescongelado.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
