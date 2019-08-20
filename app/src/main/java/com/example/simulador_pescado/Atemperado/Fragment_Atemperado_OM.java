@@ -67,31 +67,15 @@ public class Fragment_Atemperado_OM extends Fragment {
 
     private ListView listaVistaOrden;
     private SearchView campoBusqueda;
-    private AlertDialog ventanaEmergente;
-    private AlertDialog ventanaError;
 
     private AdaptadorOrdenMantenimiento adaptadorOrden;
     private OrdenMantenimiento ordenSeleccionada;
     private List<OrdenMantenimiento> listaOrden = new ArrayList<>();
-    private List<Artefacto> listaArtefactos = new ArrayList<>();
-    private String[] listaCodigos = {"Código","001","002","003"};
-
-    private Gafete gafeteEscaneado;
-
-    private String fechaActual;
 
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Atemperado_OM() {
         // Required empty public constructor
-    }
-
-    public Gafete getGafeteEscaneado() {
-        return gafeteEscaneado;
-    }
-
-    public void setGafeteEscaneado(Gafete gafeteEscaneado) {
-        this.gafeteEscaneado = gafeteEscaneado;
     }
 
     public OrdenMantenimiento getOrdenSeleccionada() {
@@ -139,12 +123,6 @@ public class Fragment_Atemperado_OM extends Fragment {
     }
 
     private void iniciaComponentes(){
-        this.listaArtefactos = new ArrayList<>();
-        this.listaArtefactos.add( new Artefacto(0, "Artefacto") );
-        this.listaArtefactos.add( new Artefacto(1, "Artefacto 1") );
-        this.listaArtefactos.add( new Artefacto(2, "Artefacto 2") );
-        this.listaArtefactos.add( new Artefacto(3, "Artefacto 3") );
-
         this.listaOrden = new ArrayList<>();
         this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2019", "Montacargas", "", "Prueba descripción 1") );
         this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "", "Prueba descripción 2") );
@@ -161,10 +139,6 @@ public class Fragment_Atemperado_OM extends Fragment {
         this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "", "Prueba descripción 13") );
         this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "", "Prueba descripción 14") );
         this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "", "Prueba descripción 15") );
-
-        setGafeteEscaneado(null);
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
 
         this.campoBusqueda = this.vista.findViewById(R.id.campoBusqueda);
         this.campoBusqueda.setIconifiedByDefault(false);
@@ -219,253 +193,13 @@ public class Fragment_Atemperado_OM extends Fragment {
     }
 
     private void muestraDetalle(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.fragment_detalle_orden, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        limpiarCampos();
-                        setOrdenSeleccionada(null);
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        limpiarCampos();
-                        setOrdenSeleccionada(null);
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaFolio = ventanaEmergente.findViewById(R.id.etiquetaFolio);
-                etiquetaFolio.setText( String.valueOf( getOrdenSeleccionada().getFolio() ) );
-
-                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText( getOrdenSeleccionada().getEquipo() );
-
-                TextView etiquetaDescripcion = ventanaEmergente.findViewById(R.id.etiquetaDescripcion);
-                etiquetaDescripcion.setText( getOrdenSeleccionada().getDescripcion() );
-
-                final EditText campoCantidad = ventanaEmergente.findViewById(R.id.campoCantidad);
-
-                final Spinner campoCodigo = ventanaEmergente.findViewById(R.id.campoCodigo);
-                campoCodigo.setAdapter( new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaCodigos) );
-
-                final Spinner campoArtefacto = ventanaEmergente.findViewById(R.id.campoArtefacto);
-                campoArtefacto.setAdapter( new AdaptadorArtefacto( getContext(), listaArtefactos ) );
-
-                final AdaptadorArtefactoLista adaptadorArtefactoLista = new AdaptadorArtefactoLista(
-                        getContext(),
-                        getOrdenSeleccionada().getListaArtefactos()
-                );
-                final ListView listaArtefactosVista = ventanaEmergente.findViewById(R.id.listaArtefactos);
-                listaArtefactosVista.setAdapter(adaptadorArtefactoLista);
-                Utilerias.setAlturaLista(listaArtefactosVista, 0);
-
-                final LinearLayout contenedorEncabezados = ventanaEmergente.findViewById(R.id.contenedorEncabezados);
-                if( !getOrdenSeleccionada().getListaArtefactos().isEmpty() ){
-                    contenedorEncabezados.setVisibility(View.VISIBLE);
-                }
-
-                final ScrollView vistaScroll = ventanaEmergente.findViewById(R.id.vistaGeneral);
-
-                FloatingActionButton botonAgregar = ventanaEmergente.findViewById(R.id.botonAgregar);
-                botonAgregar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        contenedorEncabezados.setVisibility(View.VISIBLE);
-                        getOrdenSeleccionada().getListaArtefactos().add(
-                                new ArtefactoLista(
-                                        (Artefacto) campoArtefacto.getSelectedItem(),
-                                        Integer.valueOf( campoCantidad.getText().toString() ),
-                                        campoCodigo.getSelectedItem().toString()
-                                )
-                        );
-                        adaptadorArtefactoLista.notifyDataSetChanged();
-                        Utilerias.setAlturaLista(listaArtefactosVista, 0);
-
-                        vistaScroll.post(new Runnable() {
-                            public void run() {
-                                vistaScroll.fullScroll(vistaScroll.FOCUS_DOWN);
-                            }
-                        });
-
-                        campoCantidad.setText("");
-                        campoArtefacto.setSelection(0);
-                        campoCodigo.setSelection(0);
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
-    }
-
-    private void limpiarCampos(){
-        OrdenMantenimiento orden = getOrdenSeleccionada();
-        List<ArtefactoLista> lista = new ArrayList<>();
-        for( ArtefactoLista artefactoLista : orden.getListaArtefactos() ){
-            if( artefactoLista.getArtefacto().getDescripcion().equalsIgnoreCase("Artefacto") ){
-                lista.add(artefactoLista);
-            }
-        }
-
-        for(ArtefactoLista artefactoLista : lista){
-            orden.getListaArtefactos().remove(artefactoLista);
-        }
+        Fragment fragment = new DetalleOrdenAtemperado().newInstance( getOrdenSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void asignaMecanico(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.fragment_asignar_mecanico, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        setOrdenSeleccionada(null);
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(getGafeteEscaneado() != null){
-                            getOrdenSeleccionada().setMecanico( getGafeteEscaneado().getEmpleado().getNom_trab() );
-                            adaptadorOrden.notifyDataSetChanged();
-                            setGafeteEscaneado(null);
-                        }
-                        setOrdenSeleccionada(null);
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
-                campoEscaner.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        validaGafete( editable.toString() );
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
-    }
-
-    private void validaGafete(String codigo){
-        setGafeteEscaneado(null);
-        if( codigo.length() >= 7 ){
-            iniciaProcesandoEmergente();
-            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
-            validaGafete.execute();
-        }else{
-            EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
-            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-    }
-
-    public void resultadoEscaneoGafete(Gafete resultadoGafete){
-        EditText campoNombre = this.ventanaEmergente.findViewById(R.id.campoNombre);
-
-        if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
-            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
-            campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
-            setGafeteEscaneado(resultadoGafete);
-        }else{
-            setGafeteEscaneado(null);
-            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-
-        terminaProcesandoEmergente();
-    }
-
-    public void errorServicioAsignados(ErrorServicio errorMensaje){
-        setGafeteEscaneado(null);
-        String mensajeMostrar = errorMensaje.getMessage();
-        if( errorMensaje.getMensaje() != null &&
-                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
-            mensajeMostrar = errorMensaje.getMensaje();
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaError = builder.create();
-        final String finalMensajeMostrar = mensajeMostrar;
-        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText(finalMensajeMostrar);
-
-                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ventanaError.dismiss();
-                    }
-                });
-            }
-        });
-        this.ventanaError.show();
-    }
-
-    public void iniciaProcesandoEmergente(){
-        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.ventanaEmergente.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        barraProgreso.setVisibility(View.VISIBLE);
-    }
-
-    public void terminaProcesandoEmergente(){
-        ProgressBar barraProgreso = this.ventanaEmergente.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.ventanaEmergente.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        barraProgreso.setVisibility(View.GONE);
+        Fragment fragment = new AsignarMecanicoAtemperado().newInstance( getOrdenSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

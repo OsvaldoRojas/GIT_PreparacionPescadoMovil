@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.Atemperado.AsignarMecanicoAtemperado;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.Preselecion.AsignarMecanicoPreseleccion;
@@ -78,8 +79,8 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
                         ( (AsignarMecanicoPreseleccion) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                     }
                     else{
-                        if(this.pantalla instanceof Fragment_Atemperado_OM){
-                            ( (Fragment_Atemperado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                        if(this.pantalla instanceof AsignarMecanicoAtemperado){
+                            ( (AsignarMecanicoAtemperado) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                         }else{
                             if(this.pantalla instanceof Fragment_Descongelado_OM){
                                 ( (Fragment_Descongelado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
@@ -91,7 +92,7 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
         }else{
             if(this.pantalla instanceof AsignarOperador){
                 ( (AsignarOperador) this.pantalla ).terminaProcesando();
-                ( (AsignarOperador) this.pantalla ).errorEscaneoGafete(this.errorMensaje);
+                ( (AsignarOperador) this.pantalla ).errorServicio(this.errorMensaje);
             }else{
                 if(this.pantalla instanceof AsignarMontacargas){
                     ( (AsignarMontacargas) this.pantalla ).terminaProcesando();
@@ -101,9 +102,9 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
                         ( (AsignarMecanicoPreseleccion) this.pantalla ).terminaProcesando();
                         ( (AsignarMecanicoPreseleccion) this.pantalla ).errorServicio(this.errorMensaje);
                     }else{
-                        if(this.pantalla instanceof Fragment_Atemperado_OM){
-                            ( (Fragment_Atemperado_OM) this.pantalla ).terminaProcesandoEmergente();
-                            ( (Fragment_Atemperado_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                        if(this.pantalla instanceof AsignarMecanicoAtemperado){
+                            ( (AsignarMecanicoAtemperado) this.pantalla ).terminaProcesando();
+                            ( (AsignarMecanicoAtemperado) this.pantalla ).errorServicio(this.errorMensaje);
                         }else{
                             if(this.pantalla instanceof Fragment_Descongelado_OM){
                                 ( (Fragment_Descongelado_OM) this.pantalla ).terminaProcesandoEmergente();
