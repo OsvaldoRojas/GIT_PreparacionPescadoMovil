@@ -332,63 +332,8 @@ public class Fragment_Descongelado_OM extends Fragment {
     }
 
     private void asignaMecanico(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.fragment_asignar_mecanico, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        setOrdenSeleccionada(null);
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(getGafeteEscaneado() != null){
-                            getOrdenSeleccionada().setMecanico( getGafeteEscaneado().getEmpleado().getNom_trab() );
-                            adaptadorOrden.notifyDataSetChanged();
-                            setGafeteEscaneado(null);
-                        }
-                        setOrdenSeleccionada(null);
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                EditText campoEscaner = ventanaEmergente.findViewById(R.id.campoEscaner);
-                campoEscaner.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        validaGafete( editable.toString() );
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new AsignarMecanicoDescongelado().newInstance( getOrdenSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void validaGafete(String codigo){

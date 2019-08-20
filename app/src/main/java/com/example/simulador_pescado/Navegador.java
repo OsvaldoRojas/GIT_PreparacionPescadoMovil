@@ -21,6 +21,7 @@ import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_TiempoMuerto
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.Descongelado.AsignarMecanicoDescongelado;
 import com.example.simulador_pescado.Descongelado.CreaOrdenMantenimientoDescongelado;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_Plan;
@@ -46,7 +47,7 @@ Contenedor.OnFragmentInteractionListener, Contenedor_Descongelado.OnFragmentInte
         Fragment_Atemperado_Plan.OnFragmentInteractionListener, AsignarTina.OnFragmentInteractionListener, AsignarOperador.OnFragmentInteractionListener,
         AsignarMontacargas.OnFragmentInteractionListener, CreaOrdenMantenimientoPreseleccion.OnFragmentInteractionListener, AsignarMecanicoPreseleccion.OnFragmentInteractionListener,
         DetalleOrdenPreseleccion.OnFragmentInteractionListener, CreaOrdenMantenimientoAtemperado.OnFragmentInteractionListener, CreaOrdenMantenimientoDescongelado.OnFragmentInteractionListener,
-        AsignarMecanicoAtemperado.OnFragmentInteractionListener, DetalleOrdenAtemperado.OnFragmentInteractionListener {
+        AsignarMecanicoAtemperado.OnFragmentInteractionListener, DetalleOrdenAtemperado.OnFragmentInteractionListener, AsignarMecanicoDescongelado.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
