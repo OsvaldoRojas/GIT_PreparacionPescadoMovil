@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Turno"
-            android:label="@string/title_activity_login"
+            android:label="@string/app_name"
             android:theme="@style/AppThemeAcceder">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
