@@ -56,11 +56,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        UsuarioLogueado ul = new UsuarioLogueado();
-        ul.setNombre("Nombre");
-        ul.setApellido_paterno("Usuario");
-        ul.setTurno(1);
-        UsuarioLogueado usuarioLogueado = UsuarioLogueado.getUsuarioLogueado(ul);
+        UsuarioLogueado usuarioLogueado = UsuarioLogueado.getUsuarioLogueado(null);
         this.setTitle( usuarioLogueado.getNombre().concat(" ").concat( usuarioLogueado.getApellido_paterno() ) );
        
         Fragment fragment= new home();
