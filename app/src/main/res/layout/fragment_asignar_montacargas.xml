@@ -52,22 +52,6 @@
                     android:paddingTop="4dp"/>
 
                 <EditText
-                    android:id="@+id/campoNombre"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:hint="Nombre del Operador"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
-                    android:background="@color/blanco"
-                    android:textSize="15dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:focusable="true"/>
-
-                <EditText
                     android:id="@+id/campoEscaner"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -84,6 +68,20 @@
                     android:focusable="true">
                     <requestFocus/>
                 </EditText>
+
+                <TextView
+                    android:id="@+id/campoNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:hint="Nombre del Operador"
+                    android:gravity="center_horizontal"
+                    android:background="@color/blanco"
+                    android:textSize="15dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp" />
 
             </LinearLayout>
 

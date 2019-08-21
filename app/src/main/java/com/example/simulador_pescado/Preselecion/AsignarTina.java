@@ -243,7 +243,7 @@ public class AsignarTina extends Fragment {
         seleccionEspecie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
+                getTinaSeleccionada().setGrupoEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
             }
 
             @Override
@@ -267,7 +267,7 @@ public class AsignarTina extends Fragment {
         });
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
-        etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getEtiquetaMovil() ) );
+        etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getPosicion() ) );
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText( Utilerias.fechaActual() );
@@ -297,14 +297,14 @@ public class AsignarTina extends Fragment {
             ValidaTina validaTina = new ValidaTina(codigo, this);
             validaTina.execute();
         }else{
-            EditText campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+            TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
             campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
     public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
-        EditText campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
 
         if( resultadoTina.getIdTinaDes() != null ){
             campoDescripcion.setText( resultadoTina.getTinaDes() );

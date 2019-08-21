@@ -999,7 +999,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
         if( this.listaTinas.isEmpty() ){
             for( int posicion = 1; posicion <= 96; posicion++ ){
                 Tina recursoTina = new Tina();
-                recursoTina.setIdPosicion(posicion);
+                recursoTina.setIdPreseleccionPosicionTina(posicion);
                 recursoTina.setEstado(Constantes.ESTADO.inicial);
                 this.listaTinas.add(recursoTina);
             }
@@ -1027,13 +1027,13 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
     private void accionIconoTina(int posicion){
         for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicion ){
+            if( tina.getIdPreseleccionPosicionTina() == posicion ){
                 if( tina.getEstado() == Constantes.ESTADO.inicial ){
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setImageResource(R.drawable.ic_tina1);
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     tina.setEstado(Constantes.ESTADO.seleccionado);
                     ajustaTamañoVista();
@@ -1048,9 +1048,9 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
                         setTinaSeleccionada(null);
                         habilitaRecursos();
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setImageResource(R.drawable.ic_tina2);
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         tina.setEstado(Constantes.ESTADO.inicial);
                         this.botonCreaOrden.setOnClickListener(null);
@@ -1107,7 +1107,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
         if( getTinaSeleccionada() != null ){
             vista.height = vista.height - (botonera.height*5);
-            if( getTinaSeleccionada().getIdPosicion() <= 24 ){
+            if( getTinaSeleccionada().getIdPreseleccionPosicionTina() <= 24 ){
                 this.vistaIconos.post(new Runnable() {
                     public void run() {
                         vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
@@ -1140,7 +1140,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
     private void habilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(true);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
@@ -1150,7 +1150,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
     private void deshabilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(false);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
@@ -1158,7 +1158,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
         }
 
         if( getTinaSeleccionada() != null ){
-            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+            getIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() ).setEnabled(true);
         }else{
             if( getMontacargasSeleccionado() != null ){
                 getIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ).setEnabled(true);
