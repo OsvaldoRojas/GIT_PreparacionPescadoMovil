@@ -240,7 +240,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.listaTinas = listaTinas;
         for( final Tina recursoTina : this.listaTinas ){
             recursoTina.setEstado(Constantes.ESTADO.seleccionado);
-            accionIconoTina( recursoTina.getIdPosicion() );
+            accionIconoTina( recursoTina.getIdPreseleccionPosicionTina() );
         }
     }
 
@@ -345,10 +345,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         if( this.listaTinas.isEmpty() ){
             for( int posicion = 1; posicion <= 12; posicion++ ){
                 final Tina recursoTina = new Tina();
-                recursoTina.setIdPosicion(posicion);
+                recursoTina.setIdPreseleccionPosicionTina(posicion);
                 //recursoTina.setLibre(true);
                 recursoTina.setLibre(false);
-                recursoTina.setEtiquetaMovil( getEtiquetaTina(posicion) );
+                recursoTina.setPosicion( getEtiquetaTina(posicion) );
                 //recursoTina.setEstado(Constantes.ESTADO.inicial);
                 recursoTina.setEstado(Constantes.ESTADO.seleccionado);
                 this.listaTinas.add(recursoTina);
@@ -447,13 +447,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void accionIconoTina(int posicion){
         for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicion ){
+            if( tina.getIdPreseleccionPosicionTina() == posicion ){
                 if( tina.getEstado() == Constantes.ESTADO.inicial ){
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setImageResource(R.drawable.ic_tina1);
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     tina.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarTina);
@@ -465,14 +465,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setImageResource(R.drawable.ic_tina2);
                         if( tina.getLibre() ){
-                            getIconoTina( tina.getIdPosicion() )
+                            getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             tina.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoTina( tina.getIdPosicion() )
+                            getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             tina.setEstado( Constantes.ESTADO.asignado );
                         }
@@ -489,9 +489,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             this.contenedorBotones.setVisibility(View.GONE);
                         }
                     }else{
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setImageResource(R.drawable.ic_tina1);
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         tina.setEstado( Constantes.ESTADO.seleccionado );
 
@@ -585,7 +585,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void getAsignados(){
         if( getTinaSeleccionada() != null ){
-            accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+            accionIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
         }
 
         if( getOperadorSeleccionado() != null ){
@@ -660,10 +660,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private void habilitaTinas(){
         for(Tina tina : this.listaTinas){
             if( !tina.getLibre() ){
-                getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+                getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(true);
             }
         }
-        getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(false);
+        getIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() ).setEnabled(false);
     }
 
     private void asignarOperador(){
@@ -686,9 +686,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void cancelaMezclar(){
         this.esMezclar = false;
-        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+        accionIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
         for( Tina tina : this.listaMezclarTinas ){
-            accionIconoTina( tina.getIdPosicion() );
+            accionIconoTina( tina.getIdPreseleccionPosicionTina() );
         }
     }
 
@@ -722,7 +722,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
 
                 TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
-                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getEtiquetaMovil() );
+                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getPosicion() );
 
                 TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
                 etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
@@ -758,7 +758,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
 
                 TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
-                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getEtiquetaMovil() );
+                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getPosicion() );
 
                 TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
                 etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
@@ -1122,7 +1122,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void deshabilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(false);
         }
 
         for(OperadorBascula operador : this.listaOperadores){
@@ -1134,7 +1134,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         if( getTinaSeleccionada() != null ){
-            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+            getIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() ).setEnabled(true);
         }else{
             if( getOperadorSeleccionado() != null ){
                 getIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() ).setEnabled(true);
@@ -1148,7 +1148,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void habilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(true);
         }
 
         for(OperadorBascula operador : this.listaOperadores){

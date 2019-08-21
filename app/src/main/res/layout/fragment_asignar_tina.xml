@@ -38,6 +38,24 @@
                     android:textSize="13dp"/>
 
                 <EditText
+                    android:id="@+id/campoEscaner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:hint="Escanear código tina"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/negro"
+                    android:background="@color/blanco"
+                    android:textSize="15dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:focusable="true">
+                    <requestFocus/>
+                </EditText>
+
+                <TextView
                     android:id="@+id/campoDescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -46,12 +64,10 @@
                     android:layout_marginRight="20dp"
                     android:hint="Descripción de la tina"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
                     android:background="@color/blanco"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:focusable="true"/>
+                    android:paddingBottom="4dp" />
 
                 <TextView
                     android:id="@+id/etiquetaPosicion"
@@ -98,24 +114,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp" />
-
-                <EditText
-                    android:id="@+id/campoEscaner"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:hint="Escanear código tina"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
-                    android:background="@color/blanco"
-                    android:textSize="15dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:focusable="true">
-                    <requestFocus/>
-                </EditText>
 
             </LinearLayout>
 

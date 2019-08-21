@@ -164,7 +164,7 @@ public class CreaOrdenMantenimientoPreseleccion extends Fragment {
 
         if( this.mParam1 instanceof Tina ){
             setTinaSeleccionada( (Tina) this.mParam1 );
-            etiquetaEquipo.setText( "Tina ".concat( getTinaSeleccionada().getEtiquetaMovil() ) );
+            etiquetaEquipo.setText( "Tina ".concat( getTinaSeleccionada().getPosicion() ) );
         }else{
             if( this.mParam1 instanceof OperadorBascula ){
                 setOperadorSeleccionado( (OperadorBascula) this.mParam1 );

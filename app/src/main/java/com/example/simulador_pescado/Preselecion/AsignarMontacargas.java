@@ -179,7 +179,7 @@ public class AsignarMontacargas extends Fragment {
 
     private void validaAsignacion(){
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
-        EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+        TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
 
         if( !campoEscaner.getText().equals("") &&
                 !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) ){
@@ -204,14 +204,14 @@ public class AsignarMontacargas extends Fragment {
             ValidaGafete validaGafete = new ValidaGafete(this, codigo);
             validaGafete.execute();
         }else{
-            EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+            TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
             campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
     public void resultadoEscaneoGafete(Gafete resultadoGafete){
-        EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+        TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
 
         if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
             campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );

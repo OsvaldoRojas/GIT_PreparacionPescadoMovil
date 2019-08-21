@@ -28,7 +28,7 @@ public class AdaptadorMezclarSubtallas extends ArrayAdapter<Tina> {
         TextView posicionTina = vista.findViewById(R.id.etiquetaPosicionTina);
         TextView subtalla = vista.findViewById(R.id.etiquetaSubtalla);
 
-        posicionTina.setText( posicionSubtalla.getEtiquetaMovil() );
+        posicionTina.setText( posicionSubtalla.getPosicion() );
         subtalla.setText( posicionSubtalla.getSubtalla().getDescripcion() );
 
         return vista;
