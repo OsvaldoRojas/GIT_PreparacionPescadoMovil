@@ -237,7 +237,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void ordenaTinas(List<Tina> listaTinas){
-        this.listaTinas = listaTinas;
+        //VALIDACION, QUITAR YA QUE DEJEN BIEN LA BD
+        List<Tina> listaTemp = new ArrayList<>();
+        for(Tina tinaLista : listaTinas){
+            if(tinaLista.getIdPreseleccionPosicionTina() <= 12){
+                listaTemp.add(tinaLista);
+            }
+        }
+        this.listaTinas = listaTemp;
+        //this.listaTinas = listaTinas;
         for( final Tina recursoTina : this.listaTinas ){
             recursoTina.setEstado(Constantes.ESTADO.seleccionado);
             accionIconoTina( recursoTina.getIdPreseleccionPosicionTina() );

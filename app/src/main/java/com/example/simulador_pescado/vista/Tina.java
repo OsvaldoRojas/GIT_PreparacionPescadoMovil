@@ -17,6 +17,7 @@ public class Tina implements Serializable {
     private int peso;
     private Boolean libre;
     private Boolean activo;
+    private Boolean turno;
 
     private Constantes.ESTADO estado;
 
@@ -114,5 +115,13 @@ public class Tina implements Serializable {
 
     public void setEstado(Constantes.ESTADO estado) {
         this.estado = estado;
+    }
+
+    public Boolean getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Boolean turno) {
+        this.turno = turno;
     }
 }

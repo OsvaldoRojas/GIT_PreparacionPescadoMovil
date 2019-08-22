@@ -27,6 +27,7 @@ import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.Tina;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -205,9 +206,14 @@ public class AsignarOperador extends Fragment {
         TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
 
         if( !campoEscaner.getText().equals("") &&
-                !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) ){
+                !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
+                !campoNombre.getText().equals("")){
             iniciaProcesando();
             getOperadorSeleccionado().setLibre(false);
+            getOperadorSeleccionado().setTurno(true);
+            if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
+                getOperadorSeleccionado().setTurno(false);
+            }
             AsignaOperador asignaOperador = new AsignaOperador(this, getOperadorSeleccionado() );
             asignaOperador.execute();
         }else{
