@@ -23,6 +23,7 @@ import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
 import com.example.simulador_pescado.conexion.AsignaMontacargas;
+import com.example.simulador_pescado.conexion.AsignaOperador;
 import com.example.simulador_pescado.conexion.CargaCatalogos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
@@ -681,7 +682,11 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void liberarOperador(){
-        System.out.println("LIBERAR OPERADOR...........");
+        iniciaProcesando();
+        getOperadorSeleccionado().setIdEmpleado(0);
+        getOperadorSeleccionado().setLibre(true);
+        AsignaOperador asignaOperador = new AsignaOperador(this, getOperadorSeleccionado() );
+        asignaOperador.execute();
     }
 
     private void asignarMontacargas(){
