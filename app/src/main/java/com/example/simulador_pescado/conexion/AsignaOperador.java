@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Preselecion.AsignarOperador;
+import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.google.gson.Gson;
@@ -68,10 +68,10 @@ public class AsignaOperador extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            ( (AsignarOperador) this.pantalla ).resultadoAsignacion();
+            ( (Fragment_Asigna_Operador) this.pantalla ).resultadoAsignacion();
         }else{
-            ( (AsignarOperador) this.pantalla ).terminaProcesando();
-            ( (AsignarOperador) this.pantalla ).errorServicio(this.errorMensaje);
+            ( (Fragment_Asigna_Operador) this.pantalla ).terminaProcesando();
+            ( (Fragment_Asigna_Operador) this.pantalla ).errorServicio(this.errorMensaje);
         }
     }
 }

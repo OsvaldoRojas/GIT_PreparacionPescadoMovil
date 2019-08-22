@@ -22,6 +22,7 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
+import com.example.simulador_pescado.conexion.AsignaMontacargas;
 import com.example.simulador_pescado.conexion.CargaCatalogos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
@@ -641,7 +642,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarTina(){
-        Fragment fragment = new AsignarTina()
+        Fragment fragment = new Fragment_Asigna_Tina()
                 .newInstance(
                         getTinaSeleccionada(),
                         (Serializable) this.listaTalla,
@@ -675,7 +676,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarOperador(){
-        Fragment fragment = new AsignarOperador().newInstance( getOperadorSeleccionado(), (Serializable) this.listaTinas );
+        Fragment fragment = new Fragment_Asigna_Operador().newInstance( getOperadorSeleccionado(), (Serializable) this.listaTinas );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
@@ -684,12 +685,20 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarMontacargas(){
-        Fragment fragment = new AsignarMontacargas().newInstance( getMontacargasSeleccionado() );
+        Fragment fragment = new Fragment_Asigna_Montacargas().newInstance( getMontacargasSeleccionado() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void liberarMontacargas(){
-        System.out.println("LIBERAR MONTACARGAS...........");
+        iniciaProcesando();
+        getMontacargasSeleccionado().setIdEmpleado("0");
+        getMontacargasSeleccionado().setLibre(true);
+        AsignaMontacargas asignaMontacargas = new AsignaMontacargas(this, getMontacargasSeleccionado() );
+        asignaMontacargas.execute();
+    }
+
+    public void resultadoAsignacion(){
+        getAsignados();
     }
 
     private void cancelaMezclar(){

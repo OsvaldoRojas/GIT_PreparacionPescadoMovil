@@ -4,7 +4,8 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Preselecion.AsignarMontacargas;
+import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Montacargas;
+import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.google.gson.Gson;
@@ -68,10 +69,22 @@ public class AsignaMontacargas extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            ( (AsignarMontacargas) this.pantalla ).resultadoAsignacion();
+            if( this.pantalla instanceof Fragment_Asigna_Montacargas ){
+                ( (Fragment_Asigna_Montacargas) this.pantalla ).resultadoAsignacion();
+            }else{
+                if( this.pantalla instanceof Fragment_Preselecion_Tinas )
+                    ( (Fragment_Preselecion_Tinas) this.pantalla ).resultadoAsignacion();
+            }
         }else{
-            ( (AsignarMontacargas) this.pantalla ).terminaProcesando();
-            ( (AsignarMontacargas) this.pantalla ).errorServicio(this.errorMensaje);
+            if( this.pantalla instanceof Fragment_Asigna_Montacargas ){
+                ( (Fragment_Asigna_Montacargas) this.pantalla ).terminaProcesando();
+                ( (Fragment_Asigna_Montacargas) this.pantalla ).errorServicio(this.errorMensaje);
+            }else{
+                if( this.pantalla instanceof Fragment_Preselecion_Tinas ){
+                    ( (Fragment_Preselecion_Tinas) this.pantalla ).terminaProcesando();
+                    ( (Fragment_Preselecion_Tinas) this.pantalla ).errorServicio(this.errorMensaje);
+                }
+            }
         }
     }
 }

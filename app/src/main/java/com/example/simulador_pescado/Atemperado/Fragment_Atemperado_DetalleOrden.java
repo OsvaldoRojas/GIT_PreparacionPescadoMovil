@@ -32,7 +32,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetalleOrdenAtemperado extends Fragment {
+public class Fragment_Atemperado_DetalleOrden extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +49,7 @@ public class DetalleOrdenAtemperado extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public DetalleOrdenAtemperado() {
+    public Fragment_Atemperado_DetalleOrden() {
         // Required empty public constructor
     }
 
@@ -61,8 +61,8 @@ public class DetalleOrdenAtemperado extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetalleOrdenAtemperado newInstance(Serializable param1) {
-        DetalleOrdenAtemperado fragment = new DetalleOrdenAtemperado();
+    public static Fragment_Atemperado_DetalleOrden newInstance(Serializable param1) {
+        Fragment_Atemperado_DetalleOrden fragment = new Fragment_Atemperado_DetalleOrden();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
