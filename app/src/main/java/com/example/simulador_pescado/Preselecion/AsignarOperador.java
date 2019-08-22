@@ -30,11 +30,9 @@ import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-public class AsignarOperador extends Fragment {
+public class Fragment_Asigna_Operador extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,7 +52,7 @@ public class AsignarOperador extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarOperador() {
+    public Fragment_Asigna_Operador() {
         // Required empty public constructor
     }
 
@@ -66,8 +64,8 @@ public class AsignarOperador extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarOperador newInstance(Serializable param1, Serializable param2) {
-        AsignarOperador fragment = new AsignarOperador();
+    public static Fragment_Asigna_Operador newInstance(Serializable param1, Serializable param2) {
+        Fragment_Asigna_Operador fragment = new Fragment_Asigna_Operador();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         args.putSerializable(ARG_PARAM2, param2);

@@ -41,7 +41,7 @@ import com.example.simulador_pescado.vista.UsuarioLogueado;
 import java.io.Serializable;
 import java.util.List;
 
-public class AsignarTina extends Fragment {
+public class Fragment_Asigna_Tina extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,7 +70,7 @@ public class AsignarTina extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarTina() {
+    public Fragment_Asigna_Tina() {
         // Required empty public constructor
     }
 
@@ -83,9 +83,9 @@ public class AsignarTina extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarTina newInstance(Serializable param1, Serializable param2,
-                                          Serializable param3, Serializable param4, Serializable param5) {
-        AsignarTina fragment = new AsignarTina();
+    public static Fragment_Asigna_Tina newInstance(Serializable param1, Serializable param2,
+                                                   Serializable param3, Serializable param4, Serializable param5) {
+        Fragment_Asigna_Tina fragment = new Fragment_Asigna_Tina();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         args.putSerializable(ARG_PARAM2, param2);

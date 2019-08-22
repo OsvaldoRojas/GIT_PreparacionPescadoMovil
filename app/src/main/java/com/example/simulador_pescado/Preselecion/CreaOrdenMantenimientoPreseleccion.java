@@ -21,7 +21,7 @@ import com.example.simulador_pescado.vista.Tina;
 
 import java.io.Serializable;
 
-public class CreaOrdenMantenimientoPreseleccion extends Fragment {
+public class Fragment_Preseleccion_CreaOrdenMantenimiento extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,7 +39,7 @@ public class CreaOrdenMantenimientoPreseleccion extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public CreaOrdenMantenimientoPreseleccion() {
+    public Fragment_Preseleccion_CreaOrdenMantenimiento() {
         // Required empty public constructor
     }
 
@@ -51,8 +51,8 @@ public class CreaOrdenMantenimientoPreseleccion extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreaOrdenMantenimientoPreseleccion newInstance(Serializable param1) {
-        CreaOrdenMantenimientoPreseleccion fragment = new CreaOrdenMantenimientoPreseleccion();
+    public static Fragment_Preseleccion_CreaOrdenMantenimiento newInstance(Serializable param1) {
+        Fragment_Preseleccion_CreaOrdenMantenimiento fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);

@@ -28,7 +28,7 @@ import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.io.Serializable;
 
-public class AsignarMecanicoPreseleccion extends Fragment {
+public class Fragment_Preseleccion_AsignaMecanico extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,7 +45,7 @@ public class AsignarMecanicoPreseleccion extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarMecanicoPreseleccion() {
+    public Fragment_Preseleccion_AsignaMecanico() {
         // Required empty public constructor
     }
 
@@ -57,8 +57,8 @@ public class AsignarMecanicoPreseleccion extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarMecanicoPreseleccion newInstance(Serializable param1) {
-        AsignarMecanicoPreseleccion fragment = new AsignarMecanicoPreseleccion();
+    public static Fragment_Preseleccion_AsignaMecanico newInstance(Serializable param1) {
+        Fragment_Preseleccion_AsignaMecanico fragment = new Fragment_Preseleccion_AsignaMecanico();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);

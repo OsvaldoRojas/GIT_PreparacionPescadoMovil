@@ -4,11 +4,11 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Atemperado.AsignarMecanicoAtemperado;
-import com.example.simulador_pescado.Descongelado.AsignarMecanicoDescongelado;
-import com.example.simulador_pescado.Preselecion.AsignarMecanicoPreseleccion;
-import com.example.simulador_pescado.Preselecion.AsignarMontacargas;
-import com.example.simulador_pescado.Preselecion.AsignarOperador;
+import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_AsignaMecanico;
+import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_AsignaMecanico;
+import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_AsignaMecanico;
+import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Montacargas;
+import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.google.gson.Gson;
@@ -68,46 +68,46 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            if(this.pantalla instanceof AsignarOperador){
-                ( (AsignarOperador) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+            if(this.pantalla instanceof Fragment_Asigna_Operador){
+                ( (Fragment_Asigna_Operador) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
             }else{
-                if(this.pantalla instanceof AsignarMontacargas){
-                    ( (AsignarMontacargas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                if(this.pantalla instanceof Fragment_Asigna_Montacargas){
+                    ( (Fragment_Asigna_Montacargas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                 }else{
-                    if(this.pantalla instanceof AsignarMecanicoPreseleccion){
-                        ( (AsignarMecanicoPreseleccion) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                    if(this.pantalla instanceof Fragment_Preseleccion_AsignaMecanico){
+                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                     }
                     else{
-                        if(this.pantalla instanceof AsignarMecanicoAtemperado){
-                            ( (AsignarMecanicoAtemperado) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                        if(this.pantalla instanceof Fragment_Atemperado_AsignaMecanico){
+                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                         }else{
-                            if(this.pantalla instanceof AsignarMecanicoDescongelado){
-                                ( (AsignarMecanicoDescongelado) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                            if(this.pantalla instanceof Fragment_Descongelado_AsignaMecanico){
+                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                             }
                         }
                     }
                 }
             }
         }else{
-            if(this.pantalla instanceof AsignarOperador){
-                ( (AsignarOperador) this.pantalla ).terminaProcesando();
-                ( (AsignarOperador) this.pantalla ).errorServicio(this.errorMensaje);
+            if(this.pantalla instanceof Fragment_Asigna_Operador){
+                ( (Fragment_Asigna_Operador) this.pantalla ).terminaProcesando();
+                ( (Fragment_Asigna_Operador) this.pantalla ).errorServicio(this.errorMensaje);
             }else{
-                if(this.pantalla instanceof AsignarMontacargas){
-                    ( (AsignarMontacargas) this.pantalla ).terminaProcesando();
-                    ( (AsignarMontacargas) this.pantalla ).errorServicio(this.errorMensaje);
+                if(this.pantalla instanceof Fragment_Asigna_Montacargas){
+                    ( (Fragment_Asigna_Montacargas) this.pantalla ).terminaProcesando();
+                    ( (Fragment_Asigna_Montacargas) this.pantalla ).errorServicio(this.errorMensaje);
                 }else{
-                    if(this.pantalla instanceof AsignarMecanicoPreseleccion){
-                        ( (AsignarMecanicoPreseleccion) this.pantalla ).terminaProcesando();
-                        ( (AsignarMecanicoPreseleccion) this.pantalla ).errorServicio(this.errorMensaje);
+                    if(this.pantalla instanceof Fragment_Preseleccion_AsignaMecanico){
+                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).terminaProcesando();
+                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                     }else{
-                        if(this.pantalla instanceof AsignarMecanicoAtemperado){
-                            ( (AsignarMecanicoAtemperado) this.pantalla ).terminaProcesando();
-                            ( (AsignarMecanicoAtemperado) this.pantalla ).errorServicio(this.errorMensaje);
+                        if(this.pantalla instanceof Fragment_Atemperado_AsignaMecanico){
+                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).terminaProcesando();
+                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                         }else{
-                            if(this.pantalla instanceof AsignarMecanicoDescongelado){
-                                ( (AsignarMecanicoDescongelado) this.pantalla ).terminaProcesando();
-                                ( (AsignarMecanicoDescongelado) this.pantalla ).errorServicio(this.errorMensaje);
+                            if(this.pantalla instanceof Fragment_Descongelado_AsignaMecanico){
+                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).terminaProcesando();
+                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                             }
                         }
                     }

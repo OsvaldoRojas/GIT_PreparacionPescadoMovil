@@ -29,10 +29,8 @@ import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class AsignarMontacargas extends Fragment {
+public class Fragment_Asigna_Montacargas extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +47,7 @@ public class AsignarMontacargas extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarMontacargas() {
+    public Fragment_Asigna_Montacargas() {
         // Required empty public constructor
     }
 
@@ -61,8 +59,8 @@ public class AsignarMontacargas extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarMontacargas newInstance(Serializable param1) {
-        AsignarMontacargas fragment = new AsignarMontacargas();
+    public static Fragment_Asigna_Montacargas newInstance(Serializable param1) {
+        Fragment_Asigna_Montacargas fragment = new Fragment_Asigna_Montacargas();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);

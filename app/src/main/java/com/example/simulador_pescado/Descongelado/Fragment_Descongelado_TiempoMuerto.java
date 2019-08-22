@@ -1016,12 +1016,12 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenTina(){
-        Fragment fragment = new CreaOrdenMantenimientoDescongelado().newInstance( getTinaSeleccionada() );
+        Fragment fragment = new Fragment_Descongelado_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenMontacargas(){
-        Fragment fragment = new CreaOrdenMantenimientoDescongelado().newInstance( getMontacargasSeleccionado() );
+        Fragment fragment = new Fragment_Descongelado_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 

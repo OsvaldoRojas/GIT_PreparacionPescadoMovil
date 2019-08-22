@@ -1,49 +1,25 @@
 package com.example.simulador_pescado.Descongelado;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.SearchView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.Utilerias.Utilerias;
-import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
-import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoLista;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
-import com.example.simulador_pescado.conexion.ValidaGafete;
-import com.example.simulador_pescado.vista.Artefacto;
-import com.example.simulador_pescado.vista.ArtefactoLista;
-import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -194,12 +170,12 @@ public class Fragment_Descongelado_OM extends Fragment {
     }
 
     private void muestraDetalle(){
-        Fragment fragment = new DetalleOrdenDescongelado().newInstance( getOrdenSeleccionada() );
+        Fragment fragment = new Fragment_Descongelado_DetalleOrden().newInstance( getOrdenSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void asignaMecanico(){
-        Fragment fragment = new AsignarMecanicoDescongelado().newInstance( getOrdenSeleccionada() );
+        Fragment fragment = new Fragment_Descongelado_AsignaMecanico().newInstance( getOrdenSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
