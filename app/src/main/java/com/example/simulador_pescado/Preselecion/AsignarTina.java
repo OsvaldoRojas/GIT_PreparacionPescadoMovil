@@ -27,6 +27,7 @@ import com.example.simulador_pescado.adaptadores.AdaptadorEspecialidad;
 import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
 import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
+import com.example.simulador_pescado.conexion.AsignaTina;
 import com.example.simulador_pescado.conexion.ValidaTina;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Especialidad;
@@ -35,6 +36,7 @@ import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.TinaEscaneo;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
 import java.util.List;
@@ -210,6 +212,14 @@ public class AsignarTina extends Fragment {
             }
         });
 
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validaAsignacion();
+            }
+        });
+
         Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
         seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), getListaSubtalla() ) );
         seleccionSubtalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -291,6 +301,43 @@ public class AsignarTina extends Fragment {
         });
     }
 
+    private void validaAsignacion(){
+        Spinner especie = this.vista.findViewById(R.id.seleccionEspecie);
+        Spinner talla = this.vista.findViewById(R.id.seleccionTalla);
+        Spinner subtalla = this.vista.findViewById(R.id.seleccionSubtalla);
+        Spinner especialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+
+        if( !campoEscaner.getText().equals("") &&
+                !campoDescripcion.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
+                !campoDescripcion.getText().equals("") ){
+            if( !( (GrupoEspecie) especie.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Especie") &&
+                    !( (Talla) talla.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Talla") &&
+                    !( (Subtalla) subtalla.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Subtalla") &&
+                    !( (Especialidad) especialidad.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Especialidad")){
+                iniciaProcesando();
+                getTinaSeleccionada().setLibre(false);
+                getTinaSeleccionada().setTurno(true);
+                if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
+                    getTinaSeleccionada().setTurno(false);
+                }
+                AsignaTina asignaTina = new AsignaTina(this, getTinaSeleccionada() );
+                asignaTina.execute();
+            }else {
+                errorValidacion("Es necesario capturar todos los campos.");
+            }
+        }else{
+            errorValidacion("Es necesario capturar una tina.");
+        }
+    }
+
+    public void resultadoAsignacion(){
+        terminaProcesando();
+        Fragment fragment = new Contenedor().newInstance(0);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
     private void validaTina(String codigo){
         if( codigo.length() >= 15 ){
             iniciaProcesando();
@@ -320,7 +367,7 @@ public class AsignarTina extends Fragment {
         terminaProcesando();
     }
 
-    public void errorEscaneoTina(ErrorServicio errorMensaje){
+    public void errorServicio(ErrorServicio errorMensaje){
         String mensajeMostrar = errorMensaje.getMessage();
         if( errorMensaje.getMensaje() != null &&
                 !errorMensaje.getMensaje().equalsIgnoreCase("") ){
@@ -352,6 +399,32 @@ public class AsignarTina extends Fragment {
             }
         });
         this.ventanaError.show();
+    }
+
+    public void errorValidacion(final String mensaje){
+        final AlertDialog ventanaEmergente;
+        AlertDialog.Builder builder = new AlertDialog.Builder( getContext() );
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        ventanaEmergente = builder.create();
+        ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        ventanaEmergente.show();
     }
 
     public void iniciaProcesando(){

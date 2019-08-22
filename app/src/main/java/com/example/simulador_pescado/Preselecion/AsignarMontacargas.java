@@ -26,6 +26,7 @@ import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -182,9 +183,14 @@ public class AsignarMontacargas extends Fragment {
         TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
 
         if( !campoEscaner.getText().equals("") &&
-                !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) ){
+                !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
+                !campoNombre.getText().equals("") ){
             iniciaProcesando();
             getMontacargasSeleccionado().setLibre(false);
+            getMontacargasSeleccionado().setTurno(true);
+            if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
+                getMontacargasSeleccionado().setTurno(false);
+            }
             AsignaMontacargas asignaMontacargas = new AsignaMontacargas(this, getMontacargasSeleccionado() );
             asignaMontacargas.execute();
         }else{

@@ -68,7 +68,7 @@ public class ValidaTina extends AsyncTask<Void,Integer,Boolean> {
             ( (AsignarTina) this.pantalla ).resultadoEscaneoTina(this.resultadoTina);
         }else{
             ( (AsignarTina) this.pantalla ).terminaProcesando();
-            ( (AsignarTina) this.pantalla ).errorEscaneoTina(this.errorMensaje);
+            ( (AsignarTina) this.pantalla ).errorServicio(this.errorMensaje);
         }
     }
 }
