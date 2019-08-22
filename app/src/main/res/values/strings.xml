@@ -26,6 +26,7 @@
     <string name="asignarTina">Asignar tina</string>
     <string name="mezclarTina">Mezclar tinas</string>
     <string name="liberarUsuario">Liberar usuario</string>
+    <string name="liberarOperadores">Liberar operadores</string>
     <string name="asignarUsuario">Asignar usuario</string>
     <string name="asignarMontacargas">Usuario - Montacargas</string>
     <string name="asignarTurno">Asignar turno</string>

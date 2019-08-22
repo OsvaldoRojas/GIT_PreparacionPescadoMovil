@@ -62,9 +62,11 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private LinearLayout contenedorBotones;
     private LinearLayout contenedorMensaje;
+    private LinearLayout contenedorTurno;
 
     private Button boton1;
     private Button boton2;
+    private Button botonTurno;
 
     private ImageView tina1;
     private ImageView tina2;
@@ -273,10 +275,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     public void marcaTurno(){
         if(UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1){
             this.iconoTurno.setText("T1");
-            this.iconoTurno.setVisibility(View.VISIBLE);
+            //this.iconoTurno.setVisibility(View.VISIBLE);
         }else{
             this.iconoTurno.setText("T2");
-            this.iconoTurno.setVisibility(View.VISIBLE);
+            //this.iconoTurno.setVisibility(View.VISIBLE);
         }
     }
 
@@ -399,6 +401,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         terminaProcesando();
     }
 
+    private boolean validaMuestraTurno(){
+        for( OperadorBascula operadorBascula : this.listaOperadores ){
+            if( !operadorBascula.getLibre() ){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void accionIconoOperador(int posicion){
         for( OperadorBascula operador : this.listaOperadores ){
             if( operador.getIdPreseleccionEstacion() == posicion ){
@@ -416,6 +427,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.boton2.setText(R.string.asignarUsuario);
                     this.boton2.setEnabled(true);
                     this.boton2.setOnClickListener(this.eventoAsignarOperador);
+                    this.contenedorTurno.setVisibility(View.GONE);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -433,6 +445,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             operador.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
+                        if( validaMuestraTurno() ){
+                            this.contenedorTurno.setVisibility(View.VISIBLE);
+                        }
                     }else{
                         setOperadorSeleccionado(operador);
                         deshabilitaRecursos();
@@ -447,6 +462,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         this.boton2.setText(R.string.asignarUsuario);
                         this.boton2.setEnabled(false);
                         this.boton2.setOnClickListener(null);
+                        this.contenedorTurno.setVisibility(View.GONE);
                         this.contenedorBotones.setVisibility(View.VISIBLE);
                     }
                 }
@@ -472,6 +488,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.boton2.setText(R.string.asignarTina);
                     this.boton2.setEnabled(true);
                     this.boton2.setOnClickListener(this.eventoAsignarTina);
+                    this.contenedorTurno.setVisibility(View.GONE);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -497,6 +514,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             setTinaSeleccionada(null);
                             habilitaRecursos();
                             this.contenedorBotones.setVisibility(View.GONE);
+                            if( validaMuestraTurno() ){
+                                this.contenedorTurno.setVisibility(View.VISIBLE);
+                            }
                         }
                     }else{
                         getIconoTina( tina.getIdPreseleccionPosicionTina() )
@@ -524,6 +544,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             this.boton2.setText(R.string.mezclarTina);
                             this.boton2.setEnabled(true);
                             this.boton2.setOnClickListener(this.eventoMezclarTina);
+                            this.contenedorTurno.setVisibility(View.GONE);
                             this.contenedorBotones.setVisibility(View.VISIBLE);
                         }
                     }
@@ -550,6 +571,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.boton2.setText(R.string.asignarUsuario);
                     this.boton2.setEnabled(true);
                     this.boton2.setOnClickListener(this.eventoAsignarMontacargas);
+                    this.contenedorTurno.setVisibility(View.GONE);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -567,6 +589,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             montacargas.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
+                        if( validaMuestraTurno() ){
+                            this.contenedorTurno.setVisibility(View.VISIBLE);
+                        }
                     }else{
                         setMontacargasSeleccionado(montacargas);
                         deshabilitaRecursos();
@@ -581,6 +606,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         this.boton2.setText(R.string.asignarUsuario);
                         this.boton2.setEnabled(false);
                         this.boton2.setOnClickListener(null);
+                        this.contenedorTurno.setVisibility(View.GONE);
                         this.contenedorBotones.setVisibility(View.VISIBLE);
                     }
                 }
@@ -807,7 +833,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             @Override
             public void onShow(DialogInterface dialogInterface) {
                 TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText("¿Desea terminar el turno?");
+                etiquetaMensaje.setText("¿Está seguro de liberar todos los operadores?");
 
                 Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
                 botonAceptar.setOnClickListener(new View.OnClickListener() {
@@ -856,6 +882,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.boton2 = this.vista.findViewById(R.id.boton2);
 
         this.contenedorMensaje = this.vista.findViewById(R.id.contenedorMensaje);
+        this.contenedorTurno = this.vista.findViewById(R.id.contenedorTurno);
+        this.botonTurno = this.vista.findViewById(R.id.botonTurno);
+        this.botonTurno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                liberaTurno();
+            }
+        });
 
         this.eventoCancelarMezclar = new View.OnClickListener() {
             @Override
