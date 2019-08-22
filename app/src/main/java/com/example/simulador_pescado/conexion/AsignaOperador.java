@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
+import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.google.gson.Gson;
@@ -68,10 +69,23 @@ public class AsignaOperador extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            ( (Fragment_Asigna_Operador) this.pantalla ).resultadoAsignacion();
+            if( this.pantalla instanceof Fragment_Asigna_Operador ){
+                ( (Fragment_Asigna_Operador) this.pantalla ).resultadoAsignacion();
+            }else{
+                if( this.pantalla instanceof Fragment_Preselecion_Tinas ){
+                    ( (Fragment_Preselecion_Tinas) this.pantalla ).resultadoAsignacion();
+                }
+            }
         }else{
-            ( (Fragment_Asigna_Operador) this.pantalla ).terminaProcesando();
-            ( (Fragment_Asigna_Operador) this.pantalla ).errorServicio(this.errorMensaje);
+            if( this.pantalla instanceof Fragment_Asigna_Operador ){
+                ( (Fragment_Asigna_Operador) this.pantalla ).terminaProcesando();
+                ( (Fragment_Asigna_Operador) this.pantalla ).errorServicio(this.errorMensaje);
+            }else{
+                if( this.pantalla instanceof Fragment_Preselecion_Tinas ){
+                    ( (Fragment_Preselecion_Tinas) this.pantalla ).terminaProcesando();
+                    ( (Fragment_Preselecion_Tinas) this.pantalla ).errorServicio(this.errorMensaje);
+                }
+            }
         }
     }
 }
