@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo_asignar">
+    android:background="@color/no_selecion">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:id="@+id/etiquetaMensaje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/blanco"
+            android:textColor="@color/negro"
             android:gravity="center"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
@@ -28,7 +28,6 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
-
         android:gravity="bottom|center_horizontal">
 
         <Button

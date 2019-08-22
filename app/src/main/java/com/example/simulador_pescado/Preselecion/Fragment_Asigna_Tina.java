@@ -29,6 +29,7 @@ import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.AsignaTina;
 import com.example.simulador_pescado.conexion.ValidaTina;
+import com.example.simulador_pescado.vista.Artefacto;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
@@ -299,6 +300,8 @@ public class Fragment_Asigna_Tina extends Fragment {
                 validaTina( editable.toString() );
             }
         });
+
+        cargaValoresIniciales();
     }
 
     private void validaAsignacion(){
@@ -425,6 +428,91 @@ public class Fragment_Asigna_Tina extends Fragment {
             }
         });
         ventanaEmergente.show();
+    }
+
+    private void cargaValoresIniciales(){
+        boolean turno = false;
+        if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 2 ){
+            turno = true;
+        }
+
+        if( getTinaSeleccionada().getTurno() == turno ){
+            Spinner seleccionEspecie = this.vista.findViewById(R.id.seleccionEspecie);
+            Spinner seleccionTalla = this.vista.findViewById(R.id.seleccionTalla);
+            Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
+            Spinner seleccionEspecialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
+
+            seleccionEspecie.setSelection(
+                    obtenerPosicionItem(
+                            seleccionEspecie,
+                            getTinaSeleccionada().getGrupoEspecie().getIdGrupoEspecie(),
+                            "Especie"
+                    )
+            );
+
+            seleccionTalla.setSelection(
+                    obtenerPosicionItem(
+                            seleccionTalla,
+                            getTinaSeleccionada().getTalla().getIdTalla(),
+                            "Talla"
+                    )
+            );
+
+            seleccionSubtalla.setSelection(
+                    obtenerPosicionItem(
+                            seleccionSubtalla,
+                            getTinaSeleccionada().getSubtalla().getIdSubtalla(),
+                            "Subtalla"
+                    )
+            );
+
+            /*seleccionEspecialidad.setSelection(
+                    obtenerPosicionItem(
+                            seleccionEspecialidad,
+                            getTinaSeleccionada().getEspecialidad().getIdEspecialidad(),
+                            "Especialidad"
+                    )
+            );*/
+        }
+    }
+
+    public static int obtenerPosicionItem(Spinner spinner, int id, String tipo) {
+        int posicion = 0;
+        switch (tipo){
+            case "Especie":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (GrupoEspecie) spinner.getItemAtPosition(i) ).getIdGrupoEspecie() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+            case "Talla":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (Talla) spinner.getItemAtPosition(i) ).getIdTalla() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+            case "Subtalla":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (Subtalla) spinner.getItemAtPosition(i) ).getIdSubtalla() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+            case "Especialidad":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (Especialidad) spinner.getItemAtPosition(i) ).getIdEspecialidad() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+        }
+        return posicion;
     }
 
     public void iniciaProcesando(){
