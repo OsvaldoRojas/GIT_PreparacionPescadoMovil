@@ -11,19 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.vista.Artefacto;
+import com.example.simulador_pescado.vista.Refaccion;
 
 import java.util.List;
 
-public class AdaptadorArtefacto extends ArrayAdapter<Artefacto> {
+public class AdaptadorArtefacto extends ArrayAdapter<Refaccion> {
 
     private Context contexto;
-    private List<Artefacto> listaArtefactos;
+    private List<Refaccion> listaRefacciones;
 
-    public AdaptadorArtefacto(Context contexto, List<Artefacto> listaArtefactos){
-        super(contexto, 0, listaArtefactos);
+    public AdaptadorArtefacto(Context contexto, List<Refaccion> listaRefacciones){
+        super(contexto, 0, listaRefacciones);
         this.contexto = contexto;
-        this.listaArtefactos = listaArtefactos;
+        this.listaRefacciones = listaRefacciones;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AdaptadorArtefacto extends ArrayAdapter<Artefacto> {
         }
 
         ( (TextView) vista.findViewById(R.id.opcionSpinner) )
-                .setText( this.listaArtefactos.get(posicion).getDescripcion() );
+                .setText( this.listaRefacciones.get(posicion).getDescripcion() );
 
         return vista;
     }
@@ -53,8 +53,8 @@ public class AdaptadorArtefacto extends ArrayAdapter<Artefacto> {
             fila.setTag(artefactoHolder);
         }
 
-        Artefacto artefacto = this.listaArtefactos.get(posicion);
-        ( (ArtefactoHolder) fila.getTag() ).getOpcioneSpinner().setText( artefacto.getDescripcion() );
+        Refaccion refaccion = this.listaRefacciones.get(posicion);
+        ( (ArtefactoHolder) fila.getTag() ).getOpcioneSpinner().setText( refaccion.getDescripcion() );
 
         return fila;
     }

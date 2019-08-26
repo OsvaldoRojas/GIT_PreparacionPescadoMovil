@@ -23,8 +23,8 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoLista;
-import com.example.simulador_pescado.vista.Artefacto;
-import com.example.simulador_pescado.vista.ArtefactoLista;
+import com.example.simulador_pescado.vista.Refaccion;
+import com.example.simulador_pescado.vista.RefaccionLista;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -134,11 +134,11 @@ public class Fragment_Atemperado_DetalleOrden extends Fragment {
     }
 
     private void iniciaComponentes(){
-        List<Artefacto> listaArtefactos = new ArrayList<>();
-        listaArtefactos.add( new Artefacto(0, "Artefacto") );
-        listaArtefactos.add( new Artefacto(1, "Artefacto 1") );
-        listaArtefactos.add( new Artefacto(2, "Artefacto 2") );
-        listaArtefactos.add( new Artefacto(3, "Artefacto 3") );
+        List<Refaccion> listaRefacciones = new ArrayList<>();
+        listaRefacciones.add( new Refaccion(0, "Refaccion") );
+        listaRefacciones.add( new Refaccion(1, "Refaccion 1") );
+        listaRefacciones.add( new Refaccion(2, "Refaccion 2") );
+        listaRefacciones.add( new Refaccion(3, "Refaccion 3") );
 
         String[] listaCodigos = {"Código","001","002","003"};
 
@@ -179,13 +179,13 @@ public class Fragment_Atemperado_DetalleOrden extends Fragment {
         campoCodigo.setAdapter( new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaCodigos) );
 
         final Spinner campoArtefacto = this.vista.findViewById(R.id.campoArtefacto);
-        campoArtefacto.setAdapter( new AdaptadorArtefacto( getContext(), listaArtefactos ) );
+        campoArtefacto.setAdapter( new AdaptadorArtefacto( getContext(), listaRefacciones) );
 
         final AdaptadorArtefactoLista adaptadorArtefactoLista = new AdaptadorArtefactoLista(
                 getContext(),
-                getOrdenSeleccionada().getListaArtefactos()
+                getOrdenSeleccionada().getListaRefacciones()
         );
-        final ListView listaArtefactosVista = this.vista.findViewById(R.id.listaArtefactos);
+        final ListView listaArtefactosVista = this.vista.findViewById(R.id.listaRefacciones);
         listaArtefactosVista.setAdapter(adaptadorArtefactoLista);
         Utilerias.setAlturaLista(listaArtefactosVista, 0);
 
@@ -201,9 +201,9 @@ public class Fragment_Atemperado_DetalleOrden extends Fragment {
             @Override
             public void onClick(View view) {
                 contenedorEncabezados.setVisibility(View.VISIBLE);
-                getOrdenSeleccionada().getListaArtefactos().add(
-                        new ArtefactoLista(
-                                (Artefacto) campoArtefacto.getSelectedItem(),
+                getOrdenSeleccionada().getListaRefacciones().add(
+                        new RefaccionLista(
+                                (Refaccion) campoArtefacto.getSelectedItem(),
                                 Integer.valueOf( campoCantidad.getText().toString() ),
                                 campoCodigo.getSelectedItem().toString()
                         )
@@ -226,15 +226,15 @@ public class Fragment_Atemperado_DetalleOrden extends Fragment {
 
     private void limpiarCampos(){
         OrdenMantenimiento orden = getOrdenSeleccionada();
-        List<ArtefactoLista> lista = new ArrayList<>();
-        for( ArtefactoLista artefactoLista : orden.getListaArtefactos() ){
-            if( artefactoLista.getArtefacto().getDescripcion().equalsIgnoreCase("Artefacto") ){
-                lista.add(artefactoLista);
+        List<RefaccionLista> lista = new ArrayList<>();
+        for( RefaccionLista refaccionLista : orden.getListaRefacciones() ){
+            if( refaccionLista.getRefaccion().getDescripcion().equalsIgnoreCase("Refaccion") ){
+                lista.add(refaccionLista);
             }
         }
 
-        for(ArtefactoLista artefactoLista : lista){
-            orden.getListaArtefactos().remove(artefactoLista);
+        for(RefaccionLista refaccionLista : lista){
+            orden.getListaArtefactos().remove(refaccionLista);
         }
     }
 }
