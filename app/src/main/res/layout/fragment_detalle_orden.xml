@@ -269,7 +269,7 @@
                         </LinearLayout>
 
                         <ListView
-                            android:id="@+id/listaArtefactos"
+                            android:id="@+id/listaRefacciones"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/blanco"/>

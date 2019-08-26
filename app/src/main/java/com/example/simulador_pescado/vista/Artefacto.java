@@ -4,22 +4,16 @@ import java.io.Serializable;
 
 public class Artefacto implements Serializable {
 
-    private int idArtefacto;
+    private int idMaquinariaArtefacto;
     private String descripcion;
+    private Maquinaria maquinaria;
 
-    public Artefacto(){}
-
-    public Artefacto(int idArtefacto, String descripcion){
-        this.idArtefacto = idArtefacto;
-        this.descripcion = descripcion;
+    public int getIdMaquinariaArtefacto() {
+        return idMaquinariaArtefacto;
     }
 
-    public int getIdArtefacto() {
-        return idArtefacto;
-    }
-
-    public void setIdArtefacto(int idArtefacto) {
-        this.idArtefacto = idArtefacto;
+    public void setIdMaquinariaArtefacto(int idMaquinariaArtefacto) {
+        this.idMaquinariaArtefacto = idMaquinariaArtefacto;
     }
 
     public String getDescripcion() {
@@ -28,5 +22,13 @@ public class Artefacto implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Maquinaria getMaquinaria() {
+        return maquinaria;
+    }
+
+    public void setMaquinaria(Maquinaria maquinaria) {
+        this.maquinaria = maquinaria;
     }
 }

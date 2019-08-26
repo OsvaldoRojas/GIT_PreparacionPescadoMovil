@@ -29,7 +29,6 @@ import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.AsignaTina;
 import com.example.simulador_pescado.conexion.ValidaTina;
-import com.example.simulador_pescado.vista.Artefacto;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;

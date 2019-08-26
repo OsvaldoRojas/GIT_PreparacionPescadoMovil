@@ -2,16 +2,16 @@ package com.example.simulador_pescado.vista;
 
 import java.io.Serializable;
 
-public class ArtefactoLista implements Serializable {
+public class RefaccionLista implements Serializable {
 
-    private Artefacto artefacto;
+    private Refaccion refaccion;
     private int cantidad;
     private String codigo;
 
-    public ArtefactoLista(){}
+    public RefaccionLista(){}
 
-    public ArtefactoLista(Artefacto artefacto, int cantidad, String codigo){
-        this.artefacto = artefacto;
+    public RefaccionLista(Refaccion refaccion, int cantidad, String codigo){
+        this.refaccion = refaccion;
         this.cantidad = cantidad;
         this.codigo = codigo;
     }
@@ -24,12 +24,12 @@ public class ArtefactoLista implements Serializable {
         this.codigo = codigo;
     }
 
-    public Artefacto getArtefacto() {
-        return artefacto;
+    public Refaccion getRefaccion() {
+        return refaccion;
     }
 
-    public void setArtefacto(Artefacto artefacto) {
-        this.artefacto = artefacto;
+    public void setRefaccion(Refaccion refaccion) {
+        this.refaccion = refaccion;
     }
 
     public int getCantidad() {
