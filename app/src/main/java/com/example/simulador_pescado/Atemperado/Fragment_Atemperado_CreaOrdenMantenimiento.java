@@ -15,6 +15,7 @@ import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.PosicionEstiba;
 import com.example.simulador_pescado.vista.Tina;
 
 import java.io.Serializable;
@@ -30,7 +31,7 @@ public class Fragment_Atemperado_CreaOrdenMantenimiento extends Fragment {
 
     private View vista;
 
-    private Tina tinaSeleccionada;
+    private PosicionEstiba posicionSeleccionada;
     private OperadorMontacargas montacargasSeleccionado;
 
     private OnFragmentInteractionListener mListener;
@@ -111,12 +112,12 @@ public class Fragment_Atemperado_CreaOrdenMantenimiento extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public Tina getTinaSeleccionada() {
-        return tinaSeleccionada;
+    public PosicionEstiba getPosicionSeleccionada() {
+        return posicionSeleccionada;
     }
 
-    public void setTinaSeleccionada(Tina tinaSeleccionada) {
-        this.tinaSeleccionada = tinaSeleccionada;
+    public void setPosicionSeleccionada(PosicionEstiba posicionSeleccionada) {
+        this.posicionSeleccionada = posicionSeleccionada;
     }
 
     public OperadorMontacargas getMontacargasSeleccionado() {
@@ -142,8 +143,8 @@ public class Fragment_Atemperado_CreaOrdenMantenimiento extends Fragment {
 
         TextView etiquetaEquipo = this.vista.findViewById(R.id.etiquetaEquipo);
 
-        if( this.mParam1 instanceof Tina ){
-            setTinaSeleccionada( (Tina) this.mParam1 );
+        if( this.mParam1 instanceof PosicionEstiba ){
+            setPosicionSeleccionada( (PosicionEstiba) this.mParam1 );
             etiquetaEquipo.setText("Tina");
         }else{
             if( this.mParam1 instanceof OperadorMontacargas ){

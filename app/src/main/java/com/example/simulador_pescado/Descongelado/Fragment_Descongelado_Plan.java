@@ -999,7 +999,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View vistaAsignar = inflater.inflate(R.layout.dialog_detalle_estiba, null);
+        View vistaAsignar = inflater.inflate(R.layout.fragment_atemperado_detalle_estiba, null);
         builder.setCancelable(false);
         builder.setView(vistaAsignar);
 

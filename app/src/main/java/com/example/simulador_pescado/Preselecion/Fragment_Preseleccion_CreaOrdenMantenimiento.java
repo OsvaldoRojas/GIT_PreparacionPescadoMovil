@@ -153,7 +153,7 @@ public class Fragment_Preseleccion_CreaOrdenMantenimiento extends Fragment {
         botonArtefactos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
             }
         });
 

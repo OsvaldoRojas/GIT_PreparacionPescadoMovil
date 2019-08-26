@@ -43,20 +43,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina1"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion1"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina2"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion2"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina3"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion3"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina4"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion4"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -67,20 +67,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina5"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion5"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina6"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion6"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina7"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion7"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina8"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion8"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -91,20 +91,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina9"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion9"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina10"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion10"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina11"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion11"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina12"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion12"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -115,20 +115,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina13"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion13"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina14"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion14"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina15"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion15"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina16"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion16"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -139,20 +139,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina17"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion17"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina18"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion18"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina19"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion19"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina20"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion20"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -163,20 +163,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina21"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion21"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina22"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion22"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina23"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion23"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina24"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion24"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -187,20 +187,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina25"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion25"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina26"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion26"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina27"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion27"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina28"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion28"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -211,20 +211,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina29"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion29"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina30"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion30"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina31"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion31"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina32"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion32"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -235,20 +235,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina33"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion33"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina34"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion34"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina35"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion35"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina36"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion36"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -259,20 +259,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina37"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion37"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina38"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion38"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina39"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion39"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina40"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion40"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -283,20 +283,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina41"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion41"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina42"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion42"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina43"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion43"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina44"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion44"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -307,20 +307,20 @@
                                 android:gravity="center_horizontal">
 
                                 <ImageView
-                                    android:id="@+id/tina45"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion45"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina46"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion46"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina47"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion47"
+                                    style="@style/posicionAtemperado"/>
 
                                 <ImageView
-                                    android:id="@+id/tina48"
-                                    style="@style/tinaAtemperado"/>
+                                    android:id="@+id/posicion48"
+                                    style="@style/posicionAtemperado"/>
 
                             </LinearLayout>
 
@@ -346,20 +346,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina49"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion49"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina50"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion50"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina51"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion51"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina52"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion52"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -370,20 +370,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina53"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion53"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina54"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion54"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina55"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion55"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina56"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion56"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -394,20 +394,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina57"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion57"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina58"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion58"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina59"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion59"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina60"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion60"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -418,20 +418,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina61"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion61"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina62"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion62"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina63"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion63"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina64"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion64"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -442,20 +442,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina65"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion65"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina66"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion66"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina67"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion67"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina68"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion68"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -488,24 +488,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina69"
-                                        android:src="@drawable/ic_uno2"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion69"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina70"
-                                        android:src="@drawable/ic_dos2"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion70"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina71"
-                                        android:src="@drawable/ic_tres2"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion71"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina72"
-                                        android:src="@drawable/ic_cuatro2"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion72"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -516,21 +512,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina73"
-                                        android:src="@drawable/ic_cinco2"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion73"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina74"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion74"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina75"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion75"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina76"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion76"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -541,20 +536,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina77"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion77"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina78"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion78"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina79"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion79"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina80"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion80"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -565,20 +560,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina81"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion81"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina82"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion82"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina83"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion83"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina84"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion84"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -589,20 +584,20 @@
                                     android:gravity="center_horizontal">
 
                                     <ImageView
-                                        android:id="@+id/tina85"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion85"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina86"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion86"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina87"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion87"
+                                        style="@style/posicionAtemperado"/>
 
                                     <ImageView
-                                        android:id="@+id/tina88"
-                                        style="@style/tinaAtemperado"/>
+                                        android:id="@+id/posicion88"
+                                        style="@style/posicionAtemperado"/>
 
                                 </LinearLayout>
 
@@ -619,12 +614,17 @@
             <LinearLayout
                 android:id="@+id/botonera"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="47dp"
                 android:layout_marginTop="5dp"
                 android:visibility="gone">
 
                 <Button
-                    android:id="@+id/botonDetalle"
+                    android:id="@+id/boton1"
+                    android:text="@string/liberarCompleta"
+                    style="@style/botonAccion"/>
+
+                <Button
+                    android:id="@+id/boton2"
                     android:text="@string/detalle"
                     style="@style/botonAccion"/>
 

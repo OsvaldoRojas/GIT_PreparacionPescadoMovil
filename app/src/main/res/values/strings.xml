@@ -53,6 +53,7 @@
     <string name="asignarMecanico">Asignar mecánico</string>
     <string name="cerrarTiempo">Cerrar tiempo</string>
     <string name="detalle">Detalle</string>
+    <string name="liberarCompleta">L. Completa</string>
     <string name="detalleEstiba">Detalle estiba</string>
 
     <!-- TODO: Remove or change this placeholder text -->
