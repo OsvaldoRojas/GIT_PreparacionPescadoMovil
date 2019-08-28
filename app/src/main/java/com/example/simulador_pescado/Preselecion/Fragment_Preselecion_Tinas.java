@@ -22,6 +22,7 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
+import com.example.simulador_pescado.adaptadores.AdaptadorTinasLiberadas;
 import com.example.simulador_pescado.conexion.AsignaMontacargas;
 import com.example.simulador_pescado.conexion.AsignaOperador;
 import com.example.simulador_pescado.conexion.CargaCatalogosTina;
@@ -666,7 +667,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
         GrupoEspecie especie = new GrupoEspecie();
         especie.setDescripcion("Especie");
-        especie.setIdGrupoEspecie(0);
+        especie.setIdEspecie(0);
         this.listaGrupoEspecie.add(especie);
 
         Especialidad especialidad = new Especialidad();
@@ -752,6 +753,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
     }
 
+    private String getMensajeMezclar(){
+        for( Tina tinaMezcla : this.listaMezclarTinas ){
+            if( tinaMezcla.getSubtalla().getIdSubtalla() != getTinaSeleccionada().getSubtalla().getIdSubtalla() ){
+                return getResources().getString(R.string.mezclarSubtallasDistintas);
+            }
+        }
+        return getResources().getString(R.string.decisionMezclar);
+    }
+
     private void aceptaMezclar(){
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -781,11 +791,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     }
                 });
 
-                TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
-                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getPosicion() );
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText( getMensajeMezclar() );
 
-                TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
-                etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
+                TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
+                etiquetaTinaSeleccionada.setText(
+                        getTinaSeleccionada().getPosicion().concat(" - ")
+                                .concat( getTinaSeleccionada().getSubtalla().getDescripcion() )
+                );
 
                 AdaptadorMezclarSubtallas adaptador = new AdaptadorMezclarSubtallas(getContext(), listaMezclarTinas);
                 ListView listaPosicionSubtalla = ventanaEmergente.findViewById(R.id.listaSubtallas);
@@ -818,15 +831,20 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
 
                 TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
-                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getPosicion() );
-
-                TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
-                etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
+                etiquetaTinaSeleccionada.setText(
+                        getTinaSeleccionada().getPosicion().concat(" - ")
+                                .concat( getTinaSeleccionada().getSubtalla().getDescripcion() )
+                );
 
                 AdaptadorMezclarSubtallas adaptador = new AdaptadorMezclarSubtallas(getContext(), listaMezclarTinas);
                 ListView listaPosicionSubtalla = ventanaEmergente.findViewById(R.id.listaSubtallas);
                 listaPosicionSubtalla.setAdapter(adaptador);
                 Utilerias.setAlturaLista(listaPosicionSubtalla, 349);
+
+                AdaptadorTinasLiberadas adaptadorLiberadas = new AdaptadorTinasLiberadas(getContext(), listaMezclarTinas);
+                ListView listaLiberadas = ventanaEmergente.findViewById(R.id.listaLiberadas);
+                listaLiberadas.setAdapter(adaptadorLiberadas);
+                Utilerias.setAlturaLista(listaLiberadas, 349);
             }
         });
         this.ventanaEmergente.show();

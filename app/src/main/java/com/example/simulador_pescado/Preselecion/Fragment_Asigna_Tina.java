@@ -277,7 +277,7 @@ public class Fragment_Asigna_Tina extends Fragment {
                 !campoDescripcion.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
                 !campoDescripcion.getText().equals("") ){
 
-            if( ( (GrupoEspecie) especie.getSelectedItem() ).getIdGrupoEspecie() > 0 ){
+            if( ( (GrupoEspecie) especie.getSelectedItem() ).getIdEspecie() > 0 ){
                 if( ( (Talla) talla.getSelectedItem() ).getIdTalla() > 0 ){
                     if( ( (Subtalla) subtalla.getSelectedItem() ).getIdSubtalla() > 0 ){
                         iniciaProcesando();
@@ -416,7 +416,7 @@ public class Fragment_Asigna_Tina extends Fragment {
             seleccionEspecie.setSelection(
                     obtenerPosicionItem(
                             seleccionEspecie,
-                            getTinaSeleccionada().getGrupoEspecie().getIdGrupoEspecie(),
+                            getTinaSeleccionada().getGrupoEspecie().getIdEspecie(),
                             "Especie"
                     )
             );
@@ -452,7 +452,7 @@ public class Fragment_Asigna_Tina extends Fragment {
         switch (tipo){
             case "Especie":
                 for (int i = 0; i < spinner.getCount(); i++) {
-                    if ( ( (GrupoEspecie) spinner.getItemAtPosition(i) ).getIdGrupoEspecie() == id ) {
+                    if ( ( (GrupoEspecie) spinner.getItemAtPosition(i) ).getIdEspecie() == id ) {
                         posicion = i;
                         break;
                     }

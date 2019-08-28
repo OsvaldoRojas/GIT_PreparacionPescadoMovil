@@ -5,70 +5,126 @@
     android:layout_height="match_parent"
     android:background="@color/no_selecion">
 
+    <TextView
+        android:id="@+id/etiquetaMensaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/negro"
+        android:gravity="center"
+        android:text="@string/mensajeTinasMezcladas"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="18dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/etiquetaMensaje"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/negro"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/mensajeTinasMezcladas"
-            android:textSize="20dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/fondo_tina_principal"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:text="Tina Principal"
+                android:textColor="@color/blanco"
+                android:textSize="10dp" />
 
             <TextView
                 android:id="@+id/etiquetaTinaSeleccionada"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/fondo_tina_principal"
                 android:gravity="center"
-                android:text="A1"
-                android:textSize="10dp"
-                android:textColor="@color/blanco"
-                android:background="@color/fondo_tina_principal"/>
-
-            <TextView
-                android:id="@+id/etiquetaSubtallaSeleccionada"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:padding="5dp"
-                android:gravity="center_vertical"
                 android:text="A1"
-                android:textSize="10dp"
                 android:textColor="@color/blanco"
-                android:background="@color/fondo_tina_principal"/>
+                android:textSize="10dp" />
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/listaSubtallas"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/blanco"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/fondo_tina_principal"
+                    android:gravity="left"
+                    android:padding="5dp"
+                    android:text="Tinas mezcladas"
+                    android:textColor="@color/blanco"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/fondo_tina_principal"
+                    android:gravity="left"
+                    android:padding="5dp"
+                    android:text="Sub. mezcladas"
+                    android:textColor="@color/blanco"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listaSubtallas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/negro"
+        android:gravity="center"
+        android:text="@string/tinasLiberadas"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="18dp"/>
+
+    <ListView
+        android:id="@+id/listaLiberadas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/blanco" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:gravity="bottom">
 
         <Button

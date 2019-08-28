@@ -20,17 +20,6 @@
             android:textSize="10dp"
             android:textColor="@color/negro" />
 
-        <TextView
-            android:id="@+id/etiquetaSubtalla"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:gravity="left"
-            android:text="Subtalla Ejemplo"
-            android:textSize="10dp"
-            android:textColor="@color/negro" />
-
     </LinearLayout>
 
 

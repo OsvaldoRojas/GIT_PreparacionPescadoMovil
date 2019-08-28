@@ -43,7 +43,7 @@ public class AsignaTina extends AsyncTask<Void,Integer,Boolean> {
         tinaServicio.setIdPreseleccionPosicionTina( this.tina.getIdPreseleccionPosicionTina() );
         tinaServicio.setPosicion( this.tina.getPosicion() );
         tinaServicio.setIdTina( this.tina.getTina().getIdTina() );
-        tinaServicio.setIdEspecie( this.tina.getGrupoEspecie().getIdGrupoEspecie() );
+        tinaServicio.setIdEspecie( this.tina.getGrupoEspecie().getIdEspecie() );
         tinaServicio.setIdTalla( this.tina.getTalla().getIdTalla() );
         tinaServicio.setIdSubtalla( this.tina.getSubtalla().getIdSubtalla() );
         tinaServicio.setNpiezas( this.tina.getNpiezas() );

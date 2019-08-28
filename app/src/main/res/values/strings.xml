@@ -34,9 +34,11 @@
     <string name="crearOrden">Crear orden de mantenimiento</string>
     <string name="ordenMantenimiento">Orden de mantenimiento</string>
 
-    <string name="mensajeMezclar">Marcar tinas para mezclar con la tina seleccionada</string>
-    <string name="decisionMezclar">¿Estás de acuerdo en mezclar tinas de sub tallas distintas?</string>
+    <string name="mensajeMezclar">Marque las tinas que desee mezclar en la tina elegida</string>
+    <string name="decisionMezclar">¿Está de acuerdo en mezclar las tinas seleccionadas?</string>
+    <string name="mezclarSubtallasDistintas">Las tinas seleccionadas contienen subtallas distintas.\n¿Está de acuerdo en mezclar las tinas seleccionadas?</string>
     <string name="mensajeTinasMezcladas">Tinas mezcladas</string>
+    <string name="tinasLiberadas">Posiciones liberadas</string>
     <string name="mensajeErrorEscaneo">El dato no existe</string>
     <string name="mensajeErrorInactivo">La tina esta inactiva</string>
 

@@ -4,9 +4,19 @@ import java.io.Serializable;
 
 public class GrupoEspecie implements Serializable {
 
-    private int idGrupoEspecie;
+    private int idEspecie;
     private String descripcion;
+    private String observaciones;
     private Boolean activo;
+    private Boolean borrado;
+
+    public int getIdEspecie() {
+        return idEspecie;
+    }
+
+    public void setIdEspecie(int idEspecie) {
+        this.idEspecie = idEspecie;
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -16,12 +26,12 @@ public class GrupoEspecie implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public int getIdGrupoEspecie() {
-        return idGrupoEspecie;
+    public String getObservaciones() {
+        return observaciones;
     }
 
-    public void setIdGrupoEspecie(int idGrupoEspecie) {
-        this.idGrupoEspecie = idGrupoEspecie;
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public Boolean getActivo() {
@@ -30,5 +40,13 @@ public class GrupoEspecie implements Serializable {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public Boolean getBorrado() {
+        return borrado;
+    }
+
+    public void setBorrado(Boolean borrado) {
+        this.borrado = borrado;
     }
 }
