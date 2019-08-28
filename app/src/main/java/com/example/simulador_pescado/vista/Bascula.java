@@ -2,7 +2,9 @@ package com.example.simulador_pescado.vista;
 
 import com.example.simulador_pescado.Utilerias.Constantes;
 
-public class Bascula {
+import java.io.Serializable;
+
+public class Bascula implements Serializable {
 
     private int idBascula;
     private Constantes.ESTADO estado;

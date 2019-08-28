@@ -92,7 +92,7 @@ public class Contenedor extends Fragment {
             });
             pestañas.setupWithViewPager(viewPager);
         }
-        pestañas.getTabAt(mParam1).select();
+        pestañas.getTabAt(this.mParam1).select();
         return vista;
     }
 

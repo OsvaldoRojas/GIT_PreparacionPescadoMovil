@@ -5,6 +5,9 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Utilerias {
 
     public static boolean setAlturaLista(ListView listView, int tamañoMaximo) {
@@ -41,5 +44,10 @@ public class Utilerias {
             return true;
         }
         return false;
+    }
+
+    public static String fechaActual(){
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+         return formatoFecha.format( new Date() );
     }
 }

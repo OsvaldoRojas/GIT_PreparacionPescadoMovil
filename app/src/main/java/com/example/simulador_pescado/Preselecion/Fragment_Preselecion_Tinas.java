@@ -4,14 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,24 +22,22 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
-import com.example.simulador_pescado.conexion.CargaCatalogos;
+import com.example.simulador_pescado.conexion.AsignaMontacargas;
+import com.example.simulador_pescado.conexion.AsignaOperador;
+import com.example.simulador_pescado.conexion.CargaCatalogosTina;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
-import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.Gafete;
+import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
-import com.example.simulador_pescado.vista.TinaPosicion;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,9 +61,11 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private LinearLayout contenedorBotones;
     private LinearLayout contenedorMensaje;
+    private LinearLayout contenedorTurno;
 
     private Button boton1;
     private Button boton2;
+    private Button botonTurno;
 
     private ImageView tina1;
     private ImageView tina2;
@@ -113,6 +109,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private List<Subtalla> listaSubtalla = new ArrayList<>();
     private List<Talla> listaTalla = new ArrayList<>();
     private List<GrupoEspecie> listaGrupoEspecie = new ArrayList<>();
+    private List<Especialidad> listaEspecialidad = new ArrayList<>();
 
     private View.OnClickListener eventoLiberarTina;
     private View.OnClickListener eventoAsignarTina;
@@ -130,8 +127,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private SwipeRefreshLayout actualizar;
     private Fragment fragment;
 
-    private String fechaActual;
-    private boolean esMontacargas;
     private boolean esMezclar;
 
     private OnFragmentInteractionListener mListener;
@@ -194,7 +189,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        vista=inflater.inflate(R.layout.fragment_fragment__preselecion__tinas, container, false);
+        vista=inflater.inflate(R.layout.fragment_preselecion_tinas, container, false);
 
         iniciaComponentes();
         return vista;
@@ -247,46 +242,34 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     public void ordenaTinas(List<Tina> listaTinas){
         this.listaTinas = listaTinas;
         for( final Tina recursoTina : this.listaTinas ){
-            if( recursoTina.getLibre() ){
-                recursoTina.setEstado(Constantes.ESTADO.inicial);
-            }else{
-                recursoTina.setEstado(Constantes.ESTADO.seleccionado);
-                accionIconoTina( recursoTina.getIdPosicion() );
-            }
+            recursoTina.setEstado(Constantes.ESTADO.seleccionado);
+            accionIconoTina( recursoTina.getIdPreseleccionPosicionTina() );
         }
     }
 
     public void ordenaOperadoresBascula(List<OperadorBascula> listaOperadores){
         this.listaOperadores = listaOperadores;
         for( final OperadorBascula recursoOperador : this.listaOperadores ){
-            if( recursoOperador.getLibre() ){
-                recursoOperador.setEstado(Constantes.ESTADO.inicial);
-            }else{
-                recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
-                accionIconoOperador( recursoOperador.getIdEstacion() );
-            }
+            recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
+            accionIconoOperador( recursoOperador.getIdPreseleccionEstacion() );
         }
     }
 
     public void ordenaOperadoresMontacargas(List<OperadorMontacargas> listaMontacargas){
         this.listaMontacargas = listaMontacargas;
         for( OperadorMontacargas recursoMontacargas : this.listaMontacargas ){
-            if( recursoMontacargas.getLibre() ){
-                recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
-            }else{
-                recursoMontacargas.setEstado(Constantes.ESTADO.seleccionado);
-                accionIconoMontacargas( recursoMontacargas.getIdMontacargaPreseleccion() );
-            }
+            recursoMontacargas.setEstado(Constantes.ESTADO.seleccionado);
+            accionIconoMontacargas( recursoMontacargas.getIdPreseleccionMontacarga() );
         }
     }
 
     public void marcaTurno(){
         if(UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1){
             this.iconoTurno.setText("T1");
-            this.iconoTurno.setVisibility(View.VISIBLE);
+            //this.iconoTurno.setVisibility(View.VISIBLE);
         }else{
             this.iconoTurno.setText("T2");
-            this.iconoTurno.setVisibility(View.VISIBLE);
+            //this.iconoTurno.setVisibility(View.VISIBLE);
         }
     }
 
@@ -325,7 +308,35 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaError.show();
     }
 
-    private String getEtiquetaMovil(int posicion){
+    public void ventanaMensaje(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                        getAsignados();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
+    }
+
+    private String getEtiquetaTina(int posicion){
         switch (posicion){
             case 1: return "A6";
             case 2: return "A5";
@@ -343,36 +354,42 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         return "";
     }
 
+    private String getEtiquetaOperador(int posicion){
+        switch (posicion){
+            case 1: return "A5";
+            case 2: return "A4";
+            case 3: return "A3";
+            case 4: return "A2";
+            case 5: return "A1";
+            case 6: return "B1";
+            case 7: return "B2";
+            case 8: return "B3";
+            case 9: return "B4";
+            case 10: return "B5";
+        }
+        return "";
+    }
+
     private void creaObjetosVacios(){
         iniciaProcesando();
 
         if( this.listaTinas.isEmpty() ){
             for( int posicion = 1; posicion <= 12; posicion++ ){
                 final Tina recursoTina = new Tina();
-                recursoTina.setIdPosicion(posicion);
-                //recursoTina.setLibre(true);
-                recursoTina.setLibre(false);
-                recursoTina.setEtiquetaMovil( getEtiquetaMovil(posicion) );
-                //recursoTina.setEstado(Constantes.ESTADO.inicial);
-                recursoTina.setEstado(Constantes.ESTADO.seleccionado);
+                recursoTina.setIdPreseleccionPosicionTina(posicion);
+                recursoTina.setLibre(true);
+                recursoTina.setPosicion( getEtiquetaTina(posicion) );
+                recursoTina.setEstado(Constantes.ESTADO.inicial);
                 this.listaTinas.add(recursoTina);
-                //quitar despues de pruebas
-                TinaPosicion tp = new TinaPosicion();
-                tp.setDescripcion("Tina Descripcion " + posicion);
-                Subtalla st = new Subtalla();
-                st.setDescripcion("Subtalla Descripcion " + posicion);
-                recursoTina.setTina(tp);
-                recursoTina.setSubtalla(st);
-                accionIconoTina(posicion);
-                //quitar despues de pruebas
             }
         }
 
         if( this.listaOperadores.isEmpty() ){
             for( int posicion = 1; posicion <= 10; posicion++ ){
                 final OperadorBascula recursoOperador = new OperadorBascula();
-                recursoOperador.setIdEstacion(posicion);
+                recursoOperador.setIdPreseleccionEstacion(posicion);
                 recursoOperador.setLibre(true);
+                recursoOperador.setEstacion( getEtiquetaOperador(posicion) );
                 recursoOperador.setEstado(Constantes.ESTADO.inicial);
                 this.listaOperadores.add(recursoOperador);
             }
@@ -381,7 +398,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         if( this.listaMontacargas.isEmpty() ){
             for( int posicion = 1; posicion <= 4; posicion++ ){
                 OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
-                recursoMontacargas.setIdMontacargaPreseleccion(posicion);
+                recursoMontacargas.setIdPreseleccionMontacarga(posicion);
                 recursoMontacargas.setLibre(true);
                 recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
                 this.listaMontacargas.add(recursoMontacargas);
@@ -392,15 +409,24 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         terminaProcesando();
     }
 
+    private boolean validaMuestraTurno(){
+        for( OperadorBascula operadorBascula : this.listaOperadores ){
+            if( !operadorBascula.getLibre() ){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void accionIconoOperador(int posicion){
         for( OperadorBascula operador : this.listaOperadores ){
-            if( operador.getIdEstacion() == posicion ){
+            if( operador.getIdPreseleccionEstacion() == posicion ){
                 if( operador.getEstado() == Constantes.ESTADO.inicial ){
                     setOperadorSeleccionado(operador);
                     deshabilitaRecursos();
-                    getIconoOperador( operador.getIdEstacion() )
+                    getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setImageResource(R.drawable.ic_operador1);
-                    getIconoOperador( operador.getIdEstacion() )
+                    getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     operador.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarUsuario);
@@ -409,29 +435,33 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.boton2.setText(R.string.asignarUsuario);
                     this.boton2.setEnabled(true);
                     this.boton2.setOnClickListener(this.eventoAsignarOperador);
+                    this.contenedorTurno.setVisibility(View.GONE);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
                         habilitaRecursos();
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setImageResource(R.drawable.ic_operador2);
                         if( operador.getLibre() ){
-                            getIconoOperador( operador.getIdEstacion() )
+                            getIconoOperador( operador.getIdPreseleccionEstacion() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             operador.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoOperador( operador.getIdEstacion() )
+                            getIconoOperador( operador.getIdPreseleccionEstacion() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             operador.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
+                        if( validaMuestraTurno() ){
+                            this.contenedorTurno.setVisibility(View.VISIBLE);
+                        }
                     }else{
                         setOperadorSeleccionado(operador);
                         deshabilitaRecursos();
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setImageResource(R.drawable.ic_operador1);
-                        getIconoOperador( operador.getIdEstacion() )
+                        getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         operador.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarUsuario);
@@ -440,6 +470,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         this.boton2.setText(R.string.asignarUsuario);
                         this.boton2.setEnabled(false);
                         this.boton2.setOnClickListener(null);
+                        this.contenedorTurno.setVisibility(View.GONE);
                         this.contenedorBotones.setVisibility(View.VISIBLE);
                     }
                 }
@@ -450,13 +481,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void accionIconoTina(int posicion){
         for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicion ){
+            if( tina.getIdPreseleccionPosicionTina() == posicion ){
                 if( tina.getEstado() == Constantes.ESTADO.inicial ){
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setImageResource(R.drawable.ic_tina1);
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     tina.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarTina);
@@ -465,17 +496,18 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.boton2.setText(R.string.asignarTina);
                     this.boton2.setEnabled(true);
                     this.boton2.setOnClickListener(this.eventoAsignarTina);
+                    this.contenedorTurno.setVisibility(View.GONE);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setImageResource(R.drawable.ic_tina2);
                         if( tina.getLibre() ){
-                            getIconoTina( tina.getIdPosicion() )
+                            getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             tina.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoTina( tina.getIdPosicion() )
+                            getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             tina.setEstado( Constantes.ESTADO.asignado );
                         }
@@ -490,11 +522,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             setTinaSeleccionada(null);
                             habilitaRecursos();
                             this.contenedorBotones.setVisibility(View.GONE);
+                            if( validaMuestraTurno() ){
+                                this.contenedorTurno.setVisibility(View.VISIBLE);
+                            }
                         }
                     }else{
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setImageResource(R.drawable.ic_tina1);
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         tina.setEstado( Constantes.ESTADO.seleccionado );
 
@@ -517,6 +552,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             this.boton2.setText(R.string.mezclarTina);
                             this.boton2.setEnabled(true);
                             this.boton2.setOnClickListener(this.eventoMezclarTina);
+                            this.contenedorTurno.setVisibility(View.GONE);
                             this.contenedorBotones.setVisibility(View.VISIBLE);
                         }
                     }
@@ -528,13 +564,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void accionIconoMontacargas(int posicion){
         for( OperadorMontacargas montacargas : this.listaMontacargas ){
-            if( montacargas.getIdMontacargaPreseleccion() == posicion ){
+            if( montacargas.getIdPreseleccionMontacarga() == posicion ){
                 if( montacargas.getEstado() == Constantes.ESTADO.inicial ){
                     setMontacargasSeleccionado(montacargas);
                     deshabilitaRecursos();
-                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                    getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setImageResource(R.drawable.ic_montacargas1);
-                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                    getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     montacargas.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarUsuario);
@@ -543,29 +579,33 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.boton2.setText(R.string.asignarUsuario);
                     this.boton2.setEnabled(true);
                     this.boton2.setOnClickListener(this.eventoAsignarMontacargas);
+                    this.contenedorTurno.setVisibility(View.GONE);
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
                         setMontacargasSeleccionado(null);
                         habilitaRecursos();
-                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setImageResource(R.drawable.ic_montacargas2);
                         if( montacargas.getLibre() ){
-                            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             montacargas.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                             montacargas.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
+                        if( validaMuestraTurno() ){
+                            this.contenedorTurno.setVisibility(View.VISIBLE);
+                        }
                     }else{
                         setMontacargasSeleccionado(montacargas);
                         deshabilitaRecursos();
-                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setImageResource(R.drawable.ic_montacargas1);
-                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         montacargas.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarUsuario);
@@ -574,6 +614,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         this.boton2.setText(R.string.asignarUsuario);
                         this.boton2.setEnabled(false);
                         this.boton2.setOnClickListener(null);
+                        this.contenedorTurno.setVisibility(View.GONE);
                         this.contenedorBotones.setVisibility(View.VISIBLE);
                     }
                 }
@@ -588,53 +629,65 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void getAsignados(){
         if( getTinaSeleccionada() != null ){
-            accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+            accionIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
         }
 
         if( getOperadorSeleccionado() != null ){
-            accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
+            accionIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() );
         }
 
         if( getMontacargasSeleccionado() != null ){
-            accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
+            accionIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() );
         }
 
         ObtenAsignados obtenAsignados = new ObtenAsignados( getFragment() );
         obtenAsignados.execute();
 
-        CargaCatalogos cargaCatalogos = new CargaCatalogos( getFragment() );
-        cargaCatalogos.execute();
+        CargaCatalogosTina cargaCatalogosTina = new CargaCatalogosTina( getFragment() );
+        cargaCatalogosTina.execute();
     }
 
-    public void actualizaCatalogos(List<Talla> listaTalla, List<Subtalla> listaSubtalla, List<GrupoEspecie> listaEspecie){
+    public void actualizaCatalogos(List<Talla> listaTalla, List<Subtalla> listaSubtalla,
+                                   List<GrupoEspecie> listaEspecie, List<Especialidad> listaEspecialidad){
         this.listaTalla = new ArrayList<>();
         this.listaSubtalla = new ArrayList<>();
         this.listaGrupoEspecie = new ArrayList<>();
+        this.listaEspecialidad = new ArrayList<>();
 
         Talla talla = new Talla();
         talla.setDescripcion("Talla");
+        talla.setIdTalla(0);
         this.listaTalla.add(talla);
 
         Subtalla subtalla = new Subtalla();
         subtalla.setDescripcion("Subtalla");
+        subtalla.setIdSubtalla(0);
         this.listaSubtalla.add(subtalla);
 
         GrupoEspecie especie = new GrupoEspecie();
         especie.setDescripcion("Especie");
+        especie.setIdGrupoEspecie(0);
         this.listaGrupoEspecie.add(especie);
+
+        Especialidad especialidad = new Especialidad();
+        especialidad.setDescripcion("Especialidad");
+        especialidad.setIdEspecialidad(0);
+        this.listaEspecialidad.add(especialidad);
 
         this.listaTalla.addAll(listaTalla);
         this.listaSubtalla.addAll(listaSubtalla);
         this.listaGrupoEspecie.addAll(listaEspecie);
+        this.listaEspecialidad.addAll(listaEspecialidad);
     }
 
     private void asignarTina(){
-        Fragment fragment = new AsignarTina()
+        Fragment fragment = new Fragment_Asigna_Tina()
                 .newInstance(
                         getTinaSeleccionada(),
                         (Serializable) this.listaTalla,
                         (Serializable) this.listaSubtalla,
-                        (Serializable) this.listaGrupoEspecie
+                        (Serializable) this.listaGrupoEspecie,
+                        (Serializable) this.listaEspecialidad
                 );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
@@ -655,35 +708,47 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private void habilitaTinas(){
         for(Tina tina : this.listaTinas){
             if( !tina.getLibre() ){
-                getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+                getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(true);
             }
         }
-        getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(false);
+        getIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() ).setEnabled(false);
     }
 
     private void asignarOperador(){
-        Fragment fragment = new AsignarOperador().newInstance( getOperadorSeleccionado(), (Serializable) this.listaTinas );
+        Fragment fragment = new Fragment_Asigna_Operador().newInstance( getOperadorSeleccionado(), (Serializable) this.listaTinas );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void liberarOperador(){
-        System.out.println("LIBERAR OPERADOR...........");
+        iniciaProcesando();
+        getOperadorSeleccionado().setIdEmpleado(0);
+        getOperadorSeleccionado().setLibre(true);
+        AsignaOperador asignaOperador = new AsignaOperador(this, getOperadorSeleccionado() );
+        asignaOperador.execute();
     }
 
     private void asignarMontacargas(){
-        Fragment fragment = new AsignarMontacargas().newInstance( getMontacargasSeleccionado() );
+        Fragment fragment = new Fragment_Asigna_Montacargas().newInstance( getMontacargasSeleccionado() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void liberarMontacargas(){
-        System.out.println("LIBERAR MONTACARGAS...........");
+        iniciaProcesando();
+        getMontacargasSeleccionado().setIdEmpleado("0");
+        getMontacargasSeleccionado().setLibre(true);
+        AsignaMontacargas asignaMontacargas = new AsignaMontacargas(this, getMontacargasSeleccionado() );
+        asignaMontacargas.execute();
+    }
+
+    public void resultadoAsignacion(String mensaje){
+        ventanaMensaje(mensaje);
     }
 
     private void cancelaMezclar(){
         this.esMezclar = false;
-        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
+        accionIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
         for( Tina tina : this.listaMezclarTinas ){
-            accionIconoTina( tina.getIdPosicion() );
+            accionIconoTina( tina.getIdPreseleccionPosicionTina() );
         }
     }
 
@@ -717,7 +782,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
 
                 TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
-                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getEtiquetaMovil() );
+                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getPosicion() );
 
                 TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
                 etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
@@ -753,7 +818,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 });
 
                 TextView etiquetaTinaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaTinaSeleccionada);
-                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getEtiquetaMovil() );
+                etiquetaTinaSeleccionada.setText( getTinaSeleccionada().getPosicion() );
 
                 TextView etiquetaSubtallaSeleccionada = ventanaEmergente.findViewById(R.id.etiquetaSubtallaSeleccionada);
                 etiquetaSubtallaSeleccionada.setText( getTinaSeleccionada().getSubtalla().getDescripcion() );
@@ -780,7 +845,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             @Override
             public void onShow(DialogInterface dialogInterface) {
                 TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText("¿Desea terminar el turno?");
+                etiquetaMensaje.setText("¿Está seguro de liberar todos los operadores?");
 
                 Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
                 botonAceptar.setOnClickListener(new View.OnClickListener() {
@@ -815,9 +880,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             }
         });
 
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -832,6 +894,14 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.boton2 = this.vista.findViewById(R.id.boton2);
 
         this.contenedorMensaje = this.vista.findViewById(R.id.contenedorMensaje);
+        this.contenedorTurno = this.vista.findViewById(R.id.contenedorTurno);
+        this.botonTurno = this.vista.findViewById(R.id.botonTurno);
+        this.botonTurno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                liberaTurno();
+            }
+        });
 
         this.eventoCancelarMezclar = new View.OnClickListener() {
             @Override
@@ -1120,25 +1190,25 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void deshabilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(false);
         }
 
         for(OperadorBascula operador : this.listaOperadores){
-            getIconoOperador( operador.getIdEstacion() ).setEnabled(false);
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(false);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(false);
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(false);
         }
 
         if( getTinaSeleccionada() != null ){
-            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+            getIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() ).setEnabled(true);
         }else{
             if( getOperadorSeleccionado() != null ){
-                getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
+                getIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() ).setEnabled(true);
             }else{
                 if( getMontacargasSeleccionado() != null ){
-                    getIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ).setEnabled(true);
+                    getIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ).setEnabled(true);
                 }
             }
         }
@@ -1146,15 +1216,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void habilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(true);
         }
 
         for(OperadorBascula operador : this.listaOperadores){
-            getIconoOperador( operador.getIdEstacion() ).setEnabled(true);
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(true);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(true);
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(true);
         }
     }
 

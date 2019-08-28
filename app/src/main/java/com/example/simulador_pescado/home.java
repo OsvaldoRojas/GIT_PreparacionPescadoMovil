@@ -100,15 +100,6 @@ public class home extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor_Descongelado()).commit();
             }
         });
-
-        Button botonEviscerar = this.vista.findViewById(R.id.botonEviscerar);
-        botonEviscerar.setEnabled(false);
-
-        Button botonCocimiento = this.vista.findViewById(R.id.botonCocimiento);
-        botonCocimiento.setEnabled(false);
-
-        Button botonEnfriamiento = this.vista.findViewById(R.id.botonEnfriamiento);
-        botonEnfriamiento.setEnabled(false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

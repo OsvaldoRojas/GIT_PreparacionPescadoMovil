@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
-import com.example.simulador_pescado.vista.Tina;
+import com.example.simulador_pescado.vista.PosicionEstiba;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,103 +47,104 @@ public class Fragment_Atemperado_Plan extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ImageView tina1;
-    private ImageView tina2;
-    private ImageView tina3;
-    private ImageView tina4;
-    private ImageView tina5;
-    private ImageView tina6;
-    private ImageView tina7;
-    private ImageView tina8;
-    private ImageView tina9;
-    private ImageView tina10;
-    private ImageView tina11;
-    private ImageView tina12;
-    private ImageView tina13;
-    private ImageView tina14;
-    private ImageView tina15;
-    private ImageView tina16;
-    private ImageView tina17;
-    private ImageView tina18;
-    private ImageView tina19;
-    private ImageView tina20;
-    private ImageView tina21;
-    private ImageView tina22;
-    private ImageView tina23;
-    private ImageView tina24;
-    private ImageView tina25;
-    private ImageView tina26;
-    private ImageView tina27;
-    private ImageView tina28;
-    private ImageView tina29;
-    private ImageView tina30;
-    private ImageView tina31;
-    private ImageView tina32;
-    private ImageView tina33;
-    private ImageView tina34;
-    private ImageView tina35;
-    private ImageView tina36;
-    private ImageView tina37;
-    private ImageView tina38;
-    private ImageView tina39;
-    private ImageView tina40;
-    private ImageView tina41;
-    private ImageView tina42;
-    private ImageView tina43;
-    private ImageView tina44;
-    private ImageView tina45;
-    private ImageView tina46;
-    private ImageView tina47;
-    private ImageView tina48;
-    private ImageView tina49;
-    private ImageView tina50;
-    private ImageView tina51;
-    private ImageView tina52;
-    private ImageView tina53;
-    private ImageView tina54;
-    private ImageView tina55;
-    private ImageView tina56;
-    private ImageView tina57;
-    private ImageView tina58;
-    private ImageView tina59;
-    private ImageView tina60;
-    private ImageView tina61;
-    private ImageView tina62;
-    private ImageView tina63;
-    private ImageView tina64;
-    private ImageView tina65;
-    private ImageView tina66;
-    private ImageView tina67;
-    private ImageView tina68;
-    private ImageView tina69;
-    private ImageView tina70;
-    private ImageView tina71;
-    private ImageView tina72;
-    private ImageView tina73;
-    private ImageView tina74;
-    private ImageView tina75;
-    private ImageView tina76;
-    private ImageView tina77;
-    private ImageView tina78;
-    private ImageView tina79;
-    private ImageView tina80;
-    private ImageView tina81;
-    private ImageView tina82;
-    private ImageView tina83;
-    private ImageView tina84;
-    private ImageView tina85;
-    private ImageView tina86;
-    private ImageView tina87;
-    private ImageView tina88;
+    private ImageView posicion1;
+    private ImageView posicion2;
+    private ImageView posicion3;
+    private ImageView posicion4;
+    private ImageView posicion5;
+    private ImageView posicion6;
+    private ImageView posicion7;
+    private ImageView posicion8;
+    private ImageView posicion9;
+    private ImageView posicion10;
+    private ImageView posicion11;
+    private ImageView posicion12;
+    private ImageView posicion13;
+    private ImageView posicion14;
+    private ImageView posicion15;
+    private ImageView posicion16;
+    private ImageView posicion17;
+    private ImageView posicion18;
+    private ImageView posicion19;
+    private ImageView posicion20;
+    private ImageView posicion21;
+    private ImageView posicion22;
+    private ImageView posicion23;
+    private ImageView posicion24;
+    private ImageView posicion25;
+    private ImageView posicion26;
+    private ImageView posicion27;
+    private ImageView posicion28;
+    private ImageView posicion29;
+    private ImageView posicion30;
+    private ImageView posicion31;
+    private ImageView posicion32;
+    private ImageView posicion33;
+    private ImageView posicion34;
+    private ImageView posicion35;
+    private ImageView posicion36;
+    private ImageView posicion37;
+    private ImageView posicion38;
+    private ImageView posicion39;
+    private ImageView posicion40;
+    private ImageView posicion41;
+    private ImageView posicion42;
+    private ImageView posicion43;
+    private ImageView posicion44;
+    private ImageView posicion45;
+    private ImageView posicion46;
+    private ImageView posicion47;
+    private ImageView posicion48;
+    private ImageView posicion49;
+    private ImageView posicion50;
+    private ImageView posicion51;
+    private ImageView posicion52;
+    private ImageView posicion53;
+    private ImageView posicion54;
+    private ImageView posicion55;
+    private ImageView posicion56;
+    private ImageView posicion57;
+    private ImageView posicion58;
+    private ImageView posicion59;
+    private ImageView posicion60;
+    private ImageView posicion61;
+    private ImageView posicion62;
+    private ImageView posicion63;
+    private ImageView posicion64;
+    private ImageView posicion65;
+    private ImageView posicion66;
+    private ImageView posicion67;
+    private ImageView posicion68;
+    private ImageView posicion69;
+    private ImageView posicion70;
+    private ImageView posicion71;
+    private ImageView posicion72;
+    private ImageView posicion73;
+    private ImageView posicion74;
+    private ImageView posicion75;
+    private ImageView posicion76;
+    private ImageView posicion77;
+    private ImageView posicion78;
+    private ImageView posicion79;
+    private ImageView posicion80;
+    private ImageView posicion81;
+    private ImageView posicion82;
+    private ImageView posicion83;
+    private ImageView posicion84;
+    private ImageView posicion85;
+    private ImageView posicion86;
+    private ImageView posicion87;
+    private ImageView posicion88;
 
-    private Tina tinaSeleccionada;
+    private PosicionEstiba posicionSeleccionada;
 
-    private List<Tina> listaTinas = new ArrayList<>();
+    private List<PosicionEstiba> listaPosiciones = new ArrayList<>();
 
     private LinearLayout botonera;
     private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
-    private Button botonDetalle;
+    private Button boton1;
+    private Button boton2;
     private AlertDialog ventanaEmergente;
 
     private String fechaActual;
@@ -154,12 +155,12 @@ public class Fragment_Atemperado_Plan extends Fragment {
         // Required empty public constructor
     }
 
-    public Tina getTinaSeleccionada() {
-        return tinaSeleccionada;
+    public PosicionEstiba getPosicionSeleccionada() {
+        return posicionSeleccionada;
     }
 
-    public void setTinaSeleccionada(Tina tinaSeleccionada) {
-        this.tinaSeleccionada = tinaSeleccionada;
+    public void setPosicionSeleccionada(PosicionEstiba posicionSeleccionada) {
+        this.posicionSeleccionada = posicionSeleccionada;
     }
 
     /**
@@ -193,7 +194,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.vista = inflater.inflate(R.layout.fragment_fragment__atemperado__plan, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_atemperado_plan, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -211,709 +212,722 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
         this.botonera = this.vista.findViewById(R.id.botonera);
-        this.botonDetalle = this.vista.findViewById(R.id.botonDetalle);
+        this.boton1 = this.vista.findViewById(R.id.boton1);
+        this.boton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                liberaCompleta();
+            }
+        });
+        this.boton2 = this.vista.findViewById(R.id.boton2);
+        this.boton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                muestraDetalle();
+            }
+        });
 
-        this.tina1 = this.vista.findViewById(R.id.tina1);
-        this.tina1.setOnClickListener(new View.OnClickListener() {
+        this.posicion1 = this.vista.findViewById(R.id.posicion1);
+        this.posicion1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(1);
+                accionIconoPosicion(1);
             }
         });
 
-        this.tina2 = this.vista.findViewById(R.id.tina2);
-        this.tina2.setOnClickListener(new View.OnClickListener() {
+        this.posicion2 = this.vista.findViewById(R.id.posicion2);
+        this.posicion2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(2);
+                accionIconoPosicion(2);
             }
         });
 
-        this.tina3 = this.vista.findViewById(R.id.tina3);
-        this.tina3.setOnClickListener(new View.OnClickListener() {
+        this.posicion3 = this.vista.findViewById(R.id.posicion3);
+        this.posicion3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(3);
+                accionIconoPosicion(3);
             }
         });
 
-        this.tina4 = this.vista.findViewById(R.id.tina4);
-        this.tina4.setOnClickListener(new View.OnClickListener() {
+        this.posicion4 = this.vista.findViewById(R.id.posicion4);
+        this.posicion4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(4);
+                accionIconoPosicion(4);
             }
         });
 
-        this.tina5 = this.vista.findViewById(R.id.tina5);
-        this.tina5.setOnClickListener(new View.OnClickListener() {
+        this.posicion5 = this.vista.findViewById(R.id.posicion5);
+        this.posicion5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(5);
+                accionIconoPosicion(5);
             }
         });
 
-        this.tina6 = this.vista.findViewById(R.id.tina6);
-        this.tina6.setOnClickListener(new View.OnClickListener() {
+        this.posicion6 = this.vista.findViewById(R.id.posicion6);
+        this.posicion6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(6);
+                accionIconoPosicion(6);
             }
         });
 
-        this.tina7 = this.vista.findViewById(R.id.tina7);
-        this.tina7.setOnClickListener(new View.OnClickListener() {
+        this.posicion7 = this.vista.findViewById(R.id.posicion7);
+        this.posicion7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(7);
+                accionIconoPosicion(7);
             }
         });
 
-        this.tina8 = this.vista.findViewById(R.id.tina8);
-        this.tina8.setOnClickListener(new View.OnClickListener() {
+        this.posicion8 = this.vista.findViewById(R.id.posicion8);
+        this.posicion8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(8);
+                accionIconoPosicion(8);
             }
         });
 
-        this.tina9 = this.vista.findViewById(R.id.tina9);
-        this.tina9.setOnClickListener(new View.OnClickListener() {
+        this.posicion9 = this.vista.findViewById(R.id.posicion9);
+        this.posicion9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(9);
+                accionIconoPosicion(9);
             }
         });
 
-        this.tina10 = this.vista.findViewById(R.id.tina10);
-        this.tina10.setOnClickListener(new View.OnClickListener() {
+        this.posicion10 = this.vista.findViewById(R.id.posicion10);
+        this.posicion10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(10);
+                accionIconoPosicion(10);
             }
         });
 
-        this.tina11 = this.vista.findViewById(R.id.tina11);
-        this.tina11.setOnClickListener(new View.OnClickListener() {
+        this.posicion11 = this.vista.findViewById(R.id.posicion11);
+        this.posicion11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(11);
+                accionIconoPosicion(11);
             }
         });
 
-        this.tina12 = this.vista.findViewById(R.id.tina12);
-        this.tina12.setOnClickListener(new View.OnClickListener() {
+        this.posicion12 = this.vista.findViewById(R.id.posicion12);
+        this.posicion12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(12);
+                accionIconoPosicion(12);
             }
         });
 
-        this.tina13 = this.vista.findViewById(R.id.tina13);
-        this.tina13.setOnClickListener(new View.OnClickListener() {
+        this.posicion13 = this.vista.findViewById(R.id.posicion13);
+        this.posicion13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(13);
+                accionIconoPosicion(13);
             }
         });
 
-        this.tina14 = this.vista.findViewById(R.id.tina14);
-        this.tina14.setOnClickListener(new View.OnClickListener() {
+        this.posicion14 = this.vista.findViewById(R.id.posicion14);
+        this.posicion14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(14);
+                accionIconoPosicion(14);
             }
         });
 
-        this.tina15 = this.vista.findViewById(R.id.tina15);
-        this.tina15.setOnClickListener(new View.OnClickListener() {
+        this.posicion15 = this.vista.findViewById(R.id.posicion15);
+        this.posicion15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(15);
+                accionIconoPosicion(15);
             }
         });
 
-        this.tina16 = this.vista.findViewById(R.id.tina16);
-        this.tina16.setOnClickListener(new View.OnClickListener() {
+        this.posicion16 = this.vista.findViewById(R.id.posicion16);
+        this.posicion16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(16);
+                accionIconoPosicion(16);
             }
         });
 
-        this.tina17 = this.vista.findViewById(R.id.tina17);
-        this.tina17.setOnClickListener(new View.OnClickListener() {
+        this.posicion17 = this.vista.findViewById(R.id.posicion17);
+        this.posicion17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(17);
+                accionIconoPosicion(17);
             }
         });
 
-        this.tina18 = this.vista.findViewById(R.id.tina18);
-        this.tina18.setOnClickListener(new View.OnClickListener() {
+        this.posicion18 = this.vista.findViewById(R.id.posicion18);
+        this.posicion18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(18);
+                accionIconoPosicion(18);
             }
         });
 
-        this.tina19 = this.vista.findViewById(R.id.tina19);
-        this.tina19.setOnClickListener(new View.OnClickListener() {
+        this.posicion19 = this.vista.findViewById(R.id.posicion19);
+        this.posicion19.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(19);
+                accionIconoPosicion(19);
             }
         });
 
-        this.tina20 = this.vista.findViewById(R.id.tina20);
-        this.tina20.setOnClickListener(new View.OnClickListener() {
+        this.posicion20 = this.vista.findViewById(R.id.posicion20);
+        this.posicion20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(20);
+                accionIconoPosicion(20);
             }
         });
 
-        this.tina21 = this.vista.findViewById(R.id.tina21);
-        this.tina21.setOnClickListener(new View.OnClickListener() {
+        this.posicion21 = this.vista.findViewById(R.id.posicion21);
+        this.posicion21.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(21);
+                accionIconoPosicion(21);
             }
         });
 
-        this.tina22 = this.vista.findViewById(R.id.tina22);
-        this.tina22.setOnClickListener(new View.OnClickListener() {
+        this.posicion22 = this.vista.findViewById(R.id.posicion22);
+        this.posicion22.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(22);
+                accionIconoPosicion(22);
             }
         });
 
-        this.tina23 = this.vista.findViewById(R.id.tina23);
-        this.tina23.setOnClickListener(new View.OnClickListener() {
+        this.posicion23 = this.vista.findViewById(R.id.posicion23);
+        this.posicion23.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(23);
+                accionIconoPosicion(23);
             }
         });
 
-        this.tina24 = this.vista.findViewById(R.id.tina24);
-        this.tina24.setOnClickListener(new View.OnClickListener() {
+        this.posicion24 = this.vista.findViewById(R.id.posicion24);
+        this.posicion24.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(24);
+                accionIconoPosicion(24);
             }
         });
 
-        this.tina25 = this.vista.findViewById(R.id.tina25);
-        this.tina25.setOnClickListener(new View.OnClickListener() {
+        this.posicion25 = this.vista.findViewById(R.id.posicion25);
+        this.posicion25.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(25);
+                accionIconoPosicion(25);
             }
         });
 
-        this.tina26 = this.vista.findViewById(R.id.tina26);
-        this.tina26.setOnClickListener(new View.OnClickListener() {
+        this.posicion26 = this.vista.findViewById(R.id.posicion26);
+        this.posicion26.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(26);
+                accionIconoPosicion(26);
             }
         });
 
-        this.tina27 = this.vista.findViewById(R.id.tina27);
-        this.tina27.setOnClickListener(new View.OnClickListener() {
+        this.posicion27 = this.vista.findViewById(R.id.posicion27);
+        this.posicion27.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(27);
+                accionIconoPosicion(27);
             }
         });
 
-        this.tina28 = this.vista.findViewById(R.id.tina28);
-        this.tina28.setOnClickListener(new View.OnClickListener() {
+        this.posicion28 = this.vista.findViewById(R.id.posicion28);
+        this.posicion28.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(28);
+                accionIconoPosicion(28);
             }
         });
 
-        this.tina29 = this.vista.findViewById(R.id.tina29);
-        this.tina29.setOnClickListener(new View.OnClickListener() {
+        this.posicion29 = this.vista.findViewById(R.id.posicion29);
+        this.posicion29.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(29);
+                accionIconoPosicion(29);
             }
         });
 
-        this.tina30 = this.vista.findViewById(R.id.tina30);
-        this.tina30.setOnClickListener(new View.OnClickListener() {
+        this.posicion30 = this.vista.findViewById(R.id.posicion30);
+        this.posicion30.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(30);
+                accionIconoPosicion(30);
             }
         });
 
-        this.tina31 = this.vista.findViewById(R.id.tina31);
-        this.tina31.setOnClickListener(new View.OnClickListener() {
+        this.posicion31 = this.vista.findViewById(R.id.posicion31);
+        this.posicion31.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(31);
+                accionIconoPosicion(31);
             }
         });
 
-        this.tina32 = this.vista.findViewById(R.id.tina32);
-        this.tina32.setOnClickListener(new View.OnClickListener() {
+        this.posicion32 = this.vista.findViewById(R.id.posicion32);
+        this.posicion32.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(32);
+                accionIconoPosicion(32);
             }
         });
 
-        this.tina33 = this.vista.findViewById(R.id.tina33);
-        this.tina33.setOnClickListener(new View.OnClickListener() {
+        this.posicion33 = this.vista.findViewById(R.id.posicion33);
+        this.posicion33.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(33);
+                accionIconoPosicion(33);
             }
         });
 
-        this.tina34 = this.vista.findViewById(R.id.tina34);
-        this.tina34.setOnClickListener(new View.OnClickListener() {
+        this.posicion34 = this.vista.findViewById(R.id.posicion34);
+        this.posicion34.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(34);
+                accionIconoPosicion(34);
             }
         });
 
-        this.tina35 = this.vista.findViewById(R.id.tina35);
-        this.tina35.setOnClickListener(new View.OnClickListener() {
+        this.posicion35 = this.vista.findViewById(R.id.posicion35);
+        this.posicion35.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(35);
+                accionIconoPosicion(35);
             }
         });
 
-        this.tina36 = this.vista.findViewById(R.id.tina36);
-        this.tina36.setOnClickListener(new View.OnClickListener() {
+        this.posicion36 = this.vista.findViewById(R.id.posicion36);
+        this.posicion36.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(36);
+                accionIconoPosicion(36);
             }
         });
 
-        this.tina37 = this.vista.findViewById(R.id.tina37);
-        this.tina37.setOnClickListener(new View.OnClickListener() {
+        this.posicion37 = this.vista.findViewById(R.id.posicion37);
+        this.posicion37.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(37);
+                accionIconoPosicion(37);
             }
         });
 
-        this.tina38 = this.vista.findViewById(R.id.tina38);
-        this.tina38.setOnClickListener(new View.OnClickListener() {
+        this.posicion38 = this.vista.findViewById(R.id.posicion38);
+        this.posicion38.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(38);
+                accionIconoPosicion(38);
             }
         });
 
-        this.tina39 = this.vista.findViewById(R.id.tina39);
-        this.tina39.setOnClickListener(new View.OnClickListener() {
+        this.posicion39 = this.vista.findViewById(R.id.posicion39);
+        this.posicion39.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(39);
+                accionIconoPosicion(39);
             }
         });
 
-        this.tina40 = this.vista.findViewById(R.id.tina40);
-        this.tina40.setOnClickListener(new View.OnClickListener() {
+        this.posicion40 = this.vista.findViewById(R.id.posicion40);
+        this.posicion40.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(40);
+                accionIconoPosicion(40);
             }
         });
 
-        this.tina41 = this.vista.findViewById(R.id.tina41);
-        this.tina41.setOnClickListener(new View.OnClickListener() {
+        this.posicion41 = this.vista.findViewById(R.id.posicion41);
+        this.posicion41.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(41);
+                accionIconoPosicion(41);
             }
         });
 
-        this.tina42 = this.vista.findViewById(R.id.tina42);
-        this.tina42.setOnClickListener(new View.OnClickListener() {
+        this.posicion42 = this.vista.findViewById(R.id.posicion42);
+        this.posicion42.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(42);
+                accionIconoPosicion(42);
             }
         });
 
-        this.tina43 = this.vista.findViewById(R.id.tina43);
-        this.tina43.setOnClickListener(new View.OnClickListener() {
+        this.posicion43 = this.vista.findViewById(R.id.posicion43);
+        this.posicion43.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(43);
+                accionIconoPosicion(43);
             }
         });
 
-        this.tina44 = this.vista.findViewById(R.id.tina44);
-        this.tina44.setOnClickListener(new View.OnClickListener() {
+        this.posicion44 = this.vista.findViewById(R.id.posicion44);
+        this.posicion44.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(44);
+                accionIconoPosicion(44);
             }
         });
 
-        this.tina45 = this.vista.findViewById(R.id.tina45);
-        this.tina45.setOnClickListener(new View.OnClickListener() {
+        this.posicion45 = this.vista.findViewById(R.id.posicion45);
+        this.posicion45.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(45);
+                accionIconoPosicion(45);
             }
         });
 
-        this.tina46 = this.vista.findViewById(R.id.tina46);
-        this.tina46.setOnClickListener(new View.OnClickListener() {
+        this.posicion46 = this.vista.findViewById(R.id.posicion46);
+        this.posicion46.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(46);
+                accionIconoPosicion(46);
             }
         });
 
-        this.tina47 = this.vista.findViewById(R.id.tina47);
-        this.tina47.setOnClickListener(new View.OnClickListener() {
+        this.posicion47 = this.vista.findViewById(R.id.posicion47);
+        this.posicion47.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(47);
+                accionIconoPosicion(47);
             }
         });
 
-        this.tina48 = this.vista.findViewById(R.id.tina48);
-        this.tina48.setOnClickListener(new View.OnClickListener() {
+        this.posicion48 = this.vista.findViewById(R.id.posicion48);
+        this.posicion48.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(48);
+                accionIconoPosicion(48);
             }
         });
 
-        this.tina49 = this.vista.findViewById(R.id.tina49);
-        this.tina49.setOnClickListener(new View.OnClickListener() {
+        this.posicion49 = this.vista.findViewById(R.id.posicion49);
+        this.posicion49.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(49);
+                accionIconoPosicion(49);
             }
         });
 
-        this.tina50 = this.vista.findViewById(R.id.tina50);
-        this.tina50.setOnClickListener(new View.OnClickListener() {
+        this.posicion50 = this.vista.findViewById(R.id.posicion50);
+        this.posicion50.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(50);
+                accionIconoPosicion(50);
             }
         });
 
-        this.tina51 = this.vista.findViewById(R.id.tina51);
-        this.tina51.setOnClickListener(new View.OnClickListener() {
+        this.posicion51 = this.vista.findViewById(R.id.posicion51);
+        this.posicion51.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(51);
+                accionIconoPosicion(51);
             }
         });
 
-        this.tina52 = this.vista.findViewById(R.id.tina52);
-        this.tina52.setOnClickListener(new View.OnClickListener() {
+        this.posicion52 = this.vista.findViewById(R.id.posicion52);
+        this.posicion52.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(52);
+                accionIconoPosicion(52);
             }
         });
 
-        this.tina53 = this.vista.findViewById(R.id.tina53);
-        this.tina53.setOnClickListener(new View.OnClickListener() {
+        this.posicion53 = this.vista.findViewById(R.id.posicion53);
+        this.posicion53.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(53);
+                accionIconoPosicion(53);
             }
         });
 
-        this.tina54 = this.vista.findViewById(R.id.tina54);
-        this.tina54.setOnClickListener(new View.OnClickListener() {
+        this.posicion54 = this.vista.findViewById(R.id.posicion54);
+        this.posicion54.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(54);
+                accionIconoPosicion(54);
             }
         });
 
-        this.tina55 = this.vista.findViewById(R.id.tina55);
-        this.tina55.setOnClickListener(new View.OnClickListener() {
+        this.posicion55 = this.vista.findViewById(R.id.posicion55);
+        this.posicion55.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(55);
+                accionIconoPosicion(55);
             }
         });
 
-        this.tina56 = this.vista.findViewById(R.id.tina56);
-        this.tina56.setOnClickListener(new View.OnClickListener() {
+        this.posicion56 = this.vista.findViewById(R.id.posicion56);
+        this.posicion56.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(56);
+                accionIconoPosicion(56);
             }
         });
 
-        this.tina57 = this.vista.findViewById(R.id.tina57);
-        this.tina57.setOnClickListener(new View.OnClickListener() {
+        this.posicion57 = this.vista.findViewById(R.id.posicion57);
+        this.posicion57.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(57);
+                accionIconoPosicion(57);
             }
         });
 
-        this.tina58 = this.vista.findViewById(R.id.tina58);
-        this.tina58.setOnClickListener(new View.OnClickListener() {
+        this.posicion58 = this.vista.findViewById(R.id.posicion58);
+        this.posicion58.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(58);
+                accionIconoPosicion(58);
             }
         });
 
-        this.tina59 = this.vista.findViewById(R.id.tina59);
-        this.tina59.setOnClickListener(new View.OnClickListener() {
+        this.posicion59 = this.vista.findViewById(R.id.posicion59);
+        this.posicion59.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(59);
+                accionIconoPosicion(59);
             }
         });
 
-        this.tina60 = this.vista.findViewById(R.id.tina60);
-        this.tina60.setOnClickListener(new View.OnClickListener() {
+        this.posicion60 = this.vista.findViewById(R.id.posicion60);
+        this.posicion60.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(60);
+                accionIconoPosicion(60);
             }
         });
 
-        this.tina61 = this.vista.findViewById(R.id.tina61);
-        this.tina61.setOnClickListener(new View.OnClickListener() {
+        this.posicion61 = this.vista.findViewById(R.id.posicion61);
+        this.posicion61.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(61);
+                accionIconoPosicion(61);
             }
         });
 
-        this.tina62 = this.vista.findViewById(R.id.tina62);
-        this.tina62.setOnClickListener(new View.OnClickListener() {
+        this.posicion62 = this.vista.findViewById(R.id.posicion62);
+        this.posicion62.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(62);
+                accionIconoPosicion(62);
             }
         });
 
-        this.tina63 = this.vista.findViewById(R.id.tina63);
-        this.tina63.setOnClickListener(new View.OnClickListener() {
+        this.posicion63 = this.vista.findViewById(R.id.posicion63);
+        this.posicion63.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(63);
+                accionIconoPosicion(63);
             }
         });
 
-        this.tina64 = this.vista.findViewById(R.id.tina64);
-        this.tina64.setOnClickListener(new View.OnClickListener() {
+        this.posicion64 = this.vista.findViewById(R.id.posicion64);
+        this.posicion64.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(64);
+                accionIconoPosicion(64);
             }
         });
 
-        this.tina65 = this.vista.findViewById(R.id.tina65);
-        this.tina65.setOnClickListener(new View.OnClickListener() {
+        this.posicion65 = this.vista.findViewById(R.id.posicion65);
+        this.posicion65.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(65);
+                accionIconoPosicion(65);
             }
         });
 
-        this.tina66 = this.vista.findViewById(R.id.tina66);
-        this.tina66.setOnClickListener(new View.OnClickListener() {
+        this.posicion66 = this.vista.findViewById(R.id.posicion66);
+        this.posicion66.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(66);
+                accionIconoPosicion(66);
             }
         });
 
-        this.tina67 = this.vista.findViewById(R.id.tina67);
-        this.tina67.setOnClickListener(new View.OnClickListener() {
+        this.posicion67 = this.vista.findViewById(R.id.posicion67);
+        this.posicion67.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(67);
+                accionIconoPosicion(67);
             }
         });
 
-        this.tina68 = this.vista.findViewById(R.id.tina68);
-        this.tina68.setOnClickListener(new View.OnClickListener() {
+        this.posicion68 = this.vista.findViewById(R.id.posicion68);
+        this.posicion68.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(68);
+                accionIconoPosicion(68);
             }
         });
 
-        this.tina69 = this.vista.findViewById(R.id.tina69);
-        this.tina69.setOnClickListener(new View.OnClickListener() {
+        this.posicion69 = this.vista.findViewById(R.id.posicion69);
+        this.posicion69.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(69);
+                accionIconoPosicion(69);
             }
         });
 
-        this.tina70 = this.vista.findViewById(R.id.tina70);
-        this.tina70.setOnClickListener(new View.OnClickListener() {
+        this.posicion70 = this.vista.findViewById(R.id.posicion70);
+        this.posicion70.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(70);
+                accionIconoPosicion(70);
             }
         });
 
-        this.tina71 = this.vista.findViewById(R.id.tina71);
-        this.tina71.setOnClickListener(new View.OnClickListener() {
+        this.posicion71 = this.vista.findViewById(R.id.posicion71);
+        this.posicion71.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(71);
+                accionIconoPosicion(71);
             }
         });
 
-        this.tina72 = this.vista.findViewById(R.id.tina72);
-        this.tina72.setOnClickListener(new View.OnClickListener() {
+        this.posicion72 = this.vista.findViewById(R.id.posicion72);
+        this.posicion72.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(72);
+                accionIconoPosicion(72);
             }
         });
 
-        this.tina73 = this.vista.findViewById(R.id.tina73);
-        this.tina73.setOnClickListener(new View.OnClickListener() {
+        this.posicion73 = this.vista.findViewById(R.id.posicion73);
+        this.posicion73.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(73);
+                accionIconoPosicion(73);
             }
         });
 
-        this.tina74 = this.vista.findViewById(R.id.tina74);
-        this.tina74.setOnClickListener(new View.OnClickListener() {
+        this.posicion74 = this.vista.findViewById(R.id.posicion74);
+        this.posicion74.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(74);
+                accionIconoPosicion(74);
             }
         });
 
-        this.tina75 = this.vista.findViewById(R.id.tina75);
-        this.tina75.setOnClickListener(new View.OnClickListener() {
+        this.posicion75 = this.vista.findViewById(R.id.posicion75);
+        this.posicion75.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(75);
+                accionIconoPosicion(75);
             }
         });
 
-        this.tina76 = this.vista.findViewById(R.id.tina76);
-        this.tina76.setOnClickListener(new View.OnClickListener() {
+        this.posicion76 = this.vista.findViewById(R.id.posicion76);
+        this.posicion76.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(76);
+                accionIconoPosicion(76);
             }
         });
 
-        this.tina77 = this.vista.findViewById(R.id.tina77);
-        this.tina77.setOnClickListener(new View.OnClickListener() {
+        this.posicion77 = this.vista.findViewById(R.id.posicion77);
+        this.posicion77.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(77);
+                accionIconoPosicion(77);
             }
         });
 
-        this.tina78 = this.vista.findViewById(R.id.tina78);
-        this.tina78.setOnClickListener(new View.OnClickListener() {
+        this.posicion78 = this.vista.findViewById(R.id.posicion78);
+        this.posicion78.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(78);
+                accionIconoPosicion(78);
             }
         });
 
-        this.tina79 = this.vista.findViewById(R.id.tina79);
-        this.tina79.setOnClickListener(new View.OnClickListener() {
+        this.posicion79 = this.vista.findViewById(R.id.posicion79);
+        this.posicion79.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(79);
+                accionIconoPosicion(79);
             }
         });
 
-        this.tina80 = this.vista.findViewById(R.id.tina80);
-        this.tina80.setOnClickListener(new View.OnClickListener() {
+        this.posicion80 = this.vista.findViewById(R.id.posicion80);
+        this.posicion80.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(80);
+                accionIconoPosicion(80);
             }
         });
 
-        this.tina81 = this.vista.findViewById(R.id.tina81);
-        this.tina81.setOnClickListener(new View.OnClickListener() {
+        this.posicion81 = this.vista.findViewById(R.id.posicion81);
+        this.posicion81.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(81);
+                accionIconoPosicion(81);
             }
         });
 
-        this.tina82 = this.vista.findViewById(R.id.tina82);
-        this.tina82.setOnClickListener(new View.OnClickListener() {
+        this.posicion82 = this.vista.findViewById(R.id.posicion82);
+        this.posicion82.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(82);
+                accionIconoPosicion(82);
             }
         });
 
-        this.tina83 = this.vista.findViewById(R.id.tina83);
-        this.tina83.setOnClickListener(new View.OnClickListener() {
+        this.posicion83 = this.vista.findViewById(R.id.posicion83);
+        this.posicion83.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(83);
+                accionIconoPosicion(83);
             }
         });
 
-        this.tina84 = this.vista.findViewById(R.id.tina84);
-        this.tina84.setOnClickListener(new View.OnClickListener() {
+        this.posicion84 = this.vista.findViewById(R.id.posicion84);
+        this.posicion84.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(84);
+                accionIconoPosicion(84);
             }
         });
 
-        this.tina85 = this.vista.findViewById(R.id.tina85);
-        this.tina85.setOnClickListener(new View.OnClickListener() {
+        this.posicion85 = this.vista.findViewById(R.id.posicion85);
+        this.posicion85.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(85);
+                accionIconoPosicion(85);
             }
         });
 
-        this.tina86 = this.vista.findViewById(R.id.tina86);
-        this.tina86.setOnClickListener(new View.OnClickListener() {
+        this.posicion86 = this.vista.findViewById(R.id.posicion86);
+        this.posicion86.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(86);
+                accionIconoPosicion(86);
             }
         });
 
-        this.tina87 = this.vista.findViewById(R.id.tina87);
-        this.tina87.setOnClickListener(new View.OnClickListener() {
+        this.posicion87 = this.vista.findViewById(R.id.posicion87);
+        this.posicion87.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(87);
+                accionIconoPosicion(87);
             }
         });
 
-        this.tina88 = this.vista.findViewById(R.id.tina88);
-        this.tina88.setOnClickListener(new View.OnClickListener() {
+        this.posicion88 = this.vista.findViewById(R.id.posicion88);
+        this.posicion88.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accionIconoTina(88);
+                accionIconoPosicion(88);
             }
         });
 
@@ -921,133 +935,67 @@ public class Fragment_Atemperado_Plan extends Fragment {
     }
 
     private void creaObjetosVacios(){
-        if( this.listaTinas.isEmpty() ){
+        if( this.listaPosiciones.isEmpty() ){
             for( int posicion = 1; posicion <= 88; posicion++ ){
-                Tina recursoTina = new Tina();
-                recursoTina.setIdPosicion(posicion);
-                recursoTina.setEstado(Constantes.ESTADO.inicial);
-                this.listaTinas.add(recursoTina);
+                PosicionEstiba recursoPosicion = new PosicionEstiba();
+                recursoPosicion.setIdAtemperadoPosicionTina(posicion);
+                recursoPosicion.setEstado(Constantes.ESTADO.inicial);
+                recursoPosicion.setBloqueado(false);
+                recursoPosicion.setConteoNivel(4);
+                this.listaPosiciones.add(recursoPosicion);
+                muestraIcono(recursoPosicion);
+                if( recursoPosicion.getBloqueado() ){
+                    getIconoPosicion( recursoPosicion.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                }
             }
         }
     }
 
     private void muestraDetalle(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_detalle_estiba, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                final TextView etiquetaPosicion1 = ventanaEmergente.findViewById(R.id.etiquetaPosicion1);
-                etiquetaPosicion1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion1.getText().toString().contains("disponible") ){
-                            etiquetaPosicion1.setText("Posición 1 ocupada");
-                        }else{
-                            etiquetaPosicion1.setText("Posición 1 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion2 = ventanaEmergente.findViewById(R.id.etiquetaPosicion2);
-                etiquetaPosicion2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion2.getText().toString().contains("disponible") ){
-                            etiquetaPosicion2.setText("Posición 2 ocupada");
-                        }else{
-                            etiquetaPosicion2.setText("Posición 2 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion3 = ventanaEmergente.findViewById(R.id.etiquetaPosicion3);
-                etiquetaPosicion3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion3.getText().toString().contains("disponible") ){
-                            etiquetaPosicion3.setText("Posición 3 ocupada");
-                        }else{
-                            etiquetaPosicion3.setText("Posición 3 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion4 = ventanaEmergente.findViewById(R.id.etiquetaPosicion4);
-                etiquetaPosicion4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion4.getText().toString().contains("disponible") ){
-                            etiquetaPosicion4.setText("Posición 4 ocupada");
-                        }else{
-                            etiquetaPosicion4.setText("Posición 4 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion5 = ventanaEmergente.findViewById(R.id.etiquetaPosicion5);
-                etiquetaPosicion5.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion5.getText().toString().contains("disponible") ){
-                            etiquetaPosicion5.setText("Posición 5 ocupada");
-                        }else{
-                            etiquetaPosicion5.setText("Posición 5 disponible");
-                        }
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new Fragment_Atemperado_DetalleEstiba().newInstance( getPosicionSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
-    private void accionIconoTina(int posicion){
-        for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicion ){
-                if( tina.getEstado() == Constantes.ESTADO.inicial ){
-                    setTinaSeleccionada(tina);
+    private void liberaCompleta(){
+
+    }
+
+    private void accionIconoPosicion(int posicion){
+        for( PosicionEstiba posicionEstiba : this.listaPosiciones ){
+            if( posicionEstiba.getIdAtemperadoPosicionTina() == posicion ){
+                if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
+                    setPosicionSeleccionada(posicionEstiba);
                     deshabilitaRecursos();
-                    getIconoTina( tina.getIdPosicion() )
-                            .setImageResource(R.drawable.ic_tina1);
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
-                    tina.setEstado(Constantes.ESTADO.seleccionado);
+                    posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
+                    muestraIcono(posicionEstiba);
                     ajustaTamañoVista();
-                    this.botonDetalle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            muestraDetalle();
-                        }
-                    });
+                    if( getPosicionSeleccionada().getConteoNivel() == 0 ){
+                        this.boton1.setEnabled(false);
+                    }else{
+                        this.boton1.setEnabled(true);
+                    }
+                    if( getPosicionSeleccionada().getBloqueado() ){
+                        this.boton2.setEnabled(false);
+                    }else{
+                        this.boton2.setEnabled(true);
+                    }
                     this.botonera.setVisibility(View.VISIBLE);
                 }else{
-                    if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
-                        setTinaSeleccionada(null);
+                    if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
+                        setPosicionSeleccionada(null);
                         habilitaRecursos();
-                        getIconoTina( tina.getIdPosicion() )
-                                .setImageResource(R.drawable.ic_tina2);
-                        getIconoTina( tina.getIdPosicion() )
-                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
-                        tina.setEstado(Constantes.ESTADO.inicial);
-                        this.botonDetalle.setOnClickListener(null);
+                        if( !posicionEstiba.getBloqueado() ){
+                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                        }else{
+                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                        }
+                        posicionEstiba.setEstado(Constantes.ESTADO.inicial);
+                        muestraIcono(posicionEstiba);
                         this.botonera.setVisibility(View.GONE);
                         ajustaTamañoVista();
                     }
@@ -1057,13 +1005,72 @@ public class Fragment_Atemperado_Plan extends Fragment {
         }
     }
 
+    private void muestraIcono(PosicionEstiba posicionEstiba){
+        if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
+            switch ( posicionEstiba.getConteoNivel() ){
+                case 0:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tina1);
+                    break;
+                case 1:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_uno1);
+                    break;
+                case 2:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_dos1);
+                    break;
+                case 3:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tres1);
+                    break;
+                case 4:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cuatro1);
+                    break;
+                case 5:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cinco1);
+                    break;
+            }
+        }else{
+            switch ( posicionEstiba.getConteoNivel() ){
+                case 0:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tina2);
+                    break;
+                case 1:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_uno2);
+                    break;
+                case 2:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_dos2);
+                    break;
+                case 3:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tres2);
+                    break;
+                case 4:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cuatro2);
+                    break;
+                case 5:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cinco2);
+            }
+        }
+    }
+
     private void ajustaTamañoVista(){
         ViewGroup.LayoutParams botonera = this.botonera.getLayoutParams();
         ViewGroup.LayoutParams vista = this.actualizar.getLayoutParams();
 
-        if( getTinaSeleccionada() != null ){
+        if( getPosicionSeleccionada() != null ){
             vista.height = vista.height - (botonera.height*5);
-            if( getTinaSeleccionada().getIdPosicion() <= 24 ){
+            if( getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 12
+                    || ( getPosicionSeleccionada().getIdAtemperadoPosicionTina() >= 49
+                    && getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 60 ) ){
                 this.vistaIconos.post(new Runnable() {
                     public void run() {
                         vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
@@ -1086,111 +1093,111 @@ public class Fragment_Atemperado_Plan extends Fragment {
     }
 
     private void habilitaRecursos(){
-        for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+        for(PosicionEstiba posicionEstiba : this.listaPosiciones){
+            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() ).setEnabled(true);
         }
     }
 
     private void deshabilitaRecursos(){
-        for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+        for(PosicionEstiba posicionEstiba : this.listaPosiciones){
+            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() ).setEnabled(false);
         }
 
-        if( getTinaSeleccionada() != null ){
-            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+        if( getPosicionSeleccionada() != null ){
+            getIconoPosicion( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).setEnabled(true);
         }
     }
 
-    private ImageView getIconoTina(int posicion){
+    private ImageView getIconoPosicion(int posicion){
         switch (posicion){
-            case 1: return this.tina1;
-            case 2: return this.tina2;
-            case 3: return this.tina3;
-            case 4: return this.tina4;
-            case 5: return this.tina5;
-            case 6: return this.tina6;
-            case 7: return this.tina7;
-            case 8: return this.tina8;
-            case 9: return this.tina9;
-            case 10: return this.tina10;
-            case 11: return this.tina11;
-            case 12: return this.tina12;
-            case 13: return this.tina13;
-            case 14: return this.tina14;
-            case 15: return this.tina15;
-            case 16: return this.tina16;
-            case 17: return this.tina17;
-            case 18: return this.tina18;
-            case 19: return this.tina19;
-            case 20: return this.tina20;
-            case 21: return this.tina21;
-            case 22: return this.tina22;
-            case 23: return this.tina23;
-            case 24: return this.tina24;
-            case 25: return this.tina25;
-            case 26: return this.tina26;
-            case 27: return this.tina27;
-            case 28: return this.tina28;
-            case 29: return this.tina29;
-            case 30: return this.tina30;
-            case 31: return this.tina31;
-            case 32: return this.tina32;
-            case 33: return this.tina33;
-            case 34: return this.tina34;
-            case 35: return this.tina35;
-            case 36: return this.tina36;
-            case 37: return this.tina37;
-            case 38: return this.tina38;
-            case 39: return this.tina39;
-            case 40: return this.tina40;
-            case 41: return this.tina41;
-            case 42: return this.tina42;
-            case 43: return this.tina43;
-            case 44: return this.tina44;
-            case 45: return this.tina45;
-            case 46: return this.tina46;
-            case 47: return this.tina47;
-            case 48: return this.tina48;
-            case 49: return this.tina49;
-            case 50: return this.tina50;
-            case 51: return this.tina51;
-            case 52: return this.tina52;
-            case 53: return this.tina53;
-            case 54: return this.tina54;
-            case 55: return this.tina55;
-            case 56: return this.tina56;
-            case 57: return this.tina57;
-            case 58: return this.tina58;
-            case 59: return this.tina59;
-            case 60: return this.tina60;
-            case 61: return this.tina61;
-            case 62: return this.tina62;
-            case 63: return this.tina63;
-            case 64: return this.tina64;
-            case 65: return this.tina65;
-            case 66: return this.tina66;
-            case 67: return this.tina67;
-            case 68: return this.tina68;
-            case 69: return this.tina69;
-            case 70: return this.tina70;
-            case 71: return this.tina71;
-            case 72: return this.tina72;
-            case 73: return this.tina73;
-            case 74: return this.tina74;
-            case 75: return this.tina75;
-            case 76: return this.tina76;
-            case 77: return this.tina77;
-            case 78: return this.tina78;
-            case 79: return this.tina79;
-            case 80: return this.tina80;
-            case 81: return this.tina81;
-            case 82: return this.tina82;
-            case 83: return this.tina83;
-            case 84: return this.tina84;
-            case 85: return this.tina85;
-            case 86: return this.tina86;
-            case 87: return this.tina87;
-            case 88: return this.tina88;
+            case 1: return this.posicion1;
+            case 2: return this.posicion2;
+            case 3: return this.posicion3;
+            case 4: return this.posicion4;
+            case 5: return this.posicion5;
+            case 6: return this.posicion6;
+            case 7: return this.posicion7;
+            case 8: return this.posicion8;
+            case 9: return this.posicion9;
+            case 10: return this.posicion10;
+            case 11: return this.posicion11;
+            case 12: return this.posicion12;
+            case 13: return this.posicion13;
+            case 14: return this.posicion14;
+            case 15: return this.posicion15;
+            case 16: return this.posicion16;
+            case 17: return this.posicion17;
+            case 18: return this.posicion18;
+            case 19: return this.posicion19;
+            case 20: return this.posicion20;
+            case 21: return this.posicion21;
+            case 22: return this.posicion22;
+            case 23: return this.posicion23;
+            case 24: return this.posicion24;
+            case 25: return this.posicion25;
+            case 26: return this.posicion26;
+            case 27: return this.posicion27;
+            case 28: return this.posicion28;
+            case 29: return this.posicion29;
+            case 30: return this.posicion30;
+            case 31: return this.posicion31;
+            case 32: return this.posicion32;
+            case 33: return this.posicion33;
+            case 34: return this.posicion34;
+            case 35: return this.posicion35;
+            case 36: return this.posicion36;
+            case 37: return this.posicion37;
+            case 38: return this.posicion38;
+            case 39: return this.posicion39;
+            case 40: return this.posicion40;
+            case 41: return this.posicion41;
+            case 42: return this.posicion42;
+            case 43: return this.posicion43;
+            case 44: return this.posicion44;
+            case 45: return this.posicion45;
+            case 46: return this.posicion46;
+            case 47: return this.posicion47;
+            case 48: return this.posicion48;
+            case 49: return this.posicion49;
+            case 50: return this.posicion50;
+            case 51: return this.posicion51;
+            case 52: return this.posicion52;
+            case 53: return this.posicion53;
+            case 54: return this.posicion54;
+            case 55: return this.posicion55;
+            case 56: return this.posicion56;
+            case 57: return this.posicion57;
+            case 58: return this.posicion58;
+            case 59: return this.posicion59;
+            case 60: return this.posicion60;
+            case 61: return this.posicion61;
+            case 62: return this.posicion62;
+            case 63: return this.posicion63;
+            case 64: return this.posicion64;
+            case 65: return this.posicion65;
+            case 66: return this.posicion66;
+            case 67: return this.posicion67;
+            case 68: return this.posicion68;
+            case 69: return this.posicion69;
+            case 70: return this.posicion70;
+            case 71: return this.posicion71;
+            case 72: return this.posicion72;
+            case 73: return this.posicion73;
+            case 74: return this.posicion74;
+            case 75: return this.posicion75;
+            case 76: return this.posicion76;
+            case 77: return this.posicion77;
+            case 78: return this.posicion78;
+            case 79: return this.posicion79;
+            case 80: return this.posicion80;
+            case 81: return this.posicion81;
+            case 82: return this.posicion82;
+            case 83: return this.posicion83;
+            case 84: return this.posicion84;
+            case 85: return this.posicion85;
+            case 86: return this.posicion86;
+            case 87: return this.posicion87;
+            case 88: return this.posicion88;
         }
         return null;
     }
@@ -1219,18 +1226,18 @@ public class Fragment_Atemperado_Plan extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+/**
+ * This interface must be implemented by activities that contain this
+ * fragment to allow an interaction in this fragment to be communicated
+ * to the activity and potentially other fragments contained in that
+ * activity.
+ * <p>
+ * See the Android Training lesson <a href=
+ * "http://developer.android.com/training/basics/fragments/communicating.html"
+ * >Communicating with Other Fragments</a> for more information.
+ */
+public interface OnFragmentInteractionListener {
+    // TODO: Update argument type and name
+    void onFragmentInteraction(Uri uri);
+}
 }

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo_asignar"
-    tools:context=".Preselecion.Fragment_Preselecion_Tinas">
+    android:background="@color/no_selecion">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -24,7 +22,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/detalleEstiba"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/negro"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
                     android:textSize="17dp"/>
@@ -33,25 +31,10 @@
                     android:id="@+id/etiquetaFecha"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/negro"
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
-
-                <TextView
-                    android:id="@+id/etiquetaHora"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textColor="@color/negro"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:textSize="15dp"
-                    android:text="00:00"
-                    android:background="@color/no_selecion"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
 
                 <TextView
                     android:id="@+id/etiquetaPosicion5"
@@ -61,8 +44,8 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp"
-                    android:text="Posición 5 disponible"
-                    android:background="@color/no_selecion"
+                    android:text="Posición 5 desocupada"
+                    android:background="@color/blanco"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
@@ -76,8 +59,8 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp"
-                    android:text="Posición 4 disponible"
-                    android:background="@color/no_selecion"
+                    android:text="Posición 4 desocupada"
+                    android:background="@color/blanco"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
@@ -91,8 +74,8 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp"
-                    android:text="Posición 3 disponible"
-                    android:background="@color/no_selecion"
+                    android:text="Posición 3 desocupada"
+                    android:background="@color/blanco"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
@@ -106,8 +89,8 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp"
-                    android:text="Posición 2 disponible"
-                    android:background="@color/no_selecion"
+                    android:text="Posición 2 desocupada"
+                    android:background="@color/blanco"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
@@ -121,8 +104,8 @@
                     android:gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp"
-                    android:text="Posición 1 disponible"
-                    android:background="@color/no_selecion"
+                    android:text="Posición 1 desocupada"
+                    android:background="@color/blanco"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
@@ -132,13 +115,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:gravity="bottom">
 
                 <Button

@@ -382,6 +382,20 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/contenedorTurno"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:visibility="gone">
+
+                    <Button
+                        android:id="@+id/botonTurno"
+                        android:text="@string/liberarOperadores"
+                        style="@style/botonAccion"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

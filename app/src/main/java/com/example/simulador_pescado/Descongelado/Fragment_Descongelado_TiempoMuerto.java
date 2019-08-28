@@ -1,8 +1,6 @@
 package com.example.simulador_pescado.Descongelado;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,9 +19,7 @@ import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Tina;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -155,9 +150,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
     private Button botonCreaOrden;
-    private AlertDialog ventanaEmergente;
-
-    private String fechaActual;
 
     private OnFragmentInteractionListener mListener;
 
@@ -212,16 +204,13 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.vista = inflater.inflate(R.layout.fragment_fragment__descongelado__tiempo_muerto, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_descongelado_tiempo_muerto, container, false);
 
         iniciaComponentes();
         return this.vista;
     }
 
     private void iniciaComponentes(){
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
         this.botonera = this.vista.findViewById(R.id.botonera);
@@ -1010,7 +999,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
         if( this.listaTinas.isEmpty() ){
             for( int posicion = 1; posicion <= 96; posicion++ ){
                 Tina recursoTina = new Tina();
-                recursoTina.setIdPosicion(posicion);
+                recursoTina.setIdPreseleccionPosicionTina(posicion);
                 recursoTina.setEstado(Constantes.ESTADO.inicial);
                 this.listaTinas.add(recursoTina);
             }
@@ -1019,7 +1008,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
         if( this.listaMontacargas.isEmpty() ){
             for( int posicion = 1; posicion <= 1; posicion++ ){
                 OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
-                recursoMontacargas.setIdMontacargaPreseleccion(posicion);
+                recursoMontacargas.setIdPreseleccionMontacarga(posicion);
                 recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
                 this.listaMontacargas.add(recursoMontacargas);
             }
@@ -1027,76 +1016,24 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenTina(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoTina( getTinaSeleccionada().getIdPosicion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText("Tina");
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new Fragment_Descongelado_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void creaOrdenMontacargas(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_orden_mantenimiento, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
-
-                TextView etiquetaEquipo = ventanaEmergente.findViewById(R.id.etiquetaEquipo);
-                etiquetaEquipo.setText("Montacargas");
-            }
-        });
-        this.ventanaEmergente.show();
+        Fragment fragment = new Fragment_Descongelado_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void accionIconoTina(int posicion){
         for( Tina tina : this.listaTinas ){
-            if( tina.getIdPosicion() == posicion ){
+            if( tina.getIdPreseleccionPosicionTina() == posicion ){
                 if( tina.getEstado() == Constantes.ESTADO.inicial ){
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setImageResource(R.drawable.ic_tina1);
-                    getIconoTina( tina.getIdPosicion() )
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     tina.setEstado(Constantes.ESTADO.seleccionado);
                     ajustaTamañoVista();
@@ -1111,9 +1048,9 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
                         setTinaSeleccionada(null);
                         habilitaRecursos();
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setImageResource(R.drawable.ic_tina2);
-                        getIconoTina( tina.getIdPosicion() )
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         tina.setEstado(Constantes.ESTADO.inicial);
                         this.botonCreaOrden.setOnClickListener(null);
@@ -1128,13 +1065,13 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
     private void accionIconoMontacargas(int posicion){
         for( OperadorMontacargas montacargas : this.listaMontacargas ){
-            if( montacargas.getIdMontacargaPreseleccion() == posicion ){
+            if( montacargas.getIdPreseleccionMontacarga() == posicion ){
                 if( montacargas.getEstado() == Constantes.ESTADO.inicial ){
                     setMontacargasSeleccionado(montacargas);
                     deshabilitaRecursos();
-                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                    getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setImageResource(R.drawable.ic_montacargas1);
-                    getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                    getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
                     ajustaTamañoVista();
@@ -1149,9 +1086,9 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                     if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
                         setMontacargasSeleccionado(null);
                         habilitaRecursos();
-                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setImageResource(R.drawable.ic_montacargas2);
-                        getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() )
+                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         montacargas.setEstado(Constantes.ESTADO.inicial);
                         this.botonCreaOrden.setOnClickListener(null);
@@ -1170,7 +1107,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
         if( getTinaSeleccionada() != null ){
             vista.height = vista.height - (botonera.height*5);
-            if( getTinaSeleccionada().getIdPosicion() <= 24 ){
+            if( getTinaSeleccionada().getIdPreseleccionPosicionTina() <= 24 ){
                 this.vistaIconos.post(new Runnable() {
                     public void run() {
                         vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
@@ -1184,7 +1121,16 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                 });
             }
         }else{
-            vista.height = vista.height + (botonera.height*5);
+            if( getMontacargasSeleccionado() != null ){
+                vista.height = vista.height - (botonera.height*5);
+                this.vistaIconos.post(new Runnable() {
+                    public void run() {
+                        vistaIconos.fullScroll(vistaIconos.FOCUS_DOWN);
+                    }
+                });
+            }else{
+                vista.height = vista.height + (botonera.height*5);
+            }
         }
 
         this.actualizar.requestLayout();
@@ -1194,28 +1140,28 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
     private void habilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(true);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(true);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(true);
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(true);
         }
     }
 
     private void deshabilitaRecursos(){
         for(Tina tina : this.listaTinas){
-            getIconoTina( tina.getIdPosicion() ).setEnabled(false);
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(false);
         }
 
         for(OperadorMontacargas montacargas : this.listaMontacargas){
-            getIconoMontacargas( montacargas.getIdMontacargaPreseleccion() ).setEnabled(false);
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(false);
         }
 
         if( getTinaSeleccionada() != null ){
-            getIconoTina( getTinaSeleccionada().getIdPosicion() ).setEnabled(true);
+            getIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() ).setEnabled(true);
         }else{
             if( getMontacargasSeleccionado() != null ){
-                getIconoMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ).setEnabled(true);
+                getIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() ).setEnabled(true);
             }
         }
     }

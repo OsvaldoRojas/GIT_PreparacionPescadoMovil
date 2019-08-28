@@ -22,23 +22,26 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.adaptadores.AdaptadorEspecialidad;
 import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
 import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
+import com.example.simulador_pescado.conexion.AsignaTina;
 import com.example.simulador_pescado.conexion.ValidaTina;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.TinaEscaneo;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-public class AsignarTina extends Fragment {
+public class Fragment_Asigna_Tina extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,26 +49,28 @@ public class AsignarTina extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
+    private static final String ARG_PARAM5 = "param5";
 
     // TODO: Rename and change types of parameters
     private Serializable mParam1;
     private Serializable mParam2;
     private Serializable mParam3;
     private Serializable mParam4;
+    private Serializable mParam5;
 
     private View vista;
 
-    private String fechaActual;
     private AlertDialog ventanaError;
 
     private Tina tinaSeleccionada;
     private List<Talla> listaTalla;
     private List<Subtalla> listaSubtalla;
     private List<GrupoEspecie> listaGrupoEspecie;
+    private List<Especialidad> listaEspecialidad;
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarTina() {
+    public Fragment_Asigna_Tina() {
         // Required empty public constructor
     }
 
@@ -78,13 +83,15 @@ public class AsignarTina extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarTina newInstance(Serializable param1, Serializable param2, Serializable param3, Serializable param4) {
-        AsignarTina fragment = new AsignarTina();
+    public static Fragment_Asigna_Tina newInstance(Serializable param1, Serializable param2,
+                                                   Serializable param3, Serializable param4, Serializable param5) {
+        Fragment_Asigna_Tina fragment = new Fragment_Asigna_Tina();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         args.putSerializable(ARG_PARAM2, param2);
         args.putSerializable(ARG_PARAM3, param3);
         args.putSerializable(ARG_PARAM4, param4);
+        args.putSerializable(ARG_PARAM5, param5);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,6 +104,7 @@ public class AsignarTina extends Fragment {
             mParam2 = getArguments().getSerializable(ARG_PARAM2);
             mParam3 = getArguments().getSerializable(ARG_PARAM3);
             mParam4 = getArguments().getSerializable(ARG_PARAM4);
+            mParam5 = getArguments().getSerializable(ARG_PARAM5);
         }
     }
 
@@ -180,14 +188,20 @@ public class AsignarTina extends Fragment {
         this.listaGrupoEspecie = listaGrupoEspecie;
     }
 
+    public List<Especialidad> getListaEspecialidad() {
+        return listaEspecialidad;
+    }
+
+    public void setListaEspecialidad(List<Especialidad> listaEspecialidad) {
+        this.listaEspecialidad = listaEspecialidad;
+    }
+
     private void iniciaComponentes(){
         setTinaSeleccionada( (Tina) mParam1 );
         setListaTalla( (List<Talla>) mParam2 );
         setListaSubtalla( (List<Subtalla>) mParam3 );
         setListaGrupoEspecie( (List<GrupoEspecie>) mParam4 );
-
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
+        setListaEspecialidad( (List<Especialidad>) mParam5 );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
@@ -198,53 +212,39 @@ public class AsignarTina extends Fragment {
             }
         });
 
-        Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
-        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), getListaSubtalla() ) );
-        seleccionSubtalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setSubtalla( (Subtalla) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View view) {
+                validaAsignacion();
             }
         });
+
+        Button botonPrecargar = this.vista.findViewById(R.id.botonPrecargar);
+        botonPrecargar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cargaValoresIniciales();
+            }
+        });
+
+        Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
+        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), getListaSubtalla() ) );
 
         Spinner seleccionTalla = this.vista.findViewById(R.id.seleccionTalla);
         seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), getListaTalla() ) );
-        seleccionTalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setTalla( (Talla) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         Spinner seleccionEspecie = this.vista.findViewById(R.id.seleccionEspecie);
         seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), getListaGrupoEspecie() ) );
-        seleccionEspecie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        Spinner seleccionEspecialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
+        seleccionEspecialidad.setAdapter( new AdaptadorEspecialidad( getContext(), getListaEspecialidad() ) );
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
-        etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getEtiquetaMovil() ) );
+        etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getPosicion() ) );
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
-        etiquetaFecha.setText(this.fechaActual);
+        etiquetaFecha.setText( Utilerias.fechaActual() );
 
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
         campoEscaner.addTextChangedListener(new TextWatcher() {
@@ -265,20 +265,67 @@ public class AsignarTina extends Fragment {
         });
     }
 
+    private void validaAsignacion(){
+        Spinner especie = this.vista.findViewById(R.id.seleccionEspecie);
+        Spinner especialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
+        Spinner talla = this.vista.findViewById(R.id.seleccionTalla);
+        Spinner subtalla = this.vista.findViewById(R.id.seleccionSubtalla);
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+
+        if( !campoEscaner.getText().equals("") &&
+                !campoDescripcion.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
+                !campoDescripcion.getText().equals("") ){
+
+            if( ( (GrupoEspecie) especie.getSelectedItem() ).getIdGrupoEspecie() > 0 ){
+                if( ( (Talla) talla.getSelectedItem() ).getIdTalla() > 0 ){
+                    if( ( (Subtalla) subtalla.getSelectedItem() ).getIdSubtalla() > 0 ){
+                        iniciaProcesando();
+                        getTinaSeleccionada().setLibre(false);
+                        getTinaSeleccionada().setTurno(true);
+                        if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
+                            getTinaSeleccionada().setTurno(false);
+                        }
+                        getTinaSeleccionada().setSubtalla( (Subtalla) subtalla.getSelectedItem() );
+                        getTinaSeleccionada().setTalla( (Talla) talla.getSelectedItem() );
+                        getTinaSeleccionada().setGrupoEspecie( (GrupoEspecie) especie.getSelectedItem() );
+                        getTinaSeleccionada().setEspecialidad( (Especialidad) especialidad.getSelectedItem() );
+                        AsignaTina asignaTina = new AsignaTina(this, getTinaSeleccionada() );
+                        asignaTina.execute();
+                    }else{
+                        errorValidacion("El campo Subtalla es obligatorio.");
+                    }
+                }else{
+                    errorValidacion("El campo Talla es obligatorio.");
+                }
+            }else {
+                errorValidacion("El campo Especie es obligatorio.");
+            }
+        }else{
+            errorValidacion("Es necesario capturar una tina.");
+        }
+    }
+
+    public void resultadoAsignacion(){
+        terminaProcesando();
+        Fragment fragment = new Contenedor().newInstance(0);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
     private void validaTina(String codigo){
         if( codigo.length() >= 15 ){
             iniciaProcesando();
             ValidaTina validaTina = new ValidaTina(codigo, this);
             validaTina.execute();
         }else{
-            EditText campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+            TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
             campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
     public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
-        EditText campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
 
         if( resultadoTina.getIdTinaDes() != null ){
             campoDescripcion.setText( resultadoTina.getTinaDes() );
@@ -294,7 +341,7 @@ public class AsignarTina extends Fragment {
         terminaProcesando();
     }
 
-    public void errorEscaneoTina(ErrorServicio errorMensaje){
+    public void errorServicio(ErrorServicio errorMensaje){
         String mensajeMostrar = errorMensaje.getMessage();
         if( errorMensaje.getMensaje() != null &&
                 !errorMensaje.getMensaje().equalsIgnoreCase("") ){
@@ -326,6 +373,117 @@ public class AsignarTina extends Fragment {
             }
         });
         this.ventanaError.show();
+    }
+
+    public void errorValidacion(final String mensaje){
+        final AlertDialog ventanaEmergente;
+        AlertDialog.Builder builder = new AlertDialog.Builder( getContext() );
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        ventanaEmergente = builder.create();
+        ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        ventanaEmergente.show();
+    }
+
+    private void cargaValoresIniciales(){
+        boolean turno = false;
+        if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 2 ){
+            turno = true;
+        }
+
+        if( getTinaSeleccionada().getTurno() == turno ){
+            Spinner seleccionEspecie = this.vista.findViewById(R.id.seleccionEspecie);
+            Spinner seleccionTalla = this.vista.findViewById(R.id.seleccionTalla);
+            Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
+            Spinner seleccionEspecialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
+
+            seleccionEspecie.setSelection(
+                    obtenerPosicionItem(
+                            seleccionEspecie,
+                            getTinaSeleccionada().getGrupoEspecie().getIdGrupoEspecie(),
+                            "Especie"
+                    )
+            );
+
+            seleccionTalla.setSelection(
+                    obtenerPosicionItem(
+                            seleccionTalla,
+                            getTinaSeleccionada().getTalla().getIdTalla(),
+                            "Talla"
+                    )
+            );
+
+            seleccionSubtalla.setSelection(
+                    obtenerPosicionItem(
+                            seleccionSubtalla,
+                            getTinaSeleccionada().getSubtalla().getIdSubtalla(),
+                            "Subtalla"
+                    )
+            );
+
+            seleccionEspecialidad.setSelection(
+                    obtenerPosicionItem(
+                            seleccionEspecialidad,
+                            getTinaSeleccionada().getEspecialidad().getIdEspecialidad(),
+                            "Especialidad"
+                    )
+            );
+        }
+    }
+
+    public static int obtenerPosicionItem(Spinner spinner, int id, String tipo) {
+        int posicion = 0;
+        switch (tipo){
+            case "Especie":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (GrupoEspecie) spinner.getItemAtPosition(i) ).getIdGrupoEspecie() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+            case "Talla":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (Talla) spinner.getItemAtPosition(i) ).getIdTalla() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+            case "Subtalla":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (Subtalla) spinner.getItemAtPosition(i) ).getIdSubtalla() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+            case "Especialidad":
+                for (int i = 0; i < spinner.getCount(); i++) {
+                    if ( ( (Especialidad) spinner.getItemAtPosition(i) ).getIdEspecialidad() == id ) {
+                        posicion = i;
+                        break;
+                    }
+                }
+                break;
+        }
+        return posicion;
     }
 
     public void iniciaProcesando(){

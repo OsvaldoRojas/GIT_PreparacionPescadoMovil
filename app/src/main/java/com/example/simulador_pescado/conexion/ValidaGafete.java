@@ -4,12 +4,12 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
-import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
-import com.example.simulador_pescado.Preselecion.AsignarMontacargas;
-import com.example.simulador_pescado.Preselecion.AsignarOperador;
-import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_OM;
-import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_AsignaMecanico;
+import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_AsignaMecanico;
+import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_AsignaMecanico;
+import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Montacargas;
+import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.google.gson.Gson;
@@ -24,7 +24,7 @@ import java.io.IOException;
 
 public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL = "http://10.50.1.15:7080/sip/reservamateriales_api/fortia/empleados/%s";
+    private static final String URL = "/reservamateriales_api/fortia/empleados/%s";
     private String codigo;
     private Gafete resultadoGafete;
     private ErrorServicio errorMensaje;
@@ -40,7 +40,7 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
         String urlValores = this.URL;
         urlValores = String.format(urlValores, this.codigo);
         HttpClient conexion = new DefaultHttpClient();
-        HttpGet peticion = new HttpGet(urlValores);
+        HttpGet peticion = new HttpGet( Constantes.URL_SERVICIOS_PINSA.concat(urlValores) );
 
         peticion.setHeader("content-type", "application/json");
 
@@ -69,46 +69,46 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            if(this.pantalla instanceof AsignarOperador){
-                ( (AsignarOperador) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+            if(this.pantalla instanceof Fragment_Asigna_Operador){
+                ( (Fragment_Asigna_Operador) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
             }else{
-                if(this.pantalla instanceof AsignarMontacargas){
-                    ( (AsignarMontacargas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                if(this.pantalla instanceof Fragment_Asigna_Montacargas){
+                    ( (Fragment_Asigna_Montacargas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                 }else{
-                    if(this.pantalla instanceof Fragment_Preselecion_OM){
-                        ( (Fragment_Preselecion_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                    if(this.pantalla instanceof Fragment_Preseleccion_AsignaMecanico){
+                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                     }
                     else{
-                        if(this.pantalla instanceof Fragment_Atemperado_OM){
-                            ( (Fragment_Atemperado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                        if(this.pantalla instanceof Fragment_Atemperado_AsignaMecanico){
+                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                         }else{
-                            if(this.pantalla instanceof Fragment_Descongelado_OM){
-                                ( (Fragment_Descongelado_OM) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
+                            if(this.pantalla instanceof Fragment_Descongelado_AsignaMecanico){
+                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                             }
                         }
                     }
                 }
             }
         }else{
-            if(this.pantalla instanceof AsignarOperador){
-                ( (AsignarOperador) this.pantalla ).terminaProcesando();
-                ( (AsignarOperador) this.pantalla ).errorEscaneoGafete(this.errorMensaje);
+            if(this.pantalla instanceof Fragment_Asigna_Operador){
+                ( (Fragment_Asigna_Operador) this.pantalla ).terminaProcesando();
+                ( (Fragment_Asigna_Operador) this.pantalla ).errorServicio(this.errorMensaje);
             }else{
-                if(this.pantalla instanceof AsignarMontacargas){
-                    ( (AsignarMontacargas) this.pantalla ).terminaProcesando();
-                    ( (AsignarMontacargas) this.pantalla ).errorEscaneoGafete(this.errorMensaje);
+                if(this.pantalla instanceof Fragment_Asigna_Montacargas){
+                    ( (Fragment_Asigna_Montacargas) this.pantalla ).terminaProcesando();
+                    ( (Fragment_Asigna_Montacargas) this.pantalla ).errorServicio(this.errorMensaje);
                 }else{
-                    if(this.pantalla instanceof Fragment_Preselecion_OM){
-                        ( (Fragment_Preselecion_OM) this.pantalla ).terminaProcesandoEmergente();
-                        ( (Fragment_Preselecion_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                    if(this.pantalla instanceof Fragment_Preseleccion_AsignaMecanico){
+                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).terminaProcesando();
+                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                     }else{
-                        if(this.pantalla instanceof Fragment_Atemperado_OM){
-                            ( (Fragment_Atemperado_OM) this.pantalla ).terminaProcesandoEmergente();
-                            ( (Fragment_Atemperado_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                        if(this.pantalla instanceof Fragment_Atemperado_AsignaMecanico){
+                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).terminaProcesando();
+                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                         }else{
-                            if(this.pantalla instanceof Fragment_Descongelado_OM){
-                                ( (Fragment_Descongelado_OM) this.pantalla ).terminaProcesandoEmergente();
-                                ( (Fragment_Descongelado_OM) this.pantalla ).errorServicioAsignados(this.errorMensaje);
+                            if(this.pantalla instanceof Fragment_Descongelado_AsignaMecanico){
+                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).terminaProcesando();
+                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                             }
                         }
                     }

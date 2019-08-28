@@ -1,4 +1,4 @@
-package com.example.simulador_pescado.Preselecion;
+package com.example.simulador_pescado.Descongelado;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,18 +18,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor;
+import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
-import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class AsignarMontacargas extends Fragment {
+public class Fragment_Descongelado_AsignaMecanico extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,14 +39,13 @@ public class AsignarMontacargas extends Fragment {
 
     private View vista;
 
-    private String fechaActual;
     private AlertDialog ventanaError;
 
-    private OperadorMontacargas montacargasSeleccionado;
+    private OrdenMantenimiento ordenSeleccionada;
 
     private OnFragmentInteractionListener mListener;
 
-    public AsignarMontacargas() {
+    public Fragment_Descongelado_AsignaMecanico() {
         // Required empty public constructor
     }
 
@@ -59,8 +57,8 @@ public class AsignarMontacargas extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static AsignarMontacargas newInstance(Serializable param1) {
-        AsignarMontacargas fragment = new AsignarMontacargas();
+    public static Fragment_Descongelado_AsignaMecanico newInstance(Serializable param1) {
+        Fragment_Descongelado_AsignaMecanico fragment = new Fragment_Descongelado_AsignaMecanico();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -78,7 +76,7 @@ public class AsignarMontacargas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista=inflater.inflate(R.layout.fragment_asignar_montacargas, container, false);
+        this.vista=inflater.inflate(R.layout.fragment_asignar_mecanico, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -123,34 +121,36 @@ public class AsignarMontacargas extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public OperadorMontacargas getMontacargasSeleccionado() {
-        return montacargasSeleccionado;
+    public OrdenMantenimiento getOrdenSeleccionada() {
+        return ordenSeleccionada;
     }
 
-    public void setMontacargasSeleccionado(OperadorMontacargas montacargasSeleccionado) {
-        this.montacargasSeleccionado = montacargasSeleccionado;
+    public void setOrdenSeleccionada(OrdenMantenimiento ordenSeleccionada) {
+        this.ordenSeleccionada = ordenSeleccionada;
     }
 
     private void iniciaComponentes(){
-        setMontacargasSeleccionado( (OperadorMontacargas) this.mParam1 );
-
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
+        setOrdenSeleccionada( (OrdenMantenimiento) this.mParam1 );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor().newInstance(0);
+                Fragment fragment = new Contenedor_Descongelado().newInstance(2);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });
 
-        TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
-        etiquetaFecha.setText(this.fechaActual);
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
-        etiquetaPosicion.setText( getEtiquetaMontacargas( getMontacargasSeleccionado().getIdMontacargaPreseleccion() ) );
+            }
+        });
+
+        TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
+        etiquetaFecha.setText( Utilerias.fechaActual() );
 
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
         campoEscaner.addTextChangedListener(new TextWatcher() {
@@ -177,21 +177,20 @@ public class AsignarMontacargas extends Fragment {
             ValidaGafete validaGafete = new ValidaGafete(this, codigo);
             validaGafete.execute();
         }else{
-            EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+            TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
             campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
     public void resultadoEscaneoGafete(Gafete resultadoGafete){
-        EditText campoNombre = this.vista.findViewById(R.id.campoNombre);
+        TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
 
         if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
             campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
             campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
 
-            //RELACIONAR EL ID DEL EMPLEADO DEL GAFETE ESCANEADO CON EL MONTACARGAS SELECCIONADO.
-            //getMontacargasSeleccionado().setIdEmpleado();
+            getOrdenSeleccionada().setMecanico( resultadoGafete.getEmpleado().getNom_trab() );
         }else{
             campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
@@ -200,7 +199,7 @@ public class AsignarMontacargas extends Fragment {
         terminaProcesando();
     }
 
-    public void errorEscaneoGafete(ErrorServicio errorMensaje){
+    public void errorServicio(ErrorServicio errorMensaje){
         String mensajeMostrar = errorMensaje.getMessage();
         if( errorMensaje.getMensaje() != null &&
                 !errorMensaje.getMensaje().equalsIgnoreCase("") ){
@@ -232,16 +231,6 @@ public class AsignarMontacargas extends Fragment {
             }
         });
         this.ventanaError.show();
-    }
-
-    private String getEtiquetaMontacargas(int posicion){
-        switch (posicion){
-            case 1: return "A1";
-            case 2: return "A2";
-            case 3: return "B1";
-            case 4: return "B2";
-        }
-        return "";
     }
 
     public void iniciaProcesando(){

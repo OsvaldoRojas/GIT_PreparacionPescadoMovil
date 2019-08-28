@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo_asignar">
+    android:background="@color/no_selecion">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/asignarTurno"
-            android:textColor="@color/blanco"
+            android:textColor="@color/negro"
             android:gravity="center"
             android:layout_marginTop="5dp"
             android:textSize="20dp"/>
@@ -31,9 +31,9 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:layout_marginLeft="30dp"
-                android:textColorHint="@color/blanco"
-                android:textColor="@color/blanco"
-                android:buttonTint="@color/blanco"
+                android:textColorHint="@color/negro"
+                android:textColor="@color/negro"
+                android:buttonTint="@color/negro"
                 android:textSize="18dp"
                 android:text="Turno 1"/>
 
@@ -44,8 +44,9 @@
                 android:checked="false"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="30dp"
-                android:buttonTint="@color/blanco"
-                android:textColor="@color/blanco"
+                android:textColorHint="@color/negro"
+                android:textColor="@color/negro"
+                android:buttonTint="@color/negro"
                 android:textSize="18dp"
                 android:text="Turno 2"/>
 

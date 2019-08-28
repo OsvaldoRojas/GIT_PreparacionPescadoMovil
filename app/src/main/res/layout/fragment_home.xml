@@ -30,24 +30,6 @@
             android:layout_marginTop="15dp"
             android:text="@string/descongelado"/>
 
-        <Button
-            android:id="@+id/botonEviscerar"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/eviscerar"/>
-
-        <Button
-            android:id="@+id/botonCocimiento"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/cocimiento"/>
-
-        <Button
-            android:id="@+id/botonEnfriamiento"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/enfriamiento"/>
-
     </LinearLayout>
 
 </RelativeLayout>

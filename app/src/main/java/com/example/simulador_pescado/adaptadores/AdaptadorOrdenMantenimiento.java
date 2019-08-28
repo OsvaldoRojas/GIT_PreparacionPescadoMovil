@@ -38,9 +38,21 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<OrdenMantenimiento
         TextView etiquetaMecanico = vista.findViewById(R.id.etiquetaMecanico);
 
         etiquetaFolio.setText( String.valueOf( ordenMantenimiento.getFolio() ) );
-        etiquetaFecha.setText( ordenMantenimiento.getFecha() );
+        etiquetaFecha.setText( ordenMantenimiento.getFechaInicio() );
         etiquetaEquipo.setText( ordenMantenimiento.getEquipo() );
         etiquetaMecanico.setText( ordenMantenimiento.getMecanico() );
+
+        if( (posicion % 2) == 0 ){
+            etiquetaFolio.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            etiquetaFecha.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            etiquetaEquipo.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+            etiquetaMecanico.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+        }else{
+            etiquetaFolio.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            etiquetaFecha.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            etiquetaEquipo.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+            etiquetaMecanico.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+        }
 
         return vista;
     }
@@ -54,7 +66,7 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<OrdenMantenimiento
         }else{
             for( OrdenMantenimiento orden : this.listaRespaldo ){
                 if( String.valueOf( orden.getFolio() ).contains(textoBusqueda)
-                        || orden.getFecha().contains(textoBusqueda)
+                        || orden.getFechaInicio().contains(textoBusqueda)
                         || orden.getEquipo().toLowerCase( Locale.getDefault() ).contains(textoBusqueda)
                         || orden.getMecanico().toLowerCase( Locale.getDefault() ).contains(textoBusqueda) ){
                     this.listaOrden.add(orden);

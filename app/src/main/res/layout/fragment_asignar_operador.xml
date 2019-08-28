@@ -38,20 +38,38 @@
                     android:textSize="13dp"/>
 
                 <EditText
+                    android:id="@+id/campoEscaner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:hint="Código de Usuario"
+                    android:gravity="left"
+                    android:textColor="@color/negro"
+                    android:background="@color/blanco"
+                    android:textSize="15dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="5dp"
+                    android:focusable="true">
+                    <requestFocus/>
+                </EditText>
+
+                <TextView
                     android:id="@+id/campoNombre"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Nombre del usuario"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
+                    android:hint="Nombre del Usuario"
+                    android:gravity="left"
                     android:background="@color/blanco"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
-                    android:focusable="true"/>
+                    android:paddingLeft="5dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,7 +86,7 @@
                         android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
-                        android:text="Usuario:"
+                        android:text="Posición del Usuario:"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"/>
@@ -101,7 +119,7 @@
                         android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
-                        android:text="Báscula:"
+                        android:text="Báscula del Usuario:"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"/>
@@ -134,7 +152,7 @@
                         android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
-                        android:text="Tina P.:"
+                        android:text="Tina Principal:"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"/>
@@ -167,7 +185,7 @@
                         android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
-                        android:text="Subtalla P.:"
+                        android:text="Subtalla Principal:"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"/>
@@ -200,7 +218,7 @@
                         android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
-                        android:text="Tina S.:"
+                        android:text="Tina Secundaria:"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"/>
@@ -233,7 +251,7 @@
                         android:textColor="@color/no_selecion"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
-                        android:text="Subtalla S.:"
+                        android:text="Subtalla Secundaria:"
                         android:paddingBottom="4dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"/>
@@ -250,24 +268,6 @@
                         android:paddingRight="5dp"/>
 
                 </LinearLayout>
-
-                <EditText
-                    android:id="@+id/campoEscaner"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:hint="Escanear gafete"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
-                    android:background="@color/blanco"
-                    android:textSize="15dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:focusable="true">
-                    <requestFocus/>
-                </EditText>
 
             </LinearLayout>
 

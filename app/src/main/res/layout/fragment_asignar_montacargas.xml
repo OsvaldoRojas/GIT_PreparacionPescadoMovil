@@ -37,36 +37,6 @@
                     android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
 
-                <TextView
-                    android:id="@+id/etiquetaPosicion"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textColor="@color/no_selecion"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:textSize="15dp"
-                    android:background="@color/blanco"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
-
-                <EditText
-                    android:id="@+id/campoNombre"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:hint="Nombre del Operador"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
-                    android:background="@color/blanco"
-                    android:textSize="15dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:focusable="true"/>
-
                 <EditText
                     android:id="@+id/campoEscaner"
                     android:layout_width="match_parent"
@@ -74,16 +44,47 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Escanear gafete"
-                    android:gravity="center_horizontal"
+                    android:hint="Código de Usuario"
+                    android:gravity="left"
                     android:textColor="@color/negro"
                     android:background="@color/blanco"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
+                    android:paddingLeft="5dp"
                     android:focusable="true">
                     <requestFocus/>
                 </EditText>
+
+                <TextView
+                    android:id="@+id/campoNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:hint="Nombre del Usuario"
+                    android:gravity="left"
+                    android:background="@color/blanco"
+                    android:textSize="15dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="5dp"/>
+
+                <TextView
+                    android:id="@+id/etiquetaPosicion"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/no_selecion"
+                    android:gravity="left"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:background="@color/blanco"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"/>
 
             </LinearLayout>
 

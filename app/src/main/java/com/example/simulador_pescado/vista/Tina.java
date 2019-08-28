@@ -6,54 +6,35 @@ import java.io.Serializable;
 
 public class Tina implements Serializable {
 
-    private int idPosicion;
+    private int idPreseleccionPosicionTina;
+    private String posicion;
     private TinaPosicion tina;
-    private Subtalla subtalla;
+    private GrupoEspecie grupoEspecie;
     private Talla talla;
-    private GrupoEspecie especie;
+    private Subtalla subtalla;
+    private Especialidad especialidad;
     private int npiezas;
     private int peso;
     private Boolean libre;
     private Boolean activo;
-    private String etiquetaMovil;
-    private String fechaCreador;
-    private String usuarioCreador;
-    private String fechaModifico;
-    private String usuarioModifico;
-    private Boolean borrado;
+    private Boolean turno;
 
     private Constantes.ESTADO estado;
 
-    public Constantes.ESTADO getEstado() {
-        return estado;
+    public int getIdPreseleccionPosicionTina() {
+        return idPreseleccionPosicionTina;
     }
 
-    public Talla getTalla() {
-        return talla;
+    public void setIdPreseleccionPosicionTina(int idPreseleccionPosicionTina) {
+        this.idPreseleccionPosicionTina = idPreseleccionPosicionTina;
     }
 
-    public void setTalla(Talla talla) {
-        this.talla = talla;
+    public String getPosicion() {
+        return posicion;
     }
 
-    public GrupoEspecie getEspecie() {
-        return especie;
-    }
-
-    public void setEspecie(GrupoEspecie especie) {
-        this.especie = especie;
-    }
-
-    public void setEstado(Constantes.ESTADO estado) {
-        this.estado = estado;
-    }
-
-    public String getEtiquetaMovil() {
-        return etiquetaMovil;
-    }
-
-    public void setEtiquetaMovil(String etiquetaMovil) {
-        this.etiquetaMovil = etiquetaMovil;
+    public void setPosicion(String posicion) {
+        this.posicion = posicion;
     }
 
     public TinaPosicion getTina() {
@@ -64,6 +45,22 @@ public class Tina implements Serializable {
         this.tina = tina;
     }
 
+    public GrupoEspecie getGrupoEspecie() {
+        return grupoEspecie;
+    }
+
+    public void setGrupoEspecie(GrupoEspecie grupoEspecie) {
+        this.grupoEspecie = grupoEspecie;
+    }
+
+    public Talla getTalla() {
+        return talla;
+    }
+
+    public void setTalla(Talla talla) {
+        this.talla = talla;
+    }
+
     public Subtalla getSubtalla() {
         return subtalla;
     }
@@ -72,12 +69,12 @@ public class Tina implements Serializable {
         this.subtalla = subtalla;
     }
 
-    public int getIdPosicion() {
-        return idPosicion;
+    public Especialidad getEspecialidad() {
+        return especialidad;
     }
 
-    public void setIdPosicion(int idPosicion) {
-        this.idPosicion = idPosicion;
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
     }
 
     public int getNpiezas() {
@@ -112,43 +109,19 @@ public class Tina implements Serializable {
         this.activo = activo;
     }
 
-    public String getFechaCreador() {
-        return fechaCreador;
+    public Constantes.ESTADO getEstado() {
+        return estado;
     }
 
-    public void setFechaCreador(String fechaCreador) {
-        this.fechaCreador = fechaCreador;
+    public void setEstado(Constantes.ESTADO estado) {
+        this.estado = estado;
     }
 
-    public String getUsuarioCreador() {
-        return usuarioCreador;
+    public Boolean getTurno() {
+        return turno;
     }
 
-    public void setUsuarioCreador(String usuarioCreador) {
-        this.usuarioCreador = usuarioCreador;
-    }
-
-    public String getFechaModifico() {
-        return fechaModifico;
-    }
-
-    public void setFechaModifico(String fechaModifico) {
-        this.fechaModifico = fechaModifico;
-    }
-
-    public String getUsuarioModifico() {
-        return usuarioModifico;
-    }
-
-    public void setUsuarioModifico(String usuarioModifico) {
-        this.usuarioModifico = usuarioModifico;
-    }
-
-    public Boolean getBorrado() {
-        return borrado;
-    }
-
-    public void setBorrado(Boolean borrado) {
-        this.borrado = borrado;
+    public void setTurno(Boolean turno) {
+        this.turno = turno;
     }
 }

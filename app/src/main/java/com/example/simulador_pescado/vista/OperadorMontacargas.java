@@ -6,16 +6,11 @@ import java.io.Serializable;
 
 public class OperadorMontacargas implements Serializable {
 
-    private int idMontacargaPreseleccion;
+    private int idPreseleccionMontacarga;
     private String idEmpleado;
-    private String fechaCreador;
-    private String usuarioCreador;
-    private String fechaModifico;
-    private String usuarioModifico;
     private Boolean turno;
     private Boolean libre;
     private Boolean activo;
-    private Boolean borrado;
 
     private Constantes.ESTADO estado;
 
@@ -27,12 +22,12 @@ public class OperadorMontacargas implements Serializable {
         this.estado = estado;
     }
 
-    public int getIdMontacargaPreseleccion() {
-        return idMontacargaPreseleccion;
+    public int getIdPreseleccionMontacarga() {
+        return idPreseleccionMontacarga;
     }
 
-    public void setIdMontacargaPreseleccion(int idMontacargaPreseleccion) {
-        this.idMontacargaPreseleccion = idMontacargaPreseleccion;
+    public void setIdPreseleccionMontacarga(int idPreseleccionMontacarga) {
+        this.idPreseleccionMontacarga = idPreseleccionMontacarga;
     }
 
     public String getIdEmpleado() {
@@ -41,38 +36,6 @@ public class OperadorMontacargas implements Serializable {
 
     public void setIdEmpleado(String idEmpleado) {
         this.idEmpleado = idEmpleado;
-    }
-
-    public String getFechaCreador() {
-        return fechaCreador;
-    }
-
-    public void setFechaCreador(String fechaCreador) {
-        this.fechaCreador = fechaCreador;
-    }
-
-    public String getUsuarioCreador() {
-        return usuarioCreador;
-    }
-
-    public void setUsuarioCreador(String usuarioCreador) {
-        this.usuarioCreador = usuarioCreador;
-    }
-
-    public String getFechaModifico() {
-        return fechaModifico;
-    }
-
-    public void setFechaModifico(String fechaModifico) {
-        this.fechaModifico = fechaModifico;
-    }
-
-    public String getUsuarioModifico() {
-        return usuarioModifico;
-    }
-
-    public void setUsuarioModifico(String usuarioModifico) {
-        this.usuarioModifico = usuarioModifico;
     }
 
     public Boolean getTurno() {
@@ -97,13 +60,5 @@ public class OperadorMontacargas implements Serializable {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
-    }
-
-    public Boolean getBorrado() {
-        return borrado;
-    }
-
-    public void setBorrado(Boolean borrado) {
-        this.borrado = borrado;
     }
 }

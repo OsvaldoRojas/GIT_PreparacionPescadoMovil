@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,34 +39,78 @@
                     android:textSize="13dp"/>
 
                 <EditText
+                    android:id="@+id/campoEscaner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:hint="Código de Tina"
+                    android:gravity="left"
+                    android:textColor="@color/negro"
+                    android:background="@color/blanco"
+                    android:textSize="15dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="5dp"
+                    android:focusable="true">
+                    <requestFocus/>
+                </EditText>
+
+                <TextView
                     android:id="@+id/campoDescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Descripción de la tina"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
+                    android:hint="Descripción completa de la tina que se asigna"
+                    android:gravity="left"
                     android:background="@color/blanco"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
-                    android:focusable="true"/>
+                    android:paddingLeft="5dp"/>
 
                 <TextView
                     android:id="@+id/etiquetaPosicion"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:textColor="@color/no_selecion"
-                    android:gravity="center_horizontal"
+                    android:gravity="left"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp"
                     android:background="@color/blanco"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"/>
+
+                <Button
+                    android:id="@+id/botonPrecargar"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="10dp"
+                    android:background="@color/blanco"
+                    android:text="Precargar desde posición"
+                    android:textAllCaps="false"
+                    android:gravity="left"
+                    android:drawableRight="@drawable/ic_sync" />
+
+                <Spinner
+                    android:id="@+id/seleccionEspecie"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
 
                 <Spinner
                     android:id="@+id/seleccionTalla"
@@ -84,30 +129,12 @@
                     android:layout_marginRight="20dp" />
 
                 <Spinner
-                    android:id="@+id/seleccionEspecie"
+                    android:id="@+id/seleccionEspecialidad"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp" />
-
-                <EditText
-                    android:id="@+id/campoEscaner"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:hint="Escanear código tina"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
-                    android:background="@color/blanco"
-                    android:textSize="15dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:focusable="true">
-                    <requestFocus/>
-                </EditText>
 
             </LinearLayout>
 

@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Preselecion.AsignarTina;
-import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Tina;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.TinaEscaneo;
 import com.google.gson.Gson;
@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class ValidaTina extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/tinas/%s";
+    private static final String URL = "/catalogos/tinas/%s";
     private String codigo;
     private TinaEscaneo resultadoTina;
     private ErrorServicio errorMensaje;
@@ -36,7 +36,7 @@ public class ValidaTina extends AsyncTask<Void,Integer,Boolean> {
         String urlValores = this.URL;
         urlValores = String.format(urlValores, this.codigo);
         HttpClient conexion = new DefaultHttpClient();
-        HttpGet peticion = new HttpGet(urlValores);
+        HttpGet peticion = new HttpGet( Constantes.URL_SERVICIOS.concat(urlValores) );
 
         peticion.setHeader("content-type", "application/json");
 
@@ -65,10 +65,10 @@ public class ValidaTina extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            ( (AsignarTina) this.pantalla ).resultadoEscaneoTina(this.resultadoTina);
+            ( (Fragment_Asigna_Tina) this.pantalla ).resultadoEscaneoTina(this.resultadoTina);
         }else{
-            ( (AsignarTina) this.pantalla ).terminaProcesando();
-            ( (AsignarTina) this.pantalla ).errorEscaneoTina(this.errorMensaje);
+            ( (Fragment_Asigna_Tina) this.pantalla ).terminaProcesando();
+            ( (Fragment_Asigna_Tina) this.pantalla ).errorServicio(this.errorMensaje);
         }
     }
 }
