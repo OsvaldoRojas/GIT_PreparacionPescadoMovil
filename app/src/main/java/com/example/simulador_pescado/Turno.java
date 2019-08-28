@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.simulador_pescado.conexion.CargaCatalogoEtapa;
+import com.example.simulador_pescado.conexion.CargaCatalogosTina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 public class Turno extends AppCompatActivity {
@@ -62,5 +64,11 @@ public class Turno extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        CargaCatalogoEtapa cargaCatalogoEtapa = new CargaCatalogoEtapa();
+        cargaCatalogoEtapa.execute();
+
+        CargaCatalogosTina cargaCatalogosTina = new CargaCatalogosTina();
+        cargaCatalogosTina.execute();
     }
 }

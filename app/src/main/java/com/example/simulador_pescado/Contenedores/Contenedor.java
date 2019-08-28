@@ -14,7 +14,10 @@ import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_TiempoMuerto;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
+import com.example.simulador_pescado.conexion.CargaCatalogoMaquinaria;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -93,6 +96,10 @@ public class Contenedor extends Fragment {
             pestañas.setupWithViewPager(viewPager);
         }
         pestañas.getTabAt(this.mParam1).select();
+
+        Catalogos.getInstancia().setEtapaActual(Constantes.ETAPA.preseleccion);
+        CargaCatalogoMaquinaria catalogoMaquinaria = new CargaCatalogoMaquinaria( Catalogos.getInstancia().getEtapaActual() );
+        catalogoMaquinaria.execute();
         return vista;
     }
 

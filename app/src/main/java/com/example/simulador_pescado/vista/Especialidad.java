@@ -7,6 +7,7 @@ public class Especialidad implements Serializable {
     private int idEspecialidad;
     private String descripcion;
     private String clave;
+    private Boolean borrado;
 
     public int getIdEspecialidad() {
         return idEspecialidad;
@@ -30,5 +31,13 @@ public class Especialidad implements Serializable {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public Boolean getBorrado() {
+        return borrado;
+    }
+
+    public void setBorrado(Boolean borrado) {
+        this.borrado = borrado;
     }
 }

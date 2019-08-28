@@ -14,7 +14,10 @@ import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_Plan;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_TiempoMuerto;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
+import com.example.simulador_pescado.conexion.CargaCatalogoMaquinaria;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -94,6 +97,9 @@ public class Contenedor_Atemperado extends Fragment {
         }
         pestañas.getTabAt(this.mParam1).select();
 
+        Catalogos.getInstancia().setEtapaActual(Constantes.ETAPA.atemperado);
+        CargaCatalogoMaquinaria catalogoMaquinaria = new CargaCatalogoMaquinaria( Catalogos.getInstancia().getEtapaActual() );
+        catalogoMaquinaria.execute();
         return vista;
     }
 

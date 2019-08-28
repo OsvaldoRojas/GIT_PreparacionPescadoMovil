@@ -28,10 +28,10 @@ import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_DetalleO
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_Plan;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_TiempoMuerto;
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_AsignaMecanico;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Montacargas;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Tina;
+import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_AsignaMecanico;
 import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_DetalleOrden;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_OM;
@@ -132,6 +132,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             this.finish();
 
         }
+
         if (fragmentSelecionado==true){
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main,mifragment).commit();
         }
