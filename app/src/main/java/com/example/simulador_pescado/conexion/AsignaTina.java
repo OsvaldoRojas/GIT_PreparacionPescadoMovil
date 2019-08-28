@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Tina;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.TinaServicio;
@@ -22,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 
 public class AsignaTina extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL_TINA = "http://10.50.1.15:7080/api_simulador_movil/v1/preseleccion/posiciones/tinas";
+    private static final String URL_TINA = "/preseleccion/posiciones/tinas";
     private ErrorServicio errorMensaje;
     private Fragment pantalla;
     private Tina tina;
@@ -35,20 +36,23 @@ public class AsignaTina extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected Boolean doInBackground(Void... voids) {
         TinaServicio tinaServicio = new TinaServicio();
+        tinaServicio.setIdEspecialidad( this.tina.getEspecialidad().getIdEspecialidad() );
+        if( this.tina.getEspecialidad().getIdEspecialidad() == 0 ){
+            tinaServicio.setIdEspecialidad(13);
+        }
         tinaServicio.setIdPreseleccionPosicionTina( this.tina.getIdPreseleccionPosicionTina() );
         tinaServicio.setPosicion( this.tina.getPosicion() );
-        tinaServicio.setIdTina( String.valueOf( this.tina.getTina().getIdTina() ) );
-        tinaServicio.setIdGrupoEspecie( this.tina.getGrupoEspecie().getIdGrupoEspecie() );
+        tinaServicio.setIdTina( this.tina.getTina().getIdTina() );
+        tinaServicio.setIdEspecie( this.tina.getGrupoEspecie().getIdGrupoEspecie() );
         tinaServicio.setIdTalla( this.tina.getTalla().getIdTalla() );
         tinaServicio.setIdSubtalla( this.tina.getSubtalla().getIdSubtalla() );
         tinaServicio.setNpiezas( this.tina.getNpiezas() );
         tinaServicio.setPeso( this.tina.getPeso() );
-        tinaServicio.setActivo( this.tina.getActivo() );
         tinaServicio.setLibre( this.tina.getLibre() );
         tinaServicio.setTurno( this.tina.getTurno() );
 
         HttpClient conexion = new DefaultHttpClient();
-        HttpPut solicitudPut = new HttpPut(this.URL_TINA);
+        HttpPut solicitudPut = new HttpPut( Constantes.URL_SERVICIOS.concat(this.URL_TINA) );
 
         Gson gson = new Gson();
         solicitudPut.setHeader("content-type", "application/json");

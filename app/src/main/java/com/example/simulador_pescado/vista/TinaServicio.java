@@ -4,15 +4,15 @@ public class TinaServicio {
 
     private int idPreseleccionPosicionTina;
     private String posicion;
-    private String idTina;
-    private int idGrupoEspecie;
+    private long idTina;
+    private int idEspecie;
     private int idTalla;
     private int idSubtalla;
+    private int idEspecialidad;
     private int npiezas;
     private int peso;
     private Boolean libre;
     private Boolean turno;
-    private Boolean activo;
 
     public int getIdPreseleccionPosicionTina() {
         return idPreseleccionPosicionTina;
@@ -30,20 +30,20 @@ public class TinaServicio {
         this.posicion = posicion;
     }
 
-    public String getIdTina() {
+    public long getIdTina() {
         return idTina;
     }
 
-    public void setIdTina(String idTina) {
+    public void setIdTina(long idTina) {
         this.idTina = idTina;
     }
 
-    public int getIdGrupoEspecie() {
-        return idGrupoEspecie;
+    public int getIdEspecie() {
+        return idEspecie;
     }
 
-    public void setIdGrupoEspecie(int idGrupoEspecie) {
-        this.idGrupoEspecie = idGrupoEspecie;
+    public void setIdEspecie(int idEspecie) {
+        this.idEspecie = idEspecie;
     }
 
     public int getIdTalla() {
@@ -60,6 +60,14 @@ public class TinaServicio {
 
     public void setIdSubtalla(int idSubtalla) {
         this.idSubtalla = idSubtalla;
+    }
+
+    public int getIdEspecialidad() {
+        return idEspecialidad;
+    }
+
+    public void setIdEspecialidad(int idEspecialidad) {
+        this.idEspecialidad = idEspecialidad;
     }
 
     public int getNpiezas() {
@@ -92,13 +100,5 @@ public class TinaServicio {
 
     public void setTurno(Boolean turno) {
         this.turno = turno;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
     }
 }

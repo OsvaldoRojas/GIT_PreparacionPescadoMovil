@@ -22,14 +22,14 @@
     <string name="Preselecion_tinas">Diseño de plan</string>
     <string name="Pinza">Pinsa</string>
 
-    <string name="liberarTina">Liberar tina</string>
-    <string name="asignarTina">Asignar tina</string>
-    <string name="mezclarTina">Mezclar tinas</string>
-    <string name="liberarUsuario">Liberar usuario</string>
-    <string name="liberarOperadores">Liberar operadores</string>
-    <string name="asignarUsuario">Asignar usuario</string>
-    <string name="asignarMontacargas">Usuario - Montacargas</string>
-    <string name="asignarTurno">Asignar turno</string>
+    <string name="liberarTina">Liberar Tina</string>
+    <string name="asignarTina">Asignar Tina</string>
+    <string name="mezclarTina">Mezclar Tinas</string>
+    <string name="liberarUsuario">Liberar Usuario</string>
+    <string name="liberarOperadores">Liberar Operadores</string>
+    <string name="asignarUsuario">Asignar Usuario</string>
+    <string name="asignarMontacargas">Usuario Montacargas</string>
+    <string name="asignarTurno">Asignar Turno</string>
 
     <string name="crearOrden">Crear orden de mantenimiento</string>
     <string name="ordenMantenimiento">Orden de mantenimiento</string>
@@ -37,7 +37,8 @@
     <string name="mensajeMezclar">Marcar tinas para mezclar con la tina seleccionada</string>
     <string name="decisionMezclar">¿Estás de acuerdo en mezclar tinas de sub tallas distintas?</string>
     <string name="mensajeTinasMezcladas">Tinas mezcladas</string>
-    <string name="mensajeErrorEscaneo">Código no válido</string>
+    <string name="mensajeErrorEscaneo">El dato no existe</string>
+    <string name="mensajeErrorInactivo">La tina esta inactiva</string>
 
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>

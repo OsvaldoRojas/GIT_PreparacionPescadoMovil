@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.Subtalla;
@@ -23,29 +24,29 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
+public class CargaCatalogosTina extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL_TALLA = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/tallas";
-    private static final String URL_SUBTALLA = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/subtallas";
-    private static final String URL_ESPECIE = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/grupos-especies";
-    private static final String URL_ESPECIALIDAD = "http://10.50.1.15:7080/api_simulador_movil/v1/catalogos/grupos-especies";
+    private static final String URL_TALLA = "/catalogos/tallas";
+    private static final String URL_SUBTALLA = "/catalogos/subtallas";
+    private static final String URL_ESPECIE = "/catalogos/especies";
+    private static final String URL_ESPECIALIDAD = "/catalogos/grupos-especies";
     private List<Talla> listaTallas = new ArrayList<>();
     private List<Subtalla> listaSubtallas = new ArrayList<>();
     private List<GrupoEspecie> listaEspecies = new ArrayList<>();
     private List<Especialidad> listaEspecialidad = new ArrayList<>();
     private Fragment fragment;
 
-    public CargaCatalogos(Fragment fragment){
+    public CargaCatalogosTina(Fragment fragment){
         this.fragment = fragment;
     }
 
     @Override
     protected Boolean doInBackground(Void... voids) {
         HttpClient conexion = new DefaultHttpClient();
-        HttpGet peticionTalla = new HttpGet(this.URL_TALLA);
-        HttpGet peticionSubtalla = new HttpGet(this.URL_SUBTALLA);
-        HttpGet peticionEspecie = new HttpGet(this.URL_ESPECIE);
-        HttpGet peticionEspecialidad = new HttpGet(this.URL_ESPECIALIDAD);
+        HttpGet peticionTalla = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL_TALLA) );
+        HttpGet peticionSubtalla = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL_SUBTALLA) );
+        HttpGet peticionEspecie = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL_ESPECIE) );
+        HttpGet peticionEspecialidad = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL_ESPECIALIDAD) );
 
         peticionTalla.setHeader("content-type", "application/json");
         peticionSubtalla.setHeader("content-type", "application/json");

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 
 public class AsignaOperador extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL_OPERADOR = "http://10.50.1.15:7080/api_simulador_movil/v1/preseleccion/estaciones";
+    private static final String URL_OPERADOR = "/preseleccion/estaciones";
     private ErrorServicio errorMensaje;
     private Fragment pantalla;
     private OperadorBascula operador;
@@ -35,7 +36,7 @@ public class AsignaOperador extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected Boolean doInBackground(Void... voids) {
         HttpClient conexion = new DefaultHttpClient();
-        HttpPut solicitudPut = new HttpPut(this.URL_OPERADOR);
+        HttpPut solicitudPut = new HttpPut( Constantes.URL_SERVICIOS.concat(this.URL_OPERADOR) );
 
         Gson gson = new Gson();
         solicitudPut.setHeader("content-type", "application/json");
@@ -73,7 +74,7 @@ public class AsignaOperador extends AsyncTask<Void,Integer,Boolean> {
                 ( (Fragment_Asigna_Operador) this.pantalla ).resultadoAsignacion();
             }else{
                 if( this.pantalla instanceof Fragment_Preselecion_Tinas ){
-                    ( (Fragment_Preselecion_Tinas) this.pantalla ).resultadoAsignacion();
+                    ( (Fragment_Preselecion_Tinas) this.pantalla ).resultadoAsignacion("El usuario fue liberado exitosamente");
                 }
             }
         }else{

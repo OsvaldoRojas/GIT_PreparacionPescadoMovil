@@ -220,61 +220,25 @@ public class Fragment_Asigna_Tina extends Fragment {
             }
         });
 
-        Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
-        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), getListaSubtalla() ) );
-        seleccionSubtalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Button botonPrecargar = this.vista.findViewById(R.id.botonPrecargar);
+        botonPrecargar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setSubtalla( (Subtalla) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View view) {
+                cargaValoresIniciales();
             }
         });
+
+        Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
+        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), getListaSubtalla() ) );
 
         Spinner seleccionTalla = this.vista.findViewById(R.id.seleccionTalla);
         seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), getListaTalla() ) );
-        seleccionTalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setTalla( (Talla) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         Spinner seleccionEspecie = this.vista.findViewById(R.id.seleccionEspecie);
         seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), getListaGrupoEspecie() ) );
-        seleccionEspecie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setGrupoEspecie( (GrupoEspecie) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         Spinner seleccionEspecialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
         seleccionEspecialidad.setAdapter( new AdaptadorEspecialidad( getContext(), getListaEspecialidad() ) );
-        seleccionEspecialidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adaptadorVista, View vista, int posicion, long id) {
-                getTinaSeleccionada().setEspecialidad( (Especialidad) adaptadorVista.getItemAtPosition(posicion) );
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
         etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getPosicion() ) );
@@ -299,35 +263,43 @@ public class Fragment_Asigna_Tina extends Fragment {
                 validaTina( editable.toString() );
             }
         });
-
-        cargaValoresIniciales();
     }
 
     private void validaAsignacion(){
         Spinner especie = this.vista.findViewById(R.id.seleccionEspecie);
+        Spinner especialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
         Spinner talla = this.vista.findViewById(R.id.seleccionTalla);
         Spinner subtalla = this.vista.findViewById(R.id.seleccionSubtalla);
-        Spinner especialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
         TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
 
         if( !campoEscaner.getText().equals("") &&
                 !campoDescripcion.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
                 !campoDescripcion.getText().equals("") ){
-            if( !( (GrupoEspecie) especie.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Especie") &&
-                    !( (Talla) talla.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Talla") &&
-                    !( (Subtalla) subtalla.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Subtalla") &&
-                    !( (Especialidad) especialidad.getSelectedItem() ).getDescripcion().equalsIgnoreCase("Especialidad")){
-                iniciaProcesando();
-                getTinaSeleccionada().setLibre(false);
-                getTinaSeleccionada().setTurno(true);
-                if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
-                    getTinaSeleccionada().setTurno(false);
+
+            if( ( (GrupoEspecie) especie.getSelectedItem() ).getIdGrupoEspecie() > 0 ){
+                if( ( (Talla) talla.getSelectedItem() ).getIdTalla() > 0 ){
+                    if( ( (Subtalla) subtalla.getSelectedItem() ).getIdSubtalla() > 0 ){
+                        iniciaProcesando();
+                        getTinaSeleccionada().setLibre(false);
+                        getTinaSeleccionada().setTurno(true);
+                        if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
+                            getTinaSeleccionada().setTurno(false);
+                        }
+                        getTinaSeleccionada().setSubtalla( (Subtalla) subtalla.getSelectedItem() );
+                        getTinaSeleccionada().setTalla( (Talla) talla.getSelectedItem() );
+                        getTinaSeleccionada().setGrupoEspecie( (GrupoEspecie) especie.getSelectedItem() );
+                        getTinaSeleccionada().setEspecialidad( (Especialidad) especialidad.getSelectedItem() );
+                        AsignaTina asignaTina = new AsignaTina(this, getTinaSeleccionada() );
+                        asignaTina.execute();
+                    }else{
+                        errorValidacion("El campo Subtalla es obligatorio.");
+                    }
+                }else{
+                    errorValidacion("El campo Talla es obligatorio.");
                 }
-                AsignaTina asignaTina = new AsignaTina(this, getTinaSeleccionada() );
-                asignaTina.execute();
             }else {
-                errorValidacion("Es necesario capturar todos los campos.");
+                errorValidacion("El campo Especie es obligatorio.");
             }
         }else{
             errorValidacion("Es necesario capturar una tina.");
@@ -465,13 +437,13 @@ public class Fragment_Asigna_Tina extends Fragment {
                     )
             );
 
-            /*seleccionEspecialidad.setSelection(
+            seleccionEspecialidad.setSelection(
                     obtenerPosicionItem(
                             seleccionEspecialidad,
                             getTinaSeleccionada().getEspecialidad().getIdEspecialidad(),
                             "Especialidad"
                     )
-            );*/
+            );
         }
     }
 

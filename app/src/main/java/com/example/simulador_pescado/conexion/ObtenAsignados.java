@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
@@ -25,9 +26,9 @@ import java.util.List;
 
 public class ObtenAsignados extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL_POSICIONES = "http://10.50.1.15:7080/api_simulador_movil/v1/preseleccion/posiciones/tinas";
-    private static final String URL_ESTACIONES = "http://10.50.1.15:7080/api_simulador_movil/v1/preseleccion/estaciones";
-    private static final String URL_MONTACARGAS = "http://10.50.1.15:7080/api_simulador_movil/v1/preseleccion/montacargas";
+    private static final String URL_POSICIONES = "/preseleccion/posiciones/tinas";
+    private static final String URL_ESTACIONES = "/preseleccion/estaciones";
+    private static final String URL_MONTACARGAS = "/preseleccion/montacargas";
     private List<Tina> listaTinas = new ArrayList<>();
     private List<OperadorBascula> listaOperadores = new ArrayList<>();
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
@@ -41,9 +42,9 @@ public class ObtenAsignados extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected Boolean doInBackground(Void... voids) {
         HttpClient conexion = new DefaultHttpClient();
-        HttpGet peticionPosiciones = new HttpGet(this.URL_POSICIONES);
-        HttpGet peticionEstaciones = new HttpGet(this.URL_ESTACIONES);
-        HttpGet peticionMontacargas = new HttpGet(this.URL_MONTACARGAS);
+        HttpGet peticionPosiciones = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL_POSICIONES) );
+        HttpGet peticionEstaciones = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL_ESTACIONES) );
+        HttpGet peticionMontacargas = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL_MONTACARGAS) );
 
         peticionPosiciones.setHeader("content-type", "application/json");
         peticionEstaciones.setHeader("content-type", "application/json");

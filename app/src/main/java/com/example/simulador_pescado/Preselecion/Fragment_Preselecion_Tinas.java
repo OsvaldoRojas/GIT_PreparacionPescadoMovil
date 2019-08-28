@@ -24,7 +24,7 @@ import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
 import com.example.simulador_pescado.conexion.AsignaMontacargas;
 import com.example.simulador_pescado.conexion.AsignaOperador;
-import com.example.simulador_pescado.conexion.CargaCatalogos;
+import com.example.simulador_pescado.conexion.CargaCatalogosTina;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Especialidad;
@@ -34,7 +34,6 @@ import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
-import com.example.simulador_pescado.vista.TinaPosicion;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
@@ -241,15 +240,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void ordenaTinas(List<Tina> listaTinas){
-        //VALIDACION, QUITAR YA QUE DEJEN BIEN LA BD
-        List<Tina> listaTemp = new ArrayList<>();
-        for(Tina tinaLista : listaTinas){
-            if(tinaLista.getIdPreseleccionPosicionTina() <= 12){
-                listaTemp.add(tinaLista);
-            }
-        }
-        this.listaTinas = listaTemp;
-        //this.listaTinas = listaTinas;
+        this.listaTinas = listaTinas;
         for( final Tina recursoTina : this.listaTinas ){
             recursoTina.setEstado(Constantes.ESTADO.seleccionado);
             accionIconoTina( recursoTina.getIdPreseleccionPosicionTina() );
@@ -317,6 +308,34 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaError.show();
     }
 
+    public void ventanaMensaje(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                        getAsignados();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
+    }
+
     private String getEtiquetaTina(int posicion){
         switch (posicion){
             case 1: return "A6";
@@ -358,21 +377,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             for( int posicion = 1; posicion <= 12; posicion++ ){
                 final Tina recursoTina = new Tina();
                 recursoTina.setIdPreseleccionPosicionTina(posicion);
-                //recursoTina.setLibre(true);
-                recursoTina.setLibre(false);
+                recursoTina.setLibre(true);
                 recursoTina.setPosicion( getEtiquetaTina(posicion) );
-                //recursoTina.setEstado(Constantes.ESTADO.inicial);
-                recursoTina.setEstado(Constantes.ESTADO.seleccionado);
+                recursoTina.setEstado(Constantes.ESTADO.inicial);
                 this.listaTinas.add(recursoTina);
-                //quitar despues de pruebas
-                TinaPosicion tp = new TinaPosicion();
-                tp.setDescripcion("Tina Descripcion " + posicion);
-                Subtalla st = new Subtalla();
-                st.setDescripcion("Subtalla Descripcion " + posicion);
-                recursoTina.setTina(tp);
-                recursoTina.setSubtalla(st);
-                accionIconoTina(posicion);
-                //quitar despues de pruebas
             }
         }
 
@@ -635,8 +643,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         ObtenAsignados obtenAsignados = new ObtenAsignados( getFragment() );
         obtenAsignados.execute();
 
-        CargaCatalogos cargaCatalogos = new CargaCatalogos( getFragment() );
-        cargaCatalogos.execute();
+        CargaCatalogosTina cargaCatalogosTina = new CargaCatalogosTina( getFragment() );
+        cargaCatalogosTina.execute();
     }
 
     public void actualizaCatalogos(List<Talla> listaTalla, List<Subtalla> listaSubtalla,
@@ -648,18 +656,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
         Talla talla = new Talla();
         talla.setDescripcion("Talla");
+        talla.setIdTalla(0);
         this.listaTalla.add(talla);
 
         Subtalla subtalla = new Subtalla();
         subtalla.setDescripcion("Subtalla");
+        subtalla.setIdSubtalla(0);
         this.listaSubtalla.add(subtalla);
 
         GrupoEspecie especie = new GrupoEspecie();
         especie.setDescripcion("Especie");
+        especie.setIdGrupoEspecie(0);
         this.listaGrupoEspecie.add(especie);
 
         Especialidad especialidad = new Especialidad();
         especialidad.setDescripcion("Especialidad");
+        especialidad.setIdEspecialidad(0);
         this.listaEspecialidad.add(especialidad);
 
         this.listaTalla.addAll(listaTalla);
@@ -728,8 +740,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         asignaMontacargas.execute();
     }
 
-    public void resultadoAsignacion(){
-        getAsignados();
+    public void resultadoAsignacion(String mensaje){
+        ventanaMensaje(mensaje);
     }
 
     private void cancelaMezclar(){

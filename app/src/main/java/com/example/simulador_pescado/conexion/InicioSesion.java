@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.example.simulador_pescado.LoginActivity;
+import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Usuario;
 import com.google.gson.Gson;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class InicioSesion extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL = "http://10.50.1.15:7080/sip/movil/seguridad/acceso_sistema?clave=%s&contrasena=%s&tipo_modulo=%s";
+    private static final String URL = "/movil/seguridad/acceso_sistema?clave=%s&contrasena=%s&tipo_modulo=%s";
     private String usuario;
     private String contrasena;
     private String modulo;
@@ -38,7 +39,7 @@ public class InicioSesion extends AsyncTask<Void,Integer,Boolean> {
         String urlValores = this.URL;
         urlValores = String.format(urlValores, this.usuario, this.contrasena, this.modulo);
         HttpClient conexion = new DefaultHttpClient();
-        HttpGet peticion = new HttpGet(urlValores);
+        HttpGet peticion = new HttpGet( Constantes.URL_SERVICIOS_PINSA.concat(urlValores) );
 
         peticion.setHeader("content-type", "application/json");
 

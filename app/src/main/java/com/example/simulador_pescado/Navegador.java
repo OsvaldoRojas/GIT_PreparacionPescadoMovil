@@ -116,6 +116,18 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
       mifragment = new home();
        fragmentSelecionado= true;
 
+        } else if (id == R.id.nav_preselecion) {
+            mifragment = new Contenedor();
+            fragmentSelecionado= true;
+
+        } else if (id == R.id.nav_desconglado) {
+            mifragment = new Contenedor_Descongelado();
+            fragmentSelecionado=true;
+
+        } else if (id == R.id.nav_atemperado) {
+            mifragment = new Contenedor_Atemperado();
+            fragmentSelecionado=true;
+
         } else if (id == R.id.cerrar_sesion) {
             this.finish();
 

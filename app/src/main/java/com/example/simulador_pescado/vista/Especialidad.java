@@ -6,6 +6,7 @@ public class Especialidad implements Serializable {
 
     private int idEspecialidad;
     private String descripcion;
+    private String clave;
 
     public int getIdEspecialidad() {
         return idEspecialidad;
@@ -21,5 +22,13 @@ public class Especialidad implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 }
