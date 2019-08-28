@@ -25,15 +25,10 @@ import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
 import com.example.simulador_pescado.adaptadores.AdaptadorTinasLiberadas;
 import com.example.simulador_pescado.conexion.AsignaMontacargas;
 import com.example.simulador_pescado.conexion.AsignaOperador;
-import com.example.simulador_pescado.conexion.CargaCatalogosTina;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.Especialidad;
-import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
-import com.example.simulador_pescado.vista.Subtalla;
-import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
@@ -107,10 +102,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private List<Tina> listaTinas = new ArrayList<>();
     private List<OperadorBascula> listaOperadores = new ArrayList<>();
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
-    private List<Subtalla> listaSubtalla = new ArrayList<>();
-    private List<Talla> listaTalla = new ArrayList<>();
-    private List<GrupoEspecie> listaGrupoEspecie = new ArrayList<>();
-    private List<Especialidad> listaEspecialidad = new ArrayList<>();
 
     private View.OnClickListener eventoLiberarTina;
     private View.OnClickListener eventoAsignarTina;
@@ -643,53 +634,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
         ObtenAsignados obtenAsignados = new ObtenAsignados( getFragment() );
         obtenAsignados.execute();
-
-        CargaCatalogosTina cargaCatalogosTina = new CargaCatalogosTina( getFragment() );
-        cargaCatalogosTina.execute();
-    }
-
-    public void actualizaCatalogos(List<Talla> listaTalla, List<Subtalla> listaSubtalla,
-                                   List<GrupoEspecie> listaEspecie, List<Especialidad> listaEspecialidad){
-        this.listaTalla = new ArrayList<>();
-        this.listaSubtalla = new ArrayList<>();
-        this.listaGrupoEspecie = new ArrayList<>();
-        this.listaEspecialidad = new ArrayList<>();
-
-        Talla talla = new Talla();
-        talla.setDescripcion("Talla");
-        talla.setIdTalla(0);
-        this.listaTalla.add(talla);
-
-        Subtalla subtalla = new Subtalla();
-        subtalla.setDescripcion("Subtalla");
-        subtalla.setIdSubtalla(0);
-        this.listaSubtalla.add(subtalla);
-
-        GrupoEspecie especie = new GrupoEspecie();
-        especie.setDescripcion("Especie");
-        especie.setIdEspecie(0);
-        this.listaGrupoEspecie.add(especie);
-
-        Especialidad especialidad = new Especialidad();
-        especialidad.setDescripcion("Especialidad");
-        especialidad.setIdEspecialidad(0);
-        this.listaEspecialidad.add(especialidad);
-
-        this.listaTalla.addAll(listaTalla);
-        this.listaSubtalla.addAll(listaSubtalla);
-        this.listaGrupoEspecie.addAll(listaEspecie);
-        this.listaEspecialidad.addAll(listaEspecialidad);
     }
 
     private void asignarTina(){
-        Fragment fragment = new Fragment_Asigna_Tina()
-                .newInstance(
-                        getTinaSeleccionada(),
-                        (Serializable) this.listaTalla,
-                        (Serializable) this.listaSubtalla,
-                        (Serializable) this.listaGrupoEspecie,
-                        (Serializable) this.listaEspecialidad
-                );
+        Fragment fragment = new Fragment_Asigna_Tina().newInstance( getTinaSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 

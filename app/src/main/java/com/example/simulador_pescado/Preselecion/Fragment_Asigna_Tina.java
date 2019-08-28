@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -22,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorEspecialidad;
 import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
@@ -46,17 +46,9 @@ public class Fragment_Asigna_Tina extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_PARAM3 = "param3";
-    private static final String ARG_PARAM4 = "param4";
-    private static final String ARG_PARAM5 = "param5";
 
     // TODO: Rename and change types of parameters
     private Serializable mParam1;
-    private Serializable mParam2;
-    private Serializable mParam3;
-    private Serializable mParam4;
-    private Serializable mParam5;
 
     private View vista;
 
@@ -79,19 +71,13 @@ public class Fragment_Asigna_Tina extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Asigna_Tina newInstance(Serializable param1, Serializable param2,
-                                                   Serializable param3, Serializable param4, Serializable param5) {
+    public static Fragment_Asigna_Tina newInstance(Serializable param1) {
         Fragment_Asigna_Tina fragment = new Fragment_Asigna_Tina();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
-        args.putSerializable(ARG_PARAM2, param2);
-        args.putSerializable(ARG_PARAM3, param3);
-        args.putSerializable(ARG_PARAM4, param4);
-        args.putSerializable(ARG_PARAM5, param5);
         fragment.setArguments(args);
         return fragment;
     }
@@ -101,10 +87,6 @@ public class Fragment_Asigna_Tina extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getSerializable(ARG_PARAM1);
-            mParam2 = getArguments().getSerializable(ARG_PARAM2);
-            mParam3 = getArguments().getSerializable(ARG_PARAM3);
-            mParam4 = getArguments().getSerializable(ARG_PARAM4);
-            mParam5 = getArguments().getSerializable(ARG_PARAM5);
         }
     }
 
@@ -164,44 +146,8 @@ public class Fragment_Asigna_Tina extends Fragment {
         this.tinaSeleccionada = tinaSeleccionada;
     }
 
-    public List<Talla> getListaTalla() {
-        return listaTalla;
-    }
-
-    public void setListaTalla(List<Talla> listaTalla) {
-        this.listaTalla = listaTalla;
-    }
-
-    public List<Subtalla> getListaSubtalla() {
-        return listaSubtalla;
-    }
-
-    public void setListaSubtalla(List<Subtalla> listaSubtalla) {
-        this.listaSubtalla = listaSubtalla;
-    }
-
-    public List<GrupoEspecie> getListaGrupoEspecie() {
-        return listaGrupoEspecie;
-    }
-
-    public void setListaGrupoEspecie(List<GrupoEspecie> listaGrupoEspecie) {
-        this.listaGrupoEspecie = listaGrupoEspecie;
-    }
-
-    public List<Especialidad> getListaEspecialidad() {
-        return listaEspecialidad;
-    }
-
-    public void setListaEspecialidad(List<Especialidad> listaEspecialidad) {
-        this.listaEspecialidad = listaEspecialidad;
-    }
-
     private void iniciaComponentes(){
         setTinaSeleccionada( (Tina) mParam1 );
-        setListaTalla( (List<Talla>) mParam2 );
-        setListaSubtalla( (List<Subtalla>) mParam3 );
-        setListaGrupoEspecie( (List<GrupoEspecie>) mParam4 );
-        setListaEspecialidad( (List<Especialidad>) mParam5 );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
@@ -229,16 +175,16 @@ public class Fragment_Asigna_Tina extends Fragment {
         });
 
         Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
-        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), getListaSubtalla() ) );
+        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), Catalogos.getInstancia().getCatalogoSubtalla() ) );
 
         Spinner seleccionTalla = this.vista.findViewById(R.id.seleccionTalla);
-        seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), getListaTalla() ) );
+        seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), Catalogos.getInstancia().getCatalogoTalla() ) );
 
         Spinner seleccionEspecie = this.vista.findViewById(R.id.seleccionEspecie);
-        seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), getListaGrupoEspecie() ) );
+        seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), Catalogos.getInstancia().getCatalogoGrupoEspecie() ) );
 
         Spinner seleccionEspecialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
-        seleccionEspecialidad.setAdapter( new AdaptadorEspecialidad( getContext(), getListaEspecialidad() ) );
+        seleccionEspecialidad.setAdapter( new AdaptadorEspecialidad( getContext(), Catalogos.getInstancia().getCatalogoEspecialidad() ) );
 
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
         etiquetaPosicion.setText( String.valueOf( getTinaSeleccionada().getPosicion() ) );

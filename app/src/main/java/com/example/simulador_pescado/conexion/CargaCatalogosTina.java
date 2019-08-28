@@ -2,9 +2,7 @@ package com.example.simulador_pescado.conexion;
 
 import android.os.AsyncTask;
 
-import androidx.fragment.app.Fragment;
-
-import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
@@ -29,16 +27,11 @@ public class CargaCatalogosTina extends AsyncTask<Void,Integer,Boolean> {
     private static final String URL_TALLA = "/catalogos/tallas";
     private static final String URL_SUBTALLA = "/catalogos/subtallas";
     private static final String URL_ESPECIE = "/catalogos/especies";
-    private static final String URL_ESPECIALIDAD = "/catalogos/grupos-especies";
+    private static final String URL_ESPECIALIDAD = "/catalogos/especialidades";
     private List<Talla> listaTallas = new ArrayList<>();
     private List<Subtalla> listaSubtallas = new ArrayList<>();
     private List<GrupoEspecie> listaEspecies = new ArrayList<>();
     private List<Especialidad> listaEspecialidad = new ArrayList<>();
-    private Fragment fragment;
-
-    public CargaCatalogosTina(Fragment fragment){
-        this.fragment = fragment;
-    }
 
     @Override
     protected Boolean doInBackground(Void... voids) {
@@ -63,6 +56,7 @@ public class CargaCatalogosTina extends AsyncTask<Void,Integer,Boolean> {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
         try {
@@ -75,6 +69,7 @@ public class CargaCatalogosTina extends AsyncTask<Void,Integer,Boolean> {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
         try {
@@ -87,6 +82,7 @@ public class CargaCatalogosTina extends AsyncTask<Void,Integer,Boolean> {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
         try {
@@ -99,6 +95,7 @@ public class CargaCatalogosTina extends AsyncTask<Void,Integer,Boolean> {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
         return true;
@@ -106,7 +103,11 @@ public class CargaCatalogosTina extends AsyncTask<Void,Integer,Boolean> {
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-        ( (Fragment_Preselecion_Tinas) this.fragment )
-                .actualizaCatalogos(this.listaTallas, this.listaSubtallas, this.listaEspecies, this.listaEspecialidad);
+        if(aBoolean){
+            Catalogos.getInstancia().setCatalogoGrupoEspecie(this.listaEspecies);
+            Catalogos.getInstancia().setCatalogoTalla(this.listaTallas);
+            Catalogos.getInstancia().setCatalogoSubtalla(this.listaSubtallas);
+            Catalogos.getInstancia().setCatalogoEspecialidad(this.listaEspecialidad);
+        }
     }
 }

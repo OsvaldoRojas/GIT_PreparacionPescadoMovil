@@ -6,6 +6,7 @@ public class Etapa implements Serializable {
 
     private int idEtapa;
     private String descripcion;
+    private Boolean borrado;
 
     public int getIdEtapa() {
         return idEtapa;
@@ -21,5 +22,13 @@ public class Etapa implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getBorrado() {
+        return borrado;
+    }
+
+    public void setBorrado(Boolean borrado) {
+        this.borrado = borrado;
     }
 }
