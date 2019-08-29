@@ -299,7 +299,7 @@ public class Fragment_Asigna_Operador extends Fragment {
             @Override
             public void onShow(DialogInterface dialogInterface) {
                 TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText( "Es necesario capturar un operador." );
+                etiquetaMensaje.setText( "Es necesario capturar un operador" );
 
                 Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
                 botonAceptar.setOnClickListener(new View.OnClickListener() {

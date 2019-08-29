@@ -51,13 +51,13 @@ public class ValidaTina extends AsyncTask<Void,Integer,Boolean> {
             }else{
                 this.errorMensaje = new ErrorServicio();
                 this.errorMensaje.setResultado("NO");
-                this.errorMensaje.setMensaje("Error al conectar con el servidor.");
+                this.errorMensaje.setMensaje("Error al conectar con el servidor");
             }
         } catch (IOException e) {
             e.printStackTrace();
             this.errorMensaje = new ErrorServicio();
             this.errorMensaje.setResultado("NO");
-            this.errorMensaje.setMensaje("Error al conectar con el servidor.");
+            this.errorMensaje.setMensaje("Error al conectar con el servidor");
         }
         return false;
     }

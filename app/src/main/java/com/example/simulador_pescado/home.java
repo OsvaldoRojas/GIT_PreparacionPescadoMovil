@@ -91,6 +91,7 @@ public class home extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor_Atemperado()).commit();
             }
         });
+        botonAtemperado.setVisibility(View.GONE);
 
         Button botonDescongelado = this.vista.findViewById(R.id.botonDescongelado);
         botonDescongelado.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +100,7 @@ public class home extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor_Descongelado()).commit();
             }
         });
+        botonDescongelado.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

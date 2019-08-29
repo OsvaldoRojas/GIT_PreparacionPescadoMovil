@@ -46,7 +46,7 @@ public class AsignaMontacargas extends AsyncTask<Void,Integer,Boolean> {
             e.printStackTrace();
             this.errorMensaje = new ErrorServicio();
             this.errorMensaje.setResultado("NO");
-            this.errorMensaje.setMensaje("Error al realizar la solicitud.");
+            this.errorMensaje.setMensaje("Error al realizar la solicitud");
             return false;
         }
 
@@ -62,7 +62,7 @@ public class AsignaMontacargas extends AsyncTask<Void,Integer,Boolean> {
             e.printStackTrace();
             this.errorMensaje = new ErrorServicio();
             this.errorMensaje.setResultado("NO");
-            this.errorMensaje.setMensaje("Error al conectar con el servidor.");
+            this.errorMensaje.setMensaje("Error al conectar con el servidor");
         }
         return false;
     }

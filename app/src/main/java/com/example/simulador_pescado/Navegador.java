@@ -120,7 +120,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             mifragment = new Contenedor();
             fragmentSelecionado= true;
 
-        } else if (id == R.id.nav_desconglado) {
+        } /*else if (id == R.id.nav_desconglado) {
             mifragment = new Contenedor_Descongelado();
             fragmentSelecionado=true;
 
@@ -128,7 +128,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             mifragment = new Contenedor_Atemperado();
             fragmentSelecionado=true;
 
-        } else if (id == R.id.cerrar_sesion) {
+        } */else if (id == R.id.cerrar_sesion) {
             this.finish();
 
         }
