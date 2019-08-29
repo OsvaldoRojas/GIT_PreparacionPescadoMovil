@@ -201,6 +201,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
     private void iniciaComponentes(){
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        iniciaProcesando();
 
         this.contenedorBotones = this.vista.findViewById(R.id.contenedorBotones);
         this.botonCrear = this.vista.findViewById(R.id.botonOrden);
@@ -562,6 +563,8 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                 this.listaBasculas.add(recursoBascula);
             }
         }
+
+        terminaProcesando();
     }
 
     private String getEtiquetaTina(int posicion){
@@ -832,6 +835,16 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                 break;
             }
         }
+    }
+
+    public void iniciaProcesando(){
+        //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        //getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.barraProgreso.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -239,16 +239,16 @@ public class Fragment_Asigna_Tina extends Fragment {
                         AsignaTina asignaTina = new AsignaTina(this, getTinaSeleccionada() );
                         asignaTina.execute();
                     }else{
-                        errorValidacion("El campo Subtalla es obligatorio.");
+                        errorValidacion("El campo Subtalla es obligatorio");
                     }
                 }else{
-                    errorValidacion("El campo Talla es obligatorio.");
+                    errorValidacion("El campo Talla es obligatorio");
                 }
             }else {
-                errorValidacion("El campo Especie es obligatorio.");
+                errorValidacion("El campo Especie es obligatorio");
             }
         }else{
-            errorValidacion("Es necesario capturar una tina.");
+            errorValidacion("Es necesario capturar una tina");
         }
     }
 

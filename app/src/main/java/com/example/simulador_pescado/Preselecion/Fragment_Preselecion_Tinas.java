@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -232,26 +233,32 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void ordenaTinas(List<Tina> listaTinas){
-        this.listaTinas = listaTinas;
-        for( final Tina recursoTina : this.listaTinas ){
-            recursoTina.setEstado(Constantes.ESTADO.seleccionado);
-            accionIconoTina( recursoTina.getIdPreseleccionPosicionTina() );
+        if( isAdded() ){
+            this.listaTinas = listaTinas;
+            for( final Tina recursoTina : this.listaTinas ){
+                recursoTina.setEstado(Constantes.ESTADO.seleccionado);
+                accionIconoTina( recursoTina.getIdPreseleccionPosicionTina() );
+            }
         }
     }
 
     public void ordenaOperadoresBascula(List<OperadorBascula> listaOperadores){
-        this.listaOperadores = listaOperadores;
-        for( final OperadorBascula recursoOperador : this.listaOperadores ){
-            recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
-            accionIconoOperador( recursoOperador.getIdPreseleccionEstacion() );
+        if( isAdded() ){
+            this.listaOperadores = listaOperadores;
+            for( final OperadorBascula recursoOperador : this.listaOperadores ){
+                recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
+                accionIconoOperador( recursoOperador.getIdPreseleccionEstacion() );
+            }
         }
     }
 
     public void ordenaOperadoresMontacargas(List<OperadorMontacargas> listaMontacargas){
-        this.listaMontacargas = listaMontacargas;
-        for( OperadorMontacargas recursoMontacargas : this.listaMontacargas ){
-            recursoMontacargas.setEstado(Constantes.ESTADO.seleccionado);
-            accionIconoMontacargas( recursoMontacargas.getIdPreseleccionMontacarga() );
+        if( isAdded() ){
+            this.listaMontacargas = listaMontacargas;
+            for( OperadorMontacargas recursoMontacargas : this.listaMontacargas ){
+                recursoMontacargas.setEstado(Constantes.ESTADO.seleccionado);
+                accionIconoMontacargas( recursoMontacargas.getIdPreseleccionMontacarga() );
+            }
         }
     }
 
@@ -856,6 +863,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 actualizar.setRefreshing(true);
                 getAsignados();
             }
@@ -1150,6 +1158,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void iniciaProcesando(){
+        //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.VISIBLE);
     }
 
@@ -1157,6 +1166,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         if( this.actualizar.isRefreshing() ){
             this.actualizar.setRefreshing(false);
         }
+        //getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.GONE);
     }
 

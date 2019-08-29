@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,7 @@ public class Fragment_Preselecion_OM extends Fragment {
 
     private ListView listaVistaOrden;
     private SearchView campoBusqueda;
+    private ProgressBar barraProgreso;
 
     private AdaptadorOrdenMantenimiento adaptadorOrden;
     private OrdenMantenimiento ordenSeleccionada;
@@ -98,6 +100,9 @@ public class Fragment_Preselecion_OM extends Fragment {
     }
 
     private void iniciaComponentes(){
+        this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        iniciaProcesando();
+
         this.listaOrden = new ArrayList<>();
         this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2020", "Montacargas", "", "Prueba descripción 1") );
         this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "", "Prueba descripción 2") );
@@ -165,6 +170,8 @@ public class Fragment_Preselecion_OM extends Fragment {
                 return false;
             }
         });
+
+        terminaProcesando();
     }
 
     private void muestraDetalle(){
@@ -175,6 +182,16 @@ public class Fragment_Preselecion_OM extends Fragment {
     private void asignaMecanico(){
         Fragment fragment = new Fragment_Preseleccion_AsignaMecanico().newInstance( getOrdenSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
+    public void iniciaProcesando(){
+        //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        //getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        this.barraProgreso.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
