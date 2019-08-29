@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -149,13 +150,14 @@ public class Fragment_Preseleccion_CreaOrdenMantenimiento extends Fragment {
     }
 
     private void iniciaComponentes(){
-        ImageButton botonArtefactos = this.vista.findViewById(R.id.artefactos);
+        ImageView botonArtefactos = this.vista.findViewById(R.id.artefactos);
         botonArtefactos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
+        botonArtefactos.setVisibility(View.GONE);
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {

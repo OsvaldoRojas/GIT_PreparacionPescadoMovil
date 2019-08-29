@@ -29,14 +29,11 @@
 
             <LinearLayout
                 android:id="@+id/turnoUno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginRight="5dp"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@color/blanco"
-                style="@style/tina">
+                style="@style/turno">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -58,14 +55,11 @@
 
             <LinearLayout
                 android:id="@+id/turnoDos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@color/blanco"
-                style="@style/tina">
+                style="@style/turno">
 
                 <TextView
                     android:layout_width="wrap_content"

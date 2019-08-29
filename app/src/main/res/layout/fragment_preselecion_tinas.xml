@@ -505,7 +505,7 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="111dp"
                 android:background="@drawable/contenedor_icono"
-                android:textColor="@color/blanco"
+                android:textColor="#C2C1C1"
                 android:textStyle="bold"
                 android:text="A"
                 android:gravity="center" />
@@ -515,7 +515,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="111dp"
                 android:background="@drawable/contenedor_icono"
-                android:textColor="@color/blanco"
+                android:textColor="#C2C1C1"
                 android:textStyle="bold"
                 android:text="B"
                 android:gravity="center"/>

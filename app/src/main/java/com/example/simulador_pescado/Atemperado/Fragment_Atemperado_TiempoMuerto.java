@@ -18,7 +18,6 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.PosicionEstiba;
-import com.example.simulador_pescado.vista.Tina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -976,7 +975,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                     setPosicionSeleccionada(posicionEstiba);
                     deshabilitaRecursos();
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina1);
+                            .setImageResource(R.drawable.ic_tina_negra);
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
@@ -988,7 +987,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                         setPosicionSeleccionada(null);
                         habilitaRecursos();
                         getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                                .setImageResource(R.drawable.ic_tina2);
+                                .setImageResource(R.drawable.ic_tina_blanca);
                         getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         posicionEstiba.setEstado(Constantes.ESTADO.inicial);
@@ -1009,7 +1008,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                     setMontacargasSeleccionado(montacargas);
                     deshabilitaRecursos();
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                            .setImageResource(R.drawable.ic_montacargas1);
+                            .setImageResource(R.drawable.ic_montacargas_negro);
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
@@ -1021,7 +1020,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                         setMontacargasSeleccionado(null);
                         habilitaRecursos();
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                                .setImageResource(R.drawable.ic_montacargas2);
+                                .setImageResource(R.drawable.ic_montacargas_blanco);
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         montacargas.setEstado(Constantes.ESTADO.inicial);

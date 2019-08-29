@@ -717,7 +717,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina1);
+                            .setImageResource(R.drawable.ic_tina_blanca);
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     tina.setEstado(Constantes.ESTADO.seleccionado);
@@ -728,7 +728,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                         setTinaSeleccionada(null);
                         habilitaRecursos();
                         getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                                .setImageResource(R.drawable.ic_tina2);
+                                .setImageResource(R.drawable.ic_tina_gris);
                         getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         tina.setEstado(Constantes.ESTADO.inicial);
@@ -748,7 +748,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                     setOperadorSeleccionado(operador);
                     deshabilitaRecursos();
                     getIconoOperador( operador.getIdPreseleccionEstacion() )
-                            .setImageResource(R.drawable.ic_operador1);
+                            .setImageResource(R.drawable.ic_operador_blanco);
                     getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     operador.setEstado(Constantes.ESTADO.seleccionado);
@@ -759,7 +759,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                         setOperadorSeleccionado(null);
                         habilitaRecursos();
                         getIconoOperador( operador.getIdPreseleccionEstacion() )
-                                .setImageResource(R.drawable.ic_operador2);
+                                .setImageResource(R.drawable.ic_operador_gris);
                         getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         operador.setEstado(Constantes.ESTADO.inicial);
@@ -779,7 +779,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                     setBasculaSeleccionada(bascula);
                     deshabilitaRecursos();
                     getIconoBascula( bascula.getIdBascula() )
-                            .setImageResource(R.drawable.ic_bascula1);
+                            .setImageResource(R.drawable.ic_bascula_blanca);
                     getIconoBascula( bascula.getIdBascula() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     bascula.setEstado(Constantes.ESTADO.seleccionado);
@@ -790,7 +790,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                         setBasculaSeleccionada(null);
                         habilitaRecursos();
                         getIconoBascula( bascula.getIdBascula() )
-                                .setImageResource(R.drawable.ic_bascula2);
+                                .setImageResource(R.drawable.ic_bascula_gris);
                         getIconoBascula( bascula.getIdBascula() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         bascula.setEstado(Constantes.ESTADO.inicial);
@@ -810,7 +810,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                     setMontacargasSeleccionado(montacargas);
                     deshabilitaRecursos();
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                            .setImageResource(R.drawable.ic_montacargas1);
+                            .setImageResource(R.drawable.ic_montacargas_blanco);
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
@@ -821,7 +821,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
                         setMontacargasSeleccionado(null);
                         habilitaRecursos();
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                                .setImageResource(R.drawable.ic_montacargas2);
+                                .setImageResource(R.drawable.ic_montacargas_gris);
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         montacargas.setEstado(Constantes.ESTADO.inicial);

@@ -1090,7 +1090,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina1);
+                            .setImageResource(R.drawable.ic_tina_negra);
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     tina.setEstado(Constantes.ESTADO.seleccionado);
@@ -1107,7 +1107,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
                         setTinaSeleccionada(null);
                         habilitaRecursos();
                         getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                                .setImageResource(R.drawable.ic_tina2);
+                                .setImageResource(R.drawable.ic_tina_blanca);
                         getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         tina.setEstado(Constantes.ESTADO.inicial);
