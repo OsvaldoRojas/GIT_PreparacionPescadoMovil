@@ -10,7 +10,7 @@
             android:title="Inicio" />
         <item
             android:id="@+id/nav_preselecion"
-            android:icon="@drawable/ic_tina1"
+            android:icon="@drawable/ic_tina_negra"
             android:title="Preselección" />
         <item
             android:id="@+id/nav_atemperado"

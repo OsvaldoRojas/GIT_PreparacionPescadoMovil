@@ -62,7 +62,7 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginRight">6dp</item>
         <item name="android:layout_marginLeft">6dp</item>
-        <item name="android:src">@drawable/ic_operador2</item>
+        <item name="android:src">@drawable/ic_operador_gris</item>
     </style>
 
     <style name="tina">
@@ -73,7 +73,7 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginRight">6dp</item>
         <item name="android:layout_marginLeft">6dp</item>
-        <item name="android:src">@drawable/ic_tina2</item>
+        <item name="android:src">@drawable/ic_tina_gris</item>
         <item name="android:padding">2dp</item>
     </style>
 
@@ -85,7 +85,7 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginRight">6dp</item>
         <item name="android:layout_marginLeft">6dp</item>
-        <item name="android:src">@drawable/ic_bascula2</item>
+        <item name="android:src">@drawable/ic_bascula_gris</item>
         <item name="android:padding">2dp</item>
     </style>
 
@@ -97,7 +97,7 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginRight">6dp</item>
         <item name="android:layout_marginLeft">6dp</item>
-        <item name="android:src">@drawable/ic_montacargas2</item>
+        <item name="android:src">@drawable/ic_montacargas_gris</item>
         <item name="android:padding">2dp</item>
     </style>
 
@@ -106,8 +106,14 @@
         <item name="android:layout_width">27dp</item>
         <item name="android:background">@drawable/contenedor_icono</item>
         <item name="android:layout_margin">2dp</item>
-        <item name="android:src">@drawable/ic_tina2</item>
+        <item name="android:src">@drawable/ic_tina_blanca</item>
         <item name="android:padding">2dp</item>
+    </style>
+
+    <style name="turno">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/contenedor_turno</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

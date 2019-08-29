@@ -417,7 +417,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     setOperadorSeleccionado(operador);
                     deshabilitaRecursos();
                     getIconoOperador( operador.getIdPreseleccionEstacion() )
-                            .setImageResource(R.drawable.ic_operador1);
+                            .setImageResource(R.drawable.ic_operador_blanco);
                     getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     operador.setEstado( Constantes.ESTADO.seleccionado );
@@ -433,15 +433,17 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
                         habilitaRecursos();
-                        getIconoOperador( operador.getIdPreseleccionEstacion() )
-                                .setImageResource(R.drawable.ic_operador2);
                         if( operador.getLibre() ){
+                            getIconoOperador( operador.getIdPreseleccionEstacion() )
+                                    .setImageResource(R.drawable.ic_operador_gris);
                             getIconoOperador( operador.getIdPreseleccionEstacion() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             operador.setEstado( Constantes.ESTADO.inicial );
                         }else{
                             getIconoOperador( operador.getIdPreseleccionEstacion() )
-                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                                    .setImageResource(R.drawable.ic_operador_negro);
+                            getIconoOperador( operador.getIdPreseleccionEstacion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
                             operador.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
@@ -452,7 +454,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         setOperadorSeleccionado(operador);
                         deshabilitaRecursos();
                         getIconoOperador( operador.getIdPreseleccionEstacion() )
-                                .setImageResource(R.drawable.ic_operador1);
+                                .setImageResource(R.drawable.ic_operador_blanco);
                         getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         operador.setEstado( Constantes.ESTADO.seleccionado );
@@ -478,7 +480,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     setTinaSeleccionada(tina);
                     deshabilitaRecursos();
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina1);
+                            .setImageResource(R.drawable.ic_tina_blanca);
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     tina.setEstado( Constantes.ESTADO.seleccionado );
@@ -492,15 +494,17 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     this.contenedorBotones.setVisibility(View.VISIBLE);
                 }else{
                     if( tina.getEstado() == Constantes.ESTADO.seleccionado ){
-                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                                .setImageResource(R.drawable.ic_tina2);
                         if( tina.getLibre() ){
+                            getIconoTina( tina.getIdPreseleccionPosicionTina() )
+                                    .setImageResource(R.drawable.ic_tina_gris);
                             getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             tina.setEstado( Constantes.ESTADO.inicial );
                         }else{
                             getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                                    .setImageResource(R.drawable.ic_tina_negra);
+                            getIconoTina( tina.getIdPreseleccionPosicionTina() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
                             tina.setEstado( Constantes.ESTADO.asignado );
                         }
 
@@ -520,7 +524,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         }
                     }else{
                         getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                                .setImageResource(R.drawable.ic_tina1);
+                                .setImageResource(R.drawable.ic_tina_blanca);
                         getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         tina.setEstado( Constantes.ESTADO.seleccionado );
@@ -561,7 +565,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     setMontacargasSeleccionado(montacargas);
                     deshabilitaRecursos();
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                            .setImageResource(R.drawable.ic_montacargas1);
+                            .setImageResource(R.drawable.ic_montacargas_blanco);
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     montacargas.setEstado( Constantes.ESTADO.seleccionado );
@@ -577,15 +581,17 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
                         setMontacargasSeleccionado(null);
                         habilitaRecursos();
-                        getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                                .setImageResource(R.drawable.ic_montacargas2);
                         if( montacargas.getLibre() ){
+                            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
+                                    .setImageResource(R.drawable.ic_montacargas_gris);
                             getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             montacargas.setEstado( Constantes.ESTADO.inicial );
                         }else{
                             getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                                    .setImageResource(R.drawable.ic_montacargas_negro);
+                            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
                             montacargas.setEstado( Constantes.ESTADO.asignado );
                         }
                         this.contenedorBotones.setVisibility(View.GONE);
@@ -596,7 +602,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         setMontacargasSeleccionado(montacargas);
                         deshabilitaRecursos();
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
-                                .setImageResource(R.drawable.ic_montacargas1);
+                                .setImageResource(R.drawable.ic_montacargas_blanco);
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         montacargas.setEstado( Constantes.ESTADO.seleccionado );

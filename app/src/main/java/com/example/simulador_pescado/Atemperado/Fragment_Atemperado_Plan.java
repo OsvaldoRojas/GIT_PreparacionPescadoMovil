@@ -2,7 +2,6 @@ package com.example.simulador_pescado.Atemperado;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
@@ -1010,7 +1008,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina1);
+                            .setImageResource(R.drawable.ic_tina_negra);
                     break;
                 case 1:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
@@ -1037,7 +1035,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina2);
+                            .setImageResource(R.drawable.ic_tina_blanca);
                     break;
                 case 1:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )

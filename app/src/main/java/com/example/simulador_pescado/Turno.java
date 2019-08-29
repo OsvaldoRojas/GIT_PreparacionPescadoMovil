@@ -40,8 +40,8 @@ public class Turno extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 turno = 1;
-                turnoDos.setBackgroundColor( getResources().getColor(R.color.blanco) );
-                turnoUno.setBackgroundColor( getResources().getColor(R.color.no_selecion) );
+                turnoDos.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
+                turnoUno.setBackground( getResources().getDrawable(R.drawable.contenedor_turno_seleccionado) );
                 botonAceptar.setVisibility(View.VISIBLE);
             }
         });
@@ -50,8 +50,8 @@ public class Turno extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 turno = 2;
-                turnoUno.setBackgroundColor( getResources().getColor(R.color.blanco) );
-                turnoDos.setBackgroundColor( getResources().getColor(R.color.no_selecion) );
+                turnoUno.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
+                turnoDos.setBackground( getResources().getDrawable(R.drawable.contenedor_turno_seleccionado) );
                 botonAceptar.setVisibility(View.VISIBLE);
             }
         });
