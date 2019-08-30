@@ -6,7 +6,7 @@ public class Artefacto implements Serializable {
 
     private int idMaquinariaArtefacto;
     private String descripcion;
-    private Maquinaria maquinaria;
+    private Boolean selecionado = false;
 
     public int getIdMaquinariaArtefacto() {
         return idMaquinariaArtefacto;
@@ -16,19 +16,19 @@ public class Artefacto implements Serializable {
         this.idMaquinariaArtefacto = idMaquinariaArtefacto;
     }
 
+    public Boolean getSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(Boolean selecionado) {
+        this.selecionado = selecionado;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Maquinaria getMaquinaria() {
-        return maquinaria;
-    }
-
-    public void setMaquinaria(Maquinaria maquinaria) {
-        this.maquinaria = maquinaria;
     }
 }

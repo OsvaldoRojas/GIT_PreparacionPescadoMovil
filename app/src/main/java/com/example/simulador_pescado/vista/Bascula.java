@@ -6,8 +6,14 @@ import java.io.Serializable;
 
 public class Bascula implements Serializable {
 
+    private static final String CLAVE = "MAQ-BAS";
+
     private int idBascula;
     private Constantes.ESTADO estado;
+
+    public String getClave() {
+        return CLAVE;
+    }
 
     public int getIdBascula() {
         return idBascula;
