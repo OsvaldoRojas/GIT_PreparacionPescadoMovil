@@ -27,6 +27,7 @@
 
     <string name="crearOrden">Crear orden de mantenimiento</string>
     <string name="ordenMantenimiento">Orden de mantenimiento</string>
+    <string name="mensajeArtefactos">Elija el o los componentes de la maquinaria que deben revisarse</string>
 
     <string name="mensajeMezclar">Marque las tinas que desee mezclar en la tina elegida</string>
     <string name="decisionMezclar">¿Está de acuerdo en mezclar las tinas seleccionadas?</string>

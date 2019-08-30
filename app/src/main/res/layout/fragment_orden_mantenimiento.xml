@@ -30,6 +30,15 @@
                     android:textSize="17dp"/>
 
                 <TextView
+                    android:id="@+id/etiquetaEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/negro"
+                    android:gravity="center"
+                    android:layout_marginTop="1dp"
+                    android:textSize="17dp"/>
+
+                <TextView
                     android:id="@+id/etiquetaFecha"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
@@ -38,33 +47,20 @@
                     android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/botonArtefactos"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp">
-
-                    <TextView
-                        android:id="@+id/etiquetaEquipo"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/no_selecion"
-                        android:gravity="center_horizontal"
-                        android:textSize="15dp"
-                        android:background="@color/blanco"
-                        android:paddingBottom="4dp"
-                        android:paddingTop="4dp"/>
-
-                    <ImageView
-                        android:id="@+id/artefactos"
-                        android:layout_width="75dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_menu_manage" />
-
-                </LinearLayout>
+                    android:layout_marginRight="20dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:background="@color/blanco"
+                    android:text="Seleccionar componentes"
+                    android:textAllCaps="false"
+                    android:gravity="left" />
 
                 <EditText
                     android:id="@+id/campoDescripcion"

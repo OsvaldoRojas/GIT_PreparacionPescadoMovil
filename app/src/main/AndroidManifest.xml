@@ -17,6 +17,9 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
         <activity
+            android:name=".ActividadArtefactos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Preselecion.Tabs_Preselecion"
             android:label="@string/title_activity_tabs__preselecion"
             android:theme="@style/AppTheme.NoActionBar" />

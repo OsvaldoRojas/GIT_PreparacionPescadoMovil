@@ -19,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.vista.Tina;
 
 import java.text.SimpleDateFormat;
@@ -125,22 +126,6 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private ImageView tina78;
     private ImageView tina79;
     private ImageView tina80;
-    private ImageView tina81;
-    private ImageView tina82;
-    private ImageView tina83;
-    private ImageView tina84;
-    private ImageView tina85;
-    private ImageView tina86;
-    private ImageView tina87;
-    private ImageView tina88;
-    private ImageView tina89;
-    private ImageView tina90;
-    private ImageView tina91;
-    private ImageView tina92;
-    private ImageView tina93;
-    private ImageView tina94;
-    private ImageView tina95;
-    private ImageView tina96;
 
     private Tina tinaSeleccionada;
 
@@ -151,8 +136,6 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private SwipeRefreshLayout actualizar;
     private Button botonDetalle;
     private AlertDialog ventanaEmergente;
-
-    private String fechaActual;
 
     private OnFragmentInteractionListener mListener;
 
@@ -205,9 +188,6 @@ public class Fragment_Descongelado_Plan extends Fragment{
     }
 
     private void iniciaComponentes(){
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
         this.botonera = this.vista.findViewById(R.id.botonera);
@@ -853,140 +833,12 @@ public class Fragment_Descongelado_Plan extends Fragment{
             }
         });
 
-        this.tina81 = this.vista.findViewById(R.id.tina81);
-        this.tina81.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(81);
-            }
-        });
-
-        this.tina82 = this.vista.findViewById(R.id.tina82);
-        this.tina82.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(82);
-            }
-        });
-
-        this.tina83 = this.vista.findViewById(R.id.tina83);
-        this.tina83.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(83);
-            }
-        });
-
-        this.tina84 = this.vista.findViewById(R.id.tina84);
-        this.tina84.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(84);
-            }
-        });
-
-        this.tina85 = this.vista.findViewById(R.id.tina85);
-        this.tina85.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(85);
-            }
-        });
-
-        this.tina86 = this.vista.findViewById(R.id.tina86);
-        this.tina86.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(86);
-            }
-        });
-
-        this.tina87 = this.vista.findViewById(R.id.tina87);
-        this.tina87.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(87);
-            }
-        });
-
-        this.tina88 = this.vista.findViewById(R.id.tina88);
-        this.tina88.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(88);
-            }
-        });
-
-        this.tina89 = this.vista.findViewById(R.id.tina89);
-        this.tina89.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(89);
-            }
-        });
-
-        this.tina90 = this.vista.findViewById(R.id.tina90);
-        this.tina90.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(90);
-            }
-        });
-
-        this.tina91 = this.vista.findViewById(R.id.tina91);
-        this.tina91.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(91);
-            }
-        });
-
-        this.tina92 = this.vista.findViewById(R.id.tina92);
-        this.tina92.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(92);
-            }
-        });
-
-        this.tina93 = this.vista.findViewById(R.id.tina93);
-        this.tina93.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(93);
-            }
-        });
-
-        this.tina94 = this.vista.findViewById(R.id.tina94);
-        this.tina94.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(94);
-            }
-        });
-
-        this.tina95 = this.vista.findViewById(R.id.tina95);
-        this.tina95.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(95);
-            }
-        });
-
-        this.tina96 = this.vista.findViewById(R.id.tina96);
-        this.tina96.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accionIconoTina(96);
-            }
-        });
-
         creaObjetosVacios();
     }
 
     private void creaObjetosVacios(){
         if( this.listaTinas.isEmpty() ){
-            for( int posicion = 1; posicion <= 96; posicion++ ){
+            for( int posicion = 1; posicion <= 80; posicion++ ){
                 Tina recursoTina = new Tina();
                 recursoTina.setIdPreseleccionPosicionTina(posicion);
                 recursoTina.setEstado(Constantes.ESTADO.inicial);
@@ -1017,7 +869,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
                 });
 
                 TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText(fechaActual);
+                etiquetaFecha.setText( Utilerias.fechaActual() );
 
                 final TextView etiquetaPosicion1 = ventanaEmergente.findViewById(R.id.etiquetaPosicion1);
                 etiquetaPosicion1.setOnClickListener(new View.OnClickListener() {
@@ -1247,22 +1099,6 @@ public class Fragment_Descongelado_Plan extends Fragment{
             case 78: return this.tina78;
             case 79: return this.tina79;
             case 80: return this.tina80;
-            case 81: return this.tina81;
-            case 82: return this.tina82;
-            case 83: return this.tina83;
-            case 84: return this.tina84;
-            case 85: return this.tina85;
-            case 86: return this.tina86;
-            case 87: return this.tina87;
-            case 88: return this.tina88;
-            case 89: return this.tina89;
-            case 90: return this.tina90;
-            case 91: return this.tina91;
-            case 92: return this.tina92;
-            case 93: return this.tina93;
-            case 94: return this.tina94;
-            case 95: return this.tina95;
-            case 96: return this.tina96;
         }
         return null;
     }

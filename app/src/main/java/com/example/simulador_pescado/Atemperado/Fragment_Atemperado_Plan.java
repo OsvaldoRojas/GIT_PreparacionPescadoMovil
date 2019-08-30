@@ -133,6 +133,18 @@ public class Fragment_Atemperado_Plan extends Fragment {
     private ImageView posicion86;
     private ImageView posicion87;
     private ImageView posicion88;
+    private ImageView posicion89;
+    private ImageView posicion90;
+    private ImageView posicion91;
+    private ImageView posicion92;
+    private ImageView posicion93;
+    private ImageView posicion94;
+    private ImageView posicion95;
+    private ImageView posicion96;
+    private ImageView posicion97;
+    private ImageView posicion98;
+    private ImageView posicion99;
+    private ImageView posicion100;
 
     private PosicionEstiba posicionSeleccionada;
 
@@ -929,12 +941,108 @@ public class Fragment_Atemperado_Plan extends Fragment {
             }
         });
 
+        this.posicion89 = this.vista.findViewById(R.id.posicion89);
+        this.posicion89.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(89);
+            }
+        });
+
+        this.posicion90 = this.vista.findViewById(R.id.posicion90);
+        this.posicion90.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(90);
+            }
+        });
+
+        this.posicion91 = this.vista.findViewById(R.id.posicion91);
+        this.posicion91.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(91);
+            }
+        });
+
+        this.posicion92 = this.vista.findViewById(R.id.posicion92);
+        this.posicion92.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(92);
+            }
+        });
+
+        this.posicion93 = this.vista.findViewById(R.id.posicion93);
+        this.posicion93.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(93);
+            }
+        });
+
+        this.posicion94 = this.vista.findViewById(R.id.posicion94);
+        this.posicion94.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(94);
+            }
+        });
+
+        this.posicion95 = this.vista.findViewById(R.id.posicion95);
+        this.posicion95.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(95);
+            }
+        });
+
+        this.posicion96 = this.vista.findViewById(R.id.posicion96);
+        this.posicion96.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(96);
+            }
+        });
+
+        this.posicion97 = this.vista.findViewById(R.id.posicion97);
+        this.posicion97.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(97);
+            }
+        });
+
+        this.posicion98 = this.vista.findViewById(R.id.posicion98);
+        this.posicion98.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(98);
+            }
+        });
+
+        this.posicion99 = this.vista.findViewById(R.id.posicion99);
+        this.posicion99.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(99);
+            }
+        });
+
+        this.posicion100 = this.vista.findViewById(R.id.posicion100);
+        this.posicion100.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accionIconoPosicion(100);
+            }
+        });
+
         creaObjetosVacios();
     }
 
     private void creaObjetosVacios(){
         if( this.listaPosiciones.isEmpty() ){
-            for( int posicion = 1; posicion <= 88; posicion++ ){
+            for( int posicion = 1; posicion <= 100; posicion++ ){
                 PosicionEstiba recursoPosicion = new PosicionEstiba();
                 recursoPosicion.setIdAtemperadoPosicionTina(posicion);
                 recursoPosicion.setEstado(Constantes.ESTADO.inicial);
@@ -1066,9 +1174,9 @@ public class Fragment_Atemperado_Plan extends Fragment {
 
         if( getPosicionSeleccionada() != null ){
             vista.height = vista.height - (botonera.height*5);
-            if( getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 12
-                    || ( getPosicionSeleccionada().getIdAtemperadoPosicionTina() >= 49
-                    && getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 60 ) ){
+            if( getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 15
+                    || ( getPosicionSeleccionada().getIdAtemperadoPosicionTina() >= 51
+                    && getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 65 ) ){
                 this.vistaIconos.post(new Runnable() {
                     public void run() {
                         vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
@@ -1196,6 +1304,18 @@ public class Fragment_Atemperado_Plan extends Fragment {
             case 86: return this.posicion86;
             case 87: return this.posicion87;
             case 88: return this.posicion88;
+            case 89: return this.posicion89;
+            case 90: return this.posicion90;
+            case 91: return this.posicion91;
+            case 92: return this.posicion92;
+            case 93: return this.posicion93;
+            case 94: return this.posicion94;
+            case 95: return this.posicion95;
+            case 96: return this.posicion96;
+            case 97: return this.posicion97;
+            case 98: return this.posicion98;
+            case 99: return this.posicion99;
+            case 100: return this.posicion100;
         }
         return null;
     }

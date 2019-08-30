@@ -15,6 +15,7 @@ public class OrdenMantenimiento implements Serializable {
     private String aMaternoEmpleado;
     private String aPaternoEmpleado;
     private String descripcion;
+    private Maquinaria maquinaria;
     private List<Artefacto> listaArtefactos = new ArrayList<>();
     private List<RefaccionLista> listaRefacciones = new ArrayList<>();
 
@@ -26,6 +27,14 @@ public class OrdenMantenimiento implements Serializable {
         this.equipo = equipo;
         this.mecanico = mecanico;
         this.descripcion = descripcion;
+    }
+
+    public Maquinaria getMaquinaria() {
+        return maquinaria;
+    }
+
+    public void setMaquinaria(Maquinaria maquinaria) {
+        this.maquinaria = maquinaria;
     }
 
     public int getFolio() {
