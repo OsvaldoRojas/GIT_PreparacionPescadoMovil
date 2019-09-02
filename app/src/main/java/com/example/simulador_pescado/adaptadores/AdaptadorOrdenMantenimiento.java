@@ -8,18 +8,19 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class AdaptadorOrdenMantenimiento extends ArrayAdapter<OrdenMantenimiento> {
+public class AdaptadorOrdenMantenimiento extends ArrayAdapter<ListaOrdenMantenimientoServicio> {
 
-    private List<OrdenMantenimiento> listaOrden;
-    private List<OrdenMantenimiento> listaRespaldo = new ArrayList<>();
+    private List<ListaOrdenMantenimientoServicio> listaOrden;
+    private List<ListaOrdenMantenimientoServicio> listaRespaldo = new ArrayList<>();
 
-    public AdaptadorOrdenMantenimiento(Context contexto, List<OrdenMantenimiento> listaOrden){
+    public AdaptadorOrdenMantenimiento(Context contexto, List<ListaOrdenMantenimientoServicio> listaOrden){
         super(contexto, 0, listaOrden);
         this.listaOrden = listaOrden;
         this.listaRespaldo.addAll(listaOrden);
@@ -27,7 +28,7 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<OrdenMantenimiento
 
     @Override
     public View getView(int posicion, View vista, ViewGroup padre) {
-        OrdenMantenimiento ordenMantenimiento = getItem(posicion);
+        ListaOrdenMantenimientoServicio ordenMantenimiento = getItem(posicion);
         if(vista == null){
             vista = LayoutInflater.from( getContext() ).inflate(R.layout.item_orden_mantenimiento, padre, false);
         }
@@ -37,10 +38,10 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<OrdenMantenimiento
         TextView etiquetaEquipo = vista.findViewById(R.id.etiquetaEquipo);
         TextView etiquetaMecanico = vista.findViewById(R.id.etiquetaMecanico);
 
-        etiquetaFolio.setText( String.valueOf( ordenMantenimiento.getFolio() ) );
-        etiquetaFecha.setText( ordenMantenimiento.getFechaInicio() );
-        etiquetaEquipo.setText( ordenMantenimiento.getEquipo() );
-        etiquetaMecanico.setText( ordenMantenimiento.getMecanico() );
+        etiquetaFolio.setText( ordenMantenimiento.getFolio() );
+        etiquetaFecha.setText( ordenMantenimiento.getFecha() );
+        etiquetaEquipo.setText( ordenMantenimiento.getMaquinaria() );
+        etiquetaMecanico.setText( ordenMantenimiento.getNombreEmpleado() );
 
         if( (posicion % 2) == 0 ){
             etiquetaFolio.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
@@ -64,11 +65,11 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<OrdenMantenimiento
         if( textoBusqueda.length() == 0 ){
             this.listaOrden.addAll(this.listaRespaldo);
         }else{
-            for( OrdenMantenimiento orden : this.listaRespaldo ){
+            for( ListaOrdenMantenimientoServicio orden : this.listaRespaldo ){
                 if( String.valueOf( orden.getFolio() ).contains(textoBusqueda)
-                        || orden.getFechaInicio().contains(textoBusqueda)
-                        || orden.getEquipo().toLowerCase( Locale.getDefault() ).contains(textoBusqueda)
-                        || orden.getMecanico().toLowerCase( Locale.getDefault() ).contains(textoBusqueda) ){
+                        || orden.getFecha().contains(textoBusqueda)
+                        || orden.getMaquinaria().toLowerCase( Locale.getDefault() ).contains(textoBusqueda)
+                        || orden.getNombreEmpleado().toLowerCase( Locale.getDefault() ).contains(textoBusqueda) ){
                     this.listaOrden.add(orden);
                 }
             }
