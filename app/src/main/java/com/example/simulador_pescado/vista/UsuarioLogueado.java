@@ -5,6 +5,7 @@ public class UsuarioLogueado {
     private static UsuarioLogueado USUARIO_LOGUEADO = null;
     private int id_usuario;
     private int id_rol;
+    private long id_empleado;
     private String clave_usuario;
     private String nombre;
     private String apellido_paterno;
@@ -72,5 +73,13 @@ public class UsuarioLogueado {
 
     public void setApellido_materno(String apellido_materno) {
         this.apellido_materno = apellido_materno;
+    }
+
+    public long getId_empleado() {
+        return id_empleado;
+    }
+
+    public void setId_empleado(long id_empleado) {
+        this.id_empleado = id_empleado;
     }
 }

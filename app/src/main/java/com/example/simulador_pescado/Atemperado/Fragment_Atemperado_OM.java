@@ -1,22 +1,32 @@
 package com.example.simulador_pescado.Atemperado;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
+import com.example.simulador_pescado.conexion.CargaListaOrden;
+import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.util.ArrayList;
@@ -43,10 +53,12 @@ public class Fragment_Atemperado_OM extends Fragment {
 
     private ListView listaVistaOrden;
     private SearchView campoBusqueda;
+    private ProgressBar barraProgreso;
+    private AlertDialog ventanaError;
+    private SwipeRefreshLayout actualizar;
 
     private AdaptadorOrdenMantenimiento adaptadorOrden;
-    private OrdenMantenimiento ordenSeleccionada;
-    private List<OrdenMantenimiento> listaOrden = new ArrayList<>();
+    private ListaOrdenMantenimientoServicio ordenSeleccionada;
 
     private OnFragmentInteractionListener mListener;
 
@@ -54,11 +66,11 @@ public class Fragment_Atemperado_OM extends Fragment {
         // Required empty public constructor
     }
 
-    public OrdenMantenimiento getOrdenSeleccionada() {
+    public ListaOrdenMantenimientoServicio getOrdenSeleccionada() {
         return ordenSeleccionada;
     }
 
-    public void setOrdenSeleccionada(OrdenMantenimiento ordenSeleccionada) {
+    public void setOrdenSeleccionada(ListaOrdenMantenimientoServicio ordenSeleccionada) {
         this.ordenSeleccionada = ordenSeleccionada;
     }
 
@@ -99,7 +111,10 @@ public class Fragment_Atemperado_OM extends Fragment {
     }
 
     private void iniciaComponentes(){
-        this.listaOrden = new ArrayList<>();
+        this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        iniciaProcesando();
+
+        /*this.listaOrden = new ArrayList<>();
         this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2019", "Montacargas", "", "Prueba descripción 1") );
         this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "", "Prueba descripción 2") );
         this.listaOrden.add( new OrdenMantenimiento(3, "30/07/2019", "Bnda", "", "Prueba descripción 3") );
@@ -114,58 +129,116 @@ public class Fragment_Atemperado_OM extends Fragment {
         this.listaOrden.add( new OrdenMantenimiento(12, "31/07/2019", "Recepción", "", "Prueba descripción 12") );
         this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "", "Prueba descripción 13") );
         this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "", "Prueba descripción 14") );
-        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "", "Prueba descripción 15") );
+        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "", "Prueba descripción 15") );*/
 
         this.campoBusqueda = this.vista.findViewById(R.id.campoBusqueda);
         this.campoBusqueda.setIconifiedByDefault(false);
         this.campoBusqueda.setSubmitButtonEnabled(false);
-        this.campoBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String texto) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String texto) {
-                adaptadorOrden.filtro(texto);
-                return false;
-            }
-        });
-
-        this.adaptadorOrden = new AdaptadorOrdenMantenimiento( getContext(), this.listaOrden );
         this.listaVistaOrden = this.vista.findViewById(R.id.listaOrden);
-        this.listaVistaOrden.setAdapter(this.adaptadorOrden);
         this.listaVistaOrden.setTextFilterEnabled(true);
 
-        this.listaVistaOrden.setLongClickable(true);
-        this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        this.actualizar = this.vista.findViewById(R.id.actualizar);
+        this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
-                setOrdenSeleccionada( listaOrden.get(posicion) );
-                PopupMenu menu = new PopupMenu(getContext(), vista);
-                menu.getMenuInflater().inflate( R.menu.menu_lista_orden, menu.getMenu() );
-                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch ( item.getItemId() ){
-                            case R.id.asignarMecanico:
-                                asignaMecanico();
-                                return true;
-                            case R.id.cerrarTiempo:
-                                System.out.println("CERRAR TIEMPO....");
-                                return true;
-                            case R.id.detalle:
-                                muestraDetalle();
-                                return true;
-                        }
-                        setOrdenSeleccionada(null);
-                        return false;
-                    }
-                });
-                menu.show();
-                return false;
+            public void onRefresh() {
+                actualizar.setRefreshing(true);
+                getOrdenesMantenimiento();
             }
         });
+
+        getOrdenesMantenimiento();
+    }
+
+    private void getOrdenesMantenimiento(){
+        CargaListaOrden cargaListaOrden = new CargaListaOrden(Catalogos.getInstancia().getEtapaActual(), 0, this);
+        cargaListaOrden.execute();
+    }
+
+    public void resultadoServicioLista(final List<ListaOrdenMantenimientoServicio> lista){
+        if( isAdded() ){
+            this.adaptadorOrden = new AdaptadorOrdenMantenimiento( getContext(), lista );
+            this.listaVistaOrden.setAdapter(this.adaptadorOrden);
+
+            this.listaVistaOrden.setLongClickable(true);
+            this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
+                    setOrdenSeleccionada( lista.get(posicion) );
+                    PopupMenu menu = new PopupMenu(getContext(), vista);
+                    menu.getMenuInflater().inflate( R.menu.menu_lista_orden, menu.getMenu() );
+                    menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch ( item.getItemId() ){
+                                case R.id.asignarMecanico:
+                                    asignaMecanico();
+                                    return true;
+                                case R.id.cerrarTiempo:
+                                    System.out.println("CERRAR TIEMPO....");
+                                    return true;
+                                case R.id.detalle:
+                                    muestraDetalle();
+                                    return true;
+                            }
+                            setOrdenSeleccionada(null);
+                            return false;
+                        }
+                    });
+                    menu.show();
+                    return false;
+                }
+            });
+
+            this.campoBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String texto) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String texto) {
+                    adaptadorOrden.filtro(texto);
+                    return false;
+                }
+            });
+
+            terminaProcesando();
+        }
+    }
+
+    public void errorServicio(ErrorServicio errorMensaje){
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     private void muestraDetalle(){
@@ -176,6 +249,17 @@ public class Fragment_Atemperado_OM extends Fragment {
     private void asignaMecanico(){
         Fragment fragment = new Fragment_Atemperado_AsignaMecanico().newInstance( getOrdenSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
+    public void iniciaProcesando(){
+        this.barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        if( this.actualizar.isRefreshing() ){
+            this.actualizar.setRefreshing(false);
+        }
+        this.barraProgreso.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

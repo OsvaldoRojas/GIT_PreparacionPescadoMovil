@@ -6,6 +6,7 @@ import java.util.List;
 
 public class OrdenMantenimiento implements Serializable {
 
+    private long idOrdenMantenimiento;
     private int folio;
     private String fechaInicio;
     private String fechaFin;
@@ -27,6 +28,14 @@ public class OrdenMantenimiento implements Serializable {
         this.equipo = equipo;
         this.mecanico = mecanico;
         this.descripcion = descripcion;
+    }
+
+    public long getIdOrdenMantenimiento() {
+        return idOrdenMantenimiento;
+    }
+
+    public void setIdOrdenMantenimiento(long idOrdenMantenimiento) {
+        this.idOrdenMantenimiento = idOrdenMantenimiento;
     }
 
     public Maquinaria getMaquinaria() {
