@@ -1,24 +1,38 @@
 package com.example.simulador_pescado.Atemperado;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.ActividadArtefactos;
+import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.conexion.ObtenArtefactosMaquinaria;
+import com.example.simulador_pescado.vista.Artefacto;
+import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.OrdenMantenimiento;
 import com.example.simulador_pescado.vista.PosicionEstiba;
 import com.example.simulador_pescado.vista.Tina;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Atemperado_CreaOrdenMantenimiento extends Fragment {
 
@@ -33,6 +47,10 @@ public class Fragment_Atemperado_CreaOrdenMantenimiento extends Fragment {
 
     private PosicionEstiba posicionSeleccionada;
     private OperadorMontacargas montacargasSeleccionado;
+    private Maquinaria maquinaria;
+    private OrdenMantenimiento ordenMantenimiento = new OrdenMantenimiento();
+
+    private List<Artefacto> catalogoArtefactos = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -128,7 +146,21 @@ public class Fragment_Atemperado_CreaOrdenMantenimiento extends Fragment {
         this.montacargasSeleccionado = montacargasSeleccionado;
     }
 
+    public Maquinaria getMaquinaria() {
+        return maquinaria;
+    }
+
+    public void setMaquinaria(Maquinaria maquinaria) {
+        this.maquinaria = maquinaria;
+    }
+
+    public OrdenMantenimiento getOrdenMantenimiento() {
+        return ordenMantenimiento;
+    }
+
     private void iniciaComponentes(){
+        iniciaProcesando();
+
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,19 +170,98 @@ public class Fragment_Atemperado_CreaOrdenMantenimiento extends Fragment {
             }
         });
 
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iniciaProcesando();
+                guardaOrden();
+            }
+        });
+
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText( Utilerias.fechaActual() );
 
-        TextView etiquetaEquipo = this.vista.findViewById(R.id.etiquetaEquipo);
+        Button botonArtefactos = this.vista.findViewById(R.id.botonArtefactos);
+        botonArtefactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent artefactos = new Intent(getContext(), ActividadArtefactos.class);
+                artefactos.putExtra("catalogo", (Serializable) catalogoArtefactos);
+                startActivityForResult(artefactos, 0);
+            }
+        });
 
+        TextView etiquetaEquipo = this.vista.findViewById(R.id.etiquetaEquipo);
         if( this.mParam1 instanceof PosicionEstiba ){
             setPosicionSeleccionada( (PosicionEstiba) this.mParam1 );
-            etiquetaEquipo.setText("Tina");
+            if( obtenMaquinaria( getPosicionSeleccionada().getClave() ) ){
+                etiquetaEquipo.setText( getMaquinaria().getDescripcion() );
+            }
         }else{
             if( this.mParam1 instanceof OperadorMontacargas ){
                 setMontacargasSeleccionado( (OperadorMontacargas) this.mParam1 );
-                etiquetaEquipo.setText("Montacargas");
+                if( obtenMaquinaria( getMontacargasSeleccionado().getClave() ) ){
+                    etiquetaEquipo.setText( getMaquinaria().getDescripcion() );
+                }
             }
         }
+
+        ObtenArtefactosMaquinaria obtenArtefactosMaquinaria = new ObtenArtefactosMaquinaria(this, getMaquinaria().getIdMaquinaria() );
+        obtenArtefactosMaquinaria.execute();
+    }
+
+    private boolean obtenMaquinaria(String clave){
+        for( Maquinaria maquinariaLista : Catalogos.getInstancia().getCatalogoMaquinaria() ){
+            if( maquinariaLista.getClave().equalsIgnoreCase(clave) ){
+                setMaquinaria(maquinariaLista);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void resultadoCatalogoArtefacto(List<Artefacto> lista){
+        this.catalogoArtefactos = lista;
+        terminaProcesando();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( resultCode == RESULT_OK ){
+            this.catalogoArtefactos = (List<Artefacto>) data.getSerializableExtra("artefactos");
+            List<Artefacto> artefactos = new ArrayList<>();
+            for( Artefacto artefacto : this.catalogoArtefactos ){
+                if( artefacto.getSelecionado() ){
+                    artefactos.add(artefacto);
+                }
+            }
+            getOrdenMantenimiento().setListaArtefactos(artefactos);
+        }
+    }
+
+    private void guardaOrden(){
+        getOrdenMantenimiento().setMaquinaria( getMaquinaria() );
+        TextView descripcion = this.vista.findViewById(R.id.campoDescripcion);
+        getOrdenMantenimiento().setDescripcion( descripcion.getText().toString() );
+        if( getOrdenMantenimiento().getListaArtefactos() == null ){
+            getOrdenMantenimiento().setListaArtefactos( new ArrayList<Artefacto>() );
+        }
+        // CONSUMIR SERVICIO PARA GUARDAR ORDEN DE MANTENIMIENTO
+        terminaProcesando();
+        Fragment fragment = new Contenedor().newInstance(1);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
+    public void iniciaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.GONE);
     }
 }

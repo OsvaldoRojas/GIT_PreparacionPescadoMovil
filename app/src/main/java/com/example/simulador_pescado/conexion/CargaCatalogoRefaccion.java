@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Constantes;
-import com.example.simulador_pescado.vista.Maquinaria;
+import com.example.simulador_pescado.vista.Refaccion;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,34 +19,25 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CargaCatalogoMaquinaria extends AsyncTask<Void,Integer,Boolean> {
+public class CargaCatalogoRefaccion extends AsyncTask<Void,Integer,Boolean> {
 
-    private static final String URL = "/catalogos/maquinarias/%s";
-    private List<Maquinaria> listaMaquinaria = new ArrayList<>();
-    private int etapa;
-
-    public CargaCatalogoMaquinaria(int etapa){
-        this.etapa = etapa;
-    }
+    private static final String URL = "/catalogos/refacciones";
+    private List<Refaccion> listaRefacciones = new ArrayList<>();
 
     @Override
     protected Boolean doInBackground(Void... voids) {
-        String urlValores = this.URL;
-        urlValores = String.format(urlValores, this.etapa);
         HttpClient conexion = new DefaultHttpClient();
-        HttpGet peticion = new HttpGet( Constantes.URL_SERVICIOS.concat(urlValores) );
+        HttpGet peticion = new HttpGet( Constantes.URL_SERVICIOS.concat(this.URL) );
 
         peticion.setHeader("content-type", "application/json");
 
         try {
             HttpResponse respuesta = conexion.execute(peticion);
             String respuestaJson = EntityUtils.toString( respuesta.getEntity() );
-            byte resultadoByte[] = respuestaJson.getBytes("ISO-8859-1");
-            String resultadoFinal = new String(resultadoByte, "UTF-8");
             Gson gson = new Gson();
             if( respuesta.getStatusLine().getStatusCode() == 200 ){
-                Type listaPlantilla = new TypeToken<List<Maquinaria>>(){}.getType();
-                this.listaMaquinaria = gson.fromJson(resultadoFinal, listaPlantilla);
+                Type listaPlantilla = new TypeToken<List<Refaccion>>(){}.getType();
+                this.listaRefacciones = gson.fromJson(respuestaJson, listaPlantilla);
                 return true;
             }
         } catch (IOException e) {
@@ -58,7 +49,7 @@ public class CargaCatalogoMaquinaria extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            Catalogos.getInstancia().setCatalogoMaquinaria(this.listaMaquinaria);
+            Catalogos.getInstancia().setCatalogoRefaccion(this.listaRefacciones);
         }
     }
 }

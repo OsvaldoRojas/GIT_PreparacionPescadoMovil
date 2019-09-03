@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simulador_pescado.conexion.CargaCatalogoEtapa;
+import com.example.simulador_pescado.conexion.CargaCatalogoRefaccion;
 import com.example.simulador_pescado.conexion.CargaCatalogosTina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
@@ -30,6 +31,7 @@ public class Turno extends AppCompatActivity {
         UsuarioLogueado ul = new UsuarioLogueado();
         ul.setNombre("Nombre");
         ul.setApellido_paterno("Usuario");
+        ul.setClave_usuario("usuarioerp");
         UsuarioLogueado.getUsuarioLogueado(ul);
 
         this.turnoUno = findViewById(R.id.turnoUno);
@@ -70,5 +72,8 @@ public class Turno extends AppCompatActivity {
 
         CargaCatalogosTina cargaCatalogosTina = new CargaCatalogosTina();
         cargaCatalogosTina.execute();
+
+        CargaCatalogoRefaccion cargaCatalogoRefaccion = new CargaCatalogoRefaccion();
+        cargaCatalogoRefaccion.execute();
     }
 }

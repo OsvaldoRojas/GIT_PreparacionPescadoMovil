@@ -1,7 +1,7 @@
 package com.example.simulador_pescado.Preselecion;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,12 +11,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.Bascula;
+import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.Tina;
@@ -95,7 +99,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
     private List<Bascula> listaBasculas = new ArrayList<>();
 
-    private AlertDialog ventanaEmergente;
+    private AlertDialog ventanaError;
     private ProgressBar barraProgreso;
     private Button botonCrear;
 
@@ -179,24 +183,76 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
         return vista;
     }
 
+    private boolean validaMaquinaria(String clave){
+        for( Maquinaria maquinariaLista : Catalogos.getInstancia().getCatalogoMaquinaria() ){
+            if( maquinariaLista.getClave().equalsIgnoreCase(clave) ){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void creaOrdenTina(){
-        Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        if( validaMaquinaria( getTinaSeleccionada().getClave() ) ){
+            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        }else{
+            errorMaquinaria();
+        }
     }
 
     private void creaOrdenOperador(){
-        Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado() );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        if( validaMaquinaria( getOperadorSeleccionado().getClave() ) ){
+            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado() );
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        }else{
+            errorMaquinaria();
+        }
     }
 
     private void creaOrdenBascula(){
-        Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada() );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        if( validaMaquinaria( getBasculaSeleccionada().getClave() ) ){
+            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada() );
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        }else{
+            errorMaquinaria();
+        }
     }
 
     private void creaOrdenMontacargas(){
-        Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        if( validaMaquinaria( getMontacargasSeleccionado().getClave() ) ){
+            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        }else{
+            errorMaquinaria();
+        }
+    }
+
+    public void errorMaquinaria(){
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText("No se encontró Maquinaria para el recurso seleccionado");
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     private void iniciaComponentes(){

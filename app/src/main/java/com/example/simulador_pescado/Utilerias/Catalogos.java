@@ -4,6 +4,7 @@ import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.Etapa;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.Maquinaria;
+import com.example.simulador_pescado.vista.Refaccion;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 
@@ -19,6 +20,7 @@ public class Catalogos {
     private List<Talla> catalogoTalla = new ArrayList<>();
     private List<GrupoEspecie> catalogoGrupoEspecie = new ArrayList<>();
     private List<Especialidad> catalogoEspecialidad = new ArrayList<>();
+    private List<Refaccion> catalogoRefaccion = new ArrayList<>();
     private int etapaActual;
 
     public static Catalogos getInstancia(){
@@ -103,5 +105,18 @@ public class Catalogos {
         especialidad.setIdEspecialidad(0);
         this.catalogoEspecialidad.add(especialidad);
         this.catalogoEspecialidad.addAll(catalogoEspecialidad);
+    }
+
+    public List<Refaccion> getCatalogoRefaccion() {
+        return catalogoRefaccion;
+    }
+
+    public void setCatalogoRefaccion(List<Refaccion> catalogoRefaccion) {
+        this.catalogoRefaccion = new ArrayList<>();
+        Refaccion refaccion = new Refaccion();
+        refaccion.setIdRefaccion(0);
+        refaccion.setDescripcion("Refacción");
+        this.catalogoRefaccion.add(refaccion);
+        this.catalogoRefaccion.addAll(catalogoRefaccion);
     }
 }

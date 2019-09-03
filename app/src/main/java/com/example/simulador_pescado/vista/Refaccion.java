@@ -4,22 +4,16 @@ import java.io.Serializable;
 
 public class Refaccion implements Serializable {
 
-    private int idArtefacto;
+    private long idRefaccion;
     private String descripcion;
+    private String codigo;
 
-    public Refaccion(){}
-
-    public Refaccion(int idArtefacto, String descripcion){
-        this.idArtefacto = idArtefacto;
-        this.descripcion = descripcion;
+    public long getIdRefaccion() {
+        return idRefaccion;
     }
 
-    public int getIdArtefacto() {
-        return idArtefacto;
-    }
-
-    public void setIdArtefacto(int idArtefacto) {
-        this.idArtefacto = idArtefacto;
+    public void setIdRefaccion(long idRefaccion) {
+        this.idRefaccion = idRefaccion;
     }
 
     public String getDescripcion() {
@@ -28,5 +22,13 @@ public class Refaccion implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 }

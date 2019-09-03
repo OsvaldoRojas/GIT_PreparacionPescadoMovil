@@ -12,9 +12,9 @@ import com.example.simulador_pescado.vista.RefaccionLista;
 
 import java.util.List;
 
-public class AdaptadorArtefactoLista extends ArrayAdapter<RefaccionLista> {
+public class AdaptadorRefaccionLista extends ArrayAdapter<RefaccionLista> {
 
-    public AdaptadorArtefactoLista(Context contexto, List<RefaccionLista> listaArtefactos){
+    public AdaptadorRefaccionLista(Context contexto, List<RefaccionLista> listaArtefactos){
         super(contexto, 0, listaArtefactos);
     }
 

@@ -8,8 +8,6 @@ public class RefaccionLista implements Serializable {
     private int cantidad;
     private String codigo;
 
-    public RefaccionLista(){}
-
     public RefaccionLista(Refaccion refaccion, int cantidad, String codigo){
         this.refaccion = refaccion;
         this.cantidad = cantidad;
