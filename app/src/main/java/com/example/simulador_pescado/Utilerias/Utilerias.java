@@ -50,4 +50,53 @@ public class Utilerias {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
          return formatoFecha.format( new Date() );
     }
+
+    public static String cambiaAcentos(String mensaje){
+        String resultado = "";
+        for ( char c : mensaje.toCharArray() ){
+            String valor = String.valueOf(c);
+            switch (valor){
+                case "á":
+                    resultado = resultado.concat("\\u00e1");
+                    break;
+                case "é":
+                    resultado = resultado.concat("\\u00e9");
+                    break;
+                case "í":
+                    resultado = resultado.concat("\\u00ed");
+                    break;
+                case "ó":
+                    resultado = resultado.concat("\\u00f3");
+                    break;
+                case "ú":
+                    resultado = resultado.concat("\\u00fa");
+                    break;
+                case "Á":
+                    resultado = resultado.concat("\\u00c1");
+                    break;
+                case "É":
+                    resultado = resultado.concat("\\u00c9");
+                    break;
+                case "Í":
+                    resultado = resultado.concat("\\u00cd");
+                    break;
+                case "Ó":
+                    resultado = resultado.concat("\\u00d3");
+                    break;
+                case "Ú":
+                    resultado = resultado.concat("\\u00da");
+                    break;
+                case "ñ":
+                    resultado = resultado.concat("\\u00f1");
+                    break;
+                case "Ñ":
+                    resultado = resultado.concat("\\u00d1");
+                    break;
+                    default:
+                        resultado = resultado.concat(valor);
+
+            }
+        }
+        return mensaje;
+    }
 }

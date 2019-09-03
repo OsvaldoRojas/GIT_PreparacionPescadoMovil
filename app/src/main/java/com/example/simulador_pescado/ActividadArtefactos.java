@@ -1,7 +1,6 @@
 package com.example.simulador_pescado;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,6 @@ import com.example.simulador_pescado.adaptadores.AdaptadorMaquinariaArtefacto;
 import com.example.simulador_pescado.vista.Artefacto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActividadArtefactos extends AppCompatActivity {

@@ -1,6 +1,7 @@
 package com.example.simulador_pescado.Preselecion;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.ActividadArtefactos;
@@ -19,9 +21,11 @@ import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.conexion.GuardaOrdenMantenimiento;
 import com.example.simulador_pescado.conexion.ObtenArtefactosMaquinaria;
 import com.example.simulador_pescado.vista.Artefacto;
 import com.example.simulador_pescado.vista.Bascula;
+import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
@@ -51,6 +55,8 @@ public class Fragment_Preseleccion_CreaOrdenMantenimiento extends Fragment {
     private Bascula basculaSeleccionada;
     private Maquinaria maquinaria;
     private OrdenMantenimiento ordenMantenimiento = new OrdenMantenimiento();
+
+    private AlertDialog ventanaError;
 
     private List<Artefacto> catalogoArtefactos = new ArrayList<>();
 
@@ -232,7 +238,7 @@ public class Fragment_Preseleccion_CreaOrdenMantenimiento extends Fragment {
                     if( this.mParam1 instanceof Bascula ){
                         setBasculaSeleccionada( (Bascula) this.mParam1 );
                         if( obtenMaquinaria( getBasculaSeleccionada().getClave() ) ){
-                            etiquetaEquipo.setText( parseaMensaje( getMaquinaria().getDescripcion() ) );
+                            etiquetaEquipo.setText( getMaquinaria().getDescripcion() );
                         }
                     }
                 }
@@ -251,13 +257,6 @@ public class Fragment_Preseleccion_CreaOrdenMantenimiento extends Fragment {
             }
         }
         return false;
-    }
-
-    private String parseaMensaje(String mensaje){
-        if( mensaje.contains("BÃ¡scula") ){
-            mensaje = mensaje.replace("Ã¡", "á");
-        }
-        return mensaje;
     }
 
     public void resultadoCatalogoArtefacto(List<Artefacto> lista){
@@ -286,10 +285,49 @@ public class Fragment_Preseleccion_CreaOrdenMantenimiento extends Fragment {
         if( getOrdenMantenimiento().getListaArtefactos() == null ){
             getOrdenMantenimiento().setListaArtefactos( new ArrayList<Artefacto>() );
         }
-        // CONSUMIR SERVICIO PARA GUARDAR ORDEN DE MANTENIMIENTO
+
+        GuardaOrdenMantenimiento guarda = new GuardaOrdenMantenimiento(this, getOrdenMantenimiento() );
+        guarda.execute();
+    }
+
+    public void resultadoGuardadoOrden(){
         terminaProcesando();
         Fragment fragment = new Contenedor().newInstance(1);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
+    public void errorServicio(ErrorServicio errorMensaje){
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     public void iniciaProcesando(){

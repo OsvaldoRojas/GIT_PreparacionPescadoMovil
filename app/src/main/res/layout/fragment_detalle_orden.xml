@@ -187,16 +187,22 @@
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp" />
 
-                            <Spinner
+                            <TextView
                                 android:id="@+id/campoCodigo"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:layout_weight="1"
                                 android:layout_marginRight="5dp"
-                                android:background="@color/blanco"/>
+                                android:hint="Código"
+                                android:gravity="center_horizontal"
+                                android:textColor="@color/negro"
+                                android:background="@color/blanco"
+                                android:textSize="15dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp" />
 
                             <Spinner
-                                android:id="@+id/campoArtefacto"
+                                android:id="@+id/campoRefaccion"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:layout_weight="0.8"

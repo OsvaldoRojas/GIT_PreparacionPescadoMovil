@@ -1,16 +1,19 @@
 package com.example.simulador_pescado.Preselecion;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,9 +23,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
-import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoLista;
+import com.example.simulador_pescado.adaptadores.AdaptadorRefaccionLista;
+import com.example.simulador_pescado.conexion.ObtenDetalleOrden;
+import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
 import com.example.simulador_pescado.vista.Refaccion;
 import com.example.simulador_pescado.vista.RefaccionLista;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
@@ -134,15 +141,15 @@ public class Fragment_Preseleccion_DetalleOrden extends Fragment {
     }
 
     private void iniciaComponentes(){
-        List<Refaccion> listaRefacciones = new ArrayList<>();
-        listaRefacciones.add( new Refaccion(0, "Refacción") );
-        listaRefacciones.add( new Refaccion(1, "Refacción 1") );
-        listaRefacciones.add( new Refaccion(2, "Refacción 2") );
-        listaRefacciones.add( new Refaccion(3, "Refacción 3") );
+        iniciaProcesando();
+        ListaOrdenMantenimientoServicio orden = (ListaOrdenMantenimientoServicio) this.mParam1;
 
-        String[] listaCodigos = {"Código","001","002","003"};
+        ObtenDetalleOrden detalleOrden = new ObtenDetalleOrden( this, orden.getIdOrdenMantenimiento() );
+        detalleOrden.execute();
+    }
 
-        setOrdenSeleccionada( (OrdenMantenimiento) this.mParam1 );
+    public void resultadoDetalleOrden(OrdenMantenimiento ordenMantenimiento){
+        setOrdenSeleccionada(ordenMantenimiento);
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +164,7 @@ public class Fragment_Preseleccion_DetalleOrden extends Fragment {
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //limpiarCampos();
+
             }
         });
 
@@ -175,19 +182,33 @@ public class Fragment_Preseleccion_DetalleOrden extends Fragment {
 
         final EditText campoCantidad = this.vista.findViewById(R.id.campoCantidad);
 
-        final Spinner campoCodigo = this.vista.findViewById(R.id.campoCodigo);
-        campoCodigo.setAdapter( new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaCodigos) );
+        final TextView campoCodigo = this.vista.findViewById(R.id.campoCodigo);
 
-        final Spinner campoArtefacto = this.vista.findViewById(R.id.campoArtefacto);
-        campoArtefacto.setAdapter( new AdaptadorArtefacto( getContext(), listaRefacciones) );
+        final Spinner campoRefaccion = this.vista.findViewById(R.id.campoRefaccion);
+        campoRefaccion.setAdapter( new AdaptadorArtefacto( getContext(), Catalogos.getInstancia().getCatalogoRefaccion() ) );
+        campoRefaccion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if( ( (Refaccion) adapterView.getItemAtPosition(i) ).getIdRefaccion() == 0 ){
+                    campoCodigo.setText("");
+                }else{
+                    campoCodigo.setText( ( (Refaccion) adapterView.getItemAtPosition(i) ).getCodigo() );
+                }
+            }
 
-        final AdaptadorArtefactoLista adaptadorArtefactoLista = new AdaptadorArtefactoLista(
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        final AdaptadorRefaccionLista adaptadorRefaccionLista = new AdaptadorRefaccionLista(
                 getContext(),
                 getOrdenSeleccionada().getListaRefacciones()
         );
-        final ListView listaArtefactosVista = this.vista.findViewById(R.id.listaRefacciones);
-        listaArtefactosVista.setAdapter(adaptadorArtefactoLista);
-        Utilerias.setAlturaLista(listaArtefactosVista, 0);
+        final ListView listaRefaccionVista = this.vista.findViewById(R.id.listaRefacciones);
+        listaRefaccionVista.setAdapter(adaptadorRefaccionLista);
+        Utilerias.setAlturaLista(listaRefaccionVista, 0);
 
         final LinearLayout contenedorEncabezados = this.vista.findViewById(R.id.contenedorEncabezados);
         if( !getOrdenSeleccionada().getListaArtefactos().isEmpty() ){
@@ -200,41 +221,107 @@ public class Fragment_Preseleccion_DetalleOrden extends Fragment {
         botonAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                contenedorEncabezados.setVisibility(View.VISIBLE);
-                getOrdenSeleccionada().getListaRefacciones().add(
-                        new RefaccionLista(
-                                (Refaccion) campoArtefacto.getSelectedItem(),
-                                Integer.valueOf( campoCantidad.getText().toString() ),
-                                campoCodigo.getSelectedItem().toString()
-                        )
-                );
-                adaptadorArtefactoLista.notifyDataSetChanged();
-                Utilerias.setAlturaLista(listaArtefactosVista, 0);
+                if( !campoCodigo.getText().toString().equalsIgnoreCase("") &&
+                        !campoCantidad.getText().toString().equalsIgnoreCase("") &&
+                        ( (Refaccion) campoRefaccion.getSelectedItem() ).getIdRefaccion() != 0 ){
+                    contenedorEncabezados.setVisibility(View.VISIBLE);
+                    getOrdenSeleccionada().getListaRefacciones().add(
+                            new RefaccionLista(
+                                    (Refaccion) campoRefaccion.getSelectedItem(),
+                                    Integer.valueOf( campoCantidad.getText().toString() ),
+                                    campoCodigo.getText().toString()
+                            )
+                    );
+                    adaptadorRefaccionLista.notifyDataSetChanged();
+                    Utilerias.setAlturaLista(listaRefaccionVista, 0);
 
-                vistaScroll.post(new Runnable() {
-                    public void run() {
-                        vistaScroll.fullScroll(vistaScroll.FOCUS_DOWN);
-                    }
-                });
+                    vistaScroll.post(new Runnable() {
+                        public void run() {
+                            vistaScroll.fullScroll(vistaScroll.FOCUS_DOWN);
+                        }
+                    });
 
-                campoCantidad.setText("");
-                campoArtefacto.setSelection(0);
-                campoCodigo.setSelection(0);
+                    campoCantidad.setText("");
+                    campoRefaccion.setSelection(0);
+                    campoCodigo.setText("");
+                }else{
+                    errorValidacion("Es necesario capturar todos los campos");
+                }
             }
         });
+
+        terminaProcesando();
     }
 
-    private void limpiarCampos(){
-        OrdenMantenimiento orden = getOrdenSeleccionada();
-        List<RefaccionLista> lista = new ArrayList<>();
-        for( RefaccionLista refaccionLista : orden.getListaRefacciones() ){
-            if( refaccionLista.getRefaccion().getDescripcion().equalsIgnoreCase("Refacción") ){
-                lista.add(refaccionLista);
+    public void errorValidacion(final String mensaje){
+        final AlertDialog ventanaEmergente;
+        AlertDialog.Builder builder = new AlertDialog.Builder( getContext() );
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        ventanaEmergente = builder.create();
+        ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
             }
+        });
+        ventanaEmergente.show();
+    }
+
+    public void errorServicio(ErrorServicio errorMensaje){
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
         }
 
-        for(RefaccionLista refaccionLista : lista){
-            orden.getListaArtefactos().remove(refaccionLista);
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
+    }
+
+    public void iniciaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        barraProgreso.setVisibility(View.GONE);
     }
 }

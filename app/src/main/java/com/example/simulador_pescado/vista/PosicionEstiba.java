@@ -6,9 +6,15 @@ import java.io.Serializable;
 
 public class PosicionEstiba implements Serializable {
 
+    private static final String CLAVE = "MAQ-EST";
+
     private int idAtemperadoPosicionTina;
     private int conteoNivel;
     private Boolean bloqueado;
+
+    public String getClave(){
+        return CLAVE;
+    }
 
     private Constantes.ESTADO estado;
 
