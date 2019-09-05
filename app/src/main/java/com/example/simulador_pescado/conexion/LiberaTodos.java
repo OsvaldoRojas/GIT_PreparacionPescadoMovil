@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
@@ -37,7 +38,10 @@ public class LiberaTodos extends AsyncTask<Void,Integer,Boolean> {
         Gson gson = new Gson();
         solicitudPut.setHeader("content-type", "application/json");
 
-        String json = "{ \"usuario\": \"usuarioerp\" }";
+        //String json = "{ \"usuario\": \"usuarioerp\" }";
+        String json = "{\"usuario\":\""
+                .concat( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() )
+                .concat("\"}");
         try {
             solicitudPut.setEntity( new StringEntity(json) );
         } catch (UnsupportedEncodingException e) {

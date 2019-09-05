@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Constantes;
@@ -194,7 +195,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
     private void creaOrdenTina(){
         if( validaMaquinaria( getTinaSeleccionada().getClave() ) ){
-            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada() );
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada().getClave() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -203,7 +204,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
     private void creaOrdenOperador(){
         if( validaMaquinaria( getOperadorSeleccionado().getClave() ) ){
-            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado() );
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado().getClave() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -212,7 +213,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
     private void creaOrdenBascula(){
         if( validaMaquinaria( getBasculaSeleccionada().getClave() ) ){
-            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada() );
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada().getClave() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -221,7 +222,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
     private void creaOrdenMontacargas(){
         if( validaMaquinaria( getMontacargasSeleccionado().getClave() ) ){
-            Fragment fragment = new Fragment_Preseleccion_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado().getClave() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();

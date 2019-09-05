@@ -126,6 +126,16 @@
 
                     </LinearLayout>
 
+                    <ListView
+                        android:id="@+id/listaArtefactos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:visibility="gone"
+                        android:background="@color/blanco"/>
+
                     <TextView
                         android:id="@+id/etiquetaDescripcion"
                         android:layout_width="match_parent"
@@ -291,7 +301,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 android:gravity="bottom">
 
                 <Button

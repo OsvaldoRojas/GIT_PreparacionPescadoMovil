@@ -4,8 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_CreaOrdenMantenimiento;
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_CreaOrdenMantenimiento;
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.Artefacto;
 import com.google.gson.Gson;
@@ -60,12 +59,6 @@ public class ObtenArtefactosMaquinaria extends AsyncTask<Void,Integer,Boolean> {
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-        if( this.pantalla instanceof Fragment_Preseleccion_CreaOrdenMantenimiento ){
-            ( (Fragment_Preseleccion_CreaOrdenMantenimiento) this.pantalla ).resultadoCatalogoArtefacto(this.listaArtefactos);
-        }else{
-            if( this.pantalla instanceof Fragment_Atemperado_CreaOrdenMantenimiento ){
-                ( (Fragment_Atemperado_CreaOrdenMantenimiento) this.pantalla ).resultadoCatalogoArtefacto(this.listaArtefactos);
-            }
-        }
+        ( (Fragment_CreaOrdenMantenimiento) this.pantalla ).resultadoCatalogoArtefacto(this.listaArtefactos);
     }
 }

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
-import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,8 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<ListaOrdenMantenim
         etiquetaFolio.setText( ordenMantenimiento.getFolio() );
         etiquetaFecha.setText( ordenMantenimiento.getFecha() );
         etiquetaEquipo.setText( ordenMantenimiento.getMaquinaria() );
-        etiquetaMecanico.setText( ordenMantenimiento.getNombreEmpleado() );
+        etiquetaMecanico.setText( ordenMantenimiento.getNombreEmpleado().concat(" ")
+                .concat( ordenMantenimiento.getaPaternoEmpleado() ) );
 
         if( (posicion % 2) == 0 ){
             etiquetaFolio.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
@@ -67,9 +67,10 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<ListaOrdenMantenim
         }else{
             for( ListaOrdenMantenimientoServicio orden : this.listaRespaldo ){
                 if( String.valueOf( orden.getFolio() ).contains(textoBusqueda)
-                        || orden.getFecha().contains(textoBusqueda)
+                        || orden.getFecha().substring(0, 10).contains(textoBusqueda)
                         || orden.getMaquinaria().toLowerCase( Locale.getDefault() ).contains(textoBusqueda)
-                        || orden.getNombreEmpleado().toLowerCase( Locale.getDefault() ).contains(textoBusqueda) ){
+                        || orden.getNombreEmpleado().toLowerCase( Locale.getDefault() ).contains(textoBusqueda)
+                        || orden.getaPaternoEmpleado().toLowerCase( Locale.getDefault() ).contains(textoBusqueda) ){
                     this.listaOrden.add(orden);
                 }
             }

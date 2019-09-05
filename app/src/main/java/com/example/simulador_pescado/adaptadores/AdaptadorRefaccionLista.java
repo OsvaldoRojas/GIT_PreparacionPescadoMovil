@@ -8,19 +8,19 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.vista.RefaccionLista;
+import com.example.simulador_pescado.vista.RefaccionOrden;
 
 import java.util.List;
 
-public class AdaptadorRefaccionLista extends ArrayAdapter<RefaccionLista> {
+public class AdaptadorRefaccionLista extends ArrayAdapter<RefaccionOrden> {
 
-    public AdaptadorRefaccionLista(Context contexto, List<RefaccionLista> listaArtefactos){
+    public AdaptadorRefaccionLista(Context contexto, List<RefaccionOrden> listaArtefactos){
         super(contexto, 0, listaArtefactos);
     }
 
     @Override
     public View getView(int posicion, View vista, ViewGroup padre) {
-        final RefaccionLista refaccionLista = getItem(posicion);
+        final RefaccionOrden refaccionOrden = getItem(posicion);
         if(vista == null){
             vista = LayoutInflater.from( getContext() ).inflate(R.layout.item_artefacto, padre, false);
         }
@@ -29,9 +29,9 @@ public class AdaptadorRefaccionLista extends ArrayAdapter<RefaccionLista> {
         TextView campoCodigo = vista.findViewById(R.id.etiquetaCodigo);
         TextView campoArtefacto = vista.findViewById(R.id.etiquetaArtefacto);
 
-        campoCantidad.setText( String.valueOf( refaccionLista.getCantidad() ) );
-        campoCodigo.setText( refaccionLista.getCodigo() );
-        campoArtefacto.setText( refaccionLista.getRefaccion().getDescripcion() );
+        campoCantidad.setText( String.valueOf( refaccionOrden.getCantidad() ) );
+        campoCodigo.setText( refaccionOrden.getCodigoRefaccion() );
+        campoArtefacto.setText( refaccionOrden.getDescripcionRefaccion() );
 
         if( (posicion % 2) == 0 ){
             campoCantidad.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );

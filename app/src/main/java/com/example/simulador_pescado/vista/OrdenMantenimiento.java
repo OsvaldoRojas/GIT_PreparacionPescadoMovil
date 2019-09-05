@@ -7,28 +7,19 @@ import java.util.List;
 public class OrdenMantenimiento implements Serializable {
 
     private long idOrdenMantenimiento;
-    private int folio;
+    private String folio;
     private String fechaInicio;
     private String fechaFin;
-    private String equipo;
-    private String mecanico;
+    private long idEmpleado;
     private String nombreEmpleado;
     private String aMaternoEmpleado;
     private String aPaternoEmpleado;
     private String descripcion;
+    private String solucion;
+    private Boolean finalizada;
     private Maquinaria maquinaria;
-    private List<Artefacto> listaArtefactos = new ArrayList<>();
-    private List<RefaccionLista> listaRefacciones = new ArrayList<>();
-
-    public OrdenMantenimiento(){}
-
-    public OrdenMantenimiento(int folio, String fecha, String equipo, String mecanico, String descripcion){
-        this.folio = folio;
-        this.fechaInicio = fecha;
-        this.equipo = equipo;
-        this.mecanico = mecanico;
-        this.descripcion = descripcion;
-    }
+    private List<Artefacto> artefactos = new ArrayList<>();
+    private List<RefaccionOrden> refacciones = new ArrayList<>();
 
     public long getIdOrdenMantenimiento() {
         return idOrdenMantenimiento;
@@ -38,19 +29,11 @@ public class OrdenMantenimiento implements Serializable {
         this.idOrdenMantenimiento = idOrdenMantenimiento;
     }
 
-    public Maquinaria getMaquinaria() {
-        return maquinaria;
-    }
-
-    public void setMaquinaria(Maquinaria maquinaria) {
-        this.maquinaria = maquinaria;
-    }
-
-    public int getFolio() {
+    public String getFolio() {
         return folio;
     }
 
-    public void setFolio(int folio) {
+    public void setFolio(String folio) {
         this.folio = folio;
     }
 
@@ -70,20 +53,12 @@ public class OrdenMantenimiento implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public String getEquipo() {
-        return equipo;
+    public long getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setEquipo(String equipo) {
-        this.equipo = equipo;
-    }
-
-    public String getMecanico() {
-        return mecanico;
-    }
-
-    public void setMecanico(String mecanico) {
-        this.mecanico = mecanico;
+    public void setIdEmpleado(long idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public String getNombreEmpleado() {
@@ -118,19 +93,43 @@ public class OrdenMantenimiento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Artefacto> getListaArtefactos() {
-        return listaArtefactos;
+    public String getSolucion() {
+        return solucion;
     }
 
-    public void setListaArtefactos(List<Artefacto> listaArtefactos) {
-        this.listaArtefactos = listaArtefactos;
+    public void setSolucion(String solucion) {
+        this.solucion = solucion;
     }
 
-    public List<RefaccionLista> getListaRefacciones() {
-        return listaRefacciones;
+    public Maquinaria getMaquinaria() {
+        return maquinaria;
     }
 
-    public void setListaRefacciones(List<RefaccionLista> listaRefacciones) {
-        this.listaRefacciones = listaRefacciones;
+    public void setMaquinaria(Maquinaria maquinaria) {
+        this.maquinaria = maquinaria;
+    }
+
+    public List<Artefacto> getArtefactos() {
+        return artefactos;
+    }
+
+    public void setArtefactos(List<Artefacto> artefactos) {
+        this.artefactos = artefactos;
+    }
+
+    public List<RefaccionOrden> getRefacciones() {
+        return refacciones;
+    }
+
+    public void setRefacciones(List<RefaccionOrden> refacciones) {
+        this.refacciones = refacciones;
+    }
+
+    public Boolean getFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(Boolean finalizada) {
+        this.finalizada = finalizada;
     }
 }

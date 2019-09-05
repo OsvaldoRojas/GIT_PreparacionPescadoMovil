@@ -12,28 +12,19 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_AsignaMecanico;
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_DetalleEstiba;
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_DetalleOrden;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_Plan;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_TiempoMuerto;
 import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
-import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_AsignaMecanico;
-import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_CreaOrdenMantenimiento;
-import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_DetalleOrden;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_Plan;
 import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_TiempoMuerto;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Montacargas;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Tina;
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_AsignaMecanico;
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_CreaOrdenMantenimiento;
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_DetalleOrden;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_TiempoMuerto;
 import com.example.simulador_pescado.Preselecion.Fragment_Preselecion_Tinas;
@@ -46,9 +37,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         home.OnFragmentInteractionListener, Fragment_Atemperado_OM.OnFragmentInteractionListener, Fragment_Atemperado_TiempoMuerto.OnFragmentInteractionListener,
         Contenedor_Atemperado.OnFragmentInteractionListener, Fragment_Descongelado_Plan.OnFragmentInteractionListener, Fragment_Atemperado_Plan.OnFragmentInteractionListener,
         Fragment_Asigna_Tina.OnFragmentInteractionListener, Fragment_Asigna_Operador.OnFragmentInteractionListener, Fragment_Asigna_Montacargas.OnFragmentInteractionListener,
-        Fragment_Preseleccion_CreaOrdenMantenimiento.OnFragmentInteractionListener, Fragment_Preseleccion_AsignaMecanico.OnFragmentInteractionListener, Fragment_Preseleccion_DetalleOrden.OnFragmentInteractionListener,
-        Fragment_Atemperado_CreaOrdenMantenimiento.OnFragmentInteractionListener, Fragment_Descongelado_CreaOrdenMantenimiento.OnFragmentInteractionListener, Fragment_Atemperado_AsignaMecanico.OnFragmentInteractionListener,
-        Fragment_Atemperado_DetalleOrden.OnFragmentInteractionListener, Fragment_Descongelado_AsignaMecanico.OnFragmentInteractionListener, Fragment_Descongelado_DetalleOrden.OnFragmentInteractionListener,
+        Fragment_CreaOrdenMantenimiento.OnFragmentInteractionListener, Fragment_AsignaMecanico.OnFragmentInteractionListener, Fragment_DetalleOrden.OnFragmentInteractionListener,
         Fragment_Atemperado_DetalleEstiba.OnFragmentInteractionListener {
 
     @Override
@@ -120,7 +109,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             mifragment = new Contenedor();
             fragmentSelecionado= true;
 
-        } /*else if (id == R.id.nav_desconglado) {
+        } else if (id == R.id.nav_desconglado) {
             mifragment = new Contenedor_Descongelado();
             fragmentSelecionado=true;
 
@@ -128,7 +117,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             mifragment = new Contenedor_Atemperado();
             fragmentSelecionado=true;
 
-        } */else if (id == R.id.cerrar_sesion) {
+        } else if (id == R.id.cerrar_sesion) {
             this.finish();
 
         }
