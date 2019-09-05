@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -48,7 +49,12 @@ public class Utilerias {
 
     public static String fechaActual(){
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-         return formatoFecha.format( new Date() );
+        return formatoFecha.format( new Date() );
+    }
+
+    public static String fechaActual(String formato){
+        SimpleDateFormat formatoFecha = new SimpleDateFormat(formato);
+        return formatoFecha.format( new Date() );
     }
 
     public static String cambiaAcentos(String mensaje){
@@ -97,6 +103,6 @@ public class Utilerias {
 
             }
         }
-        return mensaje;
+        return resultado;
     }
 }

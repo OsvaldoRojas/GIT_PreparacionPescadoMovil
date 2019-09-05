@@ -26,6 +26,7 @@ import com.example.simulador_pescado.adaptadores.AdaptadorMezclarSubtallas;
 import com.example.simulador_pescado.adaptadores.AdaptadorTinasLiberadas;
 import com.example.simulador_pescado.conexion.AsignaMontacargas;
 import com.example.simulador_pescado.conexion.AsignaOperador;
+import com.example.simulador_pescado.conexion.LiberaTina;
 import com.example.simulador_pescado.conexion.LiberaTodos;
 import com.example.simulador_pescado.conexion.ObtenAsignados;
 import com.example.simulador_pescado.vista.ErrorServicio;
@@ -656,7 +657,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void liberarTina(){
-        System.out.println("LIBERAR TINA..............");
+        iniciaProcesando();
+        LiberaTina liberaTina = new LiberaTina(this, getTinaSeleccionada().getIdPreseleccionPosicionTina() );
+        liberaTina.execute();
     }
 
     private void mezclarTina(){

@@ -1,51 +1,60 @@
-package com.example.simulador_pescado.Atemperado;
+package com.example.simulador_pescado;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.Contenedores.Contenedor;
 import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
-import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Utilerias;
-import com.example.simulador_pescado.conexion.ValidaGafete;
+import com.example.simulador_pescado.conexion.GuardaOrdenMantenimiento;
+import com.example.simulador_pescado.conexion.ObtenArtefactosMaquinaria;
+import com.example.simulador_pescado.vista.Artefacto;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.Gafete;
+import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Fragment_Atemperado_AsignaMecanico extends Fragment {
+import static android.app.Activity.RESULT_OK;
+
+public class Fragment_CreaOrdenMantenimiento extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
-    private Serializable mParam1;
+    private String mParam1;
 
     private View vista;
 
+    private Maquinaria maquinaria;
+    private OrdenMantenimiento ordenMantenimiento = new OrdenMantenimiento();
+
     private AlertDialog ventanaError;
 
-    private OrdenMantenimiento ordenSeleccionada;
+    private List<Artefacto> catalogoArtefactos = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_Atemperado_AsignaMecanico() {
+    public Fragment_CreaOrdenMantenimiento() {
         // Required empty public constructor
     }
 
@@ -57,10 +66,10 @@ public class Fragment_Atemperado_AsignaMecanico extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Atemperado_AsignaMecanico newInstance(Serializable param1) {
-        Fragment_Atemperado_AsignaMecanico fragment = new Fragment_Atemperado_AsignaMecanico();
+    public static Fragment_CreaOrdenMantenimiento newInstance(String param1) {
+        Fragment_CreaOrdenMantenimiento fragment = new Fragment_CreaOrdenMantenimiento();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,14 +78,14 @@ public class Fragment_Atemperado_AsignaMecanico extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = getArguments().getString(ARG_PARAM1);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista=inflater.inflate(R.layout.fragment_asignar_mecanico, container, false);
+        this.vista=inflater.inflate(R.layout.fragment_orden_mantenimiento, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -121,23 +130,26 @@ public class Fragment_Atemperado_AsignaMecanico extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public OrdenMantenimiento getOrdenSeleccionada() {
-        return ordenSeleccionada;
+    public Maquinaria getMaquinaria() {
+        return maquinaria;
     }
 
-    public void setOrdenSeleccionada(OrdenMantenimiento ordenSeleccionada) {
-        this.ordenSeleccionada = ordenSeleccionada;
+    public void setMaquinaria(Maquinaria maquinaria) {
+        this.maquinaria = maquinaria;
+    }
+
+    public OrdenMantenimiento getOrdenMantenimiento() {
+        return ordenMantenimiento;
     }
 
     private void iniciaComponentes(){
-        setOrdenSeleccionada( (OrdenMantenimiento) this.mParam1 );
+        iniciaProcesando();
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor_Atemperado().newInstance(2);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                navega();
             }
         });
 
@@ -145,58 +157,77 @@ public class Fragment_Atemperado_AsignaMecanico extends Fragment {
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                iniciaProcesando();
+                guardaOrden();
             }
         });
 
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText( Utilerias.fechaActual() );
 
-        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
-        campoEscaner.addTextChangedListener(new TextWatcher() {
+        Button botonArtefactos = this.vista.findViewById(R.id.botonArtefactos);
+        botonArtefactos.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                validaGafete( editable.toString() );
+            public void onClick(View view) {
+                Intent artefactos = new Intent(getContext(), ActividadArtefactos.class);
+                artefactos.putExtra("catalogo", (Serializable) catalogoArtefactos);
+                startActivityForResult(artefactos, 0);
             }
         });
-    }
 
-    private void validaGafete(String codigo){
-        if( codigo.length() >= 7 ){
-            iniciaProcesando();
-            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
-            validaGafete.execute();
-        }else{
-            TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
-            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-    }
-
-    public void resultadoEscaneoGafete(Gafete resultadoGafete){
-        TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
-
-        if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
-            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
-            campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
-
-            getOrdenSeleccionada().setMecanico( resultadoGafete.getEmpleado().getNom_trab() );
-        }else{
-            campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
+        TextView etiquetaEquipo = this.vista.findViewById(R.id.etiquetaEquipo);
+        if( obtenMaquinaria(this.mParam1) ){
+            etiquetaEquipo.setText( getMaquinaria().getDescripcion() );
         }
 
+        ObtenArtefactosMaquinaria obtenArtefactosMaquinaria = new ObtenArtefactosMaquinaria(this, getMaquinaria().getIdMaquinaria() );
+        obtenArtefactosMaquinaria.execute();
+    }
+
+    private boolean obtenMaquinaria(String clave){
+        for( Maquinaria maquinariaLista : Catalogos.getInstancia().getCatalogoMaquinaria() ){
+            if( maquinariaLista.getClave().equalsIgnoreCase(clave) ){
+                setMaquinaria(maquinariaLista);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void resultadoCatalogoArtefacto(List<Artefacto> lista){
+        this.catalogoArtefactos = lista;
         terminaProcesando();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( resultCode == RESULT_OK ){
+            this.catalogoArtefactos = (List<Artefacto>) data.getSerializableExtra("artefactos");
+            List<Artefacto> artefactos = new ArrayList<>();
+            for( Artefacto artefacto : this.catalogoArtefactos ){
+                if( artefacto.getSelecionado() ){
+                    artefactos.add(artefacto);
+                }
+            }
+            getOrdenMantenimiento().setArtefactos(artefactos);
+        }
+    }
+
+    private void guardaOrden(){
+        getOrdenMantenimiento().setMaquinaria( getMaquinaria() );
+        TextView descripcion = this.vista.findViewById(R.id.campoDescripcion);
+        getOrdenMantenimiento().setDescripcion( descripcion.getText().toString() );
+        if( getOrdenMantenimiento().getArtefactos() == null ){
+            getOrdenMantenimiento().setArtefactos( new ArrayList<Artefacto>() );
+        }
+
+        GuardaOrdenMantenimiento guarda = new GuardaOrdenMantenimiento(this, getOrdenMantenimiento() );
+        guarda.execute();
+    }
+
+    public void resultadoGuardadoOrden(){
+        terminaProcesando();
+        navega();
     }
 
     public void errorServicio(ErrorServicio errorMensaje){
@@ -231,6 +262,22 @@ public class Fragment_Atemperado_AsignaMecanico extends Fragment {
             }
         });
         this.ventanaError.show();
+    }
+
+    private void navega(){
+        Fragment fragment = null;
+        switch ( Catalogos.getInstancia().getEtapaActual() ){
+            case 1:
+                fragment = new Contenedor().newInstance(1);
+                break;
+            case 2:
+                fragment = new Contenedor_Atemperado().newInstance(1);
+                break;
+            case 3:
+                fragment = new Contenedor_Descongelado().newInstance(1);
+                break;
+        }
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     public void iniciaProcesando(){

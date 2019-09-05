@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Constantes;
@@ -1086,7 +1087,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
 
     private void creaOrdenPosicion(){
         if( validaMaquinaria( getPosicionSeleccionada().getClave() ) ){
-            Fragment fragment = new Fragment_Atemperado_CreaOrdenMantenimiento().newInstance( getPosicionSeleccionada() );
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getPosicionSeleccionada().getClave() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -1095,7 +1096,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
 
     private void creaOrdenMontacargas(){
         if( validaMaquinaria( getMontacargasSeleccionado().getClave() ) ){
-            Fragment fragment = new Fragment_Atemperado_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado().getClave() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();

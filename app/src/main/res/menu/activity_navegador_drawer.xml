@@ -16,12 +16,12 @@
             android:id="@+id/nav_atemperado"
             android:icon="@drawable/ic_termometro"
             android:title="Atemperado"
-            android:visible="false"/>
+            android:visible="true"/>
         <item
             android:id="@+id/nav_desconglado"
             android:icon="@drawable/ic_termometro"
             android:title="Descongelado"
-            android:visible="false"/>
+            android:visible="true"/>
     </group>
 
     <item android:title="Sesión">

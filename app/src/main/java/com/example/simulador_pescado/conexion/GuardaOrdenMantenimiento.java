@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_CreaOrdenMantenimiento;
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.vista.Artefacto;
@@ -47,7 +47,7 @@ public class GuardaOrdenMantenimiento extends AsyncTask<Void,Integer,Boolean> {
         orden.setDescripcion( Utilerias.cambiaAcentos( this.ordenMantenimiento.getDescripcion() ) );
         orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
         List<ArtefactoServicio> lista = new ArrayList<>();
-        for( Artefacto artefacto : this.ordenMantenimiento.getListaArtefactos() ){
+        for( Artefacto artefacto : this.ordenMantenimiento.getArtefactos() ){
             ArtefactoServicio artefactoServicio = new ArtefactoServicio();
             artefactoServicio.setIdMaquinariaArtefacto( artefacto.getIdMaquinariaArtefacto() );
             lista.add(artefactoServicio);
@@ -89,14 +89,10 @@ public class GuardaOrdenMantenimiento extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            if( this.pantalla instanceof Fragment_Preseleccion_CreaOrdenMantenimiento ){
-                ( (Fragment_Preseleccion_CreaOrdenMantenimiento) this.pantalla ).resultadoGuardadoOrden();
-            }
+            ( (Fragment_CreaOrdenMantenimiento) this.pantalla ).resultadoGuardadoOrden();
         }else{
-            if( this.pantalla instanceof Fragment_Preseleccion_CreaOrdenMantenimiento ){
-                ( (Fragment_Preseleccion_CreaOrdenMantenimiento) this.pantalla ).terminaProcesando();
-                ( (Fragment_Preseleccion_CreaOrdenMantenimiento) this.pantalla ).errorServicio(this.errorMensaje);
-            }
+            ( (Fragment_CreaOrdenMantenimiento) this.pantalla ).terminaProcesando();
+            ( (Fragment_CreaOrdenMantenimiento) this.pantalla ).errorServicio(this.errorMensaje);
         }
     }
 }

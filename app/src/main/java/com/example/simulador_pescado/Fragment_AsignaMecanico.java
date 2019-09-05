@@ -1,4 +1,4 @@
-package com.example.simulador_pescado.Descongelado;
+package com.example.simulador_pescado;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,24 +18,26 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.Contenedores.Contenedor;
+import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
-import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.conexion.ActualizaOrdenMantenimiento;
+import com.example.simulador_pescado.conexion.ObtenDetalleOrden;
 import com.example.simulador_pescado.conexion.ValidaGafete;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
 
-import java.io.Serializable;
-
-public class Fragment_Descongelado_AsignaMecanico extends Fragment {
+public class Fragment_AsignaMecanico extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
-    private Serializable mParam1;
+    private long mParam1;
 
     private View vista;
 
@@ -45,7 +47,7 @@ public class Fragment_Descongelado_AsignaMecanico extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_Descongelado_AsignaMecanico() {
+    public Fragment_AsignaMecanico() {
         // Required empty public constructor
     }
 
@@ -57,10 +59,10 @@ public class Fragment_Descongelado_AsignaMecanico extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Descongelado_AsignaMecanico newInstance(Serializable param1) {
-        Fragment_Descongelado_AsignaMecanico fragment = new Fragment_Descongelado_AsignaMecanico();
+    public static Fragment_AsignaMecanico newInstance(long param1) {
+        Fragment_AsignaMecanico fragment = new Fragment_AsignaMecanico();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, param1);
+        args.putLong(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,7 +71,7 @@ public class Fragment_Descongelado_AsignaMecanico extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = getArguments().getLong(ARG_PARAM1);
         }
     }
 
@@ -130,27 +132,32 @@ public class Fragment_Descongelado_AsignaMecanico extends Fragment {
     }
 
     private void iniciaComponentes(){
-        setOrdenSeleccionada( (OrdenMantenimiento) this.mParam1 );
+        iniciaProcesando();
+        TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
+        etiquetaFecha.setText( Utilerias.fechaActual() );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor_Descongelado().newInstance(2);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                navega();
             }
         });
+
+        ObtenDetalleOrden detalleOrden = new ObtenDetalleOrden( this, this.mParam1);
+        detalleOrden.execute();
+    }
+
+    public void resultadoDetalleOrden(OrdenMantenimiento ordenMantenimiento){
+        setOrdenSeleccionada(ordenMantenimiento);
 
         Button botonAceptar = this.vista.findViewById(R.id.boton2);
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                validaGuardado();
             }
         });
-
-        TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
-        etiquetaFecha.setText( Utilerias.fechaActual() );
 
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
         campoEscaner.addTextChangedListener(new TextWatcher() {
@@ -169,6 +176,54 @@ public class Fragment_Descongelado_AsignaMecanico extends Fragment {
                 validaGafete( editable.toString() );
             }
         });
+
+        terminaProcesando();
+    }
+
+    private void validaGuardado(){
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
+
+        if( !campoEscaner.getText().toString().equals("") &&
+                !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
+                !campoNombre.getText().toString().equals("") ){
+            iniciaProcesando();
+            ActualizaOrdenMantenimiento actualiza = new ActualizaOrdenMantenimiento(this, getOrdenSeleccionada() );
+            actualiza.execute();
+        }else{
+            errorValidacion();
+        }
+    }
+
+    public void errorValidacion(){
+        final AlertDialog ventanaEmergente;
+        AlertDialog.Builder builder = new AlertDialog.Builder( getContext() );
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        ventanaEmergente = builder.create();
+        ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText( "Es necesario capturar un mecánico" );
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        ventanaEmergente.show();
+    }
+
+    public void resultadoActualizaOrden(){
+        terminaProcesando();
+        navega();
     }
 
     private void validaGafete(String codigo){
@@ -187,10 +242,14 @@ public class Fragment_Descongelado_AsignaMecanico extends Fragment {
         TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
 
         if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
-            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
+            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab().concat(" ")
+                    .concat( resultadoGafete.getEmpleado().getAp_paterno() ) );
             campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
 
-            getOrdenSeleccionada().setMecanico( resultadoGafete.getEmpleado().getNom_trab() );
+            getOrdenSeleccionada().setIdEmpleado( resultadoGafete.getEmpleado().getCla_trab() );
+            getOrdenSeleccionada().setNombreEmpleado( resultadoGafete.getEmpleado().getNom_trab() );
+            getOrdenSeleccionada().setaPaternoEmpleado( resultadoGafete.getEmpleado().getAp_paterno() );
+            getOrdenSeleccionada().setaMaternoEmpleado( resultadoGafete.getEmpleado().getAp_materno() );
         }else{
             campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
@@ -243,5 +302,21 @@ public class Fragment_Descongelado_AsignaMecanico extends Fragment {
         ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         barraProgreso.setVisibility(View.GONE);
+    }
+
+    private void navega(){
+        Fragment fragment = null;
+        switch ( Catalogos.getInstancia().getEtapaActual() ){
+            case 1:
+                fragment = new Contenedor().newInstance(2);
+                break;
+            case 2:
+                fragment = new Contenedor_Atemperado().newInstance(2);
+                break;
+            case 3:
+                fragment = new Contenedor_Descongelado().newInstance(2);
+                break;
+        }
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 }

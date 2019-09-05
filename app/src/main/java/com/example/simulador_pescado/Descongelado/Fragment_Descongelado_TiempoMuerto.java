@@ -17,13 +17,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.PosicionEstiba;
-import com.example.simulador_pescado.vista.Tina;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -861,7 +861,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
 
     private void creaObjetosVacios(){
         if( this.listaPosiciones.isEmpty() ){
-            for( int posicion = 1; posicion <= 96; posicion++ ){
+            for( int posicion = 1; posicion <= 80; posicion++ ){
                 PosicionEstiba recursoPosicion = new PosicionEstiba();
                 recursoPosicion.setIdAtemperadoPosicionTina(posicion);
                 recursoPosicion.setEstado(Constantes.ESTADO.inicial);
@@ -889,13 +889,21 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenPosicion(){
-        Fragment fragment = new Fragment_Descongelado_CreaOrdenMantenimiento().newInstance( getPosicionSeleccionada() );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        if( validaMaquinaria( getPosicionSeleccionada().getClave() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getPosicionSeleccionada().getClave() );
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        }else{
+            errorMaquinaria();
+        }
     }
 
     private void creaOrdenMontacargas(){
-        Fragment fragment = new Fragment_Descongelado_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado() );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        if( validaMaquinaria( getMontacargasSeleccionado().getClave() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado().getClave() );
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        }else{
+            errorMaquinaria();
+        }
     }
 
     public void errorMaquinaria(){

@@ -20,16 +20,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.simulador_pescado.Fragment_DetalleOrden;
+import com.example.simulador_pescado.Fragment_AsignaMecanico;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
 import com.example.simulador_pescado.conexion.CargaListaOrden;
+import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
-import com.example.simulador_pescado.vista.OrdenMantenimiento;
-import com.example.simulador_pescado.vista.UsuarioLogueado;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,23 +114,6 @@ public class Fragment_Preselecion_OM extends Fragment {
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
         iniciaProcesando();
 
-        /*this.listaOrden = new ArrayList<>();
-        this.listaOrden.add( new OrdenMantenimiento(1, "30/07/2020", "Montacargas", "", "Prueba descripción 1") );
-        this.listaOrden.add( new OrdenMantenimiento(2, "30/07/2019", "Báscula", "", "Prueba descripción 2") );
-        this.listaOrden.add( new OrdenMantenimiento(3, "30/07/2019", "Bnda", "", "Prueba descripción 3") );
-        this.listaOrden.add( new OrdenMantenimiento(4, "30/07/2019", "Tina", "", "Prueba descripción 4") );
-        this.listaOrden.add( new OrdenMantenimiento(5, "30/07/2019", "Recepción", "", "Prueba descripción 5") );
-        this.listaOrden.add( new OrdenMantenimiento(6, "30/07/2019", "Estiba", "", "Prueba descripción 6") );
-        this.listaOrden.add( new OrdenMantenimiento(7, "30/07/2019", "Tina sin talla", "", "Prueba descripción 7") );
-        this.listaOrden.add( new OrdenMantenimiento(8, "30/07/2019", "Montacargas", "", "Prueba descripción 8") );
-        this.listaOrden.add( new OrdenMantenimiento(9, "30/07/2019", "Recepción", "", "Prueba descripción 9") );
-        this.listaOrden.add( new OrdenMantenimiento(10, "31/07/2019", "Tina", "", "Prueba descripción 10") );
-        this.listaOrden.add( new OrdenMantenimiento(11, "31/07/2019", "Báscula", "", "Prueba descripción 11") );
-        this.listaOrden.add( new OrdenMantenimiento(12, "31/07/2019", "Recepción", "", "Prueba descripción 12") );
-        this.listaOrden.add( new OrdenMantenimiento(13, "31/07/2019", "Estiba", "", "Prueba descripción 13") );
-        this.listaOrden.add( new OrdenMantenimiento(14, "31/07/2019", "Tina", "", "Prueba descripción 14") );
-        this.listaOrden.add( new OrdenMantenimiento(15, "31/07/2019", "Montacargas", "", "Prueba descripción 15") );*/
-
         this.campoBusqueda = this.vista.findViewById(R.id.campoBusqueda);
         this.campoBusqueda.setIconifiedByDefault(false);
         this.campoBusqueda.setSubmitButtonEnabled(false);
@@ -175,7 +158,7 @@ public class Fragment_Preselecion_OM extends Fragment {
                                     asignaMecanico();
                                     return true;
                                 case R.id.cerrarTiempo:
-                                    System.out.println("CERRAR TIEMPO....");
+                                    cierraTiempo();
                                     return true;
                                 case R.id.detalle:
                                     muestraDetalle();
@@ -242,13 +225,27 @@ public class Fragment_Preselecion_OM extends Fragment {
     }
 
     private void muestraDetalle(){
-        Fragment fragment = new Fragment_Preseleccion_DetalleOrden().newInstance( getOrdenSeleccionada() );
+        Fragment fragment = new Fragment_DetalleOrden().newInstance( getOrdenSeleccionada().getIdOrdenMantenimiento() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
     private void asignaMecanico(){
-        Fragment fragment = new Fragment_Preseleccion_AsignaMecanico().newInstance( getOrdenSeleccionada() );
+        Fragment fragment = new Fragment_AsignaMecanico().newInstance( getOrdenSeleccionada().getIdOrdenMantenimiento() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
+    private void cierraTiempo(){
+        iniciaProcesando();
+        CerrarTiempoOrden cerrarTiempoOrden = new CerrarTiempoOrden(
+                this,
+                null,
+                getOrdenSeleccionada().getIdOrdenMantenimiento()
+        );
+        cerrarTiempoOrden.execute();
+    }
+
+    public void resultadoCierraTiempo(){
+        getOrdenesMantenimiento();
     }
 
     public void iniciaProcesando(){

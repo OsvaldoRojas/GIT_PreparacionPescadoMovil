@@ -4,9 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_AsignaMecanico;
-import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_AsignaMecanico;
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_AsignaMecanico;
+import com.example.simulador_pescado.Fragment_AsignaMecanico;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Montacargas;
 import com.example.simulador_pescado.Preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.Utilerias.Constantes;
@@ -75,17 +73,8 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
                 if(this.pantalla instanceof Fragment_Asigna_Montacargas){
                     ( (Fragment_Asigna_Montacargas) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                 }else{
-                    if(this.pantalla instanceof Fragment_Preseleccion_AsignaMecanico){
-                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
-                    }
-                    else{
-                        if(this.pantalla instanceof Fragment_Atemperado_AsignaMecanico){
-                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
-                        }else{
-                            if(this.pantalla instanceof Fragment_Descongelado_AsignaMecanico){
-                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
-                            }
-                        }
+                    if(this.pantalla instanceof Fragment_AsignaMecanico){
+                        ( (Fragment_AsignaMecanico) this.pantalla ).resultadoEscaneoGafete(this.resultadoGafete);
                     }
                 }
             }
@@ -98,19 +87,9 @@ public class ValidaGafete extends AsyncTask<Void,Integer,Boolean> {
                     ( (Fragment_Asigna_Montacargas) this.pantalla ).terminaProcesando();
                     ( (Fragment_Asigna_Montacargas) this.pantalla ).errorServicio(this.errorMensaje);
                 }else{
-                    if(this.pantalla instanceof Fragment_Preseleccion_AsignaMecanico){
-                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).terminaProcesando();
-                        ( (Fragment_Preseleccion_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
-                    }else{
-                        if(this.pantalla instanceof Fragment_Atemperado_AsignaMecanico){
-                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).terminaProcesando();
-                            ( (Fragment_Atemperado_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
-                        }else{
-                            if(this.pantalla instanceof Fragment_Descongelado_AsignaMecanico){
-                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).terminaProcesando();
-                                ( (Fragment_Descongelado_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
-                            }
-                        }
+                    if(this.pantalla instanceof Fragment_AsignaMecanico){
+                        ( (Fragment_AsignaMecanico) this.pantalla ).terminaProcesando();
+                        ( (Fragment_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                     }
                 }
             }

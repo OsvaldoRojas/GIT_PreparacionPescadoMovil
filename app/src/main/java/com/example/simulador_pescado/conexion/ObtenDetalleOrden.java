@@ -4,9 +4,8 @@ import android.os.AsyncTask;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_DetalleOrden;
-import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_DetalleOrden;
-import com.example.simulador_pescado.Preselecion.Fragment_Preseleccion_DetalleOrden;
+import com.example.simulador_pescado.Fragment_AsignaMecanico;
+import com.example.simulador_pescado.Fragment_DetalleOrden;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
@@ -46,9 +45,10 @@ public class ObtenDetalleOrden extends AsyncTask<Void,Integer,Boolean> {
             HttpResponse respuesta = conexion.execute(peticion);
             if( respuesta.getStatusLine().getStatusCode() == 200 ){
                 String respuestaJson = EntityUtils.toString( respuesta.getEntity() );
+                byte resultadoByte[] = respuestaJson.getBytes("ISO-8859-1");
+                String resultadoFinal = new String(resultadoByte, "UTF-8");
                 Gson gson = new Gson();
-
-                this.detalleOrden = gson.fromJson(respuestaJson, OrdenMantenimiento.class);
+                this.detalleOrden = gson.fromJson(resultadoFinal, OrdenMantenimiento.class);
                 return true;
             }else{
                 this.errorMensaje = new ErrorServicio();
@@ -67,30 +67,21 @@ public class ObtenDetalleOrden extends AsyncTask<Void,Integer,Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         if(aBoolean){
-            if( this.pantalla instanceof Fragment_Preseleccion_DetalleOrden ){
-                ( (Fragment_Preseleccion_DetalleOrden) this.pantalla ).resultadoDetalleOrden(this.detalleOrden);
+            if( this.pantalla instanceof Fragment_DetalleOrden ){
+                ( (Fragment_DetalleOrden) this.pantalla ).resultadoDetalleOrden(this.detalleOrden);
             }else{
-                if( this.pantalla instanceof Fragment_Descongelado_DetalleOrden ){
-                    ( (Fragment_Descongelado_DetalleOrden) this.pantalla ).resultadoDetalleOrden(this.detalleOrden);
-                }else{
-                    if( this.pantalla instanceof Fragment_Atemperado_DetalleOrden ){
-                        ( (Fragment_Atemperado_DetalleOrden) this.pantalla ).resultadoDetalleOrden(this.detalleOrden);
-                    }
+                if( this.pantalla instanceof Fragment_AsignaMecanico ){
+                    ( (Fragment_AsignaMecanico) this.pantalla ).resultadoDetalleOrden(this.detalleOrden);
                 }
             }
         }else{
-            if( this.pantalla instanceof Fragment_Preseleccion_DetalleOrden ){
-                ( (Fragment_Preseleccion_DetalleOrden) this.pantalla ).terminaProcesando();
-                ( (Fragment_Preseleccion_DetalleOrden) this.pantalla ).errorServicio(this.errorMensaje);
+            if( this.pantalla instanceof Fragment_DetalleOrden ){
+                ( (Fragment_DetalleOrden) this.pantalla ).terminaProcesando();
+                ( (Fragment_DetalleOrden) this.pantalla ).errorServicio(this.errorMensaje);
             }else{
-                if( this.pantalla instanceof Fragment_Descongelado_DetalleOrden ){
-                    ( (Fragment_Descongelado_DetalleOrden) this.pantalla ).terminaProcesando();
-                    ( (Fragment_Descongelado_DetalleOrden) this.pantalla ).errorServicio(this.errorMensaje);
-                }else{
-                    if( this.pantalla instanceof Fragment_Atemperado_DetalleOrden ){
-                        ( (Fragment_Atemperado_DetalleOrden) this.pantalla ).terminaProcesando();
-                        ( (Fragment_Atemperado_DetalleOrden) this.pantalla ).errorServicio(this.errorMensaje);
-                    }
+                if( this.pantalla instanceof Fragment_AsignaMecanico ){
+                    ( (Fragment_AsignaMecanico) this.pantalla ).terminaProcesando();
+                    ( (Fragment_AsignaMecanico) this.pantalla ).errorServicio(this.errorMensaje);
                 }
             }
         }
