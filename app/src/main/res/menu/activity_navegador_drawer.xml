@@ -19,7 +19,7 @@
             android:visible="true"/>
         <item
             android:id="@+id/nav_desconglado"
-            android:icon="@drawable/ic_termometro"
+            android:icon="@drawable/ic_nieve"
             android:title="Descongelado"
             android:visible="true"/>
     </group>
