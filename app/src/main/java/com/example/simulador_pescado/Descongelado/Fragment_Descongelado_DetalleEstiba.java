@@ -1,4 +1,4 @@
-package com.example.simulador_pescado.Atemperado;
+package com.example.simulador_pescado.Descongelado;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,13 +14,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
+import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.vista.PosicionEstiba;
 
 import java.io.Serializable;
 
-public class Fragment_Atemperado_DetalleEstiba extends Fragment {
+public class Fragment_Descongelado_DetalleEstiba extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,7 +38,7 @@ public class Fragment_Atemperado_DetalleEstiba extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_Atemperado_DetalleEstiba() {
+    public Fragment_Descongelado_DetalleEstiba() {
         // Required empty public constructor
     }
 
@@ -49,8 +50,8 @@ public class Fragment_Atemperado_DetalleEstiba extends Fragment {
      * @return A new instance of fragment Fragment_Preselecion_Tinas.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Atemperado_DetalleEstiba newInstance(Serializable param1) {
-        Fragment_Atemperado_DetalleEstiba fragment = new Fragment_Atemperado_DetalleEstiba();
+    public static Fragment_Descongelado_DetalleEstiba newInstance(Serializable param1) {
+        Fragment_Descongelado_DetalleEstiba fragment = new Fragment_Descongelado_DetalleEstiba();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -68,7 +69,7 @@ public class Fragment_Atemperado_DetalleEstiba extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista=inflater.inflate(R.layout.fragment_atemperado_detalle_estiba, container, false);
+        this.vista=inflater.inflate(R.layout.fragment_descongelado_detalle_estiba, container, false);
 
         iniciaComponentes();
         return this.vista;
@@ -128,7 +129,7 @@ public class Fragment_Atemperado_DetalleEstiba extends Fragment {
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Contenedor_Atemperado().newInstance(0);
+                Fragment fragment = new Contenedor_Descongelado().newInstance(0);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });

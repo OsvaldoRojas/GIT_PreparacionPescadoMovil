@@ -11,11 +11,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
+import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_DetalleEstiba;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.PosicionEstiba;
@@ -154,10 +157,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
     private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
     private Button boton1;
-    private Button boton2;
     private AlertDialog ventanaEmergente;
-
-    private String fechaActual;
 
     private OnFragmentInteractionListener mListener;
 
@@ -211,26 +211,18 @@ public class Fragment_Atemperado_Plan extends Fragment {
     }
 
     private void iniciaComponentes(){
-        /*this.fragment = this;
-        this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
-        iniciaProcesando();
-        */
-
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        this.fechaActual = formatoFecha.format( new Date() );
-
         this.actualizar = this.vista.findViewById(R.id.actualizar);
+        this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                actualizar.setRefreshing(true);
+            }
+        });
         this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
+
         this.botonera = this.vista.findViewById(R.id.botonera);
         this.boton1 = this.vista.findViewById(R.id.boton1);
         this.boton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                liberaCompleta();
-            }
-        });
-        this.boton2 = this.vista.findViewById(R.id.boton2);
-        this.boton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 muestraDetalle();
@@ -1059,11 +1051,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
     }
 
     private void muestraDetalle(){
-        Fragment fragment = new Fragment_Atemperado_DetalleEstiba().newInstance( getPosicionSeleccionada() );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
-    }
-
-    private void liberaCompleta(){
 
     }
 
@@ -1078,16 +1065,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
                     posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
                     muestraIcono(posicionEstiba);
                     ajustaTamañoVista();
-                    if( getPosicionSeleccionada().getConteoNivel() == 0 ){
-                        this.boton1.setEnabled(false);
-                    }else{
-                        this.boton1.setEnabled(true);
-                    }
-                    if( getPosicionSeleccionada().getBloqueado() ){
-                        this.boton2.setEnabled(false);
-                    }else{
-                        this.boton2.setEnabled(true);
-                    }
                     this.botonera.setVisibility(View.VISIBLE);
                 }else{
                     if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -1120,23 +1097,23 @@ public class Fragment_Atemperado_Plan extends Fragment {
                     break;
                 case 1:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_uno1);
+                            .setImageResource(R.drawable.ic_uno_negro);
                     break;
                 case 2:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_dos1);
+                            .setImageResource(R.drawable.ic_dos_negro);
                     break;
                 case 3:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tres1);
+                            .setImageResource(R.drawable.ic_tres_negro);
                     break;
                 case 4:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cuatro1);
+                            .setImageResource(R.drawable.ic_cuatro_negro);
                     break;
                 case 5:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cinco1);
+                            .setImageResource(R.drawable.ic_cinco_negro);
                     break;
             }
         }else{
@@ -1147,23 +1124,23 @@ public class Fragment_Atemperado_Plan extends Fragment {
                     break;
                 case 1:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_uno2);
+                            .setImageResource(R.drawable.ic_uno_blanco);
                     break;
                 case 2:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_dos2);
+                            .setImageResource(R.drawable.ic_dos_blanco);
                     break;
                 case 3:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tres2);
+                            .setImageResource(R.drawable.ic_tres_blanco);
                     break;
                 case 4:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cuatro2);
+                            .setImageResource(R.drawable.ic_cuatro_blanco);
                     break;
                 case 5:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cinco2);
+                            .setImageResource(R.drawable.ic_cinco_blanco);
             }
         }
     }
@@ -1318,6 +1295,19 @@ public class Fragment_Atemperado_Plan extends Fragment {
             case 100: return this.posicion100;
         }
         return null;
+    }
+
+    public void iniciaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        if( this.actualizar.isRefreshing() ){
+            this.actualizar.setRefreshing(false);
+        }
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        barraProgreso.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -2,7 +2,6 @@ package com.example.simulador_pescado.Descongelado;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,21 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
-import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.vista.PosicionEstiba;
-import com.example.simulador_pescado.vista.Tina;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -135,7 +130,8 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private LinearLayout botonera;
     private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
-    private Button botonDetalle;
+    private Button boton1;
+    private Button boton2;
     private AlertDialog ventanaEmergente;
 
     private OnFragmentInteractionListener mListener;
@@ -190,9 +186,31 @@ public class Fragment_Descongelado_Plan extends Fragment{
 
     private void iniciaComponentes(){
         this.actualizar = this.vista.findViewById(R.id.actualizar);
+        this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                actualizar.setRefreshing(true);
+            }
+        });
         this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
+
         this.botonera = this.vista.findViewById(R.id.botonera);
-        this.botonDetalle = this.vista.findViewById(R.id.botonDetalle);
+
+        this.boton1 = this.vista.findViewById(R.id.boton1);
+        this.boton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                liberaCompleta();
+            }
+        });
+
+        this.boton2 = this.vista.findViewById(R.id.boton2);
+        this.boton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                muestraDetalle();
+            }
+        });
 
         this.posicion1 = this.vista.findViewById(R.id.posicion1);
         this.posicion1.setOnClickListener(new View.OnClickListener() {
@@ -843,97 +861,25 @@ public class Fragment_Descongelado_Plan extends Fragment{
                 PosicionEstiba recursoPosicion = new PosicionEstiba();
                 recursoPosicion.setIdAtemperadoPosicionTina(posicion);
                 recursoPosicion.setEstado(Constantes.ESTADO.inicial);
+                recursoPosicion.setBloqueado(false);
+                recursoPosicion.setConteoNivel(4);
                 this.listaPosiciones.add(recursoPosicion);
+                muestraIcono(recursoPosicion);
+                if( recursoPosicion.getBloqueado() ){
+                    getIconoPosicion( recursoPosicion.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                }
             }
         }
     }
 
     private void muestraDetalle(){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        Fragment fragment = new Fragment_Descongelado_DetalleEstiba().newInstance( getPosicionSeleccionada() );
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
 
-        View vistaAsignar = inflater.inflate(R.layout.fragment_atemperado_detalle_estiba, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
+    private void liberaCompleta(){
 
-        this.ventanaEmergente = builder.create();
-        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
-                botonCancelar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        accionIconoPosicion( getPosicionSeleccionada().getIdAtemperadoPosicionTina() );
-                        ventanaEmergente.dismiss();
-                    }
-                });
-
-                TextView etiquetaFecha = ventanaEmergente.findViewById(R.id.etiquetaFecha);
-                etiquetaFecha.setText( Utilerias.fechaActual() );
-
-                final TextView etiquetaPosicion1 = ventanaEmergente.findViewById(R.id.etiquetaPosicion1);
-                etiquetaPosicion1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion1.getText().toString().contains("disponible") ){
-                            etiquetaPosicion1.setText("Posición 1 ocupada");
-                        }else{
-                            etiquetaPosicion1.setText("Posición 1 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion2 = ventanaEmergente.findViewById(R.id.etiquetaPosicion2);
-                etiquetaPosicion2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion2.getText().toString().contains("disponible") ){
-                            etiquetaPosicion2.setText("Posición 2 ocupada");
-                        }else{
-                            etiquetaPosicion2.setText("Posición 2 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion3 = ventanaEmergente.findViewById(R.id.etiquetaPosicion3);
-                etiquetaPosicion3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion3.getText().toString().contains("disponible") ){
-                            etiquetaPosicion3.setText("Posición 3 ocupada");
-                        }else{
-                            etiquetaPosicion3.setText("Posición 3 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion4 = ventanaEmergente.findViewById(R.id.etiquetaPosicion4);
-                etiquetaPosicion4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion4.getText().toString().contains("disponible") ){
-                            etiquetaPosicion4.setText("Posición 4 ocupada");
-                        }else{
-                            etiquetaPosicion4.setText("Posición 4 disponible");
-                        }
-                    }
-                });
-
-                final TextView etiquetaPosicion5 = ventanaEmergente.findViewById(R.id.etiquetaPosicion5);
-                etiquetaPosicion5.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if( etiquetaPosicion5.getText().toString().contains("disponible") ){
-                            etiquetaPosicion5.setText("Posición 5 ocupada");
-                        }else{
-                            etiquetaPosicion5.setText("Posición 5 disponible");
-                        }
-                    }
-                });
-            }
-        });
-        this.ventanaEmergente.show();
     }
 
     private void accionIconoPosicion(int posicion){
@@ -943,33 +889,96 @@ public class Fragment_Descongelado_Plan extends Fragment{
                     setPosicionSeleccionada(posicionEstiba);
                     deshabilitaRecursos();
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina_negra);
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
-                    this.botonDetalle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            muestraDetalle();
-                        }
-                    });
-                    this.botonera.setVisibility(View.VISIBLE);
+                    muestraIcono(posicionEstiba);
                     ajustaTamañoVista();
+                    if( getPosicionSeleccionada().getConteoNivel() == 0 ){
+                        this.boton1.setEnabled(false);
+                    }else{
+                        this.boton1.setEnabled(true);
+                    }
+                    if( getPosicionSeleccionada().getBloqueado() ){
+                        this.boton2.setEnabled(false);
+                    }else{
+                        this.boton2.setEnabled(true);
+                    }
+                    this.botonera.setVisibility(View.VISIBLE);
                 }else{
                     if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
                         setPosicionSeleccionada(null);
                         habilitaRecursos();
-                        getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                                .setImageResource(R.drawable.ic_tina_blanca);
-                        getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
+                        if( !posicionEstiba.getBloqueado() ){
+                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                        }else{
+                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                        }
                         posicionEstiba.setEstado(Constantes.ESTADO.inicial);
-                        this.botonDetalle.setOnClickListener(null);
+                        muestraIcono(posicionEstiba);
                         this.botonera.setVisibility(View.GONE);
                         ajustaTamañoVista();
                     }
                 }
                 break;
+            }
+        }
+    }
+
+    private void muestraIcono(PosicionEstiba posicionEstiba){
+        if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
+            switch ( posicionEstiba.getConteoNivel() ){
+                case 0:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tina_negra);
+                    break;
+                case 1:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_uno_negro);
+                    break;
+                case 2:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_dos_negro);
+                    break;
+                case 3:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tres_negro);
+                    break;
+                case 4:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cuatro_negro);
+                    break;
+                case 5:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cinco_negro);
+                    break;
+            }
+        }else{
+            switch ( posicionEstiba.getConteoNivel() ){
+                case 0:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tina_blanca);
+                    break;
+                case 1:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_uno_blanco);
+                    break;
+                case 2:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_dos_blanco);
+                    break;
+                case 3:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tres_blanco);
+                    break;
+                case 4:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cuatro_blanco);
+                    break;
+                case 5:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cinco_blanco);
             }
         }
     }
@@ -1102,6 +1111,19 @@ public class Fragment_Descongelado_Plan extends Fragment{
             case 80: return this.posicion80;
         }
         return null;
+    }
+
+    public void iniciaProcesando(){
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        barraProgreso.setVisibility(View.VISIBLE);
+    }
+
+    public void terminaProcesando(){
+        if( this.actualizar.isRefreshing() ){
+            this.actualizar.setRefreshing(false);
+        }
+        ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
+        barraProgreso.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

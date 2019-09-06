@@ -653,11 +653,6 @@
 
                 <Button
                     android:id="@+id/boton1"
-                    android:text="@string/liberarCompleta"
-                    style="@style/botonAccion"/>
-
-                <Button
-                    android:id="@+id/boton2"
                     android:text="@string/detalle"
                     style="@style/botonAccion"/>
 
