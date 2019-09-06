@@ -106,7 +106,7 @@
         <item name="android:layout_width">27dp</item>
         <item name="android:background">@drawable/contenedor_icono</item>
         <item name="android:layout_margin">2dp</item>
-        <item name="android:src">@drawable/ic_tina_blanca</item>
+        <item name="android:src">@drawable/ic_tina_gris</item>
         <item name="android:padding">2dp</item>
     </style>
 

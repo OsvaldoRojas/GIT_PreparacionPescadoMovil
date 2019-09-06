@@ -931,33 +931,6 @@ public class Fragment_Descongelado_Plan extends Fragment{
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina_negra);
-                    break;
-                case 1:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_uno_negro);
-                    break;
-                case 2:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_dos_negro);
-                    break;
-                case 3:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tres_negro);
-                    break;
-                case 4:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cuatro_negro);
-                    break;
-                case 5:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cinco_negro);
-                    break;
-            }
-        }else{
-            switch ( posicionEstiba.getConteoNivel() ){
-                case 0:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_tina_blanca);
                     break;
                 case 1:
@@ -979,6 +952,33 @@ public class Fragment_Descongelado_Plan extends Fragment{
                 case 5:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_cinco_blanco);
+                    break;
+            }
+        }else{
+            switch ( posicionEstiba.getConteoNivel() ){
+                case 0:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tina_gris);
+                    break;
+                case 1:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_uno_gris);
+                    break;
+                case 2:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_dos_gris);
+                    break;
+                case 3:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tres_gris);
+                    break;
+                case 4:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cuatro_gris);
+                    break;
+                case 5:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cinco_gris);
             }
         }
     }
