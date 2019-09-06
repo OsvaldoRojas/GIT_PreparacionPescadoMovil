@@ -4,28 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
-import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_DetalleEstiba;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
 import com.example.simulador_pescado.vista.PosicionEstiba;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -1093,33 +1088,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tina_negra);
-                    break;
-                case 1:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_uno_negro);
-                    break;
-                case 2:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_dos_negro);
-                    break;
-                case 3:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tres_negro);
-                    break;
-                case 4:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cuatro_negro);
-                    break;
-                case 5:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cinco_negro);
-                    break;
-            }
-        }else{
-            switch ( posicionEstiba.getConteoNivel() ){
-                case 0:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_tina_blanca);
                     break;
                 case 1:
@@ -1141,6 +1109,33 @@ public class Fragment_Atemperado_Plan extends Fragment {
                 case 5:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_cinco_blanco);
+                    break;
+            }
+        }else{
+            switch ( posicionEstiba.getConteoNivel() ){
+                case 0:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tina_gris);
+                    break;
+                case 1:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_uno_gris);
+                    break;
+                case 2:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_dos_gris);
+                    break;
+                case 3:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_tres_gris);
+                    break;
+                case 4:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cuatro_gris);
+                    break;
+                case 5:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setImageResource(R.drawable.ic_cinco_gris);
             }
         }
     }
