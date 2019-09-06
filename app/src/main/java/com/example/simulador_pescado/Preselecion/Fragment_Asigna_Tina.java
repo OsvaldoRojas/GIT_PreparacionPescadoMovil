@@ -55,10 +55,6 @@ public class Fragment_Asigna_Tina extends Fragment {
     private AlertDialog ventanaError;
 
     private Tina tinaSeleccionada;
-    private List<Talla> listaTalla;
-    private List<Subtalla> listaSubtalla;
-    private List<GrupoEspecie> listaGrupoEspecie;
-    private List<Especialidad> listaEspecialidad;
 
     private OnFragmentInteractionListener mListener;
 

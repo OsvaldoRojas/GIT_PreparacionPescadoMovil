@@ -12,7 +12,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_DetalleEstiba;
+import com.example.simulador_pescado.Descongelado.Fragment_Descongelado_DetalleEstiba;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_Plan;
 import com.example.simulador_pescado.Atemperado.Fragment_Atemperado_TiempoMuerto;
@@ -38,7 +38,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         Contenedor_Atemperado.OnFragmentInteractionListener, Fragment_Descongelado_Plan.OnFragmentInteractionListener, Fragment_Atemperado_Plan.OnFragmentInteractionListener,
         Fragment_Asigna_Tina.OnFragmentInteractionListener, Fragment_Asigna_Operador.OnFragmentInteractionListener, Fragment_Asigna_Montacargas.OnFragmentInteractionListener,
         Fragment_CreaOrdenMantenimiento.OnFragmentInteractionListener, Fragment_AsignaMecanico.OnFragmentInteractionListener, Fragment_DetalleOrden.OnFragmentInteractionListener,
-        Fragment_Atemperado_DetalleEstiba.OnFragmentInteractionListener {
+        Fragment_Descongelado_DetalleEstiba.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
