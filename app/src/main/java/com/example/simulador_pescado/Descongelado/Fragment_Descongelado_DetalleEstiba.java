@@ -13,11 +13,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Utilerias;
-import com.example.simulador_pescado.vista.PosicionEstiba;
+import com.example.simulador_pescado.vista.PosicionEstibaAtemperado;
 
 import java.io.Serializable;
 
@@ -34,7 +33,7 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
 
     private AlertDialog ventanaError;
     private AlertDialog ventanaEmergente;
-    private PosicionEstiba posicionSeleccionada;
+    private PosicionEstibaAtemperado posicionSeleccionada;
 
     private OnFragmentInteractionListener mListener;
 
@@ -114,16 +113,16 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public PosicionEstiba getPosicionSeleccionada() {
+    public PosicionEstibaAtemperado getPosicionSeleccionada() {
         return posicionSeleccionada;
     }
 
-    public void setPosicionSeleccionada(PosicionEstiba posicionSeleccionada) {
+    public void setPosicionSeleccionada(PosicionEstibaAtemperado posicionSeleccionada) {
         this.posicionSeleccionada = posicionSeleccionada;
     }
 
     private void iniciaComponentes(){
-        setPosicionSeleccionada( (PosicionEstiba) this.mParam1 );
+        setPosicionSeleccionada( (PosicionEstibaAtemperado) this.mParam1 );
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {

@@ -52,10 +52,12 @@ public class CargaListaOrden extends AsyncTask<Void,Integer,Boolean> {
             HttpResponse respuesta = conexion.execute(peticion);
             if( respuesta.getStatusLine().getStatusCode() == 200 ){
                 String respuestaJson = EntityUtils.toString( respuesta.getEntity() );
+                byte resultadoByte[] = respuestaJson.getBytes("ISO-8859-1");
+                String resultadoFinal = new String(resultadoByte, "UTF-8");
                 Gson gson = new Gson();
 
                 Type listaPlantilla = new TypeToken<List<ListaOrdenMantenimientoServicio>>(){}.getType();
-                this.listaOrden = gson.fromJson(respuestaJson, listaPlantilla);
+                this.listaOrden = gson.fromJson(resultadoFinal, listaPlantilla);
                 return true;
             }else{
                 this.errorMensaje = new ErrorServicio();

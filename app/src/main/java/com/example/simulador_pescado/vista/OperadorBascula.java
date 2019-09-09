@@ -6,8 +6,6 @@ import java.io.Serializable;
 
 public class OperadorBascula implements Serializable {
 
-    private static final String CLAVE = "MAQ-OPE";
-
     private int idPreseleccionEstacion;
     private int idEmpleado;
     private int idPosicionPrincipal;
@@ -17,10 +15,15 @@ public class OperadorBascula implements Serializable {
     private Boolean activo;
     private String estacion;
 
+    private String claveMaquina;
     private Constantes.ESTADO estado;
 
-    public String getClave(){
-        return CLAVE;
+    public String getClaveMaquina() {
+        return claveMaquina;
+    }
+
+    public void setClaveMaquina(String claveMaquina) {
+        this.claveMaquina = claveMaquina;
     }
 
     public Constantes.ESTADO getEstado() {

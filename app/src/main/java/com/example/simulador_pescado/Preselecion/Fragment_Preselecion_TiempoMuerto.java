@@ -194,8 +194,8 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenTina(){
-        if( validaMaquinaria( getTinaSeleccionada().getClave() ) ){
-            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada().getClave() );
+        if( validaMaquinaria( getTinaSeleccionada().getClaveMaquina() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getTinaSeleccionada().getClaveMaquina() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -203,8 +203,8 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenOperador(){
-        if( validaMaquinaria( getOperadorSeleccionado().getClave() ) ){
-            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado().getClave() );
+        if( validaMaquinaria( getOperadorSeleccionado().getClaveMaquina() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getOperadorSeleccionado().getClaveMaquina() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -212,8 +212,8 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenBascula(){
-        if( validaMaquinaria( getBasculaSeleccionada().getClave() ) ){
-            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada().getClave() );
+        if( validaMaquinaria( getBasculaSeleccionada().getClaveMaquina() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getBasculaSeleccionada().getClaveMaquina() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -221,8 +221,8 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenMontacargas(){
-        if( validaMaquinaria( getMontacargasSeleccionado().getClave() ) ){
-            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado().getClave() );
+        if( validaMaquinaria( getMontacargasSeleccionado().getClaveMaquina() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado().getClaveMaquina() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -585,9 +585,10 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     private void creaObjetosVacios(){
         if( this.listaTinas.isEmpty() ){
             for( int posicion = 1; posicion <= 12; posicion++ ){
-                final Tina recursoTina = new Tina();
+                Tina recursoTina = new Tina();
                 recursoTina.setIdPreseleccionPosicionTina(posicion);
                 recursoTina.setPosicion( getEtiquetaTina(posicion) );
+                recursoTina.setClaveMaquina("MAQ-TIN-" + posicion);
                 recursoTina.setEstado(Constantes.ESTADO.inicial);
                 this.listaTinas.add(recursoTina);
             }
@@ -595,9 +596,10 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
 
         if( this.listaOperadores.isEmpty() ){
             for( int posicion = 1; posicion <= 10; posicion++ ){
-                final OperadorBascula recursoOperador = new OperadorBascula();
+                OperadorBascula recursoOperador = new OperadorBascula();
                 recursoOperador.setIdPreseleccionEstacion(posicion);
                 recursoOperador.setEstacion( getEtiquetaOperador(posicion) );
+                recursoOperador.setClaveMaquina("MAQ-OPE-" + posicion);
                 recursoOperador.setEstado(Constantes.ESTADO.inicial);
                 this.listaOperadores.add(recursoOperador);
             }
@@ -607,6 +609,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
             for( int posicion = 1; posicion <= 4; posicion++ ){
                 OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
                 recursoMontacargas.setIdPreseleccionMontacarga(posicion);
+                recursoMontacargas.setClaveMaquina("MAQ-MON-" + posicion);
                 recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
                 this.listaMontacargas.add(recursoMontacargas);
             }
@@ -616,6 +619,7 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
             for( int posicion = 1; posicion <=10; posicion++ ){
                 Bascula recursoBascula = new Bascula();
                 recursoBascula.setIdBascula(posicion);
+                recursoBascula.setClaveMaquina("MAQ-BAS-" + posicion);
                 recursoBascula.setEstado(Constantes.ESTADO.inicial);
                 this.listaBasculas.add(recursoBascula);
             }
