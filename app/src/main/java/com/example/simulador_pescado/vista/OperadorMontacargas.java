@@ -6,19 +6,22 @@ import java.io.Serializable;
 
 public class OperadorMontacargas implements Serializable {
 
-    private static final String CLAVE = "MAQ-MON";
-
     private int idPreseleccionMontacarga;
     private String idEmpleado;
     private Boolean turno;
     private Boolean libre;
     private Boolean activo;
 
-    public String getClave(){
-        return CLAVE;
+    private String claveMaquina;
+    private Constantes.ESTADO estado;
+
+    public String getClaveMaquina() {
+        return claveMaquina;
     }
 
-    private Constantes.ESTADO estado;
+    public void setClaveMaquina(String claveMaquina) {
+        this.claveMaquina = claveMaquina;
+    }
 
     public Constantes.ESTADO getEstado() {
         return estado;

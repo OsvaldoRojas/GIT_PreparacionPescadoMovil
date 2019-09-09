@@ -1,7 +1,7 @@
 package com.example.simulador_pescado.Atemperado;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,13 +12,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
-import com.example.simulador_pescado.vista.PosicionEstiba;
+import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.conexion.ObtenPosiciones;
+import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.PosicionEstibaAtemperado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,14 +149,15 @@ public class Fragment_Atemperado_Plan extends Fragment {
     private ImageView posicion99;
     private ImageView posicion100;
 
-    private PosicionEstiba posicionSeleccionada;
+    private PosicionEstibaAtemperado posicionSeleccionada;
 
-    private List<PosicionEstiba> listaPosiciones = new ArrayList<>();
+    private List<PosicionEstibaAtemperado> listaPosiciones = new ArrayList<>();
 
     private LinearLayout botonera;
     private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
     private Button boton1;
+    private AlertDialog ventanaError;
     private AlertDialog ventanaEmergente;
 
     private OnFragmentInteractionListener mListener;
@@ -160,11 +166,11 @@ public class Fragment_Atemperado_Plan extends Fragment {
         // Required empty public constructor
     }
 
-    public PosicionEstiba getPosicionSeleccionada() {
+    public PosicionEstibaAtemperado getPosicionSeleccionada() {
         return posicionSeleccionada;
     }
 
-    public void setPosicionSeleccionada(PosicionEstiba posicionSeleccionada) {
+    public void setPosicionSeleccionada(PosicionEstibaAtemperado posicionSeleccionada) {
         this.posicionSeleccionada = posicionSeleccionada;
     }
 
@@ -211,6 +217,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
             @Override
             public void onRefresh() {
                 actualizar.setRefreshing(true);
+                obtenPosiciones();
             }
         });
         this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
@@ -223,6 +230,8 @@ public class Fragment_Atemperado_Plan extends Fragment {
                 muestraDetalle();
             }
         });
+
+        iniciaProcesando();
 
         this.posicion1 = this.vista.findViewById(R.id.posicion1);
         this.posicion1.setOnClickListener(new View.OnClickListener() {
@@ -1024,58 +1033,101 @@ public class Fragment_Atemperado_Plan extends Fragment {
             }
         });
 
-        creaObjetosVacios();
+        obtenPosiciones();
+    }
+
+    private void obtenPosiciones(){
+        ObtenPosiciones obtenPosiciones = new ObtenPosiciones(this);
+        obtenPosiciones.execute();
     }
 
     private void creaObjetosVacios(){
         if( this.listaPosiciones.isEmpty() ){
             for( int posicion = 1; posicion <= 100; posicion++ ){
-                PosicionEstiba recursoPosicion = new PosicionEstiba();
+                PosicionEstibaAtemperado recursoPosicion = new PosicionEstibaAtemperado();
                 recursoPosicion.setIdAtemperadoPosicionTina(posicion);
                 recursoPosicion.setEstado(Constantes.ESTADO.inicial);
-                recursoPosicion.setBloqueado(false);
-                recursoPosicion.setConteoNivel(4);
+                recursoPosicion.setConteoNivel(0);
+                recursoPosicion.setEspecie("");
+                recursoPosicion.setSubtalla("");
+                recursoPosicion.setEspecialidad("");
                 this.listaPosiciones.add(recursoPosicion);
                 muestraIcono(recursoPosicion);
-                if( recursoPosicion.getBloqueado() ){
-                    getIconoPosicion( recursoPosicion.getIdAtemperadoPosicionTina() )
-                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
-                }
+            }
+        }
+    }
+
+    public void resultadoPosiciones(List<PosicionEstibaAtemperado> posiciones){
+        if( isAdded() ){
+            this.listaPosiciones = posiciones;
+            for( PosicionEstibaAtemperado recursoEstiba : this.listaPosiciones ){
+                recursoEstiba.setEstado(Constantes.ESTADO.inicial);
+                muestraIcono(recursoEstiba);
             }
         }
     }
 
     private void muestraDetalle(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        View vistaAsignar = inflater.inflate(R.layout.dialog_detalle_estiba, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                        accionIconoPosicion( getPosicionSeleccionada().getIdAtemperadoPosicionTina() );
+                    }
+                });
+
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText("Detalle");
+
+                TextView etiquetaEspecie = ventanaEmergente.findViewById(R.id.etiquetaEspecie);
+                etiquetaEspecie.setText( getPosicionSeleccionada().getEspecie() );
+
+                TextView etiquetaSubtalla = ventanaEmergente.findViewById(R.id.etiquetaSubtalla);
+                etiquetaSubtalla.setText( getPosicionSeleccionada().getSubtalla() );
+
+                TextView etiquetaEspecialidad = ventanaEmergente.findViewById(R.id.etiquetaEspecialidad);
+                etiquetaEspecialidad.setText( getPosicionSeleccionada().getEspecialidad() );
+            }
+        });
+        this.ventanaEmergente.show();
     }
 
     private void accionIconoPosicion(int posicion){
-        for( PosicionEstiba posicionEstiba : this.listaPosiciones ){
+        for( PosicionEstibaAtemperado posicionEstiba : this.listaPosiciones ){
             if( posicionEstiba.getIdAtemperadoPosicionTina() == posicion ){
-                if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
-                    setPosicionSeleccionada(posicionEstiba);
-                    deshabilitaRecursos();
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
-                    posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
-                    muestraIcono(posicionEstiba);
-                    ajustaTamañoVista();
-                    this.botonera.setVisibility(View.VISIBLE);
-                }else{
-                    if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
-                        setPosicionSeleccionada(null);
-                        habilitaRecursos();
-                        if( !posicionEstiba.getBloqueado() ){
+                if( posicionEstiba.getConteoNivel() > 0 ){
+                    if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
+                        setPosicionSeleccionada(posicionEstiba);
+                        deshabilitaRecursos();
+                        getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                        posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
+                        muestraIcono(posicionEstiba);
+                        ajustaTamañoVista();
+                        this.botonera.setVisibility(View.VISIBLE);
+                    }else{
+                        if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
+                            setPosicionSeleccionada(null);
+                            habilitaRecursos();
                             getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
-                        }else{
-                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
+                            posicionEstiba.setEstado(Constantes.ESTADO.inicial);
+                            muestraIcono(posicionEstiba);
+                            this.botonera.setVisibility(View.GONE);
+                            ajustaTamañoVista();
                         }
-                        posicionEstiba.setEstado(Constantes.ESTADO.inicial);
-                        muestraIcono(posicionEstiba);
-                        this.botonera.setVisibility(View.GONE);
-                        ajustaTamañoVista();
                     }
                 }
                 break;
@@ -1083,7 +1135,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         }
     }
 
-    private void muestraIcono(PosicionEstiba posicionEstiba){
+    private void muestraIcono(PosicionEstibaAtemperado posicionEstiba){
         if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
@@ -1146,9 +1198,9 @@ public class Fragment_Atemperado_Plan extends Fragment {
 
         if( getPosicionSeleccionada() != null ){
             vista.height = vista.height - (botonera.height*5);
-            if( getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 15
-                    || ( getPosicionSeleccionada().getIdAtemperadoPosicionTina() >= 51
-                    && getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 65 ) ){
+            if( String.valueOf( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).endsWith("1")
+                    || String.valueOf( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).endsWith("2")
+                    || String.valueOf( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).endsWith("3") ){
                 this.vistaIconos.post(new Runnable() {
                     public void run() {
                         vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
@@ -1171,13 +1223,13 @@ public class Fragment_Atemperado_Plan extends Fragment {
     }
 
     private void habilitaRecursos(){
-        for(PosicionEstiba posicionEstiba : this.listaPosiciones){
+        for(PosicionEstibaAtemperado posicionEstiba : this.listaPosiciones){
             getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() ).setEnabled(true);
         }
     }
 
     private void deshabilitaRecursos(){
-        for(PosicionEstiba posicionEstiba : this.listaPosiciones){
+        for(PosicionEstibaAtemperado posicionEstiba : this.listaPosiciones){
             getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() ).setEnabled(false);
         }
 
@@ -1290,6 +1342,41 @@ public class Fragment_Atemperado_Plan extends Fragment {
             case 100: return this.posicion100;
         }
         return null;
+    }
+
+    public void errorServicio(ErrorServicio errorMensaje){
+        String mensajeMostrar = errorMensaje.getMessage();
+        if( errorMensaje.getMensaje() != null &&
+                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
+            mensajeMostrar = errorMensaje.getMensaje();
+        }
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        final String finalMensajeMostrar = mensajeMostrar;
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(finalMensajeMostrar);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                        creaObjetosVacios();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     public void iniciaProcesando(){

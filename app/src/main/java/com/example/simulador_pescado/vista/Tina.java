@@ -6,8 +6,6 @@ import java.io.Serializable;
 
 public class Tina implements Serializable {
 
-    private static final String CLAVE = "MAQ-TIN";
-
     private int idPreseleccionPosicionTina;
     private String posicion;
     private TinaPosicion tina;
@@ -21,10 +19,15 @@ public class Tina implements Serializable {
     private Boolean activo;
     private Boolean turno;
 
+    private String claveMaquina;
     private Constantes.ESTADO estado;
 
-    public String getClave(){
-        return CLAVE;
+    public String getClaveMaquina() {
+        return claveMaquina;
+    }
+
+    public void setClaveMaquina(String claveMaquina) {
+        this.claveMaquina = claveMaquina;
     }
 
     public int getIdPreseleccionPosicionTina() {

@@ -18,7 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Constantes;
-import com.example.simulador_pescado.vista.PosicionEstiba;
+import com.example.simulador_pescado.vista.PosicionEstibaAtemperado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,9 +123,9 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private ImageView posicion79;
     private ImageView posicion80;
 
-    private PosicionEstiba posicionSeleccionada;
+    private PosicionEstibaAtemperado posicionSeleccionada;
 
-    private List<PosicionEstiba> listaPosiciones = new ArrayList<>();
+    private List<PosicionEstibaAtemperado> listaPosiciones = new ArrayList<>();
 
     private LinearLayout botonera;
     private ScrollView vistaIconos;
@@ -140,11 +140,11 @@ public class Fragment_Descongelado_Plan extends Fragment{
         // Required empty public constructor
     }
 
-    public PosicionEstiba getPosicionSeleccionada() {
+    public PosicionEstibaAtemperado getPosicionSeleccionada() {
         return posicionSeleccionada;
     }
 
-    public void setPosicionSeleccionada(PosicionEstiba posicionSeleccionada) {
+    public void setPosicionSeleccionada(PosicionEstibaAtemperado posicionSeleccionada) {
         this.posicionSeleccionada = posicionSeleccionada;
     }
 
@@ -858,7 +858,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private void creaObjetosVacios(){
         if( this.listaPosiciones.isEmpty() ){
             for( int posicion = 1; posicion <= 80; posicion++ ){
-                PosicionEstiba recursoPosicion = new PosicionEstiba();
+                PosicionEstibaAtemperado recursoPosicion = new PosicionEstibaAtemperado();
                 recursoPosicion.setIdAtemperadoPosicionTina(posicion);
                 recursoPosicion.setEstado(Constantes.ESTADO.inicial);
                 recursoPosicion.setBloqueado(false);
@@ -883,7 +883,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
     }
 
     private void accionIconoPosicion(int posicion){
-        for( PosicionEstiba posicionEstiba : this.listaPosiciones ){
+        for( PosicionEstibaAtemperado posicionEstiba : this.listaPosiciones ){
             if( posicionEstiba.getIdAtemperadoPosicionTina() == posicion ){
                 if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
                     setPosicionSeleccionada(posicionEstiba);
@@ -926,7 +926,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
         }
     }
 
-    private void muestraIcono(PosicionEstiba posicionEstiba){
+    private void muestraIcono(PosicionEstibaAtemperado posicionEstiba){
         if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
@@ -1012,13 +1012,13 @@ public class Fragment_Descongelado_Plan extends Fragment{
     }
 
     private void habilitaRecursos(){
-        for(PosicionEstiba posicion : this.listaPosiciones){
+        for(PosicionEstibaAtemperado posicion : this.listaPosiciones){
             getIconoPosicion( posicion.getIdAtemperadoPosicionTina() ).setEnabled(true);
         }
     }
 
     private void deshabilitaRecursos(){
-        for(PosicionEstiba posicion : this.listaPosiciones){
+        for(PosicionEstibaAtemperado posicion : this.listaPosiciones){
             getIconoPosicion( posicion.getIdAtemperadoPosicionTina() ).setEnabled(false);
         }
 

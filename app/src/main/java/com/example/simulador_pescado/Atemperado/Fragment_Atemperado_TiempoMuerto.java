@@ -21,10 +21,9 @@ import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.Utilerias.Catalogos;
 import com.example.simulador_pescado.Utilerias.Constantes;
-import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
-import com.example.simulador_pescado.vista.PosicionEstiba;
+import com.example.simulador_pescado.vista.PosicionEstibaAtemperado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,13 +150,13 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
 
     private ImageView montacargas;
 
-    private PosicionEstiba posicionSeleccionada;
+    private PosicionEstibaAtemperado posicionSeleccionada;
     private OperadorMontacargas montacargasSeleccionado;
 
     private View.OnClickListener eventoCreaOrdenPosicion;
     private View.OnClickListener eventoCreaOrdenMontacargas;
 
-    private List<PosicionEstiba> listaposiciones = new ArrayList<>();
+    private List<PosicionEstibaAtemperado> listaposiciones = new ArrayList<>();
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
 
     private LinearLayout botonera;
@@ -173,11 +172,11 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
         // Required empty public constructor
     }
 
-    public PosicionEstiba getPosicionSeleccionada() {
+    public PosicionEstibaAtemperado getPosicionSeleccionada() {
         return posicionSeleccionada;
     }
 
-    public void setPosicionSeleccionada(PosicionEstiba posicionSeleccionada) {
+    public void setPosicionSeleccionada(PosicionEstibaAtemperado posicionSeleccionada) {
         this.posicionSeleccionada = posicionSeleccionada;
     }
 
@@ -1059,8 +1058,9 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     private void creaObjetosVacios(){
         if( this.listaposiciones.isEmpty() ){
             for( int posicion = 1; posicion <= 100; posicion++ ){
-                PosicionEstiba recursoPosicion = new PosicionEstiba();
+                PosicionEstibaAtemperado recursoPosicion = new PosicionEstibaAtemperado();
                 recursoPosicion.setIdAtemperadoPosicionTina(posicion);
+                recursoPosicion.setClaveMaquina("MAQ-EST-" + posicion);
                 recursoPosicion.setEstado(Constantes.ESTADO.inicial);
                 this.listaposiciones.add(recursoPosicion);
             }
@@ -1070,6 +1070,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
             for( int posicion = 1; posicion <= 1; posicion++ ){
                 OperadorMontacargas recursoMontacargas = new OperadorMontacargas();
                 recursoMontacargas.setIdPreseleccionMontacarga(posicion);
+                recursoMontacargas.setClaveMaquina("MAQ-MON-" + posicion);
                 recursoMontacargas.setEstado(Constantes.ESTADO.inicial);
                 this.listaMontacargas.add(recursoMontacargas);
             }
@@ -1086,8 +1087,8 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenPosicion(){
-        if( validaMaquinaria( getPosicionSeleccionada().getClave() ) ){
-            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getPosicionSeleccionada().getClave() );
+        if( validaMaquinaria( getPosicionSeleccionada().getClaveMaquina() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getPosicionSeleccionada().getClaveMaquina() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -1095,8 +1096,8 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     }
 
     private void creaOrdenMontacargas(){
-        if( validaMaquinaria( getMontacargasSeleccionado().getClave() ) ){
-            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado().getClave() );
+        if( validaMaquinaria( getMontacargasSeleccionado().getClaveMaquina() ) ){
+            Fragment fragment = new Fragment_CreaOrdenMantenimiento().newInstance( getMontacargasSeleccionado().getClaveMaquina() );
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
         }else{
             errorMaquinaria();
@@ -1131,7 +1132,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     }
 
     private void accionIconoPosicion(int posicion){
-        for( PosicionEstiba posicionEstiba : this.listaposiciones ){
+        for( PosicionEstibaAtemperado posicionEstiba : this.listaposiciones ){
             if( posicionEstiba.getIdAtemperadoPosicionTina() == posicion ){
                 if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
                     setPosicionSeleccionada(posicionEstiba);
@@ -1236,7 +1237,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     }
 
     private void habilitaRecursos(){
-        for(PosicionEstiba posicionEstiba : this.listaposiciones){
+        for(PosicionEstibaAtemperado posicionEstiba : this.listaposiciones){
             getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() ).setEnabled(true);
         }
 
@@ -1246,7 +1247,7 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     }
 
     private void deshabilitaRecursos(){
-        for(PosicionEstiba posicionEstiba : this.listaposiciones){
+        for(PosicionEstibaAtemperado posicionEstiba : this.listaposiciones){
             getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() ).setEnabled(false);
         }
 
