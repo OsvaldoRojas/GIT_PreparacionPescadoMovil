@@ -1049,7 +1049,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
                     terminaProcesando();
                 }else{
                     terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    errorServicio("Error interno del servidor");
                 }
             }
 

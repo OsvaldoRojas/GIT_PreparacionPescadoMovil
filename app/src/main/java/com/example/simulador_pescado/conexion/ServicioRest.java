@@ -1,6 +1,7 @@
 package com.example.simulador_pescado.conexion;
 
 import com.example.simulador_pescado.vista.Gafete;
+import com.example.simulador_pescado.vista.LiberarTodos;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.OrdenMantenimientoActualizar;
@@ -52,7 +53,7 @@ public interface ServicioRest {
     Call<RespuestaServicio> asignaTina(@Body TinaServicio tina);
 
     @PUT("preseleccion/operadores/liberar-todos")
-    Call<RespuestaServicio> liberaTurno(@Body String usuario);
+    Call<RespuestaServicio> liberaTurno(@Body LiberarTodos liberarTodos);
 
     @POST("preseleccion/posiciones/tinas/liberar")
     Call<RespuestaServicio> liberaTina(@Body int idPreseleccionPosicionTina, @Body String usuario);

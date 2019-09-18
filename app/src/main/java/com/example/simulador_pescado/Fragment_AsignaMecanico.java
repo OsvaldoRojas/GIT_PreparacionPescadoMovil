@@ -221,7 +221,7 @@ public class Fragment_AsignaMecanico extends Fragment {
                     resultadoActualizaOrden();
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -302,7 +302,7 @@ public class Fragment_AsignaMecanico extends Fragment {
                         resultadoEscaneoGafete( response.body() );
                     }else{
                         terminaProcesando();
-                        errorServicio("Error al conectar con el servidor");
+                        errorServicio("Error interno del servidor");
                     }
                 }
 

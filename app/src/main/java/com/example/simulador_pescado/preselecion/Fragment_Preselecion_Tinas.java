@@ -25,6 +25,7 @@ import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.LiberarTodos;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
 import com.example.simulador_pescado.vista.RespuestaServicio;
@@ -655,7 +656,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     ordenaTinas( response.body() );
                 }else{
                     terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -674,7 +675,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     ordenaOperadoresMontacargas( response.body() );
                 }else{
                     terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -695,7 +696,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     terminaProcesando();
                 }else{
                     terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -728,7 +729,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     resultadoAsignacion("La posición fue liberada exitosamente");
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -780,7 +781,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     resultadoAsignacion("El usuario fue liberado exitosamente");
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -814,7 +815,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     resultadoAsignacion("El usuario fue liberado exitosamente");
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -1000,8 +1001,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void liberaTurnoServicio(){
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion()
-                .liberaTurno( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        LiberarTodos liberarTodos = new LiberarTodos();
+        liberarTodos.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurno(liberarTodos);
 
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
@@ -1011,7 +1013,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     getAsignados();
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
