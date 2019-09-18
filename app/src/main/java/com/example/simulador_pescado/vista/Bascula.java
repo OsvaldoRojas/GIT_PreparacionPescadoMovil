@@ -1,6 +1,6 @@
 package com.example.simulador_pescado.vista;
 
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
 
 import java.io.Serializable;
 

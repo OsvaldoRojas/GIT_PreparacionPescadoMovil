@@ -1,22 +1,59 @@
 package com.example.simulador_pescado.vista;
 
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class Tina implements Serializable {
 
+    @SerializedName("idPreseleccionPosicionTina")
+    @Expose
     private int idPreseleccionPosicionTina;
+
+    @SerializedName("posicion")
+    @Expose
     private String posicion;
+
+    @SerializedName("tina")
+    @Expose
     private TinaPosicion tina;
+
+    @SerializedName("grupoEspecie")
+    @Expose
     private GrupoEspecie grupoEspecie;
+
+    @SerializedName("talla")
+    @Expose
     private Talla talla;
+
+    @SerializedName("subtalla")
+    @Expose
     private Subtalla subtalla;
+
+    @SerializedName("especialidad")
+    @Expose
     private Especialidad especialidad;
+
+    @SerializedName("npiezas")
+    @Expose
     private int npiezas;
+
+    @SerializedName("peso")
+    @Expose
     private int peso;
+
+    @SerializedName("libre")
+    @Expose
     private Boolean libre;
+
+    @SerializedName("activo")
+    @Expose
     private Boolean activo;
+
+    @SerializedName("turno")
+    @Expose
     private Boolean turno;
 
     private String claveMaquina;

@@ -1,15 +1,31 @@
 package com.example.simulador_pescado.vista;
 
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class OperadorMontacargas implements Serializable {
 
+    @SerializedName("idPreseleccionMontacarga")
+    @Expose
     private int idPreseleccionMontacarga;
+
+    @SerializedName("idEmpleado")
+    @Expose
     private String idEmpleado;
+
+    @SerializedName("turno")
+    @Expose
     private Boolean turno;
+
+    @SerializedName("libre")
+    @Expose
     private Boolean libre;
+
+    @SerializedName("activo")
+    @Expose
     private Boolean activo;
 
     private String claveMaquina;

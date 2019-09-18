@@ -1,11 +1,22 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Refaccion implements Serializable {
 
+    @SerializedName("idRefaccion")
+    @Expose
     private long idRefaccion;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
+    @SerializedName("codigo")
+    @Expose
     private String codigo;
 
     public long getIdRefaccion() {

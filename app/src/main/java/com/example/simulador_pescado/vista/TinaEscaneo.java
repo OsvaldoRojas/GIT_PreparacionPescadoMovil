@@ -1,10 +1,24 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class TinaEscaneo {
 
+    @SerializedName("idTinaDes")
+    @Expose
     private String idTinaDes;
+
+    @SerializedName("tinaDes")
+    @Expose
     private String tinaDes;
+
+    @SerializedName("idEmpresa")
+    @Expose
     private String idEmpresa;
+
+    @SerializedName("estatus")
+    @Expose
     private String estatus;
 
     public String getIdTinaDes() {

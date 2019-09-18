@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.Artefacto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

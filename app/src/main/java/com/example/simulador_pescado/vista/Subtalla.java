@@ -1,14 +1,34 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Subtalla implements Serializable {
 
+    @SerializedName("idSubtalla")
+    @Expose
     private int idSubtalla;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
+    @SerializedName("piezas")
+    @Expose
     private int piezas;
+
+    @SerializedName("pesoPromedioPieza")
+    @Expose
     private float pesoPromedioPieza;
+
+    @SerializedName("activo")
+    @Expose
     private Boolean activo;
+
+    @SerializedName("simulador")
+    @Expose
     private Boolean simulador;
 
     public int getIdSubtalla() {

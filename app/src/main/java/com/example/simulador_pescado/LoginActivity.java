@@ -3,7 +3,6 @@ package com.example.simulador_pescado;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -15,8 +14,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.simulador_pescado.Utilerias.Encriptacion;
-import com.example.simulador_pescado.conexion.InicioSesion;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Usuario;
 import com.example.simulador_pescado.vista.UsuarioLogueado;

@@ -1,11 +1,22 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Etapa implements Serializable {
 
+    @SerializedName("idEtapa")
+    @Expose
     private int idEtapa;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
+    @SerializedName("borrado")
+    @Expose
     private Boolean borrado;
 
     public int getIdEtapa() {

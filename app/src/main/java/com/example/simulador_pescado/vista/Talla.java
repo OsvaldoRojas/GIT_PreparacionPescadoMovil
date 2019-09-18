@@ -1,12 +1,26 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Talla implements Serializable {
 
+    @SerializedName("idTalla")
+    @Expose
     private int idTalla;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
+    @SerializedName("activo")
+    @Expose
     private Boolean activo;
+
+    @SerializedName("simulador")
+    @Expose
     private Boolean simulador;
 
     public int getIdTalla() {

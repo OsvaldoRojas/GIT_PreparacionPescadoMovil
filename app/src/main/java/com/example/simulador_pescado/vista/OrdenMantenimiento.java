@@ -1,24 +1,68 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdenMantenimiento implements Serializable {
 
+    @SerializedName("idOrdenMantenimiento")
+    @Expose
     private long idOrdenMantenimiento;
+
+    @SerializedName("folio")
+    @Expose
     private String folio;
+
+    @SerializedName("fechaInicio")
+    @Expose
     private String fechaInicio;
+
+    @SerializedName("fechaFin")
+    @Expose
     private String fechaFin;
+
+    @SerializedName("idEmpleado")
+    @Expose
     private long idEmpleado;
+
+    @SerializedName("nombreEmpleado")
+    @Expose
     private String nombreEmpleado;
+
+    @SerializedName("aMaternoEmpleado")
+    @Expose
     private String aMaternoEmpleado;
+
+    @SerializedName("aPaternoEmpleado")
+    @Expose
     private String aPaternoEmpleado;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
+    @SerializedName("solucion")
+    @Expose
     private String solucion;
+
+    @SerializedName("finalizada")
+    @Expose
     private Boolean finalizada;
+
+    @SerializedName("maquinaria")
+    @Expose
     private Maquinaria maquinaria;
+
+    @SerializedName("artefactos")
+    @Expose
     private List<Artefacto> artefactos = new ArrayList<>();
+
+    @SerializedName("refacciones")
+    @Expose
     private List<RefaccionOrden> refacciones = new ArrayList<>();
 
     public long getIdOrdenMantenimiento() {

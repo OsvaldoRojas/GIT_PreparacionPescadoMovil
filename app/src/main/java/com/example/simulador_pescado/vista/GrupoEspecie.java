@@ -1,13 +1,30 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class GrupoEspecie implements Serializable {
 
+    @SerializedName("idEspecie")
+    @Expose
     private int idEspecie;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
+    @SerializedName("observaciones")
+    @Expose
     private String observaciones;
+
+    @SerializedName("activo")
+    @Expose
     private Boolean activo;
+
+    @SerializedName("borrado")
+    @Expose
     private Boolean borrado;
 
     public int getIdEspecie() {

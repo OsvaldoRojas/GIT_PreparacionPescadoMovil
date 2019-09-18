@@ -1,17 +1,52 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class TinaServicio {
 
+    @SerializedName("idPreseleccionPosicionTina")
+    @Expose
     private int idPreseleccionPosicionTina;
+
+    @SerializedName("posicion")
+    @Expose
     private String posicion;
+
+    @SerializedName("idTina")
+    @Expose
     private long idTina;
+
+    @SerializedName("idEspecie")
+    @Expose
     private int idEspecie;
+
+    @SerializedName("idTalla")
+    @Expose
     private int idTalla;
+
+    @SerializedName("idSubtalla")
+    @Expose
     private int idSubtalla;
+
+    @SerializedName("idEspecialidad")
+    @Expose
     private int idEspecialidad;
+
+    @SerializedName("npiezas")
+    @Expose
     private int npiezas;
+
+    @SerializedName("peso")
+    @Expose
     private int peso;
+
+    @SerializedName("libre")
+    @Expose
     private Boolean libre;
+
+    @SerializedName("turno")
+    @Expose
     private Boolean turno;
 
     public int getIdPreseleccionPosicionTina() {

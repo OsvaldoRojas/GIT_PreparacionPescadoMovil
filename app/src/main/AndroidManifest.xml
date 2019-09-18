@@ -20,15 +20,15 @@
             android:name=".ActividadArtefactos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Preselecion.Tabs_Preselecion"
+            android:name=".preselecion.Tabs_Preselecion"
             android:label="@string/title_activity_tabs__preselecion"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Descongelado.Tabs_Descongelado"
+            android:name=".descongelado.Tabs_Descongelado"
             android:label="@string/title_activity_tabs__descongelado"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Atemperado.Tabs_Atemperado"
+            android:name=".atemperado.Tabs_Atemperado"
             android:label="@string/title_activity_tabs__atemperado"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
