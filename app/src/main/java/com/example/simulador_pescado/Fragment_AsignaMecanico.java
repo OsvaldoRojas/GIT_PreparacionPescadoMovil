@@ -18,17 +18,23 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor;
-import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
-import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
-import com.example.simulador_pescado.Utilerias.Catalogos;
-import com.example.simulador_pescado.Utilerias.Utilerias;
-import com.example.simulador_pescado.conexion.ActualizaOrdenMantenimiento;
+import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.conexion.ObtenDetalleOrden;
-import com.example.simulador_pescado.conexion.ValidaGafete;
+import com.example.simulador_pescado.contenedores.Contenedor;
+import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
+import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
+import com.example.simulador_pescado.vista.OrdenMantenimientoActualizar;
+import com.example.simulador_pescado.vista.RespuestaServicio;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_AsignaMecanico extends Fragment {
 
@@ -188,11 +194,70 @@ public class Fragment_AsignaMecanico extends Fragment {
                 !campoNombre.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
                 !campoNombre.getText().toString().equals("") ){
             iniciaProcesando();
-            ActualizaOrdenMantenimiento actualiza = new ActualizaOrdenMantenimiento(this, getOrdenSeleccionada() );
-            actualiza.execute();
+            guarda();
         }else{
             errorValidacion();
         }
+    }
+
+    private void guarda(){
+        OrdenMantenimientoActualizar orden = new OrdenMantenimientoActualizar();
+        orden.setIdOrdenMantenimiento( getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        orden.setIdEmpleado( getOrdenSeleccionada().getIdEmpleado() );
+        orden.setNombreEmpleado( getOrdenSeleccionada().getNombreEmpleado() );
+        orden.setaPaternoEmpleado( getOrdenSeleccionada().getaPaternoEmpleado() );
+        orden.setaMaternoEmpleado( getOrdenSeleccionada().getaMaternoEmpleado() );
+        orden.setFechaInicio( getOrdenSeleccionada().getFechaInicio() );
+        orden.setSolucion( getOrdenSeleccionada().getSolucion() );
+        orden.setFinalizada( getOrdenSeleccionada().getFinalizada() );
+        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(orden);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    resultadoActualizaOrden();
+                }else{
+                    terminaProcesando();
+                    errorServicio( respuesta.getMensaje() );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    public void errorServicio(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     public void errorValidacion(){
@@ -229,8 +294,24 @@ public class Fragment_AsignaMecanico extends Fragment {
     private void validaGafete(String codigo){
         if( codigo.length() >= 7 ){
             iniciaProcesando();
-            ValidaGafete validaGafete = new ValidaGafete(this, codigo);
-            validaGafete.execute();
+            Call<Gafete> llamadaServicio = APIServicios.getConexionPINSA().getGafeteUsuario(codigo);
+            llamadaServicio.enqueue(new Callback<Gafete>() {
+                @Override
+                public void onResponse(Call<Gafete> call, Response<Gafete> response) {
+                    if(response.code() == 200){
+                        resultadoEscaneoGafete( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al conectar con el servidor");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Gafete> call, Throwable t) {
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
+            });
         }else{
             TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
             campoNombre.setText( getResources().getString(R.string.mensajeErrorEscaneo) );

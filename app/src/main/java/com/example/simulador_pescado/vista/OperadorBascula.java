@@ -1,18 +1,43 @@
 package com.example.simulador_pescado.vista;
 
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class OperadorBascula implements Serializable {
 
+    @SerializedName("idPreseleccionEstacion")
+    @Expose
     private int idPreseleccionEstacion;
+
+    @SerializedName("idEmpleado")
+    @Expose
     private int idEmpleado;
+
+    @SerializedName("idPosicionPrincipal")
+    @Expose
     private int idPosicionPrincipal;
+
+    @SerializedName("idPosicionAlterna")
+    @Expose
     private int idPosicionAlterna;
+
+    @SerializedName("libre")
+    @Expose
     private Boolean libre;
+
+    @SerializedName("turno")
+    @Expose
     private Boolean turno;
+
+    @SerializedName("activo")
+    @Expose
     private Boolean activo;
+
+    @SerializedName("estacion")
+    @Expose
     private String estacion;
 
     private String claveMaquina;

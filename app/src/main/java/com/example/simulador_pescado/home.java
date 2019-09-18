@@ -10,9 +10,9 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor;
-import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
-import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.contenedores.Contenedor;
+import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
+import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
 
 
 /**

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,29 +23,30 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor;
-import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
-import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
-import com.example.simulador_pescado.Utilerias.Catalogos;
-import com.example.simulador_pescado.Utilerias.Utilerias;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoOrden;
 import com.example.simulador_pescado.adaptadores.AdaptadorRefaccionLista;
-import com.example.simulador_pescado.conexion.ActualizaOrdenMantenimiento;
+import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
 import com.example.simulador_pescado.conexion.GuardaRefaccion;
 import com.example.simulador_pescado.conexion.ObtenDetalleOrden;
+import com.example.simulador_pescado.contenedores.Contenedor;
+import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
+import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
+import com.example.simulador_pescado.vista.OrdenMantenimiento;
+import com.example.simulador_pescado.vista.OrdenMantenimientoActualizar;
 import com.example.simulador_pescado.vista.Refaccion;
 import com.example.simulador_pescado.vista.RefaccionOrden;
-import com.example.simulador_pescado.vista.OrdenMantenimiento;
+import com.example.simulador_pescado.vista.RespuestaServicio;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_DetalleOrden extends Fragment {
 
@@ -362,16 +362,75 @@ public class Fragment_DetalleOrden extends Fragment {
                 cerrarTiempoOrden.execute();
             }
 
-            ActualizaOrdenMantenimiento actualiza = new ActualizaOrdenMantenimiento(this, getOrdenSeleccionada() );
-            actualiza.execute();
+            guarda();
         }else{
             errorValidacion("Es necesario capturar una solución");
         }
     }
 
+    private void guarda(){
+        OrdenMantenimientoActualizar orden = new OrdenMantenimientoActualizar();
+        orden.setIdOrdenMantenimiento( getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        orden.setIdEmpleado( getOrdenSeleccionada().getIdEmpleado() );
+        orden.setNombreEmpleado( getOrdenSeleccionada().getNombreEmpleado() );
+        orden.setaPaternoEmpleado( getOrdenSeleccionada().getaPaternoEmpleado() );
+        orden.setaMaternoEmpleado( getOrdenSeleccionada().getaMaternoEmpleado() );
+        orden.setFechaInicio( getOrdenSeleccionada().getFechaInicio() );
+        orden.setSolucion( getOrdenSeleccionada().getSolucion() );
+        orden.setFinalizada( getOrdenSeleccionada().getFinalizada() );
+        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(orden);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    resultadoActualizaOrden();
+                }else{
+                    terminaProcesando();
+                    errorServicio( respuesta.getMensaje() );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
     public void resultadoActualizaOrden(){
         terminaProcesando();
         navega();
+    }
+
+    public void errorServicio(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     public void errorValidacion(final String mensaje){

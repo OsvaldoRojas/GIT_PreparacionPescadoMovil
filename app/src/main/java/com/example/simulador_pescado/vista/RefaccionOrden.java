@@ -1,12 +1,26 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class RefaccionOrden implements Serializable {
 
+    @SerializedName("idRefaccion")
+    @Expose
     private long idRefaccion;
+
+    @SerializedName("cantidad")
+    @Expose
     private int cantidad;
+
+    @SerializedName("codigoRefaccion")
+    @Expose
     private String codigoRefaccion;
+
+    @SerializedName("descripcionRefaccion")
+    @Expose
     private String descripcionRefaccion;
 
     public RefaccionOrden(long idRefaccion, int cantidad, String codigoRefaccion, String descripcionRefaccion){

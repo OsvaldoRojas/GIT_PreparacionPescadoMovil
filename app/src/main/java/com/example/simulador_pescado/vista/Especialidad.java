@@ -1,12 +1,26 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Especialidad implements Serializable {
 
+    @SerializedName("idEspecialidad")
+    @Expose
     private int idEspecialidad;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
+    @SerializedName("clave")
+    @Expose
     private String clave;
+
+    @SerializedName("borrado")
+    @Expose
     private Boolean borrado;
 
     public int getIdEspecialidad() {

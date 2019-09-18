@@ -2,8 +2,8 @@ package com.example.simulador_pescado.conexion;
 
 import android.os.AsyncTask;
 
-import com.example.simulador_pescado.Utilerias.Catalogos;
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
 import com.example.simulador_pescado.vista.Subtalla;

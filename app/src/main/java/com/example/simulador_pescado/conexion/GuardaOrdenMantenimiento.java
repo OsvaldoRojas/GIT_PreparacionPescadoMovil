@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
-import com.example.simulador_pescado.Utilerias.Constantes;
-import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.Artefacto;
 import com.example.simulador_pescado.vista.ArtefactoServicio;
 import com.example.simulador_pescado.vista.ErrorServicio;

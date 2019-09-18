@@ -1,8 +1,16 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Gafete {
 
+    @SerializedName("empleado")
+    @Expose
     private EmpleadoGafete empleado;
+
+    @SerializedName("resultado")
+    @Expose
     private String resultado;
 
     public EmpleadoGafete getEmpleado() {

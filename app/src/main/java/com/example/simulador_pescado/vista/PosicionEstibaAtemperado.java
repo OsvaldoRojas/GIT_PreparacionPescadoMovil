@@ -1,16 +1,35 @@
 package com.example.simulador_pescado.vista;
 
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class PosicionEstibaAtemperado implements Serializable {
 
+    @SerializedName("idAtemperadoPosicionTina")
+    @Expose
     private int idAtemperadoPosicionTina;
+
+    @SerializedName("conteoNivel")
+    @Expose
     private int conteoNivel;
+
+    @SerializedName("especie")
+    @Expose
     private String especie;
+
+    @SerializedName("subtalla")
+    @Expose
     private String subtalla;
+
+    @SerializedName("especialidad")
+    @Expose
     private String especialidad;
+
+    @SerializedName("bloqueado")
+    @Expose
     private Boolean bloqueado;
 
     private String claveMaquina;

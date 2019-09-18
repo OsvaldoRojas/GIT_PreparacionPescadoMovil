@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.Fragment_DetalleOrden;
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.RefaccionOrden;
 import com.example.simulador_pescado.vista.UsuarioLogueado;

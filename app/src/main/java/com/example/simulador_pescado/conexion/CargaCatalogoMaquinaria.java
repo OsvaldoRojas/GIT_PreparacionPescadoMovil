@@ -2,8 +2,8 @@ package com.example.simulador_pescado.conexion;
 
 import android.os.AsyncTask;
 
-import com.example.simulador_pescado.Utilerias.Catalogos;
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.Maquinaria;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

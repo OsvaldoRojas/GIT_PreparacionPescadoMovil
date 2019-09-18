@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.example.simulador_pescado.LoginActivity;
-import com.example.simulador_pescado.Utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Usuario;
 import com.google.gson.Gson;

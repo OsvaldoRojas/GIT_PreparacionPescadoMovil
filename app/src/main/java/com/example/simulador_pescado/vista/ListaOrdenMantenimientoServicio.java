@@ -1,17 +1,46 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class ListaOrdenMantenimientoServicio implements Serializable {
 
+    @SerializedName("idOrdenMantenimiento")
+    @Expose
     private long idOrdenMantenimiento;
+
+    @SerializedName("folio")
+    @Expose
     private String folio;
+
+    @SerializedName("fecha")
+    @Expose
     private String fecha;
+
+    @SerializedName("idMaquinaria")
+    @Expose
     private long idMaquinaria;
+
+    @SerializedName("maquinaria")
+    @Expose
     private String maquinaria;
+
+    @SerializedName("idEmpleado")
+    @Expose
     private long idEmpleado;
+
+    @SerializedName("nombreEmpleado")
+    @Expose
     private String nombreEmpleado;
+
+    @SerializedName("aPaternoEmpleado")
+    @Expose
     private String aPaternoEmpleado;
+
+    @SerializedName("aMaternoEmpleado")
+    @Expose
     private String aMaternoEmpleado;
 
     public long getIdOrdenMantenimiento() {

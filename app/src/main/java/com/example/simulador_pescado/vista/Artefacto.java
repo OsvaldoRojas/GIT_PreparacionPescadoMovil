@@ -1,11 +1,20 @@
 package com.example.simulador_pescado.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Artefacto implements Serializable {
 
+    @SerializedName("idMaquinariaArtefacto")
+    @Expose
     private int idMaquinariaArtefacto;
+
+    @SerializedName("descripcion")
+    @Expose
     private String descripcion;
+
     private Boolean selecionado = false;
 
     public int getIdMaquinariaArtefacto() {

@@ -16,11 +16,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.Contenedores.Contenedor;
-import com.example.simulador_pescado.Contenedores.Contenedor_Atemperado;
-import com.example.simulador_pescado.Contenedores.Contenedor_Descongelado;
-import com.example.simulador_pescado.Utilerias.Catalogos;
-import com.example.simulador_pescado.Utilerias.Utilerias;
+import com.example.simulador_pescado.contenedores.Contenedor;
+import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
+import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.conexion.GuardaOrdenMantenimiento;
 import com.example.simulador_pescado.conexion.ObtenArtefactosMaquinaria;
 import com.example.simulador_pescado.vista.Artefacto;
