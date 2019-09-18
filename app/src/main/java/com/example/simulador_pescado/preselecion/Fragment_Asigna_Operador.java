@@ -233,7 +233,7 @@ public class Fragment_Asigna_Operador extends Fragment {
                     resultadoAsignacion();
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -289,7 +289,7 @@ public class Fragment_Asigna_Operador extends Fragment {
                         resultadoEscaneoGafete( response.body() );
                     }else{
                         terminaProcesando();
-                        errorServicio("Error al conectar con el servidor");
+                        errorServicio("Error interno del servidor");
                     }
                 }
 

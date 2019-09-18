@@ -210,7 +210,7 @@ public class Fragment_Asigna_Montacargas extends Fragment {
                     resultadoAsignacion();
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -266,7 +266,7 @@ public class Fragment_Asigna_Montacargas extends Fragment {
                         resultadoEscaneoGafete( response.body() );
                     }else{
                         terminaProcesando();
-                        errorServicio("Error al conectar con el servidor");
+                        errorServicio("Error interno del servidor");
                     }
                 }
 

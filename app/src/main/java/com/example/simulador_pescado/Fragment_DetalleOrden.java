@@ -389,7 +389,7 @@ public class Fragment_DetalleOrden extends Fragment {
                     resultadoActualizaOrden();
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 

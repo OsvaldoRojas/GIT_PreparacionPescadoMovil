@@ -278,7 +278,7 @@ public class Fragment_Asigna_Tina extends Fragment {
                     resultadoAsignacion();
                 }else{
                     terminaProcesando();
-                    errorServicio( respuesta.getMensaje() );
+                    errorServicio("Error interno del servidor");
                 }
             }
 
@@ -334,7 +334,7 @@ public class Fragment_Asigna_Tina extends Fragment {
                         resultadoEscaneoTina( response.body() );
                     }else{
                         terminaProcesando();
-                        errorServicio("Error al conectar con el servidor");
+                        errorServicio("Error interno del servidor");
                     }
                 }
 
