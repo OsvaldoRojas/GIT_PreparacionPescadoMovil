@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
+import com.example.simulador_pescado.vista.servicio.ListaOrdenMantenimientoServicio;
 
 import java.util.ArrayList;
 import java.util.List;
