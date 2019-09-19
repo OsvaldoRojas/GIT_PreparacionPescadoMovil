@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_Plan;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_TiempoMuerto;
@@ -17,9 +18,15 @@ import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
-import com.example.simulador_pescado.conexion.CargaCatalogoMaquinaria;
+import com.example.simulador_pescado.vista.Maquinaria;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,8 +104,21 @@ public class Contenedor_Descongelado extends Fragment {
         pestañas.getTabAt(this.mParam1).select();
 
         Catalogos.getInstancia().setEtapaActual(Constantes.ETAPA.descongelado);
-        CargaCatalogoMaquinaria catalogoMaquinaria = new CargaCatalogoMaquinaria( Catalogos.getInstancia().getEtapaActual() );
-        catalogoMaquinaria.execute();
+        Call<List<Maquinaria>> llamadaServicio = APIServicios.getConexion().getMaquinarias( Catalogos.getInstancia().getEtapaActual() );
+        llamadaServicio.enqueue(new Callback<List<Maquinaria>>() {
+            @Override
+            public void onResponse(Call<List<Maquinaria>> call, Response<List<Maquinaria>> response) {
+                if(response.code() == 200){
+                    Catalogos.getInstancia().setCatalogoMaquinaria( response.body() );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Maquinaria>> call, Throwable t) {
+
+            }
+        });
+
         return vista;
     }
 

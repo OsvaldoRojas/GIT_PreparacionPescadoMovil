@@ -25,18 +25,19 @@ import com.example.simulador_pescado.adaptadores.AdaptadorGrupoEspecie;
 import com.example.simulador_pescado.adaptadores.AdaptadorSubtalla;
 import com.example.simulador_pescado.adaptadores.AdaptadorTalla;
 import com.example.simulador_pescado.conexion.APIServicios;
+import com.example.simulador_pescado.conexion.AsignaTina;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.GrupoEspecie;
-import com.example.simulador_pescado.vista.RespuestaServicio;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
-import com.example.simulador_pescado.vista.TinaEscaneo;
-import com.example.simulador_pescado.vista.TinaServicio;
+import com.example.simulador_pescado.vista.servicio.TinaEscaneo;
+import com.example.simulador_pescado.vista.servicio.TinaServicio;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
 import java.io.Serializable;
@@ -253,7 +254,10 @@ public class Fragment_Asigna_Tina extends Fragment {
     }
 
     private void guarda(){
-        TinaServicio tinaServicio = new TinaServicio();
+        AsignaTina asignaTina = new AsignaTina(this, getTinaSeleccionada() );
+        asignaTina.execute();
+
+        /*TinaServicio tinaServicio = new TinaServicio();
         tinaServicio.setIdEspecialidad( getTinaSeleccionada().getEspecialidad().getIdEspecialidad() );
         if( getTinaSeleccionada().getEspecialidad().getIdEspecialidad() == 0 ){
             tinaServicio.setIdEspecialidad(13);
@@ -287,7 +291,7 @@ public class Fragment_Asigna_Tina extends Fragment {
                 terminaProcesando();
                 errorServicio("Error al conectar con el servidor");
             }
-        });
+        });*/
     }
 
     public void resultadoAsignacion(){

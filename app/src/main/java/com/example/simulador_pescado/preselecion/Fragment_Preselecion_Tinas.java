@@ -25,10 +25,10 @@ import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.LiberarTodos;
+import com.example.simulador_pescado.vista.servicio.LiberarTodos;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
-import com.example.simulador_pescado.vista.RespuestaServicio;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
@@ -36,6 +36,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -459,6 +461,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         this.contenedorBotones.setVisibility(View.GONE);
                         if( validaMuestraTurno() ){
                             this.contenedorTurno.setVisibility(View.VISIBLE);
+                        }else{
+                            this.contenedorTurno.setVisibility(View.GONE);
                         }
                     }else{
                         setOperadorSeleccionado(operador);
@@ -648,12 +652,17 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             accionIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() );
         }
 
+        getTinasAsignadas();
+    }
+
+    private void getTinasAsignadas(){
         Call<List<Tina>> tinasAsignadas = APIServicios.getConexion().getTinasAsignadas();
         tinasAsignadas.enqueue(new Callback<List<Tina>>() {
             @Override
             public void onResponse(Call<List<Tina>> call, Response<List<Tina>> response) {
                 if(response.code() == 200){
                     ordenaTinas( response.body() );
+                    getMontacragasAsignados();
                 }else{
                     terminaProcesando();
                     errorServicio("Error interno del servidor");
@@ -666,26 +675,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 errorServicio("Error al conectar con el servidor");
             }
         });
+    }
 
-        Call<List<OperadorMontacargas>> montacargasAsignados = APIServicios.getConexion().getMontacargasAsignados();
-        montacargasAsignados.enqueue(new Callback<List<OperadorMontacargas>>() {
-            @Override
-            public void onResponse(Call<List<OperadorMontacargas>> call, Response<List<OperadorMontacargas>> response) {
-                if(response.code() == 200){
-                    ordenaOperadoresMontacargas( response.body() );
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<OperadorMontacargas>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
-            }
-        });
-
+    private void getOperadoresAsignados(){
         Call<List<OperadorBascula>> operadoresAsignados = APIServicios.getConexion().getOperadoresAsignados();
         operadoresAsignados.enqueue(new Callback<List<OperadorBascula>>() {
             @Override
@@ -702,6 +694,28 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
             @Override
             public void onFailure(Call<List<OperadorBascula>> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    private void getMontacragasAsignados(){
+        Call<List<OperadorMontacargas>> montacargasAsignados = APIServicios.getConexion().getMontacargasAsignados();
+        montacargasAsignados.enqueue(new Callback<List<OperadorMontacargas>>() {
+            @Override
+            public void onResponse(Call<List<OperadorMontacargas>> call, Response<List<OperadorMontacargas>> response) {
+                if(response.code() == 200){
+                    ordenaOperadoresMontacargas( response.body() );
+                    getOperadoresAsignados();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<OperadorMontacargas>> call, Throwable t) {
                 terminaProcesando();
                 errorServicio("Error al conectar con el servidor");
             }
@@ -1001,8 +1015,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void liberaTurnoServicio(){
-        LiberarTodos liberarTodos = new LiberarTodos();
-        liberarTodos.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        LiberarTodos liberarTodos = new LiberarTodos( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
         Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurno(liberarTodos);
 
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {

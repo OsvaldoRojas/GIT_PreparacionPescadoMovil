@@ -19,18 +19,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.conexion.APIServicios;
-import com.example.simulador_pescado.conexion.ObtenDetalleOrden;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.Gafete;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
-import com.example.simulador_pescado.vista.OrdenMantenimientoActualizar;
-import com.example.simulador_pescado.vista.RespuestaServicio;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
+import com.example.simulador_pescado.vista.servicio.Gafete;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoActualizar;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -150,8 +149,24 @@ public class Fragment_AsignaMecanico extends Fragment {
             }
         });
 
-        ObtenDetalleOrden detalleOrden = new ObtenDetalleOrden( this, this.mParam1);
-        detalleOrden.execute();
+        Call<OrdenMantenimiento> llamadaServicio = APIServicios.getConexion().getDetalleOrden(this.mParam1);
+        llamadaServicio.enqueue(new Callback<OrdenMantenimiento>() {
+            @Override
+            public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
+                if(response.code() == 200){
+                    resultadoDetalleOrden( response.body() );
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrdenMantenimiento> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
     public void resultadoDetalleOrden(OrdenMantenimiento ordenMantenimiento){

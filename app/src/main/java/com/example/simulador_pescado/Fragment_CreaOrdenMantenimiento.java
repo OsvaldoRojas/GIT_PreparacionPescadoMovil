@@ -16,21 +16,28 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.utilerias.Utilerias;
-import com.example.simulador_pescado.conexion.GuardaOrdenMantenimiento;
-import com.example.simulador_pescado.conexion.ObtenArtefactosMaquinaria;
 import com.example.simulador_pescado.vista.Artefacto;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
+import com.example.simulador_pescado.vista.servicio.ArtefactoServicio;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoGuardar;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -180,8 +187,20 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
             etiquetaEquipo.setText( getMaquinaria().getDescripcion() );
         }
 
-        ObtenArtefactosMaquinaria obtenArtefactosMaquinaria = new ObtenArtefactosMaquinaria(this, getMaquinaria().getIdMaquinaria() );
-        obtenArtefactosMaquinaria.execute();
+        Call<List<Artefacto>> llamadaServicio = APIServicios.getConexion().getArtefactos( getMaquinaria().getIdMaquinaria() );
+        llamadaServicio.enqueue(new Callback<List<Artefacto>>() {
+            @Override
+            public void onResponse(Call<List<Artefacto>> call, Response<List<Artefacto>> response) {
+                if(response.code() == 200){
+                    resultadoCatalogoArtefacto( response.body() );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Artefacto>> call, Throwable t) {
+
+            }
+        });
     }
 
     private boolean obtenMaquinaria(String clave){
@@ -221,13 +240,65 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
             getOrdenMantenimiento().setArtefactos( new ArrayList<Artefacto>() );
         }
 
-        GuardaOrdenMantenimiento guarda = new GuardaOrdenMantenimiento(this, getOrdenMantenimiento() );
-        guarda.execute();
+        OrdenMantenimientoGuardar orden = new OrdenMantenimientoGuardar();
+        orden.setIdOrdenMantenimiento(0);
+        orden.setIdMaquinaria( getOrdenMantenimiento().getMaquinaria().getIdMaquinaria() );
+        orden.setDescripcion( getOrdenMantenimiento().getDescripcion() );
+        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        List<ArtefactoServicio> lista = new ArrayList<>();
+        for( Artefacto artefacto : getOrdenMantenimiento().getArtefactos() ){
+            ArtefactoServicio artefactoServicio = new ArtefactoServicio();
+            artefactoServicio.setIdMaquinariaArtefacto( artefacto.getIdMaquinariaArtefacto() );
+            lista.add(artefactoServicio);
+        }
+        orden.setArtefactos(lista);
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOrdenMantenimiento(orden);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                terminaProcesando();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    navega();
+                }else{
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
-    public void resultadoGuardadoOrden(){
-        terminaProcesando();
-        navega();
+    public void errorServicio(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     public void errorServicio(ErrorServicio errorMensaje){

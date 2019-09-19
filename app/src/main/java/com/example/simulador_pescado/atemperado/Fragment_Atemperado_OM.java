@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,17 +16,25 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.simulador_pescado.Fragment_AsignaMecanico;
 import com.example.simulador_pescado.Fragment_DetalleOrden;
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
-import com.example.simulador_pescado.conexion.CargaListaOrden;
+import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
+import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.ListaOrdenMantenimientoServicio;
+import com.example.simulador_pescado.vista.servicio.ListaOrdenMantenimientoServicio;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -135,8 +138,53 @@ public class Fragment_Atemperado_OM extends Fragment {
     }
 
     private void getOrdenesMantenimiento(){
-        CargaListaOrden cargaListaOrden = new CargaListaOrden(Catalogos.getInstancia().getEtapaActual(), 0, this);
-        cargaListaOrden.execute();
+        Call<List<ListaOrdenMantenimientoServicio>> llamadaServicio = APIServicios.getConexion()
+                .getOrdenesMantenimiento( Catalogos.getInstancia().getEtapaActual(), 0 );
+
+        llamadaServicio.enqueue(new Callback<List<ListaOrdenMantenimientoServicio>>() {
+            @Override
+            public void onResponse(Call<List<ListaOrdenMantenimientoServicio>> call, Response<List<ListaOrdenMantenimientoServicio>> response) {
+                if(response.code() == 200){
+                    resultadoServicioLista( response.body() );
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ListaOrdenMantenimientoServicio>> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    public void errorServicio(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     public void resultadoServicioLista(final List<ListaOrdenMantenimientoServicio> lista){

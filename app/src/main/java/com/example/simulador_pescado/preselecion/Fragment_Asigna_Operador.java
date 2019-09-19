@@ -23,9 +23,9 @@ import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
-import com.example.simulador_pescado.vista.Gafete;
+import com.example.simulador_pescado.vista.servicio.Gafete;
 import com.example.simulador_pescado.vista.OperadorBascula;
-import com.example.simulador_pescado.vista.RespuestaServicio;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 

@@ -28,8 +28,6 @@ import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoOrden;
 import com.example.simulador_pescado.adaptadores.AdaptadorRefaccionLista;
 import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
-import com.example.simulador_pescado.conexion.GuardaRefaccion;
-import com.example.simulador_pescado.conexion.ObtenDetalleOrden;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
@@ -37,11 +35,12 @@ import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
-import com.example.simulador_pescado.vista.OrdenMantenimientoActualizar;
 import com.example.simulador_pescado.vista.Refaccion;
 import com.example.simulador_pescado.vista.RefaccionOrden;
-import com.example.simulador_pescado.vista.RespuestaServicio;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoActualizar;
+import com.example.simulador_pescado.vista.servicio.RefaccionGuardar;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import retrofit2.Call;
@@ -176,8 +175,24 @@ public class Fragment_DetalleOrden extends Fragment {
             }
         });
 
-        ObtenDetalleOrden detalleOrden = new ObtenDetalleOrden( this, this.mParam1);
-        detalleOrden.execute();
+        Call<OrdenMantenimiento> llamadaServicio = APIServicios.getConexion().getDetalleOrden(this.mParam1);
+        llamadaServicio.enqueue(new Callback<OrdenMantenimiento>() {
+            @Override
+            public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
+                if(response.code() == 200){
+                    resultadoDetalleOrden( response.body() );
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrdenMantenimiento> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
     public void resultadoDetalleOrden(OrdenMantenimiento ordenMantenimiento){
@@ -295,12 +310,7 @@ public class Fragment_DetalleOrden extends Fragment {
                             ( (Refaccion) campoRefaccion.getSelectedItem() ).getDescripcion()
                     );
 
-                    GuardaRefaccion guardaRefaccion = new GuardaRefaccion(
-                            Fragment_DetalleOrden.this,
-                            getOrdenSeleccionada().getIdOrdenMantenimiento(),
-                            refaccionCapturada
-                    );
-                    guardaRefaccion.execute();
+                    guardaRefaccion();
                 }else{
                     errorValidacion("Es necesario capturar todos los campos");
                 }
@@ -308,6 +318,34 @@ public class Fragment_DetalleOrden extends Fragment {
         });
 
         terminaProcesando();
+    }
+
+    private void guardaRefaccion(){
+        RefaccionGuardar refaccion = new RefaccionGuardar();
+        refaccion.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        refaccion.setIdRefaccion( this.refaccionCapturada.getIdRefaccion() );
+        refaccion.setCantidad( this.refaccionCapturada.getCantidad() );
+        refaccion.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaRefaccion(refaccion);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    resultadoGuardadoRefaccion();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
     public void resultadoGuardadoRefaccion(){
