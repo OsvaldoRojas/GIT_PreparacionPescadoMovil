@@ -28,6 +28,8 @@ import com.example.simulador_pescado.preselecion.Fragment_Asigna_Tina;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_TiempoMuerto;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_Tinas;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.google.android.material.navigation.NavigationView;
 
@@ -49,7 +51,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
 
         UsuarioLogueado usuarioLogueado = UsuarioLogueado.getUsuarioLogueado(null);
         this.setTitle( usuarioLogueado.getNombre().concat(" ").concat( usuarioLogueado.getApellido_paterno() ) );
-       
+
         Fragment fragment= new home();
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commit();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -96,33 +98,32 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-        boolean fragmentSelecionado= false;
+        boolean fragmentSelecionado = false;
         Fragment mifragment= null;
 
         if (id == R.id.nav_home) {
-      mifragment = new home();
-       fragmentSelecionado= true;
+            mifragment = new home();
+            fragmentSelecionado = true;
 
         } else if (id == R.id.nav_preselecion) {
-            mifragment = new Contenedor();
-            fragmentSelecionado= true;
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.preseleccion);
+            fragmentSelecionado = true;
 
         } else if (id == R.id.nav_desconglado) {
-            mifragment = new Contenedor_Descongelado();
-            fragmentSelecionado=true;
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.descongelado);
+            fragmentSelecionado = true;
 
         } else if (id == R.id.nav_atemperado) {
-            mifragment = new Contenedor_Atemperado();
-            fragmentSelecionado=true;
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.atemperado);
+            fragmentSelecionado = true;
 
         } else if (id == R.id.cerrar_sesion) {
             this.finish();
 
         }
 
-        if (fragmentSelecionado==true){
+        if (fragmentSelecionado){
             getSupportFragmentManager().beginTransaction().replace(R.id.content_main,mifragment).commit();
         }
 

@@ -27,8 +27,12 @@ import com.example.simulador_pescado.adaptadores.AdaptadorOrdenMantenimiento;
 import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
 import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.example.simulador_pescado.vista.servicio.ListaOrdenMantenimientoServicio;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoCerrarTiempo;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 
 import java.util.List;
 
@@ -218,6 +222,9 @@ public class Fragment_Descongelado_OM extends Fragment {
                             return false;
                         }
                     });
+                    if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() != Constantes.ROL.auxiliar.getId() ){
+                        menu.getMenu().getItem(0).setVisible(false);
+                    }
                     menu.show();
                     return false;
                 }
@@ -292,6 +299,30 @@ public class Fragment_Descongelado_OM extends Fragment {
                 getOrdenSeleccionada().getIdOrdenMantenimiento()
         );
         cerrarTiempoOrden.execute();
+        /*OrdenMantenimientoCerrarTiempo orden = new OrdenMantenimientoCerrarTiempo();
+        orden.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        orden.setFecha(null);
+        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().cierraTiempoOrdenMantenimiento(orden);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    getOrdenesMantenimiento();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });*/
     }
 
     public void resultadoCierraTiempo(){

@@ -104,22 +104,6 @@ public class Contenedor_Atemperado extends Fragment {
         }
         pestañas.getTabAt(this.mParam1).select();
 
-        Catalogos.getInstancia().setEtapaActual(Constantes.ETAPA.atemperado);
-        Call<List<Maquinaria>> llamadaServicio = APIServicios.getConexion().getMaquinarias( Catalogos.getInstancia().getEtapaActual() );
-        llamadaServicio.enqueue(new Callback<List<Maquinaria>>() {
-            @Override
-            public void onResponse(Call<List<Maquinaria>> call, Response<List<Maquinaria>> response) {
-                if(response.code() == 200){
-                    Catalogos.getInstancia().setCatalogoMaquinaria( response.body() );
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Maquinaria>> call, Throwable t) {
-
-            }
-        });
-
         return vista;
     }
 

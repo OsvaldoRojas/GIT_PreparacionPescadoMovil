@@ -401,18 +401,7 @@ public class Fragment_AsignaMecanico extends Fragment {
     }
 
     private void navega(){
-        Fragment fragment = null;
-        switch ( Catalogos.getInstancia().getEtapaActual() ){
-            case 1:
-                fragment = new Contenedor().newInstance(2);
-                break;
-            case 2:
-                fragment = new Contenedor_Atemperado().newInstance(2);
-                break;
-            case 3:
-                fragment = new Contenedor_Descongelado().newInstance(2);
-                break;
-        }
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_main, Utilerias.navega(2)).commit();
     }
 }

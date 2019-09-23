@@ -26,19 +26,24 @@ import androidx.fragment.app.Fragment;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefacto;
 import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoOrden;
 import com.example.simulador_pescado.adaptadores.AdaptadorRefaccionLista;
+import com.example.simulador_pescado.atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.conexion.APIServicios;
-import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.descongelado.Fragment_Descongelado_OM;
+import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.OrdenMantenimiento;
 import com.example.simulador_pescado.vista.Refaccion;
 import com.example.simulador_pescado.vista.RefaccionOrden;
+import com.example.simulador_pescado.vista.Usuario;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoActualizar;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoCerrarTiempo;
 import com.example.simulador_pescado.vista.servicio.RefaccionGuardar;
 import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -220,7 +225,9 @@ public class Fragment_DetalleOrden extends Fragment {
         this.etiquetaHoraInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                obtenHoraInicio();
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.supervisor.getId() ){
+                    obtenHoraInicio();
+                }
             }
         });
 
@@ -236,7 +243,9 @@ public class Fragment_DetalleOrden extends Fragment {
         this.etiquetaHoraFin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                obtenHoraFin();
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.supervisor.getId() ){
+                    obtenHoraFin();
+                }
             }
         });
 
@@ -259,7 +268,6 @@ public class Fragment_DetalleOrden extends Fragment {
         campoSolucion.setText( getOrdenSeleccionada().getSolucion() );
 
         this.campoCantidad = this.vista.findViewById(R.id.campoCantidad);
-
         this.campoCodigo = this.vista.findViewById(R.id.campoCodigo);
 
         this.campoRefaccion = this.vista.findViewById(R.id.campoRefaccion);
@@ -316,6 +324,13 @@ public class Fragment_DetalleOrden extends Fragment {
                 }
             }
         });
+
+        if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() != Constantes.ROL.mecanico.getId() ){
+            campoSolucion.setEnabled(false);
+            LinearLayout contenedorCapturaRefaccion = this.vista.findViewById(R.id.contenedorCapturaRefaccion);
+            contenedorCapturaRefaccion.setVisibility(View.GONE);
+            botonAgregar.hide();
+        }
 
         terminaProcesando();
     }
@@ -392,18 +407,38 @@ public class Fragment_DetalleOrden extends Fragment {
                         .concat( this.etiquetaHoraFin.getText().toString() )
                         .concat(":00");
 
-                CerrarTiempoOrden cerrarTiempoOrden = new CerrarTiempoOrden(
-                        this,
-                        fechaHora,
-                        getOrdenSeleccionada().getIdOrdenMantenimiento()
-                );
-                cerrarTiempoOrden.execute();
+                actualizaTiempo(fechaHora);
             }
 
             guarda();
         }else{
             errorValidacion("Es necesario capturar una solución");
         }
+    }
+
+    private void actualizaTiempo(String fecha){
+        OrdenMantenimientoCerrarTiempo orden = new OrdenMantenimientoCerrarTiempo();
+        orden.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        orden.setFecha(fecha);
+        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().cierraTiempoOrdenMantenimiento(orden);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() != 200 && respuesta.getCodigo() != 0 ){
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
     private void guarda(){
@@ -544,19 +579,8 @@ public class Fragment_DetalleOrden extends Fragment {
     }
 
     private void navega(){
-        Fragment fragment = null;
-        switch ( Catalogos.getInstancia().getEtapaActual() ){
-            case 1:
-                fragment = new Contenedor().newInstance(2);
-                break;
-            case 2:
-                fragment = new Contenedor_Atemperado().newInstance(2);
-                break;
-            case 3:
-                fragment = new Contenedor_Descongelado().newInstance(2);
-                break;
-        }
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_main, Utilerias.navega(2)).commit();
     }
 
     private void obtenHoraFin(){
