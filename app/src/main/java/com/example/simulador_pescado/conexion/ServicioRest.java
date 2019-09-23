@@ -17,6 +17,7 @@ import com.example.simulador_pescado.vista.servicio.Gafete;
 import com.example.simulador_pescado.vista.servicio.LiberarTodos;
 import com.example.simulador_pescado.vista.servicio.ListaOrdenMantenimientoServicio;
 import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoActualizar;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoCerrarTiempo;
 import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoGuardar;
 import com.example.simulador_pescado.vista.servicio.RefaccionGuardar;
 import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
@@ -84,23 +85,26 @@ public interface ServicioRest {
     @GET("atemperado/posiciones/tinas")
     Call<List<PosicionEstibaAtemperado>> getPosicionesAtemperado();
 
-    @PUT("ordenes/mantenimientos")
-    Call<RespuestaServicio> actualizaOrdenMantenimiento(@Body OrdenMantenimientoActualizar orden);
-
     @PUT("preseleccion/montacargas")
     Call<RespuestaServicio> guardaMontacargas(@Body OperadorMontacargas montacargas);
 
     @PUT("preseleccion/estaciones")
     Call<RespuestaServicio> guardaOperador(@Body OperadorBascula operador);
 
-    @PUT("preseleccion/posiciones/tinas")
-    Call<RespuestaServicio> asignaTina(@Body TinaServicio tina);
-
     @PUT("preseleccion/operadores/liberar-todos")
     Call<RespuestaServicio> liberaTurno(@Body LiberarTodos liberarTodos);
 
+    @PUT("preseleccion/posiciones/tinas")
+    Call<RespuestaServicio> asignaTina(@Body TinaServicio tina);
+
     @POST("preseleccion/posiciones/tinas/liberar")
     Call<RespuestaServicio> liberaTina(@Body int idPreseleccionPosicionTina, @Body String usuario);
+
+    @PUT("ordenes/mantenimientos")
+    Call<RespuestaServicio> actualizaOrdenMantenimiento(@Body OrdenMantenimientoActualizar orden);
+
+    @PUT("ordenes/mantenimientos/finalizar")
+    Call<RespuestaServicio> cierraTiempoOrdenMantenimiento(@Body OrdenMantenimientoCerrarTiempo orden);
 
     @POST("ordenes/mantenimientos")
     Call<RespuestaServicio> guardaOrdenMantenimiento(@Body OrdenMantenimientoGuardar orden);

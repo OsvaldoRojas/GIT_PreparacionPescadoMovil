@@ -336,19 +336,8 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
     }
 
     private void navega(){
-        Fragment fragment = null;
-        switch ( Catalogos.getInstancia().getEtapaActual() ){
-            case 1:
-                fragment = new Contenedor().newInstance(1);
-                break;
-            case 2:
-                fragment = new Contenedor_Atemperado().newInstance(1);
-                break;
-            case 3:
-                fragment = new Contenedor_Descongelado().newInstance(1);
-                break;
-        }
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_main, Utilerias.navega(1)).commit();
     }
 
     public void iniciaProcesando(){

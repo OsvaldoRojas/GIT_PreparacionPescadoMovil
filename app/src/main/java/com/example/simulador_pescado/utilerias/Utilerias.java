@@ -5,8 +5,26 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.fragment.app.Fragment;
+
+import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.atemperado.Fragment_Atemperado_OM;
+import com.example.simulador_pescado.conexion.APIServicios;
+import com.example.simulador_pescado.contenedores.Contenedor;
+import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
+import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.descongelado.Fragment_Descongelado_OM;
+import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
+import com.example.simulador_pescado.vista.Maquinaria;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Utilerias {
 
@@ -54,6 +72,79 @@ public class Utilerias {
     public static String fechaActual(String formato){
         SimpleDateFormat formatoFecha = new SimpleDateFormat(formato);
         return formatoFecha.format( new Date() );
+    }
+
+    public static Fragment navega(int pestaña){
+        Fragment fragment = null;
+        switch ( Catalogos.getInstancia().getEtapaActual() ){
+            case 1:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor().newInstance(pestaña);
+                }else{
+                    fragment = new Fragment_Preselecion_OM();
+                }
+                break;
+            case 2:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Atemperado().newInstance(pestaña);
+                }else{
+                    fragment = new Fragment_Atemperado_OM();
+                }
+                break;
+            case 3:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Descongelado().newInstance(pestaña);
+                }else{
+                    fragment = new Fragment_Descongelado_OM();
+                }
+                break;
+        }
+        return fragment;
+    }
+
+    public static Fragment navegaInicio(Constantes.ETAPA etapa){
+        Catalogos.getInstancia().setEtapaActual(etapa);
+        Call<List<Maquinaria>> llamadaServicio = APIServicios.getConexion().getMaquinarias( Catalogos.getInstancia().getEtapaActual() );
+        llamadaServicio.enqueue(new Callback<List<Maquinaria>>() {
+            @Override
+            public void onResponse(Call<List<Maquinaria>> call, Response<List<Maquinaria>> response) {
+                if(response.code() == 200){
+                    Catalogos.getInstancia().setCatalogoMaquinaria( response.body() );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Maquinaria>> call, Throwable t) {
+
+            }
+        });
+
+        Fragment fragment = null;
+        switch (etapa){
+            case preseleccion:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor();
+                }else{
+                    fragment = new Fragment_Preselecion_OM();
+                }
+                break;
+            case atemperado:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Atemperado();
+                }else{
+                    fragment = new Fragment_Atemperado_OM();
+                }
+                break;
+            case descongelado:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Descongelado();
+                }else{
+                    fragment = new Fragment_Descongelado_OM();
+                }
+                break;
+        }
+
+        return fragment;
     }
 
     public static String cambiaAcentos(String mensaje){

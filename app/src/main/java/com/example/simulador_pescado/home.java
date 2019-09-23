@@ -10,9 +10,24 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.atemperado.Fragment_Atemperado_OM;
+import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.descongelado.Fragment_Descongelado_OM;
+import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
+import com.example.simulador_pescado.utilerias.Catalogos;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Utilerias;
+import com.example.simulador_pescado.vista.Maquinaria;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -80,7 +95,9 @@ public class home extends Fragment {
         botonPreseleccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.preseleccion))
+                        .commit();
             }
         });
 
@@ -88,19 +105,21 @@ public class home extends Fragment {
         botonAtemperado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor_Atemperado()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.atemperado))
+                        .commit();
             }
         });
-        //botonAtemperado.setVisibility(View.GONE);
 
         Button botonDescongelado = this.vista.findViewById(R.id.botonDescongelado);
         botonDescongelado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Contenedor_Descongelado()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.descongelado))
+                        .commit();
             }
         });
-        //botonDescongelado.setVisibility(View.GONE);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

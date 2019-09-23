@@ -30,6 +30,7 @@ public class Turno extends AppCompatActivity {
         ul.setNombre("Nombre");
         ul.setApellido_paterno("Usuario");
         ul.setClave_usuario("usuarioerp");
+        ul.setId_rol(1);//1 = auxiliar; 2 = mecanico; 3 = supervisor
         UsuarioLogueado.getUsuarioLogueado(ul);
 
         this.turnoUno = findViewById(R.id.turnoUno);
