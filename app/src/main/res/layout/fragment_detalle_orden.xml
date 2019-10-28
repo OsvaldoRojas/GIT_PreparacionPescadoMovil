@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +19,8 @@
             <ScrollView
                 android:id="@+id/vistaGeneral"
                 android:layout_width="match_parent"
-                android:layout_height="385dp">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -29,16 +31,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/ordenMantenimiento"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center"
                         android:layout_marginTop="5dp"
                         android:textSize="17dp"/>
 
                     <TextView
+                        android:id="@+id/etiquetaEquipo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:gravity="center"
+                        android:layout_marginTop="1dp"
+                        android:textSize="15dp"/>
+
+                    <TextView
                         android:id="@+id/etiquetaFecha"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:textColor="@color/negro"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center"
                         android:layout_marginTop="1dp"
                         android:textSize="13dp"/>
@@ -50,45 +61,31 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:background="@color/blanco">
+                        android:background="@color/colorAccent">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:textColor="@color/no_selecion"
+                            android:textColor="@color/colorPrimaryDark"
                             android:gravity="center_horizontal"
                             android:textSize="15dp"
                             android:text="Folio:"
                             android:paddingBottom="4dp"
                             android:paddingTop="4dp"
-                            android:paddingLeft="5dp"/>
+                            android:paddingLeft="10dp"/>
 
                         <TextView
                             android:id="@+id/etiquetaFolio"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:textColor="@color/no_selecion"
+                            android:textColor="@color/colorPrimaryDark"
                             android:gravity="right"
                             android:textSize="15dp"
                             android:paddingBottom="4dp"
                             android:paddingTop="4dp"
-                            android:paddingRight="5dp"/>
+                            android:paddingRight="10dp"/>
 
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/etiquetaEquipo"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:textSize="15dp"
-                        android:background="@color/blanco"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:paddingBottom="4dp"
-                        android:paddingTop="4dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -103,8 +100,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:background="@color/blanco"
-                            android:textColor="@color/no_selecion"
+                            android:background="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:gravity="center"
                             android:textSize="15dp"
                             android:text="00:00"
@@ -116,8 +113,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:background="@color/blanco"
-                            android:textColor="@color/no_selecion"
+                            android:background="@color/colorAccent"
+                            android:textColor="@color/colorPrimaryDark"
                             android:gravity="center"
                             android:textSize="15dp"
                             android:text="00:00"
@@ -133,8 +130,9 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:visibility="gone"
-                        android:background="@color/blanco"/>
+                        android:visibility="visible"
+                        android:background="@color/colorAccent"
+                        tools:listitem="@layout/item_artefacto_orden"/>
 
                     <TextView
                         android:id="@+id/etiquetaDescripcion"
@@ -143,8 +141,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:textColor="@color/no_selecion"
-                        android:background="@color/blanco"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:background="@color/colorAccent"
                         android:textSize="15dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"
@@ -159,7 +157,7 @@
                         android:layout_marginRight="20dp"
                         android:hint="Solución"
                         android:gravity="top"
-                        android:background="@color/blanco"
+                        android:background="@color/colorAccent"
                         android:textSize="15dp"
                         android:paddingTop="4dp"
                         android:paddingLeft="5dp"
@@ -192,7 +190,7 @@
                                 android:hint="Cant."
                                 android:gravity="center_horizontal"
                                 android:textColor="@color/negro"
-                                android:background="@color/blanco"
+                                android:background="@color/colorAccent"
                                 android:textSize="15dp"
                                 android:inputType="numberDecimal"
                                 android:paddingTop="4dp"
@@ -206,8 +204,8 @@
                                 android:layout_marginRight="5dp"
                                 android:hint="Código"
                                 android:gravity="center_horizontal"
-                                android:textColor="@color/negro"
-                                android:background="@color/blanco"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@color/colorAccent"
                                 android:textSize="15dp"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp" />
@@ -217,7 +215,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:layout_weight="0.8"
-                                android:background="@color/blanco"/>
+                                android:background="@color/colorAccent"/>
 
                         </LinearLayout>
 
@@ -232,6 +230,7 @@
                             android:layout_gravity="right"
                             android:layout_marginBottom="2dp"
                             android:layout_marginTop="5dp"
+                            android:background="@color/colorPrimaryDark"
                             app:srcCompat="@android:drawable/ic_input_add" />
 
                         <LinearLayout
@@ -252,8 +251,8 @@
                                 android:gravity="center_vertical"
                                 android:text="Cant."
                                 android:textSize="14dp"
-                                android:textColor="@color/blanco"
-                                android:background="@color/fondo_tina_principal"/>
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@color/colorAccent"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -266,8 +265,8 @@
                                 android:gravity="center_vertical"
                                 android:text="Código"
                                 android:textSize="14dp"
-                                android:textColor="@color/blanco"
-                                android:background="@color/fondo_tina_principal"/>
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@color/colorAccent"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -280,8 +279,8 @@
                                 android:gravity="center_vertical"
                                 android:text="Artefacto"
                                 android:textSize="14dp"
-                                android:textColor="@color/blanco"
-                                android:background="@color/fondo_tina_principal"/>
+                                android:textColor="@color/colorPrimaryDark"
+                                android:background="@color/colorAccent"/>
 
                         </LinearLayout>
 
@@ -289,7 +288,8 @@
                             android:id="@+id/listaRefacciones"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/blanco"/>
+                            android:background="@color/colorAccent"
+                            tools:listitem="@layout/item_artefacto"/>
 
                     </LinearLayout>
 
@@ -300,6 +300,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="7"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
                 android:layout_marginTop="3dp"

@@ -15,7 +15,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -25,7 +26,7 @@
                     android:textColor="@color/negro"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
-                    android:textSize="17dp"/>
+                    android:textSize="17dp" />
 
                 <TextView
                     android:id="@+id/etiquetaFecha"
@@ -35,6 +36,22 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
+
+                <TextView
+                    android:id="@+id/temporizador"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textColor="@color/negro"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="00:00"
+                    android:background="@color/blanco"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp" />
 
                 <TextView
                     android:id="@+id/etiquetaPosicion5"
@@ -49,7 +66,9 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:drawableLeft="@drawable/ic_radio" />
 
                 <TextView
                     android:id="@+id/etiquetaPosicion4"
@@ -64,7 +83,9 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:drawableLeft="@drawable/ic_radio"/>
 
                 <TextView
                     android:id="@+id/etiquetaPosicion3"
@@ -79,7 +100,9 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:drawableLeft="@drawable/ic_radio"/>
 
                 <TextView
                     android:id="@+id/etiquetaPosicion2"
@@ -94,7 +117,9 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:drawableLeft="@drawable/ic_radio"/>
 
                 <TextView
                     android:id="@+id/etiquetaPosicion1"
@@ -109,21 +134,23 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:paddingBottom="4dp"
-                    android:paddingTop="4dp"/>
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:drawableLeft="@drawable/ic_radio"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="5"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
-                android:layout_marginTop="20dp"
                 android:gravity="bottom">
 
                 <Button
                     android:id="@+id/boton1"
-                    android:text="@string/cancelar"
+                    android:text="Regresar"
                     style="@style/botonAccion"/>
 
                 <Button

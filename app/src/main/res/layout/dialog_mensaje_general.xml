@@ -14,7 +14,7 @@
             android:id="@+id/etiquetaMensaje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/negro"
+            android:textColor="@color/colorPrimaryDark"
             android:gravity="center"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
@@ -33,7 +33,7 @@
         <Button
             android:id="@+id/boton1"
             android:text="@string/aceptar"
-            style="@style/botonAccion"/>
+            style="@style/botonDialog"/>
 
     </LinearLayout>
 

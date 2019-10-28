@@ -71,6 +71,7 @@
                     android:textColor="@color/blanco" />
 
                 <TextView
+                    android:id="@+id/tituloMecanico"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.6"
@@ -95,7 +96,8 @@
                 <ListView
                     android:id="@+id/listaOrden"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/item_orden_mantenimiento"/>
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

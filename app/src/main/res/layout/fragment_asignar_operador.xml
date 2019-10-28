@@ -23,7 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/asignarUsuario"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
                     android:textSize="17dp"/>
@@ -32,7 +32,7 @@
                     android:id="@+id/etiquetaFecha"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
@@ -46,8 +46,8 @@
                     android:layout_marginRight="20dp"
                     android:hint="Código de Usuario"
                     android:gravity="left"
-                    android:textColor="@color/negro"
-                    android:background="@color/blanco"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorAccent"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
@@ -65,7 +65,7 @@
                     android:layout_marginRight="20dp"
                     android:hint="Nombre del Usuario"
                     android:gravity="left"
-                    android:background="@color/blanco"
+                    android:background="@color/colorAccent"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
@@ -78,12 +78,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/blanco">
+                    android:background="@color/colorAccent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Posición del Usuario:"
@@ -95,7 +95,7 @@
                         android:id="@+id/etiquetaPosicion"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -111,12 +111,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/blanco">
+                    android:background="@color/colorAccent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Báscula del Usuario:"
@@ -128,7 +128,7 @@
                         android:id="@+id/etiquetaBascula"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -144,12 +144,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/blanco">
+                    android:background="@color/colorAccent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Tina Principal:"
@@ -161,7 +161,7 @@
                         android:id="@+id/etiquetaTinaPrincipal"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -177,12 +177,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/blanco">
+                    android:background="@color/colorAccent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Subtalla Principal:"
@@ -194,7 +194,7 @@
                         android:id="@+id/etiquetaSubtallaPrincipal"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -210,12 +210,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/blanco">
+                    android:background="@color/colorAccent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Tina Secundaria:"
@@ -227,7 +227,7 @@
                         android:id="@+id/etiquetaTinaSecundaria"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"
@@ -243,12 +243,12 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/blanco">
+                    android:background="@color/colorAccent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="center_horizontal"
                         android:textSize="15dp"
                         android:text="Subtalla Secundaria:"
@@ -260,7 +260,7 @@
                         android:id="@+id/etiquetaSubtallaSecundaria"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/no_selecion"
+                        android:textColor="@color/colorPrimaryDark"
                         android:gravity="right"
                         android:textSize="15dp"
                         android:paddingBottom="4dp"

@@ -18,7 +18,7 @@
             android:gravity="center"
             android:text="A1"
             android:textSize="10dp"
-            android:textColor="@color/negro" />
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/etiquetaSubtalla"
@@ -29,7 +29,7 @@
             android:gravity="left"
             android:text="Subtalla Ejemplo"
             android:textSize="10dp"
-            android:textColor="@color/negro" />
+            android:textColor="@color/colorPrimaryDark" />
 
     </LinearLayout>
 

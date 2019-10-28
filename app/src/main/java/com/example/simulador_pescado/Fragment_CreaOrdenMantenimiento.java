@@ -229,6 +229,13 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
                 }
             }
             getOrdenMantenimiento().setArtefactos(artefactos);
+
+            Button botonArtefactos = this.vista.findViewById(R.id.botonArtefactos);
+            if( artefactos.size() > 0 ){
+                botonArtefactos.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.drawable.ic_done), null);
+            }else{
+                botonArtefactos.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.drawable.ic_clear), null);
+            }
         }
     }
 

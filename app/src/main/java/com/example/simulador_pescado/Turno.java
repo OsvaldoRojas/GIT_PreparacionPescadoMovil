@@ -27,9 +27,10 @@ public class Turno extends AppCompatActivity {
 
     private void iniciaComponentes(){
         UsuarioLogueado ul = new UsuarioLogueado();
-        ul.setNombre("Nombre");
-        ul.setApellido_paterno("Usuario");
+        ul.setNombre("Juan");
+        ul.setApellido_paterno("Perez");
         ul.setClave_usuario("usuarioerp");
+        ul.setId_empleado(7000008);
         ul.setId_rol(1);//1 = auxiliar; 2 = mecanico; 3 = supervisor
         UsuarioLogueado.getUsuarioLogueado(ul);
 

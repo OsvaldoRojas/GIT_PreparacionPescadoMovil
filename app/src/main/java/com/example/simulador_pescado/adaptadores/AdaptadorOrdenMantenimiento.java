@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.utilerias.Constantes;
+import com.example.simulador_pescado.utilerias.Utilerias;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.example.simulador_pescado.vista.servicio.ListaOrdenMantenimientoServicio;
 
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<ListaOrdenMantenim
         TextView etiquetaMecanico = vista.findViewById(R.id.etiquetaMecanico);
 
         etiquetaFolio.setText( ordenMantenimiento.getFolio() );
-        etiquetaFecha.setText( ordenMantenimiento.getFecha() );
+        etiquetaFecha.setText( Utilerias.formatoFecha( ordenMantenimiento.getFecha() ) );
         etiquetaEquipo.setText( ordenMantenimiento.getMaquinaria() );
         etiquetaMecanico.setText( ordenMantenimiento.getNombreEmpleado().concat(" ")
                 .concat( ordenMantenimiento.getaPaternoEmpleado() ) );
@@ -53,6 +56,10 @@ public class AdaptadorOrdenMantenimiento extends ArrayAdapter<ListaOrdenMantenim
             etiquetaFecha.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
             etiquetaEquipo.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
             etiquetaMecanico.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+        }
+
+        if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
+            etiquetaMecanico.setVisibility(View.GONE);
         }
 
         return vista;

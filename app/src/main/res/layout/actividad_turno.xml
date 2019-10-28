@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/turno"
-            android:textColor="@color/negro"
+            android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:gravity="center"/>
 
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:text="Turno 1"
                     android:textStyle="bold"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/colorPrimary"
                     android:gravity="center"
                     android:textSize="25dp"
                     android:layout_marginTop="10dp"/>
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:text="Turno 2"
                     android:textStyle="bold"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/colorPrimary"
                     android:gravity="center"
                     android:textSize="25dp"
                     android:layout_marginTop="10dp"/>

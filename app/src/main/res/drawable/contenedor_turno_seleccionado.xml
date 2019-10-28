@@ -3,9 +3,9 @@
     <!-- Sombra -->
     <item>
         <shape>
-            <solid android:color="@color/no_selecion" />
+            <solid android:color="@color/no_selecion_dos" />
             <corners android:radius="7dp" />
-            <stroke android:width="2dp"/>
+            <stroke android:color="@color/colorPrimary" android:width="2dp"/>
         </shape>
     </item>
 </layer-list>

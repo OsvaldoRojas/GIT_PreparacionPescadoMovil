@@ -102,6 +102,9 @@ public class Contenedor_Descongelado extends Fragment {
             pestañas.setupWithViewPager(viewPager);
         }
         pestañas.getTabAt(this.mParam1).select();
+        pestañas.setTabTextColors( getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimary) );
+        //pestañas.getChildAt(0).setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
+        //pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.noValido) );
 
         return vista;
     }

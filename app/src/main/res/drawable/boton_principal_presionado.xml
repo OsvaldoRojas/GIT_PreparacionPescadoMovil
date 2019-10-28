@@ -3,7 +3,7 @@
     <!-- Contenido -->
     <item>
         <shape>
-            <solid android:color="@color/botonMenuPresionado" />
+            <solid android:color="@color/colorPrimaryDark" />
             <corners android:radius="5dp" />
         </shape>
     </item>

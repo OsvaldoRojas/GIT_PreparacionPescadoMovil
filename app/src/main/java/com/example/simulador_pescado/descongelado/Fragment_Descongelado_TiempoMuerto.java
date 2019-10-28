@@ -137,8 +137,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     private List<OperadorMontacargas> listaMontacargas = new ArrayList<>();
 
     private LinearLayout botonera;
-    private ScrollView vistaIconos;
-    private SwipeRefreshLayout actualizar;
     private Button botonCreaOrden;
 
     private AlertDialog ventanaError;
@@ -203,8 +201,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     }
 
     private void iniciaComponentes(){
-        this.actualizar = this.vista.findViewById(R.id.actualizar);
-        this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
         this.botonera = this.vista.findViewById(R.id.botonera);
         this.botonCreaOrden = this.vista.findViewById(R.id.botonCrearOrden);
 
@@ -944,7 +940,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
-                    ajustaTamañoVista();
+                    //ajustaTamañoVista();
                     this.botonCreaOrden.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -962,8 +958,8 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         posicionEstiba.setEstado(Constantes.ESTADO.inicial);
                         this.botonCreaOrden.setOnClickListener(null);
-                        this.botonera.setVisibility(View.GONE);
-                        ajustaTamañoVista();
+                        this.botonera.setVisibility(View.INVISIBLE);
+                        //ajustaTamañoVista();
                     }
                 }
                 break;
@@ -982,7 +978,7 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
-                    ajustaTamañoVista();
+                    //ajustaTamañoVista();
                     this.botonCreaOrden.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -1000,50 +996,13 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono) );
                         montacargas.setEstado(Constantes.ESTADO.inicial);
                         this.botonCreaOrden.setOnClickListener(null);
-                        this.botonera.setVisibility(View.GONE);
-                        ajustaTamañoVista();
+                        this.botonera.setVisibility(View.INVISIBLE);
+                        //ajustaTamañoVista();
                     }
                 }
                 break;
             }
         }
-    }
-
-    private void ajustaTamañoVista(){
-        ViewGroup.LayoutParams botonera = this.botonera.getLayoutParams();
-        ViewGroup.LayoutParams vista = this.actualizar.getLayoutParams();
-
-        if( getPosicionSeleccionada() != null ){
-            vista.height = vista.height - (botonera.height*5);
-            if( getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 24 ){
-                this.vistaIconos.post(new Runnable() {
-                    public void run() {
-                        vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
-                    }
-                });
-            }else{
-                this.vistaIconos.post(new Runnable() {
-                    public void run() {
-                        vistaIconos.fullScroll(vistaIconos.FOCUS_DOWN);
-                    }
-                });
-            }
-        }else{
-            if( getMontacargasSeleccionado() != null ){
-                vista.height = vista.height - (botonera.height*5);
-                this.vistaIconos.post(new Runnable() {
-                    public void run() {
-                        vistaIconos.fullScroll(vistaIconos.FOCUS_DOWN);
-                    }
-                });
-            }else{
-                vista.height = vista.height + (botonera.height*5);
-            }
-        }
-
-        this.actualizar.requestLayout();
-        this.actualizar.setLayoutParams(vista);
-        return;
     }
 
     private void habilitaRecursos(){

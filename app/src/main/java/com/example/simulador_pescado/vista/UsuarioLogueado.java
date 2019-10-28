@@ -11,12 +11,21 @@ public class UsuarioLogueado {
     private String apellido_paterno;
     private String apellido_materno;
     private int turno;
+    private boolean mostrarMensaje = true;
 
     public static UsuarioLogueado getUsuarioLogueado(UsuarioLogueado usuario){
         if( USUARIO_LOGUEADO == null ){
             USUARIO_LOGUEADO = usuario;
         }
         return USUARIO_LOGUEADO;
+    }
+
+    public boolean isMostrarMensaje() {
+        return mostrarMensaje;
+    }
+
+    public void setMostrarMensaje(boolean mostrarMensaje) {
+        this.mostrarMensaje = mostrarMensaje;
     }
 
     public int getTurno() {

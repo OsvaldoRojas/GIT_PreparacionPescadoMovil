@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +10,7 @@
         android:id="@+id/etiquetaMensaje"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/negro"
+        android:textColor="@color/colorPrimaryDark"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
@@ -33,11 +34,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/fondo_tina_principal"
+                android:background="@color/colorAccent"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:text="Tina Principal"
-                android:textColor="@color/blanco"
+                android:textColor="@color/colorPrimary"
                 android:textSize="10dp" />
 
             <TextView
@@ -45,11 +46,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/fondo_tina_principal"
+                android:background="@color/colorAccent"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="A1"
-                android:textColor="@color/blanco"
+                android:textColor="@color/colorPrimary"
                 android:textSize="10dp" />
 
         </LinearLayout>
@@ -69,22 +70,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/fondo_tina_principal"
+                    android:background="@color/colorAccent"
                     android:gravity="left"
                     android:padding="5dp"
                     android:text="Tinas a mezclar"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/fondo_tina_principal"
+                    android:background="@color/colorAccent"
                     android:gravity="left"
                     android:padding="5dp"
                     android:text="Sub. a mezclar"
-                    android:textColor="@color/blanco"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="10dp" />
 
             </LinearLayout>
@@ -93,7 +94,8 @@
                 android:id="@+id/listaSubtallas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/blanco" />
+                android:background="@color/blanco"
+                tools:listitem="@layout/item_mezclar_subtalla"/>
 
         </LinearLayout>
 
@@ -109,12 +111,12 @@
         <Button
             android:id="@+id/boton1"
             android:text="@string/cancelar"
-            style="@style/botonAccion"/>
+            style="@style/botonDialog"/>
 
         <Button
             android:id="@+id/boton2"
             android:text="@string/aceptar"
-            style="@style/botonAccion"/>
+            style="@style/botonDialog"/>
 
     </LinearLayout>
 

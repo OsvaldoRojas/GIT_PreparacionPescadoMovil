@@ -1,7 +1,7 @@
 package com.example.simulador_pescado.descongelado;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,17 +11,26 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.utilerias.Constantes;
-import com.example.simulador_pescado.vista.PosicionEstibaAtemperado;
+import com.example.simulador_pescado.vista.PosicionEstibaDescongelado;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
+import com.example.simulador_pescado.vista.servicio.LiberaPosicion;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -123,16 +132,16 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private ImageView posicion79;
     private ImageView posicion80;
 
-    private PosicionEstibaAtemperado posicionSeleccionada;
+    private PosicionEstibaDescongelado posicionSeleccionada;
 
-    private List<PosicionEstibaAtemperado> listaPosiciones = new ArrayList<>();
+    private List<PosicionEstibaDescongelado> listaPosiciones = new ArrayList<>();
 
     private LinearLayout botonera;
-    private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
     private Button boton1;
     private Button boton2;
-    private AlertDialog ventanaEmergente;
+    private AlertDialog ventanaError;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -140,11 +149,11 @@ public class Fragment_Descongelado_Plan extends Fragment{
         // Required empty public constructor
     }
 
-    public PosicionEstibaAtemperado getPosicionSeleccionada() {
+    public PosicionEstibaDescongelado getPosicionSeleccionada() {
         return posicionSeleccionada;
     }
 
-    public void setPosicionSeleccionada(PosicionEstibaAtemperado posicionSeleccionada) {
+    public void setPosicionSeleccionada(PosicionEstibaDescongelado posicionSeleccionada) {
         this.posicionSeleccionada = posicionSeleccionada;
     }
 
@@ -190,9 +199,9 @@ public class Fragment_Descongelado_Plan extends Fragment{
             @Override
             public void onRefresh() {
                 actualizar.setRefreshing(true);
+                obtenPosiciones();
             }
         });
-        this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
 
         this.botonera = this.vista.findViewById(R.id.botonera);
 
@@ -200,6 +209,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
         this.boton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                iniciaProcesando();
                 liberaCompleta();
             }
         });
@@ -211,6 +221,8 @@ public class Fragment_Descongelado_Plan extends Fragment{
                 muestraDetalle();
             }
         });
+
+        iniciaProcesando();
 
         this.posicion1 = this.vista.findViewById(R.id.posicion1);
         this.posicion1.setOnClickListener(new View.OnClickListener() {
@@ -852,21 +864,81 @@ public class Fragment_Descongelado_Plan extends Fragment{
             }
         });
 
-        creaObjetosVacios();
+        obtenPosiciones();
+    }
+
+    private void obtenPosiciones(){
+        Call<List<PosicionEstibaDescongelado>> llamadaServicio = APIServicios.getConexion().getPosicionesDescongelado();
+        llamadaServicio.enqueue(new Callback<List<PosicionEstibaDescongelado>>() {
+            @Override
+            public void onResponse(Call<List<PosicionEstibaDescongelado>> call, Response<List<PosicionEstibaDescongelado>> response) {
+                if(response.code() == 200){
+                    resultadoPosiciones( response.body() );
+                    terminaProcesando();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PosicionEstibaDescongelado>> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    public void errorServicio(final String mensaje){
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaError.dismiss();
+                        creaObjetosVacios();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
+    }
+
+    public void resultadoPosiciones(List<PosicionEstibaDescongelado> posiciones){
+        if( isAdded() ){
+            this.listaPosiciones = posiciones;
+            for( PosicionEstibaDescongelado recursoEstiba : this.listaPosiciones ){
+                recursoEstiba.setEstado(Constantes.ESTADO.inicial);
+                muestraIcono(recursoEstiba);
+            }
+        }
     }
 
     private void creaObjetosVacios(){
         if( this.listaPosiciones.isEmpty() ){
             for( int posicion = 1; posicion <= 80; posicion++ ){
-                PosicionEstibaAtemperado recursoPosicion = new PosicionEstibaAtemperado();
-                recursoPosicion.setIdAtemperadoPosicionTina(posicion);
+                PosicionEstibaDescongelado recursoPosicion = new PosicionEstibaDescongelado();
+                recursoPosicion.setIdPosicion(posicion);
                 recursoPosicion.setEstado(Constantes.ESTADO.inicial);
-                recursoPosicion.setBloqueado(false);
-                recursoPosicion.setConteoNivel(4);
+                recursoPosicion.setCompleta(false);
+                recursoPosicion.setConteoNivel(0);
                 this.listaPosiciones.add(recursoPosicion);
                 muestraIcono(recursoPosicion);
-                if( recursoPosicion.getBloqueado() ){
-                    getIconoPosicion( recursoPosicion.getIdAtemperadoPosicionTina() )
+                if( recursoPosicion.getCompleta() ){
+                    getIconoPosicion( recursoPosicion.getIdPosicion() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                 }
             }
@@ -879,46 +951,52 @@ public class Fragment_Descongelado_Plan extends Fragment{
     }
 
     private void liberaCompleta(){
+        LiberaPosicion liberaPosicion = new LiberaPosicion();
+        liberaPosicion.setIdPosicion( getPosicionSeleccionada().getIdPosicion() );
+        liberaPosicion.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaPosicion(liberaPosicion);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    accionIconoPosicion( getPosicionSeleccionada().getIdPosicion() );
+                    obtenPosiciones();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
     private void accionIconoPosicion(int posicion){
-        for( PosicionEstibaAtemperado posicionEstiba : this.listaPosiciones ){
-            if( posicionEstiba.getIdAtemperadoPosicionTina() == posicion ){
-                if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
-                    setPosicionSeleccionada(posicionEstiba);
-                    deshabilitaRecursos();
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
-                    posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
-                    muestraIcono(posicionEstiba);
-                    ajustaTamañoVista();
-                    if( getPosicionSeleccionada().getConteoNivel() == 0 ){
-                        this.boton1.setEnabled(false);
-                    }else{
-                        this.boton1.setEnabled(true);
-                    }
-                    if( getPosicionSeleccionada().getBloqueado() ){
-                        this.boton2.setEnabled(false);
-                    }else{
-                        this.boton2.setEnabled(true);
-                    }
-                    this.botonera.setVisibility(View.VISIBLE);
-                }else{
-                    if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
-                        setPosicionSeleccionada(null);
-                        habilitaRecursos();
-                        if( !posicionEstiba.getBloqueado() ){
-                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
-                        }else{
-                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
-                        }
-                        posicionEstiba.setEstado(Constantes.ESTADO.inicial);
+        for( PosicionEstibaDescongelado posicionEstiba : this.listaPosiciones ){
+            if( posicionEstiba.getIdPosicion() == posicion ){
+                if( posicionEstiba.getConteoNivel() > 0 ){
+                    if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
+                        setPosicionSeleccionada(posicionEstiba);
+                        deshabilitaRecursos();
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
+                        posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
                         muestraIcono(posicionEstiba);
-                        this.botonera.setVisibility(View.GONE);
-                        ajustaTamañoVista();
+                        this.botonera.setVisibility(View.VISIBLE);
+                    }else{
+                        if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
+                            setPosicionSeleccionada(null);
+                            habilitaRecursos();
+                            posicionEstiba.setEstado(Constantes.ESTADO.inicial);
+                            muestraIcono(posicionEstiba);
+                            this.botonera.setVisibility(View.INVISIBLE);
+                        }
                     }
                 }
                 break;
@@ -926,104 +1004,158 @@ public class Fragment_Descongelado_Plan extends Fragment{
         }
     }
 
-    private void muestraIcono(PosicionEstibaAtemperado posicionEstiba){
+    private void muestraIcono(PosicionEstibaDescongelado posicionEstiba){
         if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
                             .setImageResource(R.drawable.ic_tina_blanca);
                     break;
                 case 1:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
                             .setImageResource(R.drawable.ic_uno_blanco);
                     break;
                 case 2:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
                             .setImageResource(R.drawable.ic_dos_blanco);
                     break;
                 case 3:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
                             .setImageResource(R.drawable.ic_tres_blanco);
                     break;
                 case 4:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
                             .setImageResource(R.drawable.ic_cuatro_blanco);
                     break;
                 case 5:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
                             .setImageResource(R.drawable.ic_cinco_blanco);
                     break;
             }
         }else{
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
                             .setImageResource(R.drawable.ic_tina_gris);
+                    getIconoPosicion( posicionEstiba.getIdPosicion() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                     break;
                 case 1:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_uno_gris);
+                    if( !posicionEstiba.getCompleta() ){
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_uno_gris);
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    }else{
+                        if( posicionEstiba.getMinutos() <= 0 ){
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_uno_rojo);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_rojo ) );
+                        }else{
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_uno_azul);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_azul ) );
+                        }
+                    }
                     break;
                 case 2:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_dos_gris);
+                    if( !posicionEstiba.getCompleta() ){
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_dos_gris);
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    }else{
+                        if( posicionEstiba.getMinutos() <= 0 ){
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_dos_rojo);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_rojo ) );
+                        }else{
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_dos_azul);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_azul ) );
+                        }
+                    }
                     break;
                 case 3:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_tres_gris);
+                    if( !posicionEstiba.getCompleta() ){
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_tres_gris);
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    }else{
+                        if( posicionEstiba.getMinutos() <= 0 ){
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_tres_rojo);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_rojo ) );
+                        }else{
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_tres_azul);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_azul ) );
+                        }
+                    }
                     break;
                 case 4:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cuatro_gris);
+                    if( !posicionEstiba.getCompleta() ){
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_cuatro_gris);
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    }else{
+                        if( posicionEstiba.getMinutos() <= 0 ){
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_cuatro_rojo);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_rojo ) );
+                        }else{
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_cuatro_azul);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_azul ) );
+                        }
+                    }
                     break;
                 case 5:
-                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                            .setImageResource(R.drawable.ic_cinco_gris);
+                    if( !posicionEstiba.getCompleta() ){
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setImageResource(R.drawable.ic_cinco_gris);
+                        getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    }else{
+                        if( posicionEstiba.getMinutos() <= 0 ){
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_cinco_rojo);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_rojo ) );
+                        }else{
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setImageResource(R.drawable.ic_cinco_azul);
+                            getIconoPosicion( posicionEstiba.getIdPosicion() )
+                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_azul ) );
+                        }
+                    }
             }
         }
-    }
-
-    private void ajustaTamañoVista(){
-        ViewGroup.LayoutParams botonera = this.botonera.getLayoutParams();
-        ViewGroup.LayoutParams vista = this.actualizar.getLayoutParams();
-
-        if( getPosicionSeleccionada() != null ){
-            vista.height = vista.height - (botonera.height*5);
-            if( getPosicionSeleccionada().getIdAtemperadoPosicionTina() <= 24 ){
-                this.vistaIconos.post(new Runnable() {
-                    public void run() {
-                        vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
-                    }
-                });
-            }else{
-                this.vistaIconos.post(new Runnable() {
-                    public void run() {
-                        vistaIconos.fullScroll(vistaIconos.FOCUS_DOWN);
-                    }
-                });
-            }
-        }else{
-            vista.height = vista.height + (botonera.height*5);
-        }
-
-        this.actualizar.requestLayout();
-        this.actualizar.setLayoutParams(vista);
-        return;
     }
 
     private void habilitaRecursos(){
-        for(PosicionEstibaAtemperado posicion : this.listaPosiciones){
-            getIconoPosicion( posicion.getIdAtemperadoPosicionTina() ).setEnabled(true);
+        for(PosicionEstibaDescongelado posicion : this.listaPosiciones){
+            getIconoPosicion( posicion.getIdPosicion() ).setEnabled(true);
         }
     }
 
     private void deshabilitaRecursos(){
-        for(PosicionEstibaAtemperado posicion : this.listaPosiciones){
-            getIconoPosicion( posicion.getIdAtemperadoPosicionTina() ).setEnabled(false);
+        for(PosicionEstibaDescongelado posicion : this.listaPosiciones){
+            getIconoPosicion( posicion.getIdPosicion() ).setEnabled(false);
         }
 
         if( getPosicionSeleccionada() != null ){
-            getIconoPosicion( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).setEnabled(true);
+            getIconoPosicion( getPosicionSeleccionada().getIdPosicion() ).setEnabled(true);
         }
     }
 

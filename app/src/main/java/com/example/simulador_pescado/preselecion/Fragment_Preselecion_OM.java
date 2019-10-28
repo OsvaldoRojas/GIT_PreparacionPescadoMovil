@@ -29,9 +29,10 @@ import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
 import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.OrdenMantenimiento;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.example.simulador_pescado.vista.servicio.ListaOrdenMantenimientoServicio;
-import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoCerrarTiempo;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoActualizar;
 import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 
 import java.util.List;
@@ -138,12 +139,26 @@ public class Fragment_Preselecion_OM extends Fragment {
             }
         });
 
+        if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
+            TextView tituloMecanico = this.vista.findViewById(R.id.tituloMecanico);
+            tituloMecanico.setVisibility(View.GONE);
+        }
+
         getOrdenesMantenimiento();
     }
 
     private void getOrdenesMantenimiento(){
-        Call<List<ListaOrdenMantenimientoServicio>> llamadaServicio = APIServicios.getConexion()
-                .getOrdenesMantenimiento( Catalogos.getInstancia().getEtapaActual(), 0 );
+        Call<List<ListaOrdenMantenimientoServicio>> llamadaServicio;
+        if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
+            llamadaServicio = APIServicios.getConexion()
+                    .getOrdenesMantenimiento(
+                            Catalogos.getInstancia().getEtapaActual(),
+                            (int) UsuarioLogueado.getUsuarioLogueado(null).getId_empleado()
+                    );
+        }else{
+            llamadaServicio = APIServicios.getConexion()
+                    .getOrdenesMantenimiento( Catalogos.getInstancia().getEtapaActual(), 0 );
+        }
 
         llamadaServicio.enqueue(new Callback<List<ListaOrdenMantenimientoServicio>>() {
             @Override
@@ -200,6 +215,7 @@ public class Fragment_Preselecion_OM extends Fragment {
             this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
+                    vista.setSelected(true);
                     setOrdenSeleccionada( lista.get(posicion) );
                     PopupMenu menu = new PopupMenu(getContext(), vista);
                     menu.getMenuInflater().inflate( R.menu.menu_lista_orden, menu.getMenu() );
@@ -213,6 +229,9 @@ public class Fragment_Preselecion_OM extends Fragment {
                                 case R.id.cerrarTiempo:
                                     cierraTiempo();
                                     return true;
+                                case R.id.finalizaOrden:
+                                    obtenDetalle();
+                                    return true;
                                 case R.id.detalle:
                                     muestraDetalle();
                                     return true;
@@ -224,8 +243,13 @@ public class Fragment_Preselecion_OM extends Fragment {
                     if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() != Constantes.ROL.auxiliar.getId() ){
                         menu.getMenu().getItem(0).setVisible(false);
                     }
+                    if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
+                        menu.getMenu().getItem(1).setVisible(false);
+                    }else{
+                        menu.getMenu().getItem(2).setVisible(false);
+                    }
                     menu.show();
-                    return false;
+                    return true;
                 }
             });
 
@@ -322,6 +346,62 @@ public class Fragment_Preselecion_OM extends Fragment {
                 errorServicio("Error al conectar con el servidor");
             }
         });*/
+    }
+
+    private void obtenDetalle(){
+        iniciaProcesando();
+        Call<OrdenMantenimiento> llamadaServicio = APIServicios.getConexion()
+                .getDetalleOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        llamadaServicio.enqueue(new Callback<OrdenMantenimiento>() {
+            @Override
+            public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
+                if(response.code() == 200){
+                    finalizaOrden( response.body() );
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrdenMantenimiento> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    private void finalizaOrden(OrdenMantenimiento orden){
+        OrdenMantenimientoActualizar ordenActualizar = new OrdenMantenimientoActualizar();
+        ordenActualizar.setIdOrdenMantenimiento( orden.getIdOrdenMantenimiento() );
+        ordenActualizar.setIdEmpleado( orden.getIdEmpleado() );
+        ordenActualizar.setNombreEmpleado( orden.getNombreEmpleado() );
+        ordenActualizar.setaPaternoEmpleado( orden.getaPaternoEmpleado() );
+        ordenActualizar.setaMaternoEmpleado( orden.getaMaternoEmpleado() );
+        ordenActualizar.setFechaInicio( orden.getFechaInicio() );
+        ordenActualizar.setSolucion( orden.getSolucion() );
+        ordenActualizar.setFinalizada(true);
+        ordenActualizar.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(ordenActualizar);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    getOrdenesMantenimiento();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
     public void resultadoCierraTiempo(){

@@ -139,12 +139,26 @@ public class Fragment_Descongelado_OM extends Fragment {
             }
         });
 
+        if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
+            TextView tituloMecanico = this.vista.findViewById(R.id.tituloMecanico);
+            tituloMecanico.setVisibility(View.GONE);
+        }
+
         getOrdenesMantenimiento();
     }
 
     private void getOrdenesMantenimiento(){
-        Call<List<ListaOrdenMantenimientoServicio>> llamadaServicio = APIServicios.getConexion()
-                .getOrdenesMantenimiento( Catalogos.getInstancia().getEtapaActual(), 0 );
+        Call<List<ListaOrdenMantenimientoServicio>> llamadaServicio;
+        if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
+            llamadaServicio = APIServicios.getConexion()
+                    .getOrdenesMantenimiento(
+                            Catalogos.getInstancia().getEtapaActual(),
+                            (int) UsuarioLogueado.getUsuarioLogueado(null).getId_empleado()
+                    );
+        }else{
+            llamadaServicio = APIServicios.getConexion()
+                    .getOrdenesMantenimiento( Catalogos.getInstancia().getEtapaActual(), 0 );
+        }
 
         llamadaServicio.enqueue(new Callback<List<ListaOrdenMantenimientoServicio>>() {
             @Override
@@ -224,6 +238,11 @@ public class Fragment_Descongelado_OM extends Fragment {
                     });
                     if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() != Constantes.ROL.auxiliar.getId() ){
                         menu.getMenu().getItem(0).setVisible(false);
+                    }
+                    if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
+                        menu.getMenu().getItem(1).setVisible(false);
+                    }else{
+                        menu.getMenu().getItem(2).setVisible(false);
                     }
                     menu.show();
                     return false;

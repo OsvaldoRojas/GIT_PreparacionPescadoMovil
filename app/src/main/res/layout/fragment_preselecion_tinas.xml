@@ -8,6 +8,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
         android:layout_height="match_parent">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -33,11 +34,11 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:layout_marginTop="5dp"
-                        android:background="@color/no_selecion"
-                        android:textColor="@color/blanco"
+                        android:background="@color/no_selecion_dos"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold"
                         android:textSize="13dp"
-                        android:text="Materia sin talla" />
+                        android:text="Materia" />
 
                 </LinearLayout>
 
@@ -154,7 +155,7 @@
                             android:layout_height="2dp"
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
@@ -162,7 +163,7 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginTop="1dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
@@ -170,7 +171,7 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginTop="1dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
@@ -178,14 +179,14 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginTop="1dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="168dp"
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
-                            android:background="@color/no_selecion"
+                            android:background="@color/no_selecion_dos"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"/>
 
@@ -195,7 +196,7 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginBottom="1dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
@@ -203,7 +204,7 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginBottom="1dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
@@ -211,14 +212,14 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginBottom="1dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="2dp"
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
-                            android:background="@color/no_selecion" />
+                            android:background="@color/no_selecion_dos" />
 
                         <ImageView
                             android:layout_width="28dp"
@@ -334,8 +335,8 @@
                         android:paddingRight="8dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@color/no_selecion"
-                        android:textColor="@color/blanco"
+                        android:background="@color/no_selecion_dos"
+                        android:textColor="@color/colorPrimary"
                         android:textStyle="bold"
                         android:textSize="13dp"
                         android:text="Recepción" />
@@ -373,7 +374,7 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="3dp"
                         android:paddingTop="3dp"
-                        android:background="@color/no_selecion"
+                        android:background="@color/colorPrimary"
                         android:textColor="@color/blanco"
                         android:textStyle="bold"
                         android:textSize="16dp"
@@ -404,6 +405,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -449,6 +451,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -471,6 +474,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
         android:layout_height="match_parent">
 
         <TextView
@@ -491,6 +495,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -505,7 +510,7 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="111dp"
                 android:background="@drawable/contenedor_icono"
-                android:textColor="#C2C1C1"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:text="A"
                 android:gravity="center" />
@@ -515,7 +520,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="111dp"
                 android:background="@drawable/contenedor_icono"
-                android:textColor="#C2C1C1"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:text="B"
                 android:gravity="center"/>
@@ -526,6 +531,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
         android:layout_height="match_parent">
 
         <LinearLayout

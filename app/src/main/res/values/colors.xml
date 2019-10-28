@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6B6E70</color>
-    <color name="colorPrimaryDark">#4C4E50</color>
-    <color name="colorAccent">#6B6E70</color>
+    <color name="colorPrimary">#265196</color>
+    <color name="colorPrimaryDark">#13284B</color>
+    <color name="colorAccent">#D7E5FC</color>
 
     <color name="blanco">#FFFFFF</color>
     <color name="negro">#000000</color>
 
-    <color name="principalNormalContenido">#053091</color>
-    <color name="principalNormalSombra">#032169</color>
+    <color name="principalNormalContenido">#265196</color>
+    <color name="principalNormalSombra">#13284B</color>
 
     <color name="principalPresionadoContenido">#05256B</color>
     <color name="principalPresionadoSombra">#041B52</color>
@@ -16,20 +16,14 @@
     <color name="principalDeshabilitadoContenido">#7C7C7C</color>
     <color name="principalDeshabilitadoSombra">#5F5F5F</color>
 
-    <color name="botonMenuNormal">#B8BDC4</color>
-    <color name="botonMenuPresionado">#8E9096</color>
+    <color name="botonMenuNormal">#D7E5FC</color>
+    <color name="botonMenuPresionado">#5F7EB4</color>
     <color name="botonMenuDeshabilitado">#E4E7E9</color>
 
-    <color name="no_selecion_dos">#E2E2E2</color>
-    <color name="no_selecion">#DBDBDB</color>
-    <color name="selecion">#6B6E70</color>
-    <color name="borde_contenedor">#C2C1C1</color>
-
-    <color name="fondo_gris_obscuro">#4C4E50</color>
-    <color name="fondo_gris">#6B6E70</color>
-    <color name="fondo_asignar">#828788</color>
-
-    <color name="fondo_tina_principal">#555758</color>
+    <color name="no_selecion_dos">#D7E5FC</color>
+    <color name="no_selecion">#F2F7FF</color>
+    <color name="selecion">#265196</color>
+    <color name="borde_contenedor">#13284B</color>
 
     <color name="noValido">#CF0808</color>
     <color name="siValido">#0EB82B</color>
