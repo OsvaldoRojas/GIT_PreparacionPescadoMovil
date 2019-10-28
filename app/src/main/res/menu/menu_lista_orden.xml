@@ -15,8 +15,14 @@
         app:showAsAction="withText" />
 
     <item
-        android:id="@+id/detalle"
+        android:id="@+id/finalizaOrden"
         android:orderInCategory="3"
+        android:title="@string/finalizaOrden"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/detalle"
+        android:orderInCategory="4"
         android:title="@string/detalle"
         app:showAsAction="withText" />
 

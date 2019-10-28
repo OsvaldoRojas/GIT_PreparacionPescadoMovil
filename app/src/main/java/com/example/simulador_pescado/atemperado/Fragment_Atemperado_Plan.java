@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,7 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.utilerias.Constantes;
-import com.example.simulador_pescado.vista.ErrorServicio;
 import com.example.simulador_pescado.vista.PosicionEstibaAtemperado;
 
 import java.util.ArrayList;
@@ -157,7 +155,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
     private List<PosicionEstibaAtemperado> listaPosiciones = new ArrayList<>();
 
     private LinearLayout botonera;
-    private ScrollView vistaIconos;
     private SwipeRefreshLayout actualizar;
     private Button boton1;
     private AlertDialog ventanaError;
@@ -223,7 +220,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
                 obtenPosiciones();
             }
         });
-        this.vistaIconos = this.vista.findViewById(R.id.vistaIconos);
 
         this.botonera = this.vista.findViewById(R.id.botonera);
         this.boton1 = this.vista.findViewById(R.id.boton1);
@@ -1081,6 +1077,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
                     @Override
                     public void onClick(View view) {
                         ventanaError.dismiss();
+                        creaObjetosVacios();
                     }
                 });
             }
@@ -1162,18 +1159,16 @@ public class Fragment_Atemperado_Plan extends Fragment {
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                         posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
                         muestraIcono(posicionEstiba);
-                        ajustaTamañoVista();
+                        //ajustaTamañoVista();
                         this.botonera.setVisibility(View.VISIBLE);
                     }else{
                         if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
                             setPosicionSeleccionada(null);
                             habilitaRecursos();
-                            getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
-                                    .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             posicionEstiba.setEstado(Constantes.ESTADO.inicial);
                             muestraIcono(posicionEstiba);
-                            this.botonera.setVisibility(View.GONE);
-                            ajustaTamañoVista();
+                            this.botonera.setVisibility(View.INVISIBLE);
+                            //ajustaTamañoVista();
                         }
                     }
                 }
@@ -1214,59 +1209,41 @@ public class Fragment_Atemperado_Plan extends Fragment {
             switch ( posicionEstiba.getConteoNivel() ){
                 case 0:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_tina_gris);
                     break;
                 case 1:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_uno_gris);
                     break;
                 case 2:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_dos_gris);
                     break;
                 case 3:
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_tres_gris);
                     break;
                 case 4:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_cuatro_gris);
                     break;
                 case 5:
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
+                            .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
+                    getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setImageResource(R.drawable.ic_cinco_gris);
             }
         }
-    }
-
-    private void ajustaTamañoVista(){
-        ViewGroup.LayoutParams botonera = this.botonera.getLayoutParams();
-        ViewGroup.LayoutParams vista = this.actualizar.getLayoutParams();
-
-        if( getPosicionSeleccionada() != null ){
-            vista.height = vista.height - (botonera.height*5);
-            if( String.valueOf( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).endsWith("1")
-                    || String.valueOf( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).endsWith("2")
-                    || String.valueOf( getPosicionSeleccionada().getIdAtemperadoPosicionTina() ).endsWith("3") ){
-                this.vistaIconos.post(new Runnable() {
-                    public void run() {
-                        vistaIconos.fullScroll(vistaIconos.FOCUS_UP);
-                    }
-                });
-            }else{
-                this.vistaIconos.post(new Runnable() {
-                    public void run() {
-                        vistaIconos.fullScroll(vistaIconos.FOCUS_DOWN);
-                    }
-                });
-            }
-        }else{
-            vista.height = vista.height + (botonera.height*5);
-        }
-
-        this.actualizar.requestLayout();
-        this.actualizar.setLayoutParams(vista);
-        return;
     }
 
     private void habilitaRecursos(){
@@ -1389,41 +1366,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
             case 100: return this.posicion100;
         }
         return null;
-    }
-
-    public void errorServicio(ErrorServicio errorMensaje){
-        String mensajeMostrar = errorMensaje.getMessage();
-        if( errorMensaje.getMensaje() != null &&
-                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
-            mensajeMostrar = errorMensaje.getMensaje();
-        }
-
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaError = builder.create();
-        final String finalMensajeMostrar = mensajeMostrar;
-        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText(finalMensajeMostrar);
-
-                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ventanaError.dismiss();
-                        creaObjetosVacios();
-                    }
-                });
-            }
-        });
-        this.ventanaError.show();
     }
 
     public void iniciaProcesando(){

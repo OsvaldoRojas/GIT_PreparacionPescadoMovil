@@ -23,7 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/asignarMecanico"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
                     android:textSize="17dp"/>
@@ -32,7 +32,7 @@
                     android:id="@+id/etiquetaFecha"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:textColor="@color/negro"
+                    android:textColor="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
@@ -45,12 +45,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:hint="Escanear gafete"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/negro"
-                    android:background="@color/blanco"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorAccent"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
+                    android:paddingLeft="5dp"
                     android:focusable="true">
                     <requestFocus/>
                 </EditText>
@@ -63,10 +64,11 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:hint="Nombre del Mecánico"
-                    android:gravity="center_horizontal"
-                    android:background="@color/blanco"
+                    android:gravity="center_vertical"
+                    android:background="@color/colorAccent"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
                     android:paddingBottom="4dp" />
 
             </LinearLayout>

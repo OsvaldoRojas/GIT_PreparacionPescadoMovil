@@ -28,6 +28,12 @@ public class AdaptadorArtefactoOrden extends ArrayAdapter<Artefacto> {
         TextView etiquetaDescripcion = vista.findViewById(R.id.etiquetaDescripcion);
         etiquetaDescripcion.setText( artefacto.getDescripcion() );
 
+        if( (posicion % 2) == 0 ){
+            etiquetaDescripcion.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion_dos) );
+        }else{
+            etiquetaDescripcion.setBackgroundColor( getContext().getResources().getColor(R.color.no_selecion) );
+        }
+
         return vista;
     }
 }

@@ -56,6 +56,10 @@ public class Tina implements Serializable {
     @Expose
     private Boolean turno;
 
+    @SerializedName("porcentaje")
+    @Expose
+    private int porcentaje;
+
     private String claveMaquina;
     private Constantes.ESTADO estado;
 
@@ -169,5 +173,13 @@ public class Tina implements Serializable {
 
     public void setTurno(Boolean turno) {
         this.turno = turno;
+    }
+
+    public int getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(int porcentaje) {
+        this.porcentaje = porcentaje;
     }
 }

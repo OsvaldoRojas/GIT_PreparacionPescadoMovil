@@ -18,6 +18,7 @@ import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -72,6 +73,18 @@ public class Utilerias {
     public static String fechaActual(String formato){
         SimpleDateFormat formatoFecha = new SimpleDateFormat(formato);
         return formatoFecha.format( new Date() );
+    }
+
+    public static String formatoFecha(String fechaTexto){
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoFechaEntrada = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        try {
+            fecha = formatoFechaEntrada.parse(fechaTexto);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return formatoFecha.format(fecha);
     }
 
     public static Fragment navega(int pestaña){

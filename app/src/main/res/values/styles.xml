@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <style name="AppThemeAcceder" parent="Theme.AppCompat.Light.NoActionBar">
@@ -13,6 +13,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="tab" parent="Widget.Design.TabLayout">
+        <item name="android:colorBackground">@color/noValido</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -24,6 +28,7 @@
         <item name="android:layout_width">180dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/blanco</item>
         <item name="android:background">@drawable/boton_principal</item>
     </style>
 
@@ -40,6 +45,16 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="botonDialog">
+        <item name="android:background">@drawable/boton_dialog</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:layout_weight">1</item>
     </style>
 

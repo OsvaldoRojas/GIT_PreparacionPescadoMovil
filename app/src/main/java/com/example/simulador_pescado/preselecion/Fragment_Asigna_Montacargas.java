@@ -287,7 +287,8 @@ public class Fragment_Asigna_Montacargas extends Fragment {
         TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
 
         if( resultadoGafete.getResultado().equalsIgnoreCase("YES") ){
-            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab() );
+            campoNombre.setText( resultadoGafete.getEmpleado().getNom_trab().concat(" ")
+                    .concat( resultadoGafete.getEmpleado().getAp_paterno() ) );
             campoNombre.setTextColor( getResources().getColor(R.color.siValido) );
 
             getMontacargasSeleccionado()

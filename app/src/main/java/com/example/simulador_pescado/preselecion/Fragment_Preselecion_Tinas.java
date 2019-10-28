@@ -25,9 +25,11 @@ import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.servicio.LiberaTinaServicio;
 import com.example.simulador_pescado.vista.servicio.LiberarTodos;
 import com.example.simulador_pescado.vista.OperadorBascula;
 import com.example.simulador_pescado.vista.OperadorMontacargas;
+import com.example.simulador_pescado.vista.servicio.MezclaTinaServicio;
 import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
@@ -515,8 +517,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             tina.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoTina( tina.getIdPreseleccionPosicionTina() )
-                                    .setImageResource(R.drawable.ic_tina_negra);
+                            cambiaIconoLlenado(tina);
                             getIconoTina( tina.getIdPreseleccionPosicionTina() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
                             tina.setEstado( Constantes.ESTADO.asignado );
@@ -568,6 +569,35 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     }
                 }
                 break;
+            }
+        }
+    }
+
+    private void cambiaIconoLlenado(Tina tina){
+        if( tina.getPorcentaje() >= 0 &&
+                tina.getPorcentaje() < 20 ){
+            getIconoTina( tina.getIdPreseleccionPosicionTina() )
+                    .setImageResource(R.drawable.ic_tina_negra);
+        }else{
+            if( tina.getPorcentaje() >= 20 &&
+                    tina.getPorcentaje() < 40 ){
+                getIconoTina( tina.getIdPreseleccionPosicionTina() )
+                        .setImageResource(R.drawable.ic_tina20);
+            }else{
+                if( tina.getPorcentaje() >= 40 &&
+                        tina.getPorcentaje() < 80 ){
+                    getIconoTina( tina.getIdPreseleccionPosicionTina() )
+                            .setImageResource(R.drawable.ic_tina40);
+                }else{
+                    if( tina.getPorcentaje() >= 80 &&
+                            tina.getPorcentaje() < 100 ){
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
+                                .setImageResource(R.drawable.ic_tina80);
+                    }else{
+                        getIconoTina( tina.getIdPreseleccionPosicionTina() )
+                                .setImageResource(R.drawable.ic_tina100);
+                    }
+                }
             }
         }
     }
@@ -729,12 +759,12 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void liberarTina(){
         iniciaProcesando();
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion()
-                .liberaTina(
-                        getTinaSeleccionada().getIdPreseleccionPosicionTina(),
-                        UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario()
-                );
 
+        LiberaTinaServicio tinaLiberada = new LiberaTinaServicio();
+        tinaLiberada.setIdPosicion( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
+        tinaLiberada.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTina(tinaLiberada);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -913,8 +943,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 botonAceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        iniciaProcesando();
+                        mezclaTinasServicio();
                         ventanaEmergente.dismiss();
-                        resultadoMezclaTinas();
+                        //resultadoMezclaTinas();
                     }
                 });
 
@@ -936,6 +968,37 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.ventanaEmergente.show();
     }
 
+    private void mezclaTinasServicio(){
+        MezclaTinaServicio mezclaTinaServicio = new MezclaTinaServicio();
+        mezclaTinaServicio.setIdTinaPrincipal( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
+        List<Integer> listaTinas = new ArrayList<>();
+        for( Tina tina : this.listaMezclarTinas ){
+            listaTinas.add( tina.getIdPreseleccionPosicionTina() );
+        }
+        mezclaTinaServicio.setPosicionesTina(listaTinas);
+        mezclaTinaServicio.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().mezclaTinas(mezclaTinaServicio);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                terminaProcesando();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    resultadoMezclaTinas();
+                }else{
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
     public void resultadoMezclaTinas(){
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -954,6 +1017,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                     public void onClick(View view) {
                         cancelaMezclar();
                         ventanaEmergente.dismiss();
+                        getAsignados();
                     }
                 });
 

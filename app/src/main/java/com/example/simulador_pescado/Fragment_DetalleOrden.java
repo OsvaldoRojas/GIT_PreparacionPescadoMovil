@@ -384,7 +384,9 @@ public class Fragment_DetalleOrden extends Fragment {
     private void validaGuardado(){
         EditText campoSolucion = this.vista.findViewById(R.id.campoSolucion);
 
-        if( !campoSolucion.getText().toString().equals("") ){
+        if( ( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() &&
+                !campoSolucion.getText().toString().equals("") ) ||
+                UsuarioLogueado.getUsuarioLogueado(null).getId_rol() != Constantes.ROL.mecanico.getId() ){
             iniciaProcesando();
             getOrdenSeleccionada().setSolucion( campoSolucion.getText().toString() );
 
@@ -409,7 +411,6 @@ public class Fragment_DetalleOrden extends Fragment {
 
                 actualizaTiempo(fechaHora);
             }
-
             guarda();
         }else{
             errorValidacion("Es necesario capturar una solución");

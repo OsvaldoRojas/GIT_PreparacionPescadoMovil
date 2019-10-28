@@ -65,7 +65,7 @@
         <Button
             android:id="@+id/boton1"
             android:text="@string/aceptar"
-            style="@style/botonAccion"/>
+            style="@style/botonDialog"/>
 
     </LinearLayout>
 
