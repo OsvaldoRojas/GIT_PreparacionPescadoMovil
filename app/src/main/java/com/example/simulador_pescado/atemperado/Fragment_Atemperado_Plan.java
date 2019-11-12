@@ -163,7 +163,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Atemperado_Plan() {
-        // Required empty public constructor
     }
 
     public PosicionEstibaAtemperado getPosicionSeleccionada() {
@@ -204,7 +203,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         this.vista = inflater.inflate(R.layout.fragment_atemperado_plan, container, false);
 
         iniciaComponentes();
@@ -1159,7 +1157,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                         posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
                         muestraIcono(posicionEstiba);
-                        //ajustaTamañoVista();
                         this.botonera.setVisibility(View.VISIBLE);
                     }else{
                         if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
@@ -1168,7 +1165,6 @@ public class Fragment_Atemperado_Plan extends Fragment {
                             posicionEstiba.setEstado(Constantes.ESTADO.inicial);
                             muestraIcono(posicionEstiba);
                             this.botonera.setVisibility(View.INVISIBLE);
-                            //ajustaTamañoVista();
                         }
                     }
                 }

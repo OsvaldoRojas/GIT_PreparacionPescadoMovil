@@ -1,32 +1,25 @@
 package com.example.simulador_pescado.contenedores;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
-import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
-import com.example.simulador_pescado.preselecion.Fragment_Preselecion_TiempoMuerto;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_Tinas;
-import com.example.simulador_pescado.utilerias.Catalogos;
-import com.example.simulador_pescado.utilerias.Constantes;
-import com.example.simulador_pescado.vista.Maquinaria;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**
@@ -52,7 +45,6 @@ public class Contenedor extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Contenedor() {
-        // Required empty public constructor
     }
 
     /**
@@ -84,7 +76,6 @@ public class Contenedor extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         vista=inflater.inflate(R.layout.fragment_contenedor, container, false);
 
         View parent= (View) container.getParent();
@@ -102,10 +93,11 @@ public class Contenedor extends Fragment {
             });
             pestañas.setupWithViewPager(viewPager);
         }
+        iniciaTab();
+        pestañas.setTabRippleColor( getResources().getColorStateList(R.color.colorAccent) );
+        pestañas.setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
+        pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.blanco) );
         pestañas.getTabAt(this.mParam1).select();
-        pestañas.setTabTextColors( getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimary) );
-        //pestañas.getChildAt(0).setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
-        //pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.noValido) );
 
         return vista;
     }
@@ -119,9 +111,21 @@ public class Contenedor extends Fragment {
     private void llenarview(ViewPager viewPager) {
         SesionesAdapter adatartes= new SesionesAdapter(getFragmentManager());
         adatartes.addfragments(new Fragment_Preselecion_Tinas(), getResources().getString(R.string.Preselecion_tinas));
-        adatartes.addfragments(new Fragment_Preselecion_TiempoMuerto(), getResources().getString(R.string.TiempoMuerto));
+        adatartes.addfragments(new Fragment_CreaOrdenMantenimiento(), getResources().getString(R.string.TiempoMuerto));
         adatartes.addfragments(new Fragment_Preselecion_OM(), getResources().getString(R.string.OM));
         viewPager.setAdapter(adatartes);
+    }
+
+    private void iniciaTab(){
+        TextView textView1 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView1.setText( getResources().getString(R.string.Preselecion_tinas) );
+        pestañas.getTabAt(0).setCustomView(textView1);
+        TextView textView2 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView2.setText( getResources().getString(R.string.TiempoMuerto) );
+        pestañas.getTabAt(1).setCustomView(textView2);
+        TextView textView3 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView3.setText( getResources().getString(R.string.OM) );
+        pestañas.getTabAt(2).setCustomView(textView3);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

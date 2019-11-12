@@ -7,13 +7,18 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador_pescado.R;
+import com.example.simulador_pescado.Fragment_ControlProceso;
+import com.example.simulador_pescado.Fragment_MovimientoPersonal;
 import com.example.simulador_pescado.atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
+import com.example.simulador_pescado.contenedores.Contenedor_Emparrillado;
+import com.example.simulador_pescado.contenedores.Contenedor_Eviscerado;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_OM;
+import com.example.simulador_pescado.emparrillado.Fragment_Emparrillado_OM;
+import com.example.simulador_pescado.eviscerado.Fragment_Eviscerado_OM;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.vista.Maquinaria;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
@@ -111,26 +116,27 @@ public class Utilerias {
                     fragment = new Fragment_Descongelado_OM();
                 }
                 break;
+            case 4:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Eviscerado().newInstance(pestaña);
+                }else{
+                    fragment = new Fragment_Eviscerado_OM();
+                }
+                break;
+            case 5:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Emparrillado().newInstance(pestaña);
+                }else{
+                    fragment = new Fragment_Emparrillado_OM();
+                }
+                break;
         }
         return fragment;
     }
 
     public static Fragment navegaInicio(Constantes.ETAPA etapa){
         Catalogos.getInstancia().setEtapaActual(etapa);
-        Call<List<Maquinaria>> llamadaServicio = APIServicios.getConexion().getMaquinarias( Catalogos.getInstancia().getEtapaActual() );
-        llamadaServicio.enqueue(new Callback<List<Maquinaria>>() {
-            @Override
-            public void onResponse(Call<List<Maquinaria>> call, Response<List<Maquinaria>> response) {
-                if(response.code() == 200){
-                    Catalogos.getInstancia().setCatalogoMaquinaria( response.body() );
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Maquinaria>> call, Throwable t) {
-
-            }
-        });
 
         Fragment fragment = null;
         switch (etapa){
@@ -154,6 +160,26 @@ public class Utilerias {
                 }else{
                     fragment = new Fragment_Descongelado_OM();
                 }
+                break;
+            case eviscerado:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Eviscerado();
+                }else{
+                    fragment = new Fragment_Eviscerado_OM();
+                }
+                break;
+            case emparrillado:
+                if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.auxiliar.getId() ){
+                    fragment = new Contenedor_Emparrillado();
+                }else{
+                    fragment = new Fragment_Emparrillado_OM();
+                }
+                break;
+            case movimiento:
+                fragment = new Fragment_MovimientoPersonal();
+                break;
+            case control:
+                fragment = new Fragment_ControlProceso();
                 break;
         }
 

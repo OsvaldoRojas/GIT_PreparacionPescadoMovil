@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.R;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
 import com.example.simulador_pescado.atemperado.Fragment_Atemperado_OM;
@@ -52,7 +54,6 @@ public class Contenedor_Atemperado extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Contenedor_Atemperado() {
-        // Required empty public constructor
     }
 
     /**
@@ -84,7 +85,6 @@ public class Contenedor_Atemperado extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_contenedor_atemperado, container, false);
 
         View parent= (View) container.getParent();
@@ -102,10 +102,11 @@ public class Contenedor_Atemperado extends Fragment {
             });
             pestañas.setupWithViewPager(viewPager);
         }
+        iniciaTab();
+        pestañas.setTabRippleColor( getResources().getColorStateList(R.color.colorAccent) );
+        pestañas.setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
+        pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.blanco) );
         pestañas.getTabAt(this.mParam1).select();
-        pestañas.setTabTextColors( getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimary) );
-        //pestañas.getChildAt(0).setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
-        //pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.noValido) );
 
         return vista;
     }
@@ -119,9 +120,21 @@ public class Contenedor_Atemperado extends Fragment {
     private void llenar(ViewPager viewPager) {
         SesionesAdapter adapter= new SesionesAdapter(getFragmentManager());
         adapter.addfragments(new Fragment_Atemperado_Plan(), getResources().getString(R.string.Preselecion_tinas));
-        adapter.addfragments(new Fragment_Atemperado_TiempoMuerto(), getResources().getString(R.string.TiempoMuerto));
+        adapter.addfragments(new Fragment_CreaOrdenMantenimiento(), getResources().getString(R.string.TiempoMuerto));
         adapter.addfragments(new Fragment_Atemperado_OM(), getResources().getString(R.string.OM));
         viewPager.setAdapter(adapter);
+    }
+
+    private void iniciaTab(){
+        TextView textView1 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView1.setText( getResources().getString(R.string.Preselecion_tinas) );
+        pestañas.getTabAt(0).setCustomView(textView1);
+        TextView textView2 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView2.setText( getResources().getString(R.string.TiempoMuerto) );
+        pestañas.getTabAt(1).setCustomView(textView2);
+        TextView textView3 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView3.setText( getResources().getString(R.string.OM) );
+        pestañas.getTabAt(2).setCustomView(textView3);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

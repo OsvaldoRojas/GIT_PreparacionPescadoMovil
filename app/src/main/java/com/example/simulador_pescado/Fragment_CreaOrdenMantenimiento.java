@@ -9,13 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.adaptadores.AdaptadorArtefactoOrden;
+import com.example.simulador_pescado.adaptadores.AdaptadorMaquinaria;
 import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
@@ -55,6 +60,9 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
     private Maquinaria maquinaria;
     private OrdenMantenimiento ordenMantenimiento = new OrdenMantenimiento();
 
+    private Spinner seleccionMaquinaria;
+    private ListView listaArtefactos;
+
     private AlertDialog ventanaError;
 
     private List<Artefacto> catalogoArtefactos = new ArrayList<>();
@@ -93,7 +101,6 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.vista=inflater.inflate(R.layout.fragment_orden_mantenimiento, container, false);
-
         iniciaComponentes();
         return this.vista;
     }
@@ -156,7 +163,7 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navega();
+                limpiaCampos();
             }
         });
 
@@ -165,7 +172,7 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
             @Override
             public void onClick(View view) {
                 iniciaProcesando();
-                guardaOrden();
+                validaGuardado();
             }
         });
 
@@ -182,11 +189,52 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
             }
         });
 
-        TextView etiquetaEquipo = this.vista.findViewById(R.id.etiquetaEquipo);
-        if( obtenMaquinaria(this.mParam1) ){
-            etiquetaEquipo.setText( getMaquinaria().getDescripcion() );
-        }
+        this.seleccionMaquinaria = this.vista.findViewById(R.id.seleccionMaquinaria);
+        this.seleccionMaquinaria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                iniciaProcesando();
+                Maquinaria maquinaria = (Maquinaria) adapterView.getItemAtPosition(i);
+                getOrdenMantenimiento().setArtefactos(new ArrayList<Artefacto>());
+                listaArtefactos.setVisibility(View.GONE);
+                if(maquinaria.getIdMaquinaria() > 0){
+                    setMaquinaria( (Maquinaria) adapterView.getItemAtPosition(i) );
+                    obtenArtefactos();
+                }else{
+                    resultadoCatalogoArtefacto(new ArrayList<Artefacto>());
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Call<List<Maquinaria>> llamadaServicio = APIServicios.getConexion().getMaquinarias( Catalogos.getInstancia().getEtapaActual() );
+        llamadaServicio.enqueue(new Callback<List<Maquinaria>>() {
+            @Override
+            public void onResponse(Call<List<Maquinaria>> call, Response<List<Maquinaria>> response) {
+                if(response.code() == 200){
+                    Catalogos.getInstancia().setCatalogoMaquinaria( response.body() );
+                    seleccionMaquinaria.setAdapter(
+                            new AdaptadorMaquinaria( Catalogos.getInstancia().getCatalogoMaquinaria(), getContext() )
+                    );
+                    terminaProcesando();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Maquinaria>> call, Throwable t) {
+
+            }
+        });
+
+        this.listaArtefactos = this.vista.findViewById(R.id.listaArtefactos);
+
+    }
+
+    private void obtenArtefactos(){
         Call<List<Artefacto>> llamadaServicio = APIServicios.getConexion().getArtefactos( getMaquinaria().getIdMaquinaria() );
         llamadaServicio.enqueue(new Callback<List<Artefacto>>() {
             @Override
@@ -201,16 +249,6 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
 
             }
         });
-    }
-
-    private boolean obtenMaquinaria(String clave){
-        for( Maquinaria maquinariaLista : Catalogos.getInstancia().getCatalogoMaquinaria() ){
-            if( maquinariaLista.getClave().equalsIgnoreCase(clave) ){
-                setMaquinaria(maquinariaLista);
-                return true;
-            }
-        }
-        return false;
     }
 
     public void resultadoCatalogoArtefacto(List<Artefacto> lista){
@@ -230,22 +268,38 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
             }
             getOrdenMantenimiento().setArtefactos(artefactos);
 
-            Button botonArtefactos = this.vista.findViewById(R.id.botonArtefactos);
-            if( artefactos.size() > 0 ){
-                botonArtefactos.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.drawable.ic_done), null);
-            }else{
-                botonArtefactos.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.drawable.ic_clear), null);
-            }
+            AdaptadorArtefactoOrden adaptadorArtefactos = new AdaptadorArtefactoOrden(
+                    getContext(),
+                    artefactos
+            );
+            this.listaArtefactos.setAdapter(adaptadorArtefactos);
+            Utilerias.setAlturaLista(this.listaArtefactos, 0);
+            this.listaArtefactos.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void validaGuardado(){
+        if( getOrdenMantenimiento().getArtefactos() == null
+                || getOrdenMantenimiento().getArtefactos().size() == 0){
+            terminaProcesando();
+            errorServicio("Es necesario capturar al menos un componente");
+            return;
+        }
+
+        TextView descripcion = this.vista.findViewById(R.id.campoDescripcion);
+        if( descripcion.length() == 0 ){
+            terminaProcesando();
+            errorServicio("Es necesario capturar una descripción");
+            return;
+        }
+
+        guardaOrden();
     }
 
     private void guardaOrden(){
         getOrdenMantenimiento().setMaquinaria( getMaquinaria() );
         TextView descripcion = this.vista.findViewById(R.id.campoDescripcion);
         getOrdenMantenimiento().setDescripcion( descripcion.getText().toString() );
-        if( getOrdenMantenimiento().getArtefactos() == null ){
-            getOrdenMantenimiento().setArtefactos( new ArrayList<Artefacto>() );
-        }
 
         OrdenMantenimientoGuardar orden = new OrdenMantenimientoGuardar();
         orden.setIdOrdenMantenimiento(0);
@@ -267,7 +321,7 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
                 RespuestaServicio respuesta = response.body();
                 terminaProcesando();
                 if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    navega();
+                    mensajeGuardado();
                 }else{
                     errorServicio("Error interno del servidor");
                 }
@@ -279,6 +333,34 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
                 errorServicio("Error al conectar con el servidor");
             }
         });
+    }
+
+    public void mensajeGuardado(){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaError = builder.create();
+        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText("Orden de mantenimiento guardada correctamente");
+
+                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        limpiaCampos();
+                        ventanaError.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaError.show();
     }
 
     public void errorServicio(final String mensaje){
@@ -308,54 +390,23 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
         this.ventanaError.show();
     }
 
-    public void errorServicio(ErrorServicio errorMensaje){
-        String mensajeMostrar = errorMensaje.getMessage();
-        if( errorMensaje.getMensaje() != null &&
-                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
-            mensajeMostrar = errorMensaje.getMensaje();
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaError = builder.create();
-        final String finalMensajeMostrar = mensajeMostrar;
-        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText(finalMensajeMostrar);
-
-                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ventanaError.dismiss();
-                    }
-                });
-            }
-        });
-        this.ventanaError.show();
-    }
-
-    private void navega(){
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main, Utilerias.navega(1)).commit();
+    private void limpiaCampos(){
+        this.seleccionMaquinaria.setSelection(0);
+        this.ordenMantenimiento = new OrdenMantenimiento();
+        TextView descripcion = this.vista.findViewById(R.id.campoDescripcion);
+        descripcion.setText("");
+        this.listaArtefactos.setVisibility(View.GONE);
     }
 
     public void iniciaProcesando(){
         ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         barraProgreso.setVisibility(View.VISIBLE);
     }
 
     public void terminaProcesando(){
         ProgressBar barraProgreso = this.vista.findViewById(R.id.barraProgreso);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        //getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         barraProgreso.setVisibility(View.GONE);
     }
 }

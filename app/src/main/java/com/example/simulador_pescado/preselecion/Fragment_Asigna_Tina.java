@@ -63,7 +63,6 @@ public class Fragment_Asigna_Tina extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Asigna_Tina() {
-        // Required empty public constructor
     }
 
     /**
@@ -253,9 +252,6 @@ public class Fragment_Asigna_Tina extends Fragment {
     }
 
     private void guarda(){
-        /*AsignaTina asignaTina = new AsignaTina(this, getTinaSeleccionada() );
-        asignaTina.execute();*/
-
         TinaServicio tinaServicio = new TinaServicio();
         tinaServicio.setIdEspecialidad( getTinaSeleccionada().getEspecialidad().getIdEspecialidad() );
         if( getTinaSeleccionada().getEspecialidad().getIdEspecialidad() == 0 ){

@@ -48,7 +48,12 @@ public class Catalogos {
     }
 
     public void setCatalogoMaquinaria(List<Maquinaria> catalogoMaquinaria) {
-        this.catalogoMaquinaria = catalogoMaquinaria;
+        this.catalogoMaquinaria = new ArrayList<>();
+        Maquinaria maquinaria = new Maquinaria();
+        maquinaria.setDescripcion("Máquinaria");
+        maquinaria.setIdMaquinaria(0);
+        this.catalogoMaquinaria.add(maquinaria);
+        this.catalogoMaquinaria.addAll(catalogoMaquinaria);
     }
 
     public List<Maquinaria> getCatalogoMaquinaria() {

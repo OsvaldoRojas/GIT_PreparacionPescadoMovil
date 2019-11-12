@@ -144,7 +144,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Descongelado_TiempoMuerto() {
-        // Required empty public constructor
     }
 
     public PosicionEstibaAtemperado getPosicionSeleccionada() {
@@ -193,7 +192,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         this.vista = inflater.inflate(R.layout.fragment_descongelado_tiempo_muerto, container, false);
 
         iniciaComponentes();
@@ -940,7 +938,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
-                    //ajustaTamañoVista();
                     this.botonCreaOrden.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -959,7 +956,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                         posicionEstiba.setEstado(Constantes.ESTADO.inicial);
                         this.botonCreaOrden.setOnClickListener(null);
                         this.botonera.setVisibility(View.INVISIBLE);
-                        //ajustaTamañoVista();
                     }
                 }
                 break;
@@ -978,7 +974,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
-                    //ajustaTamañoVista();
                     this.botonCreaOrden.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -997,7 +992,6 @@ public class Fragment_Descongelado_TiempoMuerto extends Fragment {
                         montacargas.setEstado(Constantes.ESTADO.inicial);
                         this.botonCreaOrden.setOnClickListener(null);
                         this.botonera.setVisibility(View.INVISIBLE);
-                        //ajustaTamañoVista();
                     }
                 }
                 break;

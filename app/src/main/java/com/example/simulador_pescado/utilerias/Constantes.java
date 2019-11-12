@@ -13,8 +13,9 @@ public class Constantes {
         atemperado,
         descongelado,
         eviscerado,
-        cocimiento,
-        enfriamiento
+        emparrillado,
+        movimiento,
+        control
     }
 
     public enum ROL{

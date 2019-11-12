@@ -57,7 +57,6 @@ public class Fragment_Asigna_Operador extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Asigna_Operador() {
-        // Required empty public constructor
     }
 
     /**
