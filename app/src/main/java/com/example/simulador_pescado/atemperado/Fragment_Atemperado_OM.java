@@ -71,7 +71,6 @@ public class Fragment_Atemperado_OM extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Atemperado_OM() {
-        // Required empty public constructor
     }
 
     public ListaOrdenMantenimientoServicio getOrdenSeleccionada() {

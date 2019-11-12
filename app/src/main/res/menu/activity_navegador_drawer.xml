@@ -3,35 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/home" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/casa_24"
             android:title="Inicio" />
+    </group>
+
+    <group android:id="@+id/proceso" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_preselecion"
             android:icon="@drawable/ic_tina_negra"
-            android:title="Preselección" />
+            android:title="@string/preseleccion" />
         <item
             android:id="@+id/nav_atemperado"
             android:icon="@drawable/ic_termometro"
-            android:title="Atemperado"
-            android:visible="true"/>
+            android:title="@string/atemperador" />
         <item
             android:id="@+id/nav_desconglado"
             android:icon="@drawable/ic_nieve"
-            android:title="Descongelado"
-            android:visible="true"/>
+            android:title="@string/descongelado" />
+        <item
+            android:id="@+id/nav_eviscerado"
+            android:icon="@drawable/ic_nieve"
+            android:title="@string/eviscerar" />
+        <item
+            android:id="@+id/nav_emparrillado"
+            android:icon="@drawable/ic_nieve"
+            android:title="@string/emparrillado" />
+        <item
+            android:id="@+id/nav_movimiento"
+            android:icon="@drawable/ic_nieve"
+            android:title="@string/movimieto" />
+        <item
+            android:id="@+id/nav_control"
+            android:icon="@drawable/ic_nieve"
+            android:title="@string/control" />
     </group>
 
-    <item android:title="Sesión">
-        <menu>
-            <item
-                android:id="@+id/cerrar_sesion"
-                android:icon="@drawable/ic_logout"
-                android:title="Cerrar sesión" />
+    <group android:id="@+id/sesion" android:checkableBehavior="single">
+        <item android:title="Sesión">
+            <menu>
+                <item
+                    android:id="@+id/cerrar_sesion"
+                    android:icon="@drawable/ic_logout"
+                    android:title="Cerrar sesión" />
 
-        </menu>
-    </item>
+            </menu>
+        </item>
+    </group>
 
 </menu>

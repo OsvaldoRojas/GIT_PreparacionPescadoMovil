@@ -53,7 +53,6 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Descongelado_DetalleEstiba() {
-        // Required empty public constructor
     }
 
     /**

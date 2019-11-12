@@ -112,7 +112,6 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_TiempoMuerto() {
-        // Required empty public constructor
     }
 
     public Tina getTinaSeleccionada() {
@@ -177,7 +176,6 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         vista=inflater.inflate(R.layout.fragment_preselecion_tiempo_muerto, container, false);
 
         iniciaComponentes();
@@ -899,12 +897,10 @@ public class Fragment_Preselecion_TiempoMuerto extends Fragment {
     }
 
     public void iniciaProcesando(){
-        //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.VISIBLE);
     }
 
     public void terminaProcesando(){
-        //getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.GONE);
     }
 

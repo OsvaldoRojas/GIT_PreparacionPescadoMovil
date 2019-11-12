@@ -72,7 +72,6 @@ public class Fragment_Preselecion_OM extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_OM() {
-        // Required empty public constructor
     }
 
     public ListaOrdenMantenimientoServicio getOrdenSeleccionada() {

@@ -146,7 +146,6 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Descongelado_Plan() {
-        // Required empty public constructor
     }
 
     public PosicionEstibaDescongelado getPosicionSeleccionada() {
@@ -187,7 +186,6 @@ public class Fragment_Descongelado_Plan extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         this.vista = inflater.inflate(R.layout.fragment_descongelado_plan, container, false);
         iniciaComponentes();
         return this.vista;

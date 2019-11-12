@@ -12,6 +12,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.simulador_pescado.contenedores.Contenedor_Emparrillado;
+import com.example.simulador_pescado.contenedores.Contenedor_Eviscerado;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_DetalleEstiba;
 import com.example.simulador_pescado.atemperado.Fragment_Atemperado_OM;
 import com.example.simulador_pescado.atemperado.Fragment_Atemperado_Plan;
@@ -21,7 +23,14 @@ import com.example.simulador_pescado.contenedores.Contenedor_Atemperado;
 import com.example.simulador_pescado.contenedores.Contenedor_Descongelado;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_Plan;
+import com.example.simulador_pescado.descongelado.Fragment_Descongelado_SalidaTinas;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_TiempoMuerto;
+import com.example.simulador_pescado.emparrillado.Fragment_Emparrillado_OM;
+import com.example.simulador_pescado.emparrillado.Fragment_Emparrillado_Plan;
+import com.example.simulador_pescado.emparrillado.Fragment_Emparrillado_TiempoMuerto;
+import com.example.simulador_pescado.eviscerado.Fragment_Eviscerado_OM;
+import com.example.simulador_pescado.eviscerado.Fragment_Eviscerado_Plan;
+import com.example.simulador_pescado.eviscerado.Fragment_Eviscerado_TiempoMuerto;
 import com.example.simulador_pescado.preselecion.Fragment_Asigna_Montacargas;
 import com.example.simulador_pescado.preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.preselecion.Fragment_Asigna_Tina;
@@ -40,7 +49,12 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         Contenedor_Atemperado.OnFragmentInteractionListener, Fragment_Descongelado_Plan.OnFragmentInteractionListener, Fragment_Atemperado_Plan.OnFragmentInteractionListener,
         Fragment_Asigna_Tina.OnFragmentInteractionListener, Fragment_Asigna_Operador.OnFragmentInteractionListener, Fragment_Asigna_Montacargas.OnFragmentInteractionListener,
         Fragment_CreaOrdenMantenimiento.OnFragmentInteractionListener, Fragment_AsignaMecanico.OnFragmentInteractionListener, Fragment_DetalleOrden.OnFragmentInteractionListener,
-        Fragment_Descongelado_DetalleEstiba.OnFragmentInteractionListener {
+        Fragment_Descongelado_DetalleEstiba.OnFragmentInteractionListener, Contenedor_Eviscerado.OnFragmentInteractionListener, Fragment_Eviscerado_Plan.OnFragmentInteractionListener,
+        Fragment_Eviscerado_TiempoMuerto.OnFragmentInteractionListener, Fragment_Eviscerado_OM.OnFragmentInteractionListener, Contenedor_Emparrillado.OnFragmentInteractionListener,
+        Fragment_Emparrillado_Plan.OnFragmentInteractionListener, Fragment_Emparrillado_TiempoMuerto.OnFragmentInteractionListener, Fragment_Emparrillado_OM.OnFragmentInteractionListener,
+        Fragment_Descongelado_SalidaTinas.OnFragmentInteractionListener, com.example.simulador_pescado.eviscerado.Fragment_Asigna_Operador.OnFragmentInteractionListener,
+        com.example.simulador_pescado.emparrillado.Fragment_Asigna_Operador.OnFragmentInteractionListener, Fragment_MovimientoPersonal.OnFragmentInteractionListener,
+        Fragment_ControlProceso.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +130,22 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
 
         } else if (id == R.id.nav_atemperado) {
             mifragment = Utilerias.navegaInicio(Constantes.ETAPA.atemperado);
+            fragmentSelecionado = true;
+
+        } else if (id == R.id.nav_eviscerado) {
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.eviscerado);
+            fragmentSelecionado = true;
+
+        } else if (id == R.id.nav_emparrillado) {
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.emparrillado);
+            fragmentSelecionado = true;
+
+        } else if (id == R.id.nav_movimiento) {
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.movimiento);
+            fragmentSelecionado = true;
+
+        } else if (id == R.id.nav_control) {
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.control);
             fragmentSelecionado = true;
 
         } else if (id == R.id.cerrar_sesion) {

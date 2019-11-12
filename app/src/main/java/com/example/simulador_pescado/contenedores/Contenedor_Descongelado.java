@@ -1,32 +1,26 @@
 package com.example.simulador_pescado.contenedores;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.simulador_pescado.conexion.APIServicios;
+import com.example.simulador_pescado.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_OM;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_Plan;
+import com.example.simulador_pescado.descongelado.Fragment_Descongelado_SalidaTinas;
 import com.example.simulador_pescado.descongelado.Fragment_Descongelado_TiempoMuerto;
 import com.example.simulador_pescado.R;
-import com.example.simulador_pescado.utilerias.Catalogos;
-import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.adaptadores.SesionesAdapter;
-import com.example.simulador_pescado.vista.Maquinaria;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +46,6 @@ public class Contenedor_Descongelado extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Contenedor_Descongelado() {
-        // Required empty public constructor
     }
 
     /**
@@ -101,10 +94,12 @@ public class Contenedor_Descongelado extends Fragment {
             });
             pestañas.setupWithViewPager(viewPager);
         }
+        iniciaTab();
+        pestañas.setTabRippleColor( getResources().getColorStateList(R.color.colorAccent) );
+        pestañas.setTabMode(TabLayout.MODE_SCROLLABLE);
+        pestañas.setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
+        pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.blanco) );
         pestañas.getTabAt(this.mParam1).select();
-        pestañas.setTabTextColors( getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimary) );
-        //pestañas.getChildAt(0).setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
-        //pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.noValido) );
 
         return vista;
     }
@@ -118,10 +113,27 @@ public class Contenedor_Descongelado extends Fragment {
     private void llenarview(ViewPager viewPager) {
         SesionesAdapter adatartes2= new SesionesAdapter(getFragmentManager());
         adatartes2.addfragments(new Fragment_Descongelado_Plan(), getResources().getString(R.string.Preselecion_tinas));
-        adatartes2.addfragments(new Fragment_Descongelado_TiempoMuerto(), getResources().getString(R.string.TiempoMuerto));
+        adatartes2.addfragments(new Fragment_CreaOrdenMantenimiento(), getResources().getString(R.string.TiempoMuerto));
         adatartes2.addfragments(new Fragment_Descongelado_OM(), getResources().getString(R.string.OM));
+        adatartes2.addfragments(new Fragment_Descongelado_SalidaTinas(), getResources().getString(R.string.Salida));
         viewPager.setAdapter(adatartes2);
     }
+
+    private void iniciaTab(){
+        TextView textView1 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView1.setText( getResources().getString(R.string.Preselecion_tinas) );
+        pestañas.getTabAt(0).setCustomView(textView1);
+        TextView textView2 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView2.setText( getResources().getString(R.string.TiempoMuerto) );
+        pestañas.getTabAt(1).setCustomView(textView2);
+        TextView textView3 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView3.setText( getResources().getString(R.string.OM) );
+        pestañas.getTabAt(2).setCustomView(textView3);
+        TextView textView4 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView4.setText( getResources().getString(R.string.Salida) );
+        pestañas.getTabAt(3).setCustomView(textView4);
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

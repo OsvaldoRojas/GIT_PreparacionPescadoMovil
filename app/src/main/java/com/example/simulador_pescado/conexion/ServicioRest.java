@@ -83,7 +83,7 @@ public interface ServicioRest {
 
     @GET("ordenes/mantenimientos")
     Call<List<ListaOrdenMantenimientoServicio>> getOrdenesMantenimiento(@Query("idEtapa") int idEtapa,
-                                                                        @Query("idEmpleado") int idEmpleado);//NO FUNCIONA
+                                                                        @Query("idEmpleado") int idEmpleado);//FUNCIONA
 
     @GET("ordenes/mantenimientos/{idOrden}")
     Call<OrdenMantenimiento> getDetalleOrden(@Path("idOrden") long idOrden);//FUNCIONA
@@ -110,19 +110,19 @@ public interface ServicioRest {
     Call<RespuestaServicio> liberaTina(@Body LiberaTinaServicio tinaLiberada);//FUNCIONA
 
     @PUT("ordenes/mantenimientos")
-    Call<RespuestaServicio> actualizaOrdenMantenimiento(@Body OrdenMantenimientoActualizar orden);//FALTAN PRUEBAS
+    Call<RespuestaServicio> actualizaOrdenMantenimiento(@Body OrdenMantenimientoActualizar orden);//FUNCIONA
 
     @PUT("ordenes/mantenimientos/finalizar")
     Call<RespuestaServicio> cierraTiempoOrdenMantenimiento(@Body OrdenMantenimientoCerrarTiempo orden);//FUNCIONA
 
     @POST("preseleccion/posiciones/tinas/mezclar")
-    Call<RespuestaServicio> mezclaTinas(@Body MezclaTinaServicio tinasMezcladas);//FALTA SERVICIO
+    Call<RespuestaServicio> mezclaTinas(@Body MezclaTinaServicio tinasMezcladas);//FUNCIONA
 
     @POST("ordenes/mantenimientos")
     Call<RespuestaServicio> guardaOrdenMantenimiento(@Body OrdenMantenimientoGuardar orden);//FUNCIONA
 
     @POST("ordenes/mantenimientos/refacciones")
-    Call<RespuestaServicio> guardaRefaccion(@Body RefaccionGuardar refaccion);//FALTAN PRUEBAS
+    Call<RespuestaServicio> guardaRefaccion(@Body RefaccionGuardar refaccion);//FUNCIONA
 
     @POST("descongelado/posiciones/tinas/liberar")
     Call<RespuestaServicio> liberaTinaPosicion(@Body LiberaTinaPosicion tinaLiberada);//FUNCIONA
@@ -131,5 +131,5 @@ public interface ServicioRest {
     Call<RespuestaServicio> completaPosicion(@Body PosicionCompleta posicionCompleta);//FUNCIONA
 
     @POST("descongelado/posiciones/liberar")
-    Call<RespuestaServicio> liberaPosicion(@Body LiberaPosicion liberaPosicion);//FALTAN PRUEBAS
+    Call<RespuestaServicio> liberaPosicion(@Body LiberaPosicion liberaPosicion);//FUNCIONA
 }

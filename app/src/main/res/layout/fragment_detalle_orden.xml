@@ -79,11 +79,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:textColor="@color/colorPrimaryDark"
-                            android:gravity="right"
+                            android:gravity="left"
                             android:textSize="15dp"
                             android:paddingBottom="4dp"
                             android:paddingTop="4dp"
-                            android:paddingRight="10dp"/>
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"/>
 
                     </LinearLayout>
 
@@ -105,6 +106,7 @@
                             android:gravity="center"
                             android:textSize="15dp"
                             android:text="00:00"
+                            android:layout_marginRight="5dp"
                             android:paddingBottom="4dp"
                             android:paddingTop="4dp" />
 
@@ -118,6 +120,7 @@
                             android:gravity="center"
                             android:textSize="15dp"
                             android:text="00:00"
+                            android:layout_marginLeft="5dp"
                             android:paddingBottom="4dp"
                             android:paddingTop="4dp" />
 
@@ -163,6 +166,7 @@
                         android:paddingLeft="5dp"
                         android:paddingBottom="4dp"
                         android:lines="6"
+                        android:textColor="@color/colorPrimaryDark"
                         android:scrollbars="vertical">
                         <requestFocus/>
                     </EditText>
@@ -251,8 +255,8 @@
                                 android:gravity="center_vertical"
                                 android:text="Cant."
                                 android:textSize="14dp"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:background="@color/colorAccent"/>
+                                android:textColor="@color/blanco"
+                                android:background="@color/colorPrimary"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -265,8 +269,8 @@
                                 android:gravity="center_vertical"
                                 android:text="Código"
                                 android:textSize="14dp"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:background="@color/colorAccent"/>
+                                android:textColor="@color/blanco"
+                                android:background="@color/colorPrimary"/>
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -279,8 +283,8 @@
                                 android:gravity="center_vertical"
                                 android:text="Artefacto"
                                 android:textSize="14dp"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:background="@color/colorAccent"/>
+                                android:textColor="@color/blanco"
+                                android:background="@color/colorPrimary"/>
 
                         </LinearLayout>
 

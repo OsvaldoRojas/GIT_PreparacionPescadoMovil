@@ -167,7 +167,6 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Atemperado_TiempoMuerto() {
-        // Required empty public constructor
     }
 
     public PosicionEstibaAtemperado getPosicionSeleccionada() {
@@ -1138,7 +1137,6 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                     getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
-                    //ajustaTamañoVista();
                     this.botonCrearOrden.setOnClickListener(this.eventoCreaOrdenPosicion);
                     this.botonera.setVisibility(View.VISIBLE);
                 }else{
@@ -1152,7 +1150,6 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                         posicionEstiba.setEstado(Constantes.ESTADO.inicial);
                         this.botonCrearOrden.setOnClickListener(null);
                         this.botonera.setVisibility(View.INVISIBLE);
-                        //ajustaTamañoVista();
                     }
                 }
                 break;
@@ -1171,7 +1168,6 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                     montacargas.setEstado(Constantes.ESTADO.seleccionado);
-                    //ajustaTamañoVista();
                     this.botonCrearOrden.setOnClickListener(this.eventoCreaOrdenMontacargas);
                     this.botonera.setVisibility(View.VISIBLE);
                 }else{
@@ -1185,7 +1181,6 @@ public class Fragment_Atemperado_TiempoMuerto extends Fragment {
                         montacargas.setEstado(Constantes.ESTADO.inicial);
                         this.botonCrearOrden.setOnClickListener(null);
                         this.botonera.setVisibility(View.INVISIBLE);
-                        //ajustaTamañoVista();
                     }
                 }
                 break;

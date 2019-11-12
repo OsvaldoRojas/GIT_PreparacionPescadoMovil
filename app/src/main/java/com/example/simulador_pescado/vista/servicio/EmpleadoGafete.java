@@ -21,6 +21,14 @@ public class EmpleadoGafete {
     @Expose
     private String ap_materno;
 
+    @SerializedName("nom_area")
+    @Expose
+    private String areaPertenece;
+
+    @SerializedName("nom_puesto")
+    @Expose
+    private String puestoPertenece;
+
     public int getCla_trab() {
         return cla_trab;
     }
@@ -51,5 +59,21 @@ public class EmpleadoGafete {
 
     public void setAp_materno(String ap_materno) {
         this.ap_materno = ap_materno;
+    }
+
+    public String getAreaPertenece() {
+        return areaPertenece;
+    }
+
+    public void setAreaPertenece(String areaPertenece) {
+        this.areaPertenece = areaPertenece;
+    }
+
+    public String getPuestoPertenece() {
+        return puestoPertenece;
+    }
+
+    public void setPuestoPertenece(String puestoPertenece) {
+        this.puestoPertenece = puestoPertenece;
     }
 }

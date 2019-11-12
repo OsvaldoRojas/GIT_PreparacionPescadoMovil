@@ -52,7 +52,6 @@ public class Fragment_Asigna_Montacargas extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Asigna_Montacargas() {
-        // Required empty public constructor
     }
 
     /**

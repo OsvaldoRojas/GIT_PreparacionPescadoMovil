@@ -132,7 +132,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Preselecion_Tinas() {
-        // Required empty public constructor
     }
 
     public Tina getTinaSeleccionada() {
@@ -277,41 +276,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             this.iconoTurno.setText("T2");
             //this.iconoTurno.setVisibility(View.VISIBLE);
         }
-    }
-
-    public void errorServicio(ErrorServicio errorMensaje){
-        String mensajeMostrar = errorMensaje.getMessage();
-        if( errorMensaje.getMensaje() != null &&
-                !errorMensaje.getMensaje().equalsIgnoreCase("") ){
-            mensajeMostrar = errorMensaje.getMensaje();
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaError = builder.create();
-        final String finalMensajeMostrar = mensajeMostrar;
-        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText(finalMensajeMostrar);
-
-                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ventanaError.dismiss();
-                        creaObjetosVacios();
-                    }
-                });
-            }
-        });
-        this.ventanaError.show();
     }
 
     public void ventanaMensaje(final String mensaje){
@@ -561,7 +525,11 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             this.boton1.setEnabled(true);
                             this.boton1.setOnClickListener(this.eventoLiberarTina);
                             this.boton2.setText(R.string.mezclarTina);
-                            this.boton2.setEnabled(true);
+                            if( validaMezcla() ){
+                                this.boton2.setEnabled(true);
+                            }else{
+                                this.boton2.setEnabled(false);
+                            }
                             this.boton2.setOnClickListener(this.eventoMezclarTina);
                             this.contenedorTurno.setVisibility(View.GONE);
                             this.contenedorBotones.setVisibility(View.VISIBLE);
@@ -571,6 +539,19 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 break;
             }
         }
+    }
+
+    private boolean validaMezcla(){
+        int cantidad = 0;
+        for(Tina tina : this.listaTinas){
+            if( !tina.getLibre() ){
+                cantidad = cantidad+1;
+            }
+        }
+        if(cantidad < 2){
+            return false;
+        }
+        return true;
     }
 
     private void cambiaIconoLlenado(Tina tina){
@@ -1119,7 +1100,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 actualizar.setRefreshing(true);
                 getAsignados();
             }
@@ -1414,7 +1394,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     public void iniciaProcesando(){
-        //getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.VISIBLE);
     }
 
@@ -1422,7 +1401,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         if( this.actualizar.isRefreshing() ){
             this.actualizar.setRefreshing(false);
         }
-        //getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.GONE);
     }
 
