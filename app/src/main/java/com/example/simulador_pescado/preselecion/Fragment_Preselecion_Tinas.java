@@ -33,9 +33,11 @@ import com.example.simulador_pescado.vista.servicio.MezclaTinaServicio;
 import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.Tina;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
+import com.google.gson.JsonObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -734,7 +736,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void asignarTina(){
-        Fragment fragment = new Fragment_Asigna_Tina().newInstance( getTinaSeleccionada() );
+        //Fragment fragment = new Fragment_Asigna_Tina().newInstance( getTinaSeleccionada() );
+        Fragment fragment = new Fragment_Asigna_Tina_Cocida().newInstance( getTinaSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
@@ -1013,7 +1016,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 listaPosicionSubtalla.setAdapter(adaptador);
                 Utilerias.setAlturaLista(listaPosicionSubtalla, 349);
 
-                AdaptadorTinasLiberadas adaptadorLiberadas = new AdaptadorTinasLiberadas(getContext(), listaMezclarTinas);
+                List<Tina> tinasLiberadas = new ArrayList<>();
+                tinasLiberadas.addAll(listaMezclarTinas);
+                tinasLiberadas.add( getTinaSeleccionada() );
+                AdaptadorTinasLiberadas adaptadorLiberadas = new AdaptadorTinasLiberadas(getContext(), tinasLiberadas);
                 ListView listaLiberadas = ventanaEmergente.findViewById(R.id.listaLiberadas);
                 listaLiberadas.setAdapter(adaptadorLiberadas);
                 Utilerias.setAlturaLista(listaLiberadas, 349);
@@ -1060,9 +1066,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void liberaTurnoServicio(){
-        LiberarTodos liberarTodos = new LiberarTodos( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurno(liberarTodos);
+        //LiberarTodos liberarTodos = new LiberarTodos( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        //Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurno(liberarTodos);
 
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario());
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurnoPrueba(jsonObject);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

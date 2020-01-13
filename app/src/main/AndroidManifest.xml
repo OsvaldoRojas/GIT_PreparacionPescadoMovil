@@ -34,6 +34,7 @@
         <activity
             android:name=".Navegador"
             android:label="@string/title_activity_navegador"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Turno"

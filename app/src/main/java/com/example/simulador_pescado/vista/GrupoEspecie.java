@@ -11,6 +11,10 @@ public class GrupoEspecie implements Serializable {
     @Expose
     private int idEspecie;
 
+    @SerializedName("idGrupoEspecie")
+    @Expose
+    private int idEspecieInicial;
+
     @SerializedName("descripcion")
     @Expose
     private String descripcion;
@@ -33,6 +37,14 @@ public class GrupoEspecie implements Serializable {
 
     public void setIdEspecie(int idEspecie) {
         this.idEspecie = idEspecie;
+    }
+
+    public int getIdEspecieInicial() {
+        return idEspecieInicial;
+    }
+
+    public void setIdEspecieInicial(int idEspecieInicial) {
+        this.idEspecieInicial = idEspecieInicial;
     }
 
     public String getDescripcion() {

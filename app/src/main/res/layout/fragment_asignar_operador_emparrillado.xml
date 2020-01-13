@@ -52,6 +52,7 @@
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
                     android:paddingLeft="5dp"
+                    android:singleLine="true"
                     android:focusable="true">
                     <requestFocus/>
                 </EditText>

@@ -26,6 +26,19 @@ public class Turno extends AppCompatActivity {
     }
 
     private void iniciaComponentes(){
+        /*String nombre = getIntent().getStringExtra("nombre");
+        String apellido = getIntent().getStringExtra("apellido");
+        String usuario = getIntent().getStringExtra("usuario");
+        int idEmpleado = getIntent().getIntExtra("idEmpleado", 0);
+        int rol = getIntent().getIntExtra("rol", 1);
+
+        UsuarioLogueado ul = new UsuarioLogueado();
+        ul.setNombre(nombre);
+        ul.setApellido_paterno(apellido);
+        ul.setClave_usuario(usuario);
+        ul.setId_empleado(idEmpleado);
+        ul.setId_rol(rol);*/
+
         UsuarioLogueado ul = new UsuarioLogueado();
         ul.setNombre("Juan");
         ul.setApellido_paterno("Perez");
@@ -67,6 +80,13 @@ public class Turno extends AppCompatActivity {
             }
         });
 
+        CargaCatalogos cargaCatalogos = new CargaCatalogos();
+        cargaCatalogos.execute();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         CargaCatalogos cargaCatalogos = new CargaCatalogos();
         cargaCatalogos.execute();
     }

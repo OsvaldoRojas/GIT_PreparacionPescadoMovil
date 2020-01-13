@@ -1,6 +1,7 @@
 package com.example.simulador_pescado.conexion;
 
 import com.example.simulador_pescado.vista.Artefacto;
+import com.example.simulador_pescado.vista.Cocida;
 import com.example.simulador_pescado.vista.Especialidad;
 import com.example.simulador_pescado.vista.Etapa;
 import com.example.simulador_pescado.vista.GrupoEspecie;
@@ -29,6 +30,7 @@ import com.example.simulador_pescado.vista.servicio.RefaccionGuardar;
 import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.servicio.TinaEscaneo;
 import com.example.simulador_pescado.vista.servicio.TinaServicio;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -94,6 +96,9 @@ public interface ServicioRest {
     @GET("descongelado/posiciones/tinas")
     Call<List<PosicionEstibaDescongelado>> getPosicionesDescongelado();//FUNCIONA
 
+    @GET("preseleccion/asignaciones/cocidas")
+    Call<List<Cocida>> getAsignacionCocida();
+
     @PUT("preseleccion/montacargas")
     Call<RespuestaServicio> guardaMontacargas(@Body OperadorMontacargas montacargas);//FUNCIONA
 
@@ -102,6 +107,9 @@ public interface ServicioRest {
 
     @PUT("preseleccion/operadores/liberar-todos")
     Call<RespuestaServicio> liberaTurno(@Body LiberarTodos liberarTodos);//FUNCIONA
+
+    @PUT("preseleccion/operadores/liberar-todos")
+    Call<RespuestaServicio> liberaTurnoPrueba(@Body JsonObject body);//FUNCIONA
 
     @PUT("preseleccion/posiciones/tinas")
     Call<RespuestaServicio> asignaTina(@Body TinaServicio tina);//FUNCIONA

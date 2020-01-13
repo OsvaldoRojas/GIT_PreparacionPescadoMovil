@@ -121,7 +121,7 @@ public class home extends Fragment {
             }
         });
 
-        Button botonEviscerado = this.vista.findViewById(R.id.botonEviscerado);
+        /*Button botonEviscerado = this.vista.findViewById(R.id.botonEviscerado);
         botonEviscerado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,7 +159,7 @@ public class home extends Fragment {
                         .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.control))
                         .commit();
             }
-        });
+        });*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event

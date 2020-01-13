@@ -154,8 +154,7 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
         botonCompleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iniciaProcesando();
-                completaPosicion();
+                confirma("¿Está seguro que desea completar la estiba?");
             }
         });
 
@@ -392,6 +391,44 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
             iniciaProcesando();
             liberaTina();
         }
+    }
+
+    private void confirma(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_decision_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        iniciaProcesando();
+                        completaPosicion();
+                        ventanaEmergente.dismiss();
+
+                    }
+                });
+
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaEmergente.show();
     }
 
     private void completaPosicion(){

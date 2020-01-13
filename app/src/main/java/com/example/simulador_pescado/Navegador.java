@@ -34,6 +34,7 @@ import com.example.simulador_pescado.eviscerado.Fragment_Eviscerado_TiempoMuerto
 import com.example.simulador_pescado.preselecion.Fragment_Asigna_Montacargas;
 import com.example.simulador_pescado.preselecion.Fragment_Asigna_Operador;
 import com.example.simulador_pescado.preselecion.Fragment_Asigna_Tina;
+import com.example.simulador_pescado.preselecion.Fragment_Asigna_Tina_Cocida;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_OM;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_TiempoMuerto;
 import com.example.simulador_pescado.preselecion.Fragment_Preselecion_Tinas;
@@ -54,7 +55,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         Fragment_Emparrillado_Plan.OnFragmentInteractionListener, Fragment_Emparrillado_TiempoMuerto.OnFragmentInteractionListener, Fragment_Emparrillado_OM.OnFragmentInteractionListener,
         Fragment_Descongelado_SalidaTinas.OnFragmentInteractionListener, com.example.simulador_pescado.eviscerado.Fragment_Asigna_Operador.OnFragmentInteractionListener,
         com.example.simulador_pescado.emparrillado.Fragment_Asigna_Operador.OnFragmentInteractionListener, Fragment_MovimientoPersonal.OnFragmentInteractionListener,
-        Fragment_ControlProceso.OnFragmentInteractionListener{
+        Fragment_ControlProceso.OnFragmentInteractionListener, Fragment_Asigna_Tina_Cocida.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             mifragment = Utilerias.navegaInicio(Constantes.ETAPA.atemperado);
             fragmentSelecionado = true;
 
-        } else if (id == R.id.nav_eviscerado) {
+        } /*else if (id == R.id.nav_eviscerado) {
             mifragment = Utilerias.navegaInicio(Constantes.ETAPA.eviscerado);
             fragmentSelecionado = true;
 
@@ -148,7 +149,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             mifragment = Utilerias.navegaInicio(Constantes.ETAPA.control);
             fragmentSelecionado = true;
 
-        } else if (id == R.id.cerrar_sesion) {
+        }*/ else if (id == R.id.cerrar_sesion) {
             this.finish();
 
         }
