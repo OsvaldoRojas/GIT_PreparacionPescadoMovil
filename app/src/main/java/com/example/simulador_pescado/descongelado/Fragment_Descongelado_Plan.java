@@ -141,6 +141,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
     private Button boton1;
     private Button boton2;
     private AlertDialog ventanaError;
+    private AlertDialog ventanaEmergente;
 
 
     private OnFragmentInteractionListener mListener;
@@ -207,8 +208,7 @@ public class Fragment_Descongelado_Plan extends Fragment{
         this.boton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iniciaProcesando();
-                liberaCompleta();
+                confirma("¿Está seguro que desea liberar la estiba?");
             }
         });
 
@@ -885,6 +885,44 @@ public class Fragment_Descongelado_Plan extends Fragment{
                 errorServicio("Error al conectar con el servidor");
             }
         });
+    }
+
+    private void confirma(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_decision_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaEmergente = builder.create();
+        this.ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton2);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        iniciaProcesando();
+                        liberaCompleta();
+                        ventanaEmergente.dismiss();
+
+                    }
+                });
+
+                Button botonCancelar = ventanaEmergente.findViewById(R.id.boton1);
+                botonCancelar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaEmergente.show();
     }
 
     public void errorServicio(final String mensaje){

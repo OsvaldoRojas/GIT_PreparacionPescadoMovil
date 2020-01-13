@@ -115,7 +115,7 @@ public class Contenedor_Descongelado extends Fragment {
         adatartes2.addfragments(new Fragment_Descongelado_Plan(), getResources().getString(R.string.Preselecion_tinas));
         adatartes2.addfragments(new Fragment_CreaOrdenMantenimiento(), getResources().getString(R.string.TiempoMuerto));
         adatartes2.addfragments(new Fragment_Descongelado_OM(), getResources().getString(R.string.OM));
-        adatartes2.addfragments(new Fragment_Descongelado_SalidaTinas(), getResources().getString(R.string.Salida));
+        //adatartes2.addfragments(new Fragment_Descongelado_SalidaTinas(), getResources().getString(R.string.Salida));
         viewPager.setAdapter(adatartes2);
     }
 
@@ -129,9 +129,9 @@ public class Contenedor_Descongelado extends Fragment {
         TextView textView3 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
         textView3.setText( getResources().getString(R.string.OM) );
         pestañas.getTabAt(2).setCustomView(textView3);
-        TextView textView4 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+       /* TextView textView4 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
         textView4.setText( getResources().getString(R.string.Salida) );
-        pestañas.getTabAt(3).setCustomView(textView4);
+        pestañas.getTabAt(3).setCustomView(textView4);*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event

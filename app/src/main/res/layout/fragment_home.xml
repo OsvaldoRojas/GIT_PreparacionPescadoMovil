@@ -30,7 +30,7 @@
             android:layout_marginTop="15dp"
             android:text="@string/descongelado"/>
 
-        <Button
+        <!--<Button
             android:id="@+id/botonEviscerado"
             style="@style/botonMenu"
             android:layout_marginTop="15dp"
@@ -52,7 +52,7 @@
             android:id="@+id/botonControl"
             style="@style/botonMenu"
             android:layout_marginTop="15dp"
-            android:text="@string/control"/>
+            android:text="@string/control"/>-->
 
     </LinearLayout>
 

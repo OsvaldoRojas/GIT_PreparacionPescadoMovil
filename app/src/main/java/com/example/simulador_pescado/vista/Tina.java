@@ -20,7 +20,7 @@ public class Tina implements Serializable {
     @Expose
     private TinaPosicion tina;
 
-    @SerializedName("grupoEspecie")
+    @SerializedName("especie")
     @Expose
     private GrupoEspecie grupoEspecie;
 
@@ -42,7 +42,7 @@ public class Tina implements Serializable {
 
     @SerializedName("peso")
     @Expose
-    private int peso;
+    private float peso;
 
     @SerializedName("libre")
     @Expose
@@ -135,11 +135,11 @@ public class Tina implements Serializable {
         this.npiezas = npiezas;
     }
 
-    public int getPeso() {
+    public float getPeso() {
         return peso;
     }
 
-    public void setPeso(int peso) {
+    public void setPeso(float peso) {
         this.peso = peso;
     }
 

@@ -226,10 +226,10 @@ public class Fragment_Preselecion_OM extends Fragment {
                                     asignaMecanico();
                                     return true;
                                 case R.id.cerrarTiempo:
-                                    cierraTiempo();
+                                    obtenDetalle(false);
                                     return true;
                                 case R.id.finalizaOrden:
-                                    obtenDetalle();
+                                    obtenDetalle(true);
                                     return true;
                                 case R.id.detalle:
                                     muestraDetalle();
@@ -313,14 +313,18 @@ public class Fragment_Preselecion_OM extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
-    private void cierraTiempo(){
-        iniciaProcesando();
-        CerrarTiempoOrden cerrarTiempoOrden = new CerrarTiempoOrden(
-                this,
-                null,
-                getOrdenSeleccionada().getIdOrdenMantenimiento()
-        );
-        cerrarTiempoOrden.execute();
+    private void cierraTiempo(OrdenMantenimiento orden){
+        if( orden.getFechaFin() != null && !orden.getFechaFin().equals("") ){
+            terminaProcesando();
+            errorServicio("No es posible volver a cerrar la orden");
+        }else{
+            CerrarTiempoOrden cerrarTiempoOrden = new CerrarTiempoOrden(
+                    this,
+                    null,
+                    getOrdenSeleccionada().getIdOrdenMantenimiento()
+            );
+            cerrarTiempoOrden.execute();
+        }
         /*OrdenMantenimientoCerrarTiempo orden = new OrdenMantenimientoCerrarTiempo();
         orden.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
         orden.setFecha(null);
@@ -347,7 +351,7 @@ public class Fragment_Preselecion_OM extends Fragment {
         });*/
     }
 
-    private void obtenDetalle(){
+    private void obtenDetalle(final boolean finaliza){
         iniciaProcesando();
         Call<OrdenMantenimiento> llamadaServicio = APIServicios.getConexion()
                 .getDetalleOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
@@ -355,7 +359,11 @@ public class Fragment_Preselecion_OM extends Fragment {
             @Override
             public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
                 if(response.code() == 200){
-                    finalizaOrden( response.body() );
+                    if(finaliza){
+                        finalizaOrden( response.body() );
+                    }else{
+                        cierraTiempo( response.body() );
+                    }
                 }else{
                     terminaProcesando();
                     errorServicio("Error interno del servidor");

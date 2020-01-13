@@ -29,8 +29,11 @@ import com.example.simulador_pescado.conexion.CerrarTiempoOrden;
 import com.example.simulador_pescado.utilerias.Catalogos;
 import com.example.simulador_pescado.utilerias.Constantes;
 import com.example.simulador_pescado.vista.ErrorServicio;
+import com.example.simulador_pescado.vista.OrdenMantenimiento;
 import com.example.simulador_pescado.vista.UsuarioLogueado;
 import com.example.simulador_pescado.vista.servicio.ListaOrdenMantenimientoServicio;
+import com.example.simulador_pescado.vista.servicio.OrdenMantenimientoActualizar;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 
 import java.util.List;
 
@@ -213,7 +216,10 @@ public class Fragment_Emparrillado_OM extends Fragment {
                                     asignaMecanico();
                                     return true;
                                 case R.id.cerrarTiempo:
-                                    cierraTiempo();
+                                    obtenDetalle(false);
+                                    return true;
+                                case R.id.finalizaOrden:
+                                    obtenDetalle(true);
                                     return true;
                                 case R.id.detalle:
                                     muestraDetalle();
@@ -263,14 +269,18 @@ public class Fragment_Emparrillado_OM extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
-    private void cierraTiempo(){
-        iniciaProcesando();
-        CerrarTiempoOrden cerrarTiempoOrden = new CerrarTiempoOrden(
-                this,
-                null,
-                getOrdenSeleccionada().getIdOrdenMantenimiento()
-        );
-        cerrarTiempoOrden.execute();
+    private void cierraTiempo(OrdenMantenimiento orden){
+        if( orden.getFechaFin() != null && !orden.getFechaFin().equals("") ){
+            terminaProcesando();
+            errorServicio("No es posible volver a cerrar la orden");
+        }else{
+            CerrarTiempoOrden cerrarTiempoOrden = new CerrarTiempoOrden(
+                    this,
+                    null,
+                    getOrdenSeleccionada().getIdOrdenMantenimiento()
+            );
+            cerrarTiempoOrden.execute();
+        }
         /*OrdenMantenimientoCerrarTiempo orden = new OrdenMantenimientoCerrarTiempo();
         orden.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
         orden.setFecha(null);
@@ -295,6 +305,66 @@ public class Fragment_Emparrillado_OM extends Fragment {
                 errorServicio("Error al conectar con el servidor");
             }
         });*/
+    }
+
+    private void obtenDetalle(final boolean finaliza){
+        iniciaProcesando();
+        Call<OrdenMantenimiento> llamadaServicio = APIServicios.getConexion()
+                .getDetalleOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        llamadaServicio.enqueue(new Callback<OrdenMantenimiento>() {
+            @Override
+            public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
+                if(response.code() == 200){
+                    if(finaliza){
+                        finalizaOrden( response.body() );
+                    }else{
+                        cierraTiempo( response.body() );
+                    }
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrdenMantenimiento> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    private void finalizaOrden(OrdenMantenimiento orden){
+        OrdenMantenimientoActualizar ordenActualizar = new OrdenMantenimientoActualizar();
+        ordenActualizar.setIdOrdenMantenimiento( orden.getIdOrdenMantenimiento() );
+        ordenActualizar.setIdEmpleado( orden.getIdEmpleado() );
+        ordenActualizar.setNombreEmpleado( orden.getNombreEmpleado() );
+        ordenActualizar.setaPaternoEmpleado( orden.getaPaternoEmpleado() );
+        ordenActualizar.setaMaternoEmpleado( orden.getaMaternoEmpleado() );
+        ordenActualizar.setFechaInicio( orden.getFechaInicio() );
+        ordenActualizar.setSolucion( orden.getSolucion() );
+        ordenActualizar.setFinalizada(true);
+        ordenActualizar.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(ordenActualizar);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    getOrdenesMantenimiento();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
     }
 
     public void iniciaProcesando(){

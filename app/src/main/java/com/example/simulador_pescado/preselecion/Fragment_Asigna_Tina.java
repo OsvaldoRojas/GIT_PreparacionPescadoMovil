@@ -258,7 +258,7 @@ public class Fragment_Asigna_Tina extends Fragment {
             tinaServicio.setIdEspecialidad(13);
         }
         tinaServicio.setIdPreseleccionPosicionTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
-        tinaServicio.setPosicion( getTinaSeleccionada().getPosicion() );
+        tinaServicio.setIdAsignacionCocida(0);
         tinaServicio.setIdTina( getTinaSeleccionada().getTina().getIdTina() );
         tinaServicio.setIdEspecie( getTinaSeleccionada().getGrupoEspecie().getIdEspecie() );
         tinaServicio.setIdTalla( getTinaSeleccionada().getTalla().getIdTalla() );
@@ -267,6 +267,7 @@ public class Fragment_Asigna_Tina extends Fragment {
         tinaServicio.setPeso( getTinaSeleccionada().getPeso() );
         tinaServicio.setLibre( getTinaSeleccionada().getLibre() );
         tinaServicio.setTurno( getTinaSeleccionada().getTurno() );
+        tinaServicio.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
         Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().asignaTina(tinaServicio);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
@@ -442,7 +443,7 @@ public class Fragment_Asigna_Tina extends Fragment {
             seleccionEspecie.setSelection(
                     obtenerPosicionItem(
                             seleccionEspecie,
-                            getTinaSeleccionada().getGrupoEspecie().getIdEspecie(),
+                            getTinaSeleccionada().getGrupoEspecie().getIdEspecieInicial(),
                             "Especie"
                     )
             );

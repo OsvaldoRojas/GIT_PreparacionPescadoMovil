@@ -9,9 +9,9 @@ public class TinaServicio {
     @Expose
     private int idPreseleccionPosicionTina;
 
-    @SerializedName("posicion")
+    @SerializedName("idAsignacionCocida")
     @Expose
-    private String posicion;
+    private int idAsignacionCocida;
 
     @SerializedName("idTina")
     @Expose
@@ -39,7 +39,7 @@ public class TinaServicio {
 
     @SerializedName("peso")
     @Expose
-    private int peso;
+    private float peso;
 
     @SerializedName("libre")
     @Expose
@@ -49,20 +49,24 @@ public class TinaServicio {
     @Expose
     private Boolean turno;
 
+    @SerializedName("usuario")
+    @Expose
+    private String usuario;
+
+    public int getIdAsignacionCocida() {
+        return idAsignacionCocida;
+    }
+
+    public void setIdAsignacionCocida(int idAsignacionCocida) {
+        this.idAsignacionCocida = idAsignacionCocida;
+    }
+
     public int getIdPreseleccionPosicionTina() {
         return idPreseleccionPosicionTina;
     }
 
     public void setIdPreseleccionPosicionTina(int idPreseleccionPosicionTina) {
         this.idPreseleccionPosicionTina = idPreseleccionPosicionTina;
-    }
-
-    public String getPosicion() {
-        return posicion;
-    }
-
-    public void setPosicion(String posicion) {
-        this.posicion = posicion;
     }
 
     public long getIdTina() {
@@ -113,11 +117,11 @@ public class TinaServicio {
         this.npiezas = npiezas;
     }
 
-    public int getPeso() {
+    public float getPeso() {
         return peso;
     }
 
-    public void setPeso(int peso) {
+    public void setPeso(float peso) {
         this.peso = peso;
     }
 
@@ -135,5 +139,13 @@ public class TinaServicio {
 
     public void setTurno(Boolean turno) {
         this.turno = turno;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

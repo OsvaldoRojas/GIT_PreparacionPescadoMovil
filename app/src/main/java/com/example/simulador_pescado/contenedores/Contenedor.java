@@ -95,6 +95,7 @@ public class Contenedor extends Fragment {
         }
         iniciaTab();
         pestañas.setTabRippleColor( getResources().getColorStateList(R.color.colorAccent) );
+        pestañas.setTabMode(TabLayout.MODE_SCROLLABLE);
         pestañas.setBackgroundColor( getResources().getColor(R.color.colorPrimary) );
         pestañas.setSelectedTabIndicatorColor( getResources().getColor(R.color.blanco) );
         pestañas.getTabAt(this.mParam1).select();

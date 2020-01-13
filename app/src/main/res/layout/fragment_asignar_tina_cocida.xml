@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,13 +17,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4.9"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/etiquetaPosicion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/asignarMontacargas"
+                    android:text="@string/asignarTina"
                     android:textColor="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:layout_marginTop="5dp"
@@ -34,17 +37,16 @@
                     android:layout_height="20dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:gravity="center"
-                    android:layout_marginTop="1dp"
                     android:textSize="13dp"/>
 
                 <EditText
                     android:id="@+id/campoEscaner"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="7dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Código de Usuario"
+                    android:hint="Código de Tina"
                     android:gravity="left"
                     android:textColor="@color/colorPrimaryDark"
                     android:background="@color/colorAccent"
@@ -58,33 +60,18 @@
                 </EditText>
 
                 <TextView
-                    android:id="@+id/campoNombre"
+                    android:id="@+id/campoDescripcion"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="7dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Nombre del Usuario"
+                    android:hint="Descripción completa de la tina que se asigna"
                     android:gravity="left"
                     android:background="@color/colorAccent"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
-                    android:paddingLeft="5dp"/>
-
-                <TextView
-                    android:id="@+id/etiquetaPosicion"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:gravity="left"
-                    android:layout_marginTop="10dp"
-                    android:textSize="15dp"
-                    android:background="@color/colorAccent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="4dp"
                     android:paddingLeft="5dp"/>
 
             </LinearLayout>
@@ -92,9 +79,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:layout_marginTop="5dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listaTinas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/card_asignar_cocida"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_weight="5.8"
                 android:gravity="bottom">
 
                 <Button
