@@ -15,7 +15,6 @@ import com.example.simulador_pescado.vista.Refaccion;
 import com.example.simulador_pescado.vista.Subtalla;
 import com.example.simulador_pescado.vista.Talla;
 import com.example.simulador_pescado.vista.Tina;
-import com.example.simulador_pescado.vista.TinaProceso;
 import com.example.simulador_pescado.vista.servicio.Gafete;
 import com.example.simulador_pescado.vista.servicio.LiberaPosicion;
 import com.example.simulador_pescado.vista.servicio.LiberaTinaPosicion;
@@ -100,9 +99,6 @@ public interface ServicioRest {
     @GET("preseleccion/asignaciones/cocidas")
     Call<List<Cocida>> getAsignacionCocida();
 
-    @GET("etapas/posiciones/tinas/{idTina}")
-    Call<TinaProceso> getTinaProceso(@Path("idTina") long idTina);
-
     @PUT("preseleccion/montacargas")
     Call<RespuestaServicio> guardaMontacargas(@Body OperadorMontacargas montacargas);//FUNCIONA
 
@@ -144,7 +140,4 @@ public interface ServicioRest {
 
     @POST("descongelado/posiciones/liberar")
     Call<RespuestaServicio> liberaPosicion(@Body LiberaPosicion liberaPosicion);//FUNCIONA
-
-    @POST("etapas/posiciones/tinas")
-    Call<RespuestaServicio> guardaPeso(@Body JsonObject body);
 }

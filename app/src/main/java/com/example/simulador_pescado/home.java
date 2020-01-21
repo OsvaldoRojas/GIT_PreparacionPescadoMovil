@@ -149,7 +149,7 @@ public class home extends Fragment {
                         .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.movimiento))
                         .commit();
             }
-        });*/
+        });
 
         Button botonControl = this.vista.findViewById(R.id.botonControl);
         botonControl.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +159,7 @@ public class home extends Fragment {
                         .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.control))
                         .commit();
             }
-        });
+        });*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event
