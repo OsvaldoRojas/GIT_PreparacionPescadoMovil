@@ -19,12 +19,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-import com.example.simulador_pescado.conexion.APIServicios;
-import com.example.simulador_pescado.utilerias.Utilerias;
-import com.example.simulador_pescado.vista.servicio.TinaEscaneo;
-
-=======
 import com.example.simulador_pescado.adaptadores.AdaptadorArea;
 import com.example.simulador_pescado.adaptadores.AdaptadorPuesto;
 import com.example.simulador_pescado.conexion.APIServicios;
@@ -37,16 +31,11 @@ import com.example.simulador_pescado.vista.servicio.Gafete;
 import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-public class Fragment_ControlProceso extends Fragment {
-=======
 public class Fragment_MovimientoPersonal extends Fragment {
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,11 +50,7 @@ public class Fragment_MovimientoPersonal extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-    public Fragment_ControlProceso() {
-=======
     public Fragment_MovimientoPersonal() {
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
         // Required empty public constructor
     }
 
@@ -78,13 +63,8 @@ public class Fragment_MovimientoPersonal extends Fragment {
      * @return A new instance of fragment Fragment_Descongelado_TiempoMuerto.
      */
     // TODO: Rename and change types and number of parameters
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-    public static Fragment_ControlProceso newInstance(String param1, String param2) {
-        Fragment_ControlProceso fragment = new Fragment_ControlProceso();
-=======
     public static Fragment_MovimientoPersonal newInstance(String param1, String param2) {
         Fragment_MovimientoPersonal fragment = new Fragment_MovimientoPersonal();
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -105,21 +85,12 @@ public class Fragment_MovimientoPersonal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-        this.vista = inflater.inflate(R.layout.fragment_control_proceso, container, false);
-        iniciaComponente();
-        return this.vista;
-    }
-
-    private void iniciaComponente(){
-=======
         this.vista = inflater.inflate(R.layout.fragment_movimiento_personal, container, false);
         iniciaComponentes();
         return this.vista;
     }
 
     private void iniciaComponentes(){
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,36 +158,12 @@ public class Fragment_MovimientoPersonal extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                validaTina( editable.toString() );
+                validaGafete( editable.toString() );
             }
         });
     }
 
     private void limpiaComponentes(){
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
-        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
-        TextView campoEtapaActual = this.vista.findViewById(R.id.campoEtapaActual);
-        TextView campoEtapaSiguiente = this.vista.findViewById(R.id.campoEtapaSiguiente);
-        TextView campoPeso = this.vista.findViewById(R.id.campoPeso);
-
-        campoEscaner.setText("");
-        campoDescripcion.setText("");
-        campoEtapaActual.setText("");
-        campoEtapaSiguiente.setText("");
-        campoPeso.setText("");
-    }
-
-    private void validaTina(String codigo){
-        if( codigo.length() >= 15 ){
-            iniciaProcesando();
-            Call<TinaEscaneo> llamadaServicio = APIServicios.getConexion().getTina(codigo);
-            llamadaServicio.enqueue(new Callback<TinaEscaneo>() {
-                @Override
-                public void onResponse(Call<TinaEscaneo> call, Response<TinaEscaneo> response) {
-                    if(response.code() == 200){
-                        resultadoEscaneoTina( response.body() );
-=======
         TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
         TextView campoArea = this.vista.findViewById(R.id.campoAreaPertenece);
         TextView campoPuesto = this.vista.findViewById(R.id.campoPuestoPertenece);
@@ -241,7 +188,6 @@ public class Fragment_MovimientoPersonal extends Fragment {
                 public void onResponse(Call<Gafete> call, Response<Gafete> response) {
                     if(response.code() == 200){
                         resultadoEscaneoGafete( response.body() );
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
                     }else{
                         terminaProcesando();
                         errorServicio("Error interno del servidor");
@@ -249,35 +195,12 @@ public class Fragment_MovimientoPersonal extends Fragment {
                 }
 
                 @Override
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-                public void onFailure(Call<TinaEscaneo> call, Throwable t) {
-=======
                 public void onFailure(Call<Gafete> call, Throwable t) {
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
                     terminaProcesando();
                     errorServicio("Error al conectar con el servidor");
                 }
             });
         }else{
-<<<<<<< HEAD:app/src/main/java/com/example/simulador_pescado/Fragment_ControlProceso.java
-            TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
-        }
-    }
-
-    public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
-        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
-
-        if( resultadoTina.getIdTinaDes() != null ){
-            campoDescripcion.setText( resultadoTina.getTinaDes() );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
-
-
-        } else{
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
-=======
             TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
             TextView campoArea = this.vista.findViewById(R.id.campoAreaPertenece);
             TextView campoPuesto = this.vista.findViewById(R.id.campoPuestoPertenece);
@@ -305,7 +228,6 @@ public class Fragment_MovimientoPersonal extends Fragment {
             campoNombre.setTextColor( getResources().getColor(R.color.noValido) );
             campoArea.setText("");
             campoPuesto.setText("");
->>>>>>> origin/develop:app/src/main/java/com/example/simulador_pescado/Fragment_MovimientoPersonal.java
         }
 
         terminaProcesando();
