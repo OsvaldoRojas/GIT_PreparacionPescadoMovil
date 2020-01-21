@@ -34,11 +34,11 @@
         <item
             android:id="@+id/nav_movimiento"
             android:icon="@drawable/ic_nieve"
-            android:title="@string/movimieto" />
+            android:title="@string/movimieto" />-->
         <item
             android:id="@+id/nav_control"
             android:icon="@drawable/ic_nieve"
-            android:title="@string/control" />-->
+            android:title="@string/control" />
     </group>
 
     <group android:id="@+id/sesion" android:checkableBehavior="single">

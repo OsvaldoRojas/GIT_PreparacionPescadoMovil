@@ -20,7 +20,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.simulador_pescado.conexion.APIServicios;
 import com.example.simulador_pescado.utilerias.Utilerias;
+import com.example.simulador_pescado.vista.TinaProceso;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.servicio.TinaEscaneo;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,7 +98,7 @@ public class Fragment_ControlProceso extends Fragment {
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                validaGuardado();
             }
         });
 
@@ -120,15 +124,68 @@ public class Fragment_ControlProceso extends Fragment {
         });
     }
 
-    private void limpiaComponentes(){
+    private void validaGuardado(){
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
-        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+        TextView campoEtapaActual = this.vista.findViewById(R.id.campoEtapaActual);
+        EditText campoPeso = this.vista.findViewById(R.id.campoPeso);
+
+        if( campoEscaner.getText().toString().equalsIgnoreCase("") ||
+                campoEtapaActual.getText().toString().equalsIgnoreCase("") ){
+            errorServicio("Es necesario capturar una tina valida");
+        }else{
+            if( campoPeso.getText().toString().equalsIgnoreCase("") ){
+                errorServicio("Es necesario capturar un peso");
+            }else{
+                iniciaProcesando();
+                guarda();
+            }
+        }
+    }
+
+    private void guarda(){
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        TextView campoPosicion = this.vista.findViewById(R.id.campoPosicion);
         TextView campoEtapaActual = this.vista.findViewById(R.id.campoEtapaActual);
         TextView campoEtapaSiguiente = this.vista.findViewById(R.id.campoEtapaSiguiente);
-        TextView campoPeso = this.vista.findViewById(R.id.campoPeso);
+        EditText campoPeso = this.vista.findViewById(R.id.campoPeso);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("idTina", campoEscaner.getText().toString() );
+        jsonObject.addProperty("peso", campoPeso.getText().toString() );
+        jsonObject.addProperty("posicion", campoPosicion.getText().toString() );
+        jsonObject.addProperty("etapaActual", campoEtapaActual.getText().toString() );
+        jsonObject.addProperty("etapaSiguiente", campoEtapaSiguiente.getText().toString() );
+        jsonObject.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaPeso(jsonObject);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                terminaProcesando();
+                if(response.code() == 200){
+                    limpiaComponentes();
+                }else{
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    private void limpiaComponentes(){
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        TextView campoPosicion = this.vista.findViewById(R.id.campoPosicion);
+        TextView campoEtapaActual = this.vista.findViewById(R.id.campoEtapaActual);
+        TextView campoEtapaSiguiente = this.vista.findViewById(R.id.campoEtapaSiguiente);
+        EditText campoPeso = this.vista.findViewById(R.id.campoPeso);
 
         campoEscaner.setText("");
-        campoDescripcion.setText("");
+        campoPosicion.setText("");
         campoEtapaActual.setText("");
         campoEtapaSiguiente.setText("");
         campoPeso.setText("");
@@ -137,12 +194,12 @@ public class Fragment_ControlProceso extends Fragment {
     private void validaTina(String codigo){
         if( codigo.length() >= 15 ){
             iniciaProcesando();
-            Call<TinaEscaneo> llamadaServicio = APIServicios.getConexion().getTina(codigo);
-            llamadaServicio.enqueue(new Callback<TinaEscaneo>() {
+            Call<TinaProceso> llamadaServicio = APIServicios.getConexion().getTinaProceso( Long.valueOf(codigo) );
+            llamadaServicio.enqueue(new Callback<TinaProceso>() {
                 @Override
-                public void onResponse(Call<TinaEscaneo> call, Response<TinaEscaneo> response) {
+                public void onResponse(Call<TinaProceso> call, Response<TinaProceso> response) {
                     if(response.code() == 200){
-                        resultadoEscaneoTina( response.body() );
+                        resultadoTinaProceso( response.body() );
                     }else{
                         terminaProcesando();
                         errorServicio("Error interno del servidor");
@@ -150,29 +207,34 @@ public class Fragment_ControlProceso extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<TinaEscaneo> call, Throwable t) {
+                public void onFailure(Call<TinaProceso> call, Throwable t) {
                     terminaProcesando();
                     errorServicio("Error al conectar con el servidor");
                 }
             });
         }else{
-            TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+            TextView campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+            campoEscaner.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
-    public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
-        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+    private void resultadoTinaProceso(TinaProceso tina){
+        TextView campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        TextView campoPosicion = this.vista.findViewById(R.id.campoPosicion);
+        TextView campoEtapaActual = this.vista.findViewById(R.id.campoEtapaActual);
+        TextView campoEtapaSiguiente = this.vista.findViewById(R.id.campoEtapaSiguiente);
+        if( tina.getId() == null ){
+            campoEscaner.setTextColor( getResources().getColor(R.color.noValido) );
 
-        if( resultadoTina.getIdTinaDes() != null ){
-            campoDescripcion.setText( resultadoTina.getTinaDes() );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
+            campoPosicion.setText("");
+            campoEtapaActual.setText("");
+            campoEtapaSiguiente.setText("");
+        }else{
+            campoEscaner.setTextColor( getResources().getColor(R.color.siValido) );
 
-
-        } else{
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+            campoPosicion.setText( tina.getPosicion() );
+            campoEtapaActual.setText( tina.getEtapaActual() );
+            campoEtapaSiguiente.setText( tina.getEtapaSiguiente() );
         }
 
         terminaProcesando();
