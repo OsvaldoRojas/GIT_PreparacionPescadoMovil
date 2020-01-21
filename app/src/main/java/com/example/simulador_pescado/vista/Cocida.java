@@ -9,7 +9,7 @@ public class Cocida implements Serializable {
 
     @SerializedName("idAsignacionCocida")
     @Expose
-    private long id;
+    private int id;
 
     @SerializedName("talla")
     @Expose
@@ -41,11 +41,11 @@ public class Cocida implements Serializable {
 
     private boolean seleccionado = false;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

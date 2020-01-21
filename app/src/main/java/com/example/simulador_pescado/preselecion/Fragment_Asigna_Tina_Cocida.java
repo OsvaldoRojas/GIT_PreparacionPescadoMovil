@@ -27,7 +27,10 @@ import com.example.simulador_pescado.contenedores.Contenedor;
 import com.example.simulador_pescado.utilerias.Utilerias;
 import com.example.simulador_pescado.vista.Cocida;
 import com.example.simulador_pescado.vista.Tina;
+import com.example.simulador_pescado.vista.UsuarioLogueado;
+import com.example.simulador_pescado.vista.servicio.RespuestaServicio;
 import com.example.simulador_pescado.vista.servicio.TinaEscaneo;
+import com.example.simulador_pescado.vista.servicio.TinaServicio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,6 +55,8 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     private RecyclerView vistaLista;
 
     private Tina tinaSeleccionada;
+
+    private List<Cocida> cocidas;
 
     private OnFragmentInteractionListener mListener;
 
@@ -151,6 +156,14 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
             }
         });
 
+        Button botonAceptar = this.vista.findViewById(R.id.boton2);
+        botonAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validaAsignacion();
+            }
+        });
+
         TextView etiquetaPosicion = this.vista.findViewById(R.id.etiquetaPosicion);
         etiquetaPosicion.setText(
                 etiquetaPosicion.getText().toString().concat(" ")
@@ -205,18 +218,123 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     private void resultadoCocidas(List<Cocida> cocidas){
         if( isAdded() ){
             //if( !cocidas.isEmpty() ){
-                this.vistaLista = this.vista.findViewById(R.id.listaTinas);
-                this.vistaLista.setHasFixedSize(true);
+            this.cocidas = cocidas;
+            this.vistaLista = this.vista.findViewById(R.id.listaTinas);
+            this.vistaLista.setHasFixedSize(true);
 
-                LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
-                this.vistaLista.setLayoutManager(layoutManager);
+            LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
+            this.vistaLista.setLayoutManager(layoutManager);
 
-                AdaptadorCocida adaptador = new AdaptadorCocida(cocidas, this);
-                this.vistaLista.setAdapter(adaptador);
+            AdaptadorCocida adaptador = new AdaptadorCocida(cocidas, this);
+            this.vistaLista.setAdapter(adaptador);
 
-                terminaProcesando();
+            terminaProcesando();
             //}
         }
+    }
+
+    private void validaAsignacion(){
+        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+
+        if( !campoEscaner.getText().equals("") &&
+                !campoDescripcion.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
+                !campoDescripcion.getText().equals("") ){
+
+            Cocida cocidaSeleccionada = getCocidaSelecconada();
+            if( cocidaSeleccionada == null ){
+                errorValidacion("Es necesario seleccionar una asignación cocida");
+            }else{
+                iniciaProcesando();
+                getTinaSeleccionada().setLibre(false);
+                getTinaSeleccionada().setTurno(true);
+                if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
+                    getTinaSeleccionada().setTurno(false);
+                }
+
+                guardaAsignacion(cocidaSeleccionada);
+            }
+
+        }else{
+            errorValidacion("Es necesario capturar una tina");
+        }
+    }
+
+    private void guardaAsignacion(Cocida cocidaSeleccionada){
+        TinaServicio tinaServicio = new TinaServicio();
+        tinaServicio.setIdEspecialidad( cocidaSeleccionada.getEspecialiad().getIdEspecialidad() );
+        tinaServicio.setIdPreseleccionPosicionTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
+        tinaServicio.setIdAsignacionCocida( cocidaSeleccionada.getId() );
+        tinaServicio.setIdTina( getTinaSeleccionada().getTina().getIdTina() );
+        tinaServicio.setIdEspecie( cocidaSeleccionada.getEspecie().getIdEspecie() );
+        tinaServicio.setIdTalla( cocidaSeleccionada.getTalla().getIdTalla() );
+        tinaServicio.setIdSubtalla( cocidaSeleccionada.getSubtalla().getIdSubtalla() );
+        tinaServicio.setNpiezas( getTinaSeleccionada().getNpiezas() );
+        tinaServicio.setPeso( getTinaSeleccionada().getPeso() );
+        tinaServicio.setLibre( getTinaSeleccionada().getLibre() );
+        tinaServicio.setTurno( getTinaSeleccionada().getTurno() );
+        tinaServicio.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().asignaTina(tinaServicio);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    resultadoAsignacion();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
+            }
+        });
+    }
+
+    public void resultadoAsignacion(){
+        terminaProcesando();
+        Fragment fragment = new Contenedor().newInstance(0);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+    }
+
+    private Cocida getCocidaSelecconada(){
+        for(Cocida cocida : this.cocidas){
+            if( cocida.isSeleccionado() ){
+                return cocida;
+            }
+        }
+        return null;
+    }
+
+    public void errorValidacion(final String mensaje){
+        final AlertDialog ventanaEmergente;
+        AlertDialog.Builder builder = new AlertDialog.Builder( getContext() );
+        View vistaAsignar = getLayoutInflater().inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        ventanaEmergente = builder.create();
+        ventanaEmergente.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaEmergente.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaEmergente.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ventanaEmergente.dismiss();
+                    }
+                });
+            }
+        });
+        ventanaEmergente.show();
     }
 
     private void validaTina(String codigo){
