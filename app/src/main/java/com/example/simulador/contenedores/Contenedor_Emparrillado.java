@@ -16,7 +16,6 @@ import com.example.simulador.R;
 import com.example.simulador.adaptadores.SesionesAdapter;
 import com.example.simulador.emparrillado.Fragment_Emparrillado_OM;
 import com.example.simulador.emparrillado.Fragment_Emparrillado_Plan;
-import com.example.simulador.emparrillado.Fragment_Emparrillado_TiempoMuerto;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 

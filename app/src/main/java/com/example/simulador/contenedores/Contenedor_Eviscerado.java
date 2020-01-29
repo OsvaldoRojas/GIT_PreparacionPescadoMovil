@@ -16,7 +16,6 @@ import com.example.simulador.R;
 import com.example.simulador.adaptadores.SesionesAdapter;
 import com.example.simulador.eviscerado.Fragment_Eviscerado_OM;
 import com.example.simulador.eviscerado.Fragment_Eviscerado_Plan;
-import com.example.simulador.eviscerado.Fragment_Eviscerado_TiempoMuerto;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 

@@ -21,7 +21,6 @@ import com.example.simulador.conexion.APIServicios;
 import com.example.simulador.contenedores.Contenedor_Descongelado;
 import com.example.simulador.R;
 import com.example.simulador.utilerias.Utilerias;
-import com.example.simulador.vista.PosicionEstibaAtemperado;
 import com.example.simulador.vista.PosicionEstibaDescongelado;
 import com.example.simulador.vista.UsuarioLogueado;
 import com.example.simulador.vista.servicio.LiberaTinaPosicion;
@@ -29,7 +28,6 @@ import com.example.simulador.vista.servicio.PosicionCompleta;
 import com.example.simulador.vista.servicio.RespuestaServicio;
 
 import java.io.Serializable;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

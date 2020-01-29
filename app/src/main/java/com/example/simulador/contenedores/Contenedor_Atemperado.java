@@ -16,19 +16,8 @@ import com.example.simulador.R;
 import com.example.simulador.adaptadores.SesionesAdapter;
 import com.example.simulador.atemperado.Fragment_Atemperado_OM;
 import com.example.simulador.atemperado.Fragment_Atemperado_Plan;
-import com.example.simulador.atemperado.Fragment_Atemperado_TiempoMuerto;
-import com.example.simulador.conexion.APIServicios;
-import com.example.simulador.utilerias.Catalogos;
-import com.example.simulador.utilerias.Constantes;
-import com.example.simulador.vista.Maquinaria;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.

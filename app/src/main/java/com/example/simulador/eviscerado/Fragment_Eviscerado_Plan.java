@@ -21,13 +21,10 @@ import com.example.simulador.R;
 import com.example.simulador.conexion.APIServicios;
 import com.example.simulador.utilerias.Constantes;
 import com.example.simulador.vista.OperadorBascula;
-import com.example.simulador.vista.OperadorMontacargas;
-import com.example.simulador.vista.Tina;
 import com.example.simulador.vista.UsuarioLogueado;
 import com.example.simulador.vista.servicio.LiberarTodos;
 import com.example.simulador.vista.servicio.RespuestaServicio;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

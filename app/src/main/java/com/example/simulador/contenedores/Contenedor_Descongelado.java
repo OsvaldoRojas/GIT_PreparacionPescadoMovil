@@ -1,7 +1,6 @@
 package com.example.simulador.contenedores;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,8 +14,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.simulador.Fragment_CreaOrdenMantenimiento;
 import com.example.simulador.descongelado.Fragment_Descongelado_OM;
 import com.example.simulador.descongelado.Fragment_Descongelado_Plan;
-import com.example.simulador.descongelado.Fragment_Descongelado_SalidaTinas;
-import com.example.simulador.descongelado.Fragment_Descongelado_TiempoMuerto;
 import com.example.simulador.R;
 import com.example.simulador.adaptadores.SesionesAdapter;
 import com.google.android.material.appbar.AppBarLayout;

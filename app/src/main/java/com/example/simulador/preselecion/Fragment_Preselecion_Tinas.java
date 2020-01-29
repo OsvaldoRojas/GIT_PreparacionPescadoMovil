@@ -24,9 +24,7 @@ import com.example.simulador.adaptadores.AdaptadorTinasLiberadas;
 import com.example.simulador.conexion.APIServicios;
 import com.example.simulador.utilerias.Constantes;
 import com.example.simulador.utilerias.Utilerias;
-import com.example.simulador.vista.ErrorServicio;
 import com.example.simulador.vista.servicio.LiberaTinaServicio;
-import com.example.simulador.vista.servicio.LiberarTodos;
 import com.example.simulador.vista.OperadorBascula;
 import com.example.simulador.vista.OperadorMontacargas;
 import com.example.simulador.vista.servicio.MezclaTinaServicio;
@@ -37,11 +35,8 @@ import com.google.gson.JsonObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

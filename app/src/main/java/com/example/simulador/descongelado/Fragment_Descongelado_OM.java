@@ -33,7 +33,6 @@ import com.example.simulador.vista.OrdenMantenimiento;
 import com.example.simulador.vista.UsuarioLogueado;
 import com.example.simulador.vista.servicio.ListaOrdenMantenimientoServicio;
 import com.example.simulador.vista.servicio.OrdenMantenimientoActualizar;
-import com.example.simulador.vista.servicio.OrdenMantenimientoCerrarTiempo;
 import com.example.simulador.vista.servicio.RespuestaServicio;
 
 import java.util.List;

@@ -10,24 +10,8 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.simulador.atemperado.Fragment_Atemperado_OM;
-import com.example.simulador.conexion.APIServicios;
-import com.example.simulador.contenedores.Contenedor;
-import com.example.simulador.contenedores.Contenedor_Atemperado;
-import com.example.simulador.contenedores.Contenedor_Descongelado;
-import com.example.simulador.descongelado.Fragment_Descongelado_OM;
-import com.example.simulador.preselecion.Fragment_Preselecion_OM;
-import com.example.simulador.utilerias.Catalogos;
 import com.example.simulador.utilerias.Constantes;
 import com.example.simulador.utilerias.Utilerias;
-import com.example.simulador.vista.Maquinaria;
-import com.example.simulador.vista.UsuarioLogueado;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**

@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -27,10 +26,6 @@ import com.example.simulador.conexion.APIServicios;
 import com.example.simulador.contenedores.Contenedor;
 import com.example.simulador.utilerias.Utilerias;
 import com.example.simulador.vista.Cocida;
-import com.example.simulador.vista.Especialidad;
-import com.example.simulador.vista.GrupoEspecie;
-import com.example.simulador.vista.Subtalla;
-import com.example.simulador.vista.Talla;
 import com.example.simulador.vista.Tina;
 import com.example.simulador.vista.UsuarioLogueado;
 import com.example.simulador.vista.servicio.RespuestaServicio;
@@ -38,7 +33,6 @@ import com.example.simulador.vista.servicio.TinaEscaneo;
 import com.example.simulador.vista.servicio.TinaServicio;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
