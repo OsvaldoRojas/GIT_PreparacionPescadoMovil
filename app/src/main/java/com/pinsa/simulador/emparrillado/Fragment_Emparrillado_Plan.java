@@ -17,12 +17,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.R;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.utilerias.Constantes;
-import com.pinsa.simulador.vista.OperadorBascula;
+import com.pinsa.simulador.vista.Operador;
 import com.pinsa.simulador.vista.UsuarioLogueado;
-import com.pinsa.simulador.vista.servicio.LiberarTodos;
 import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.util.ArrayList;
@@ -52,9 +52,9 @@ public class Fragment_Emparrillado_Plan extends Fragment {
     private ImageView operador7;
     private ImageView operador8;
 
-    private OperadorBascula operadorSeleccionado;
+    private Operador operadorSeleccionado;
 
-    private List<OperadorBascula> listaOperadores = new ArrayList<>();
+    private List<Operador> listaOperadores = new ArrayList<>();
 
     private AlertDialog ventanaError;
     private AlertDialog ventanaEmergente;
@@ -73,11 +73,11 @@ public class Fragment_Emparrillado_Plan extends Fragment {
     public Fragment_Emparrillado_Plan() {
     }
 
-    public OperadorBascula getOperadorSeleccionado() {
+    public Operador getOperadorSeleccionado() {
         return operadorSeleccionado;
     }
 
-    public void setOperadorSeleccionado(OperadorBascula operadorSeleccionado) {
+    public void setOperadorSeleccionado(Operador operadorSeleccionado) {
         this.operadorSeleccionado = operadorSeleccionado;
     }
 
@@ -211,17 +211,17 @@ public class Fragment_Emparrillado_Plan extends Fragment {
 
     private void getAsignados(){
         if( getOperadorSeleccionado() != null ){
-            accionIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() );
+            accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
         }
 
         getOperadoresAsignados();
     }
 
     private void getOperadoresAsignados(){
-        Call<List<OperadorBascula>> operadoresAsignados = APIServicios.getConexion().getOperadoresAsignados();
-        operadoresAsignados.enqueue(new Callback<List<OperadorBascula>>() {
+        Call<List<Operador>> llamadaServicio = APIServicios.getConexion().getOperadoresEmparrillado();
+        llamadaServicio.enqueue(new Callback<List<Operador>>() {
             @Override
-            public void onResponse(Call<List<OperadorBascula>> call, Response<List<OperadorBascula>> response) {
+            public void onResponse(Call<List<Operador>> call, Response<List<Operador>> response) {
                 if(response.code() == 200){
                     ordenaOperadores( response.body() );
                     terminaProcesando();
@@ -232,38 +232,38 @@ public class Fragment_Emparrillado_Plan extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<OperadorBascula>> call, Throwable t) {
+            public void onFailure(Call<List<Operador>> call, Throwable t) {
                 terminaProcesando();
                 errorServicio("Error al conectar con el servidor");
             }
         });
     }
 
-    public void ordenaOperadores(List<OperadorBascula> listaOperadores){
+    public void ordenaOperadores(List<Operador> listaOperadores){
         if( isAdded() ){
             //this.listaOperadores = listaOperadores;
             this.listaOperadores = new ArrayList<>();
-            for(OperadorBascula operadorBascula : listaOperadores){
-                if(operadorBascula.getIdPreseleccionEstacion() <= 8){
-                    this.listaOperadores.add(operadorBascula);
+            for(Operador operador : listaOperadores){
+                if(operador.getIdEstacion() <= 8){
+                    this.listaOperadores.add(operador);
                 }
             }
-            for( final OperadorBascula recursoOperador : this.listaOperadores ){
+            for( Operador recursoOperador : this.listaOperadores ){
                 recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
-                accionIconoOperador( recursoOperador.getIdPreseleccionEstacion() );
+                accionIconoOperador( recursoOperador.getIdEstacion() );
             }
         }
     }
 
     private void accionIconoOperador(int posicion){
-        for( OperadorBascula operador : this.listaOperadores ){
-            if( operador.getIdPreseleccionEstacion() == posicion ){
+        for( Operador operador : this.listaOperadores ){
+            if( operador.getIdEstacion() == posicion ){
                 if( operador.getEstado() == Constantes.ESTADO.inicial ){
                     setOperadorSeleccionado(operador);
                     deshabilitaRecursos();
-                    getIconoOperador( operador.getIdPreseleccionEstacion() )
+                    getIconoOperador( operador.getIdEstacion() )
                             .setImageResource(R.drawable.ic_operador_blanco);
-                    getIconoOperador( operador.getIdPreseleccionEstacion() )
+                    getIconoOperador( operador.getIdEstacion() )
                             .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                     operador.setEstado( Constantes.ESTADO.seleccionado );
                     this.boton1.setText(R.string.liberarUsuario);
@@ -283,16 +283,16 @@ public class Fragment_Emparrillado_Plan extends Fragment {
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
                         habilitaRecursos();
-                        if( operador.getLibre() ){
-                            getIconoOperador( operador.getIdPreseleccionEstacion() )
+                        if( operador.isLibre() ){
+                            getIconoOperador( operador.getIdEstacion() )
                                     .setImageResource(R.drawable.ic_operador_gris);
-                            getIconoOperador( operador.getIdPreseleccionEstacion() )
+                            getIconoOperador( operador.getIdEstacion() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono ) );
                             operador.setEstado( Constantes.ESTADO.inicial );
                         }else{
-                            getIconoOperador( operador.getIdPreseleccionEstacion() )
+                            getIconoOperador( operador.getIdEstacion() )
                                     .setImageResource(R.drawable.ic_operador_negro);
-                            getIconoOperador( operador.getIdPreseleccionEstacion() )
+                            getIconoOperador( operador.getIdEstacion() )
                                     .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_asignado ) );
                             operador.setEstado( Constantes.ESTADO.asignado );
                         }
@@ -306,9 +306,9 @@ public class Fragment_Emparrillado_Plan extends Fragment {
                     }else{
                         setOperadorSeleccionado(operador);
                         deshabilitaRecursos();
-                        getIconoOperador( operador.getIdPreseleccionEstacion() )
+                        getIconoOperador( operador.getIdEstacion() )
                                 .setImageResource(R.drawable.ic_operador_blanco);
-                        getIconoOperador( operador.getIdPreseleccionEstacion() )
+                        getIconoOperador( operador.getIdEstacion() )
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         operador.setEstado( Constantes.ESTADO.seleccionado );
                         this.boton1.setText(R.string.liberarUsuario);
@@ -340,11 +340,21 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         iniciaProcesando();
         getOperadorSeleccionado().setIdEmpleado(0);
         getOperadorSeleccionado().setLibre(true);
+        getOperadorSeleccionado().setTurno(true);
+        if( UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ){
+            getOperadorSeleccionado().setTurno(false);
+        }
         guardaOperador();
     }
 
     private void guardaOperador(){
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperador( getOperadorSeleccionado() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idEstacion", getOperadorSeleccionado().getIdEstacion() );
+        json.addProperty("libre", getOperadorSeleccionado().isLibre() );
+        json.addProperty("idEmpleado", String.valueOf( getOperadorSeleccionado().getIdEmpleado() ) );
+        json.addProperty("turno", getOperadorSeleccionado().isTurno() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorEmparrillado(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -431,9 +441,9 @@ public class Fragment_Emparrillado_Plan extends Fragment {
     }
 
     private void liberaTurnoServicio(){
-        LiberarTodos liberarTodos = new LiberarTodos( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurno(liberarTodos);
-
+        JsonObject json = new JsonObject();
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberarTurnoEmparrillado(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -455,18 +465,18 @@ public class Fragment_Emparrillado_Plan extends Fragment {
     }
 
     private void deshabilitaRecursos(){
-        for(OperadorBascula operador : this.listaOperadores){
-            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(false);
+        for(Operador operador : this.listaOperadores){
+            getIconoOperador( operador.getIdEstacion() ).setEnabled(false);
         }
 
         if( getOperadorSeleccionado() != null ){
-            getIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() ).setEnabled(true);
+            getIconoOperador( getOperadorSeleccionado().getIdEstacion() ).setEnabled(true);
         }
     }
 
     private void habilitaRecursos(){
-        for(OperadorBascula operador : this.listaOperadores) {
-            getIconoOperador(operador.getIdPreseleccionEstacion()).setEnabled(true);
+        for(Operador operador : this.listaOperadores) {
+            getIconoOperador(operador.getIdEstacion()).setEnabled(true);
         }
     }
 
@@ -512,8 +522,8 @@ public class Fragment_Emparrillado_Plan extends Fragment {
     }
 
     private boolean validaMuestraTurno(){
-        for( OperadorBascula operadorBascula : this.listaOperadores ){
-            if( !operadorBascula.getLibre() ){
+        for( Operador operadorBascula : this.listaOperadores ){
+            if( !operadorBascula.isLibre() ){
                 return true;
             }
         }

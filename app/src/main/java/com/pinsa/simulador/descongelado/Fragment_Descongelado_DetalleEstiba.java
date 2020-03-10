@@ -17,14 +17,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.JsonObject;
+import com.pinsa.simulador.R;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.contenedores.Contenedor_Descongelado;
-import com.pinsa.simulador.R;
 import com.pinsa.simulador.utilerias.Utilerias;
 import com.pinsa.simulador.vista.PosicionEstibaDescongelado;
 import com.pinsa.simulador.vista.UsuarioLogueado;
-import com.pinsa.simulador.vista.servicio.LiberaTinaPosicion;
-import com.pinsa.simulador.vista.servicio.PosicionCompleta;
 import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.io.Serializable;
@@ -430,12 +429,12 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
     }
 
     private void completaPosicion(){
-        PosicionCompleta posicionCompleta = new PosicionCompleta();
-        posicionCompleta.setIdPosicion( getPosicionSeleccionada().getIdPosicion() );
-        posicionCompleta.setCompleta(true);
-        posicionCompleta.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idDescongeladoPosicionTina", getPosicionSeleccionada().getIdPosicion() );
+        json.addProperty("bloqueado", true );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().completaPosicion(posicionCompleta);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().completaPosicion(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -458,12 +457,12 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
     }
 
     private void liberaTina(){
-        LiberaTinaPosicion tinaLiberada = new LiberaTinaPosicion();
-        tinaLiberada.setIdPosicion( getPosicionSeleccionada().getIdPosicion() );
-        tinaLiberada.setNivel( getPosicionSeleccionada().getConteoNivel() );
-        tinaLiberada.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idDescongeladoPosicionTina", getPosicionSeleccionada().getIdPosicion() );
+        json.addProperty("nivel", getPosicionSeleccionada().getConteoNivel() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTinaPosicion(tinaLiberada);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTinaPosicion(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

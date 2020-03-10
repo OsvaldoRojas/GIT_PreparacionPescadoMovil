@@ -17,12 +17,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.R;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.utilerias.Constantes;
 import com.pinsa.simulador.vista.PosicionEstibaDescongelado;
 import com.pinsa.simulador.vista.UsuarioLogueado;
-import com.pinsa.simulador.vista.servicio.LiberaPosicion;
 import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.util.ArrayList;
@@ -987,11 +987,11 @@ public class Fragment_Descongelado_Plan extends Fragment{
     }
 
     private void liberaCompleta(){
-        LiberaPosicion liberaPosicion = new LiberaPosicion();
-        liberaPosicion.setIdPosicion( getPosicionSeleccionada().getIdPosicion() );
-        liberaPosicion.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idDescongeladoPosicionTina", getPosicionSeleccionada().getIdPosicion() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaPosicion(liberaPosicion);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaPosicion(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

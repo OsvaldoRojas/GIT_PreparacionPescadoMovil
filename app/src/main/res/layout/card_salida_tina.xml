@@ -1,126 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="4dp"
-    card_view:cardUseCompatPadding="true">
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:drawSelectorOnTop="true"
+    android:orientation="horizontal">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:background="@color/colorAccent"
-        android:layout_height="wrap_content">
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="3dp"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="4dp"
+        card_view:cardUseCompatPadding="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_weight="7">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textColor="@color/colorPrimary"
-                    android:text="TINA"/>
-
-                <TextView
-                    android:id="@+id/tina"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textColor="@color/colorPrimary"
-                    android:text="45"/>
-
-            </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:background="@color/colorAccent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:textSize="17dp"
                         android:textColor="@color/colorPrimary"
-                        android:text="Posición:"/>
+                        android:text="TINA"/>
 
                     <TextView
-                        android:id="@+id/posicion"
+                        android:id="@+id/tina"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:textSize="15dp"
+                        android:textSize="14dp"
                         android:textColor="@color/colorPrimary"
-                        android:text="A - 8"/>
+                        android:text="20051103153014733"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_weight="5"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="@color/colorPrimary"
-                        android:text="Hora:"/>
-
-                    <TextView
-                        android:id="@+id/hora"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:layout_marginLeft="5dp"
-                        android:textSize="15dp"
-                        android:textColor="@color/colorPrimary"
-                        android:text="00:00 am"/>
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="Posición:"/>
+
+                        <TextView
+                            android:id="@+id/posicion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="13dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="A - 8"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="Subtalla:"/>
+
+                        <TextView
+                            android:id="@+id/subtalla"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="8dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="xxxxxx"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="Hora:"/>
+
+                        <TextView
+                            android:id="@+id/hora"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="13dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="00:00 am"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="7"
-                android:gravity="center"
-                android:orientation="vertical">
+        </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/eliminar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_clear"/>
+    </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
 
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/accion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_salida"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>

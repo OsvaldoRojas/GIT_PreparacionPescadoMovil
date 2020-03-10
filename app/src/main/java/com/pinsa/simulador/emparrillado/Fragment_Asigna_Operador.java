@@ -18,11 +18,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.R;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.contenedores.Contenedor_Emparrillado;
 import com.pinsa.simulador.utilerias.Utilerias;
 import com.pinsa.simulador.vista.ErrorServicio;
+import com.pinsa.simulador.vista.Operador;
 import com.pinsa.simulador.vista.OperadorBascula;
 import com.pinsa.simulador.vista.UsuarioLogueado;
 import com.pinsa.simulador.vista.servicio.Gafete;
@@ -35,17 +37,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Fragment_Asigna_Operador extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private Serializable mParam1;
     private View vista;
 
     private AlertDialog ventanaError;
 
-    private OperadorBascula operadorSeleccionado;
+    private Operador operadorSeleccionado;
 
     private OnFragmentInteractionListener mListener;
 
@@ -84,16 +83,16 @@ public class Fragment_Asigna_Operador extends Fragment {
         return this.vista;
     }
 
-    public OperadorBascula getOperadorSeleccionado() {
+    public Operador getOperadorSeleccionado() {
         return operadorSeleccionado;
     }
 
-    public void setOperadorSeleccionado(OperadorBascula operadorSeleccionado) {
+    public void setOperadorSeleccionado(Operador operadorSeleccionado) {
         this.operadorSeleccionado = operadorSeleccionado;
     }
 
     private void iniciaComponentes(){
-        setOperadorSeleccionado( (OperadorBascula) this.mParam1);
+        setOperadorSeleccionado( (Operador) this.mParam1);
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +107,7 @@ public class Fragment_Asigna_Operador extends Fragment {
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //validaAsignacion();
+                validaAsignacion();
             }
         });
 
@@ -119,7 +118,7 @@ public class Fragment_Asigna_Operador extends Fragment {
         etiquetaPosicion.setText( getOperadorSeleccionado().getEstacion() );
 
         TextView etiquetaLinea = this.vista.findViewById(R.id.etiquetaLinea);
-        etiquetaLinea.setText("1");
+        etiquetaLinea.setText( getOperadorSeleccionado().getEstacion().substring(0,1) );
 
         EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
         campoEscaner.addTextChangedListener(new TextWatcher() {
@@ -161,7 +160,13 @@ public class Fragment_Asigna_Operador extends Fragment {
     }
 
     private void guarda(){
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperador( getOperadorSeleccionado() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idEstacion", getOperadorSeleccionado().getIdEstacion() );
+        json.addProperty("libre", getOperadorSeleccionado().isLibre() );
+        json.addProperty("idEmpleado", String.valueOf( getOperadorSeleccionado().getIdEmpleado() ) );
+        json.addProperty("turno", getOperadorSeleccionado().isTurno() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorEmparrillado(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

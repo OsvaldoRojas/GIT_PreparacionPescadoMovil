@@ -178,9 +178,13 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
         botonArtefactos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent artefactos = new Intent(getContext(), ActividadArtefactos.class);
-                artefactos.putExtra("catalogo", (Serializable) catalogoArtefactos);
-                startActivityForResult(artefactos, 0);
+                if( getMaquinaria() != null ){
+                    Intent artefactos = new Intent(getContext(), ActividadArtefactos.class);
+                    artefactos.putExtra("catalogo", (Serializable) catalogoArtefactos);
+                    startActivityForResult(artefactos, 0);
+                }else{
+                    errorServicio("Es necesario seleccionar una máquinaria");
+                }
             }
         });
 
@@ -197,6 +201,7 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
                     obtenArtefactos();
                 }else{
                     resultadoCatalogoArtefacto(new ArrayList<Artefacto>());
+                    setMaquinaria(null);
                 }
             }
 

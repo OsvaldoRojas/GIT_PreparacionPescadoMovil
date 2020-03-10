@@ -23,6 +23,8 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.adaptadores.AdaptadorArtefacto;
 import com.pinsa.simulador.adaptadores.AdaptadorArtefactoOrden;
 import com.pinsa.simulador.adaptadores.AdaptadorRefaccionLista;
@@ -35,11 +37,7 @@ import com.pinsa.simulador.vista.OrdenMantenimiento;
 import com.pinsa.simulador.vista.Refaccion;
 import com.pinsa.simulador.vista.RefaccionOrden;
 import com.pinsa.simulador.vista.UsuarioLogueado;
-import com.pinsa.simulador.vista.servicio.OrdenMantenimientoActualizar;
-import com.pinsa.simulador.vista.servicio.OrdenMantenimientoCerrarTiempo;
-import com.pinsa.simulador.vista.servicio.RefaccionGuardar;
 import com.pinsa.simulador.vista.servicio.RespuestaServicio;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -329,13 +327,14 @@ public class Fragment_DetalleOrden extends Fragment {
     }
 
     private void guardaRefaccion(){
-        RefaccionGuardar refaccion = new RefaccionGuardar();
-        refaccion.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
-        refaccion.setIdRefaccion( this.refaccionCapturada.getIdRefaccion() );
-        refaccion.setCantidad( this.refaccionCapturada.getCantidad() );
-        refaccion.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        iniciaProcesando();
+        JsonObject json = new JsonObject();
+        json.addProperty("idOrdenMantenimiento", getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        json.addProperty("idRefaccion", this.refaccionCapturada.getIdRefaccion() );
+        json.addProperty("cantidad", this.refaccionCapturada.getCantidad() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaRefaccion(refaccion);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaRefaccion(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -411,12 +410,12 @@ public class Fragment_DetalleOrden extends Fragment {
     }
 
     private void actualizaTiempo(String fecha){
-        OrdenMantenimientoCerrarTiempo orden = new OrdenMantenimientoCerrarTiempo();
-        orden.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
-        orden.setFecha(fecha);
-        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idOrdenMantenimiento", getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        json.addProperty("fechaFin", fecha);
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().cierraTiempoOrdenMantenimiento(orden);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().cierraTiempoOrdenMantenimiento(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -436,18 +435,18 @@ public class Fragment_DetalleOrden extends Fragment {
     }
 
     private void guarda(){
-        OrdenMantenimientoActualizar orden = new OrdenMantenimientoActualizar();
-        orden.setIdOrdenMantenimiento( getOrdenSeleccionada().getIdOrdenMantenimiento() );
-        orden.setIdEmpleado( getOrdenSeleccionada().getIdEmpleado() );
-        orden.setNombreEmpleado( getOrdenSeleccionada().getNombreEmpleado() );
-        orden.setaPaternoEmpleado( getOrdenSeleccionada().getaPaternoEmpleado() );
-        orden.setaMaternoEmpleado( getOrdenSeleccionada().getaMaternoEmpleado() );
-        orden.setFechaInicio( getOrdenSeleccionada().getFechaInicio() );
-        orden.setSolucion( getOrdenSeleccionada().getSolucion() );
-        orden.setFinalizada( getOrdenSeleccionada().getFinalizada() );
-        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idOrdenMantenimiento", getOrdenSeleccionada().getIdOrdenMantenimiento() );
+        json.addProperty("idEmpleado", getOrdenSeleccionada().getIdEmpleado() );
+        json.addProperty("nombreEmpleado", getOrdenSeleccionada().getNombreEmpleado() );
+        json.addProperty("aPaternoEmpleado", getOrdenSeleccionada().getaPaternoEmpleado() );
+        json.addProperty("aMaternoEmpleado", getOrdenSeleccionada().getaMaternoEmpleado() );
+        json.addProperty("fechaInicio", getOrdenSeleccionada().getFechaInicio() );
+        json.addProperty("solucion", getOrdenSeleccionada().getSolucion() );
+        json.addProperty("finalizada", getOrdenSeleccionada().getFinalizada() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(orden);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

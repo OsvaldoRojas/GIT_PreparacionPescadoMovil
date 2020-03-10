@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".preselecion.Fragment_Preselecion_Tinas">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -98,11 +97,28 @@
                     android:id="@+id/listaOrden"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:drawSelectorOnTop="true"
                     tools:listitem="@layout/item_orden_mantenimiento"/>
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/sinResultados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No se encontraron resultados"
+            android:gravity="center_horizontal"
+            android:paddingTop="100dp"
+            android:visibility="gone"
+            android:textSize="15dp"/>
 
     </FrameLayout>
 

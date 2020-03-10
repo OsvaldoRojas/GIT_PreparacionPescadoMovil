@@ -1,4 +1,4 @@
-package com.pinsa.simulador.vista.servicio;
+/*package com.pinsa.simulador.vista.servicio;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -30,4 +30,4 @@ public class LiberaPosicion implements Serializable {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-}
+}*/

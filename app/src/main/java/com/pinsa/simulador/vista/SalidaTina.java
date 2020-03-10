@@ -1,10 +1,29 @@
 package com.pinsa.simulador.vista;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class SalidaTina {
 
+    @SerializedName("idTina")
+    @Expose
     private String tina;
+
+    @SerializedName("posicion")
+    @Expose
     private String posicion;
+
+    @SerializedName("subtalla")
+    @Expose
+    private String subtalla;
+
+    @SerializedName("horaSalida")
+    @Expose
     private String hora;
+
+    @SerializedName("marcado")
+    @Expose
+    private Boolean marcado;
 
     public String getTina() {
         return tina;
@@ -28,5 +47,21 @@ public class SalidaTina {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public String getSubtalla() {
+        return subtalla;
+    }
+
+    public void setSubtalla(String subtalla) {
+        this.subtalla = subtalla;
+    }
+
+    public Boolean getMarcado() {
+        return marcado;
+    }
+
+    public void setMarcado(Boolean marcado) {
+        this.marcado = marcado;
     }
 }

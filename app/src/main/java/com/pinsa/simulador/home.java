@@ -105,7 +105,17 @@ public class home extends Fragment {
             }
         });
 
-        /*Button botonEviscerado = this.vista.findViewById(R.id.botonEviscerado);
+        Button botonMovimiento = this.vista.findViewById(R.id.botonMovimiento);
+        botonMovimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.movimiento))
+                        .commit();
+            }
+        });
+
+        Button botonEviscerado = this.vista.findViewById(R.id.botonEviscerado);
         botonEviscerado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,16 +134,6 @@ public class home extends Fragment {
                         .commit();
             }
         });
-
-        Button botonMovimiento = this.vista.findViewById(R.id.botonMovimiento);
-        botonMovimiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.movimiento))
-                        .commit();
-            }
-        });*/
 
         Button botonControl = this.vista.findViewById(R.id.botonControl);
         botonControl.setOnClickListener(new View.OnClickListener() {

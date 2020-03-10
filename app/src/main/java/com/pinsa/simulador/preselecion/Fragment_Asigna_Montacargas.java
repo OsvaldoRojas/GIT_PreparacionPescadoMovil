@@ -18,15 +18,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.R;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.contenedores.Contenedor;
 import com.pinsa.simulador.utilerias.Utilerias;
 import com.pinsa.simulador.vista.ErrorServicio;
-import com.pinsa.simulador.vista.servicio.Gafete;
 import com.pinsa.simulador.vista.OperadorMontacargas;
-import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 import com.pinsa.simulador.vista.UsuarioLogueado;
+import com.pinsa.simulador.vista.servicio.Gafete;
+import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 
@@ -200,7 +201,13 @@ public class Fragment_Asigna_Montacargas extends Fragment {
     }
 
     private void guarda(){
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaMontacargas( getMontacargasSeleccionado() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idPreseleccionMontacarga", getMontacargasSeleccionado().getIdPreseleccionMontacarga() );
+        json.addProperty("idEmpleado", getMontacargasSeleccionado().getIdEmpleado() );
+        json.addProperty("turno", getMontacargasSeleccionado().getTurno() );
+        json.addProperty("libre", getMontacargasSeleccionado().getLibre() );
+        //json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaMontacargas(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

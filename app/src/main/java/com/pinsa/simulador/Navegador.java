@@ -137,19 +137,19 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
             mifragment = Utilerias.navegaInicio(Constantes.ETAPA.control);
             fragmentSelecionado = true;
 
-        }/*else if (id == R.id.nav_eviscerado) {
-            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.eviscerado);
-            fragmentSelecionado = true;
-
         } else if (id == R.id.nav_emparrillado) {
             mifragment = Utilerias.navegaInicio(Constantes.ETAPA.emparrillado);
             fragmentSelecionado = true;
 
-        } else if (id == R.id.nav_movimiento) {
+        } else if (id == R.id.nav_eviscerado) {
+            mifragment = Utilerias.navegaInicio(Constantes.ETAPA.eviscerado);
+            fragmentSelecionado = true;
+
+        }  else if (id == R.id.nav_movimiento) {
             mifragment = Utilerias.navegaInicio(Constantes.ETAPA.movimiento);
             fragmentSelecionado = true;
 
-        } */
+        }
         else if (id == R.id.cerrar_sesion) {
             this.finish();
 

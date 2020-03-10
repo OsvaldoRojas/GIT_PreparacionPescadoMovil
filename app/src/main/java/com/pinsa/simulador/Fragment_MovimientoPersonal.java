@@ -19,13 +19,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.adaptadores.AdaptadorArea;
 import com.pinsa.simulador.adaptadores.AdaptadorPuesto;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.utilerias.Utilerias;
 import com.pinsa.simulador.vista.Area;
 import com.pinsa.simulador.vista.Puesto;
+import com.pinsa.simulador.vista.UsuarioLogueado;
 import com.pinsa.simulador.vista.servicio.Gafete;
+import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Fragment_MovimientoPersonal extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private View vista;
 
     private AlertDialog ventanaError;
@@ -50,40 +46,16 @@ public class Fragment_MovimientoPersonal extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public Fragment_MovimientoPersonal() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Descongelado_TiempoMuerto.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_MovimientoPersonal newInstance(String param1, String param2) {
-        Fragment_MovimientoPersonal fragment = new Fragment_MovimientoPersonal();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         this.vista = inflater.inflate(R.layout.fragment_movimiento_personal, container, false);
         iniciaComponentes();
         return this.vista;
@@ -102,7 +74,7 @@ public class Fragment_MovimientoPersonal extends Fragment {
         botonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                valida();
             }
         });
 
@@ -110,7 +82,7 @@ public class Fragment_MovimientoPersonal extends Fragment {
         etiquetaFecha.setText( Utilerias.fechaActual() );
 
         Area area1 = new Area();
-        area1.setId(1);
+        area1.setId(0);
         area1.setDescripcion("Seleccionar área");
         Area area2 = new Area();
         area2.setId(2);
@@ -127,7 +99,7 @@ public class Fragment_MovimientoPersonal extends Fragment {
         seleccionArea.setAdapter( new AdaptadorArea( getContext(), listaAreas ) );
 
         Puesto puesto1 = new Puesto();
-        puesto1.setId(1);
+        puesto1.setId(0);
         puesto1.setDescripcion("Seleccionar puesto");
         Puesto puesto2 = new Puesto();
         puesto2.setId(2);
@@ -158,6 +130,55 @@ public class Fragment_MovimientoPersonal extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 validaGafete( editable.toString() );
+            }
+        });
+    }
+
+    private void valida(){
+        TextView campoNombre = this.vista.findViewById(R.id.campoNombre);
+        Spinner seleccionPuesto = this.vista.findViewById(R.id.seleccionPuesto);
+        Spinner seleccionArea = this.vista.findViewById(R.id.seleccionArea);
+
+        if( campoNombre.getText().toString().equalsIgnoreCase("") ){
+            errorServicio("Es necesario ingresar un usuario");
+        }else{
+            if( ( (Puesto) seleccionPuesto.getSelectedItem() ).getId() == 0
+                    || ( (Area) seleccionArea.getSelectedItem() ).getId() == 0 ){
+                errorServicio("Es necesario seleccionar un Puesto y Área");
+            }else{
+                guarda(
+                        campoNombre.getText().toString(),
+                        (Area) seleccionArea.getSelectedItem(),
+                        (Puesto) seleccionPuesto.getSelectedItem()
+                );
+            }
+        }
+    }
+
+    private void guarda(String idEmpleado, Area area, Puesto puesto){
+        JsonObject json = new JsonObject();
+        json.addProperty("idEmpleado", idEmpleado);
+        json.addProperty("idArea", String.valueOf( area.getId() ) );
+        json.addProperty("idPuesto", String.valueOf( puesto.getId() ) );
+        json.addProperty("turno", UsuarioLogueado.getUsuarioLogueado(null).getTurno() == 1 ? false : true );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaPuesto(json);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                RespuestaServicio respuesta = response.body();
+                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
+                    limpiaComponentes();
+                }else{
+                    terminaProcesando();
+                    errorServicio("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                terminaProcesando();
+                errorServicio("Error al conectar con el servidor");
             }
         });
     }

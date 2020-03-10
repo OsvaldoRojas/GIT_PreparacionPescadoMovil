@@ -118,6 +118,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/sinResultados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No se encontraron cocidas"
+            android:gravity="center_horizontal"
+            android:paddingTop="150dp"
+            android:visibility="gone"
+            android:textSize="15dp"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

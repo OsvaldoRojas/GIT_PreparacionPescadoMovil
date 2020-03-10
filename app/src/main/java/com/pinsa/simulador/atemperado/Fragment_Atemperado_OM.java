@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.Fragment_AsignaMecanico;
 import com.pinsa.simulador.Fragment_DetalleOrden;
 import com.pinsa.simulador.R;
@@ -32,7 +33,6 @@ import com.pinsa.simulador.vista.ErrorServicio;
 import com.pinsa.simulador.vista.OrdenMantenimiento;
 import com.pinsa.simulador.vista.UsuarioLogueado;
 import com.pinsa.simulador.vista.servicio.ListaOrdenMantenimientoServicio;
-import com.pinsa.simulador.vista.servicio.OrdenMantenimientoActualizar;
 import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.util.List;
@@ -207,62 +207,69 @@ public class Fragment_Atemperado_OM extends Fragment {
 
     public void resultadoServicioLista(final List<ListaOrdenMantenimientoServicio> lista){
         if( isAdded() ){
-            this.adaptadorOrden = new AdaptadorOrdenMantenimiento( getContext(), lista );
-            this.listaVistaOrden.setAdapter(this.adaptadorOrden);
+            TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
+            if( !lista.isEmpty() ) {
+                sinResultado.setVisibility(View.GONE);
 
-            this.listaVistaOrden.setLongClickable(true);
-            this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
-                    setOrdenSeleccionada( lista.get(posicion) );
-                    PopupMenu menu = new PopupMenu(getContext(), vista);
-                    menu.getMenuInflater().inflate( R.menu.menu_lista_orden, menu.getMenu() );
-                    menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch ( item.getItemId() ){
-                                case R.id.asignarMecanico:
-                                    asignaMecanico();
-                                    return true;
-                                case R.id.cerrarTiempo:
-                                    obtenDetalle(false);
-                                    return true;
-                                case R.id.finalizaOrden:
-                                    obtenDetalle(true);
-                                    return true;
-                                case R.id.detalle:
-                                    muestraDetalle();
-                                    return true;
+                this.adaptadorOrden = new AdaptadorOrdenMantenimiento(getContext(), lista);
+                this.listaVistaOrden.setAdapter(this.adaptadorOrden);
+
+                this.listaVistaOrden.setLongClickable(true);
+                this.listaVistaOrden.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
+                        setOrdenSeleccionada(lista.get(posicion));
+                        PopupMenu menu = new PopupMenu(getContext(), vista);
+                        menu.getMenuInflater().inflate(R.menu.menu_lista_orden, menu.getMenu());
+                        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.asignarMecanico:
+                                        asignaMecanico();
+                                        return true;
+                                    case R.id.cerrarTiempo:
+                                        obtenDetalle(false);
+                                        return true;
+                                    case R.id.finalizaOrden:
+                                        obtenDetalle(true);
+                                        return true;
+                                    case R.id.detalle:
+                                        muestraDetalle();
+                                        return true;
+                                }
+                                setOrdenSeleccionada(null);
+                                return false;
                             }
-                            setOrdenSeleccionada(null);
-                            return false;
+                        });
+                        if (UsuarioLogueado.getUsuarioLogueado(null).getId_rol() != Constantes.ROL.auxiliar.getId()) {
+                            menu.getMenu().getItem(0).setVisible(false);
                         }
-                    });
-                    if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() != Constantes.ROL.auxiliar.getId() ){
-                        menu.getMenu().getItem(0).setVisible(false);
+                        if (UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId()) {
+                            menu.getMenu().getItem(1).setVisible(false);
+                        } else {
+                            menu.getMenu().getItem(2).setVisible(false);
+                        }
+                        menu.show();
+                        return false;
                     }
-                    if( UsuarioLogueado.getUsuarioLogueado(null).getId_rol() == Constantes.ROL.mecanico.getId() ){
-                        menu.getMenu().getItem(1).setVisible(false);
-                    }else{
-                        menu.getMenu().getItem(2).setVisible(false);
+                });
+
+                this.campoBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String texto) {
+                        return false;
                     }
-                    menu.show();
-                    return false;
-                }
-            });
 
-            this.campoBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String texto) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String texto) {
-                    adaptadorOrden.filtro(texto);
-                    return false;
-                }
-            });
+                    @Override
+                    public boolean onQueryTextChange(String texto) {
+                        adaptadorOrden.filtro(texto);
+                        return false;
+                    }
+                });
+            }else{
+                sinResultado.setVisibility(View.VISIBLE);
+            }
 
             terminaProcesando();
         }
@@ -378,18 +385,18 @@ public class Fragment_Atemperado_OM extends Fragment {
     }
 
     private void finalizaOrden(OrdenMantenimiento orden){
-        OrdenMantenimientoActualizar ordenActualizar = new OrdenMantenimientoActualizar();
-        ordenActualizar.setIdOrdenMantenimiento( orden.getIdOrdenMantenimiento() );
-        ordenActualizar.setIdEmpleado( orden.getIdEmpleado() );
-        ordenActualizar.setNombreEmpleado( orden.getNombreEmpleado() );
-        ordenActualizar.setaPaternoEmpleado( orden.getaPaternoEmpleado() );
-        ordenActualizar.setaMaternoEmpleado( orden.getaMaternoEmpleado() );
-        ordenActualizar.setFechaInicio( orden.getFechaInicio() );
-        ordenActualizar.setSolucion( orden.getSolucion() );
-        ordenActualizar.setFinalizada(true);
-        ordenActualizar.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idOrdenMantenimiento", orden.getIdOrdenMantenimiento() );
+        json.addProperty("idEmpleado", orden.getIdEmpleado() );
+        json.addProperty("nombreEmpleado", orden.getNombreEmpleado() );
+        json.addProperty("aPaternoEmpleado", orden.getaPaternoEmpleado() );
+        json.addProperty("aMaternoEmpleado", orden.getaMaternoEmpleado() );
+        json.addProperty("fechaInicio", orden.getFechaInicio() );
+        json.addProperty("solucion", orden.getSolucion() );
+        json.addProperty("finalizada", true);
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
 
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(ordenActualizar);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().actualizaOrdenMantenimiento(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

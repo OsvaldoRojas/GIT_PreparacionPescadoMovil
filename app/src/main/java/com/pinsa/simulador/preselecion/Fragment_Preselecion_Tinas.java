@@ -18,20 +18,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.R;
 import com.pinsa.simulador.adaptadores.AdaptadorMezclarSubtallas;
 import com.pinsa.simulador.adaptadores.AdaptadorTinasLiberadas;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.utilerias.Constantes;
 import com.pinsa.simulador.utilerias.Utilerias;
-import com.pinsa.simulador.vista.servicio.LiberaTinaServicio;
 import com.pinsa.simulador.vista.OperadorBascula;
 import com.pinsa.simulador.vista.OperadorMontacargas;
-import com.pinsa.simulador.vista.servicio.MezclaTinaServicio;
-import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 import com.pinsa.simulador.vista.Tina;
 import com.pinsa.simulador.vista.UsuarioLogueado;
-import com.google.gson.JsonObject;
+import com.pinsa.simulador.vista.servicio.MezclaTinaServicio;
+import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -738,12 +737,10 @@ public class Fragment_Preselecion_Tinas extends Fragment {
 
     private void liberarTina(){
         iniciaProcesando();
-
-        LiberaTinaServicio tinaLiberada = new LiberaTinaServicio();
-        tinaLiberada.setIdPosicion( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
-        tinaLiberada.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTina(tinaLiberada);
+        JsonObject json = new JsonObject();
+        json.addProperty("idPreseleccionPosicionTina", getTinaSeleccionada().getIdPreseleccionPosicionTina() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTina(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -795,7 +792,16 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void guardaOperador(){
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperador( getOperadorSeleccionado() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idPreseleccionEstacion", getOperadorSeleccionado().getIdPreseleccionEstacion() );
+        json.addProperty("estacion", getOperadorSeleccionado().getEstacion() );
+        json.addProperty("idPosicionPrincipal", getOperadorSeleccionado().getIdPosicionPrincipal() );
+        json.addProperty("idPosicionAlterna", getOperadorSeleccionado().getIdPosicionAlterna() );
+        json.addProperty("idEmpleado", getOperadorSeleccionado().getIdEmpleado() );
+        json.addProperty("turno", getOperadorSeleccionado().getTurno() );
+        json.addProperty("libre", getOperadorSeleccionado().getLibre() );
+        //json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperador(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -829,7 +835,13 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void guardaMontacargas(){
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaMontacargas( getMontacargasSeleccionado() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idPreseleccionMontacarga", getMontacargasSeleccionado().getIdPreseleccionMontacarga() );
+        json.addProperty("idEmpleado", getMontacargasSeleccionado().getIdEmpleado() );
+        json.addProperty("turno", getMontacargasSeleccionado().getTurno() );
+        json.addProperty("libre", getMontacargasSeleccionado().getLibre() );
+        //json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaMontacargas(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -1061,13 +1073,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
     }
 
     private void liberaTurnoServicio(){
-        //LiberarTodos liberarTodos = new LiberarTodos( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-        //Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurno(liberarTodos);
-
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario());
-
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurnoPrueba(jsonObject);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurno(jsonObject);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

@@ -18,16 +18,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.R;
 import com.pinsa.simulador.conexion.APIServicios;
 import com.pinsa.simulador.contenedores.Contenedor;
 import com.pinsa.simulador.utilerias.Utilerias;
 import com.pinsa.simulador.vista.ErrorServicio;
-import com.pinsa.simulador.vista.servicio.Gafete;
 import com.pinsa.simulador.vista.OperadorBascula;
-import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 import com.pinsa.simulador.vista.Tina;
 import com.pinsa.simulador.vista.UsuarioLogueado;
+import com.pinsa.simulador.vista.servicio.Gafete;
+import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 import java.util.List;
@@ -223,7 +224,16 @@ public class Fragment_Asigna_Operador extends Fragment {
     }
 
     private void guarda(){
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperador( getOperadorSeleccionado() );
+        JsonObject json = new JsonObject();
+        json.addProperty("idPreseleccionEstacion", getOperadorSeleccionado().getIdPreseleccionEstacion() );
+        json.addProperty("estacion", getOperadorSeleccionado().getEstacion() );
+        json.addProperty("idPosicionPrincipal", getOperadorSeleccionado().getIdPosicionPrincipal() );
+        json.addProperty("idPosicionAlterna", getOperadorSeleccionado().getIdPosicionAlterna() );
+        json.addProperty("idEmpleado", getOperadorSeleccionado().getIdEmpleado() );
+        json.addProperty("turno", getOperadorSeleccionado().getTurno() );
+        json.addProperty("libre", getOperadorSeleccionado().getLibre() );
+        //json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperador(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {

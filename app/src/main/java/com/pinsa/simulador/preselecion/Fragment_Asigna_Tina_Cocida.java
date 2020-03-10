@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.JsonObject;
 import com.pinsa.simulador.R;
 import com.pinsa.simulador.adaptadores.AdaptadorCocida;
 import com.pinsa.simulador.conexion.APIServicios;
@@ -30,7 +31,6 @@ import com.pinsa.simulador.vista.Tina;
 import com.pinsa.simulador.vista.UsuarioLogueado;
 import com.pinsa.simulador.vista.servicio.RespuestaServicio;
 import com.pinsa.simulador.vista.servicio.TinaEscaneo;
-import com.pinsa.simulador.vista.servicio.TinaServicio;
 
 import java.io.Serializable;
 import java.util.List;
@@ -225,21 +225,20 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     }
 
     private void guarda(int idCocida){
-        TinaServicio tinaServicio = new TinaServicio();
-        tinaServicio.setIdEspecialidad( getTinaSeleccionada().getEspecialidad().getIdEspecialidad() );
-        tinaServicio.setIdPreseleccionPosicionTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
-        tinaServicio.setIdAsignacionCocida(idCocida);
-        tinaServicio.setIdTina( getTinaSeleccionada().getTina().getIdTina() );
-        tinaServicio.setIdEspecie( getTinaSeleccionada().getGrupoEspecie().getIdEspecie() );
-        tinaServicio.setIdTalla( getTinaSeleccionada().getTalla().getIdTalla() );
-        tinaServicio.setIdSubtalla( getTinaSeleccionada().getSubtalla().getIdSubtalla() );
-        tinaServicio.setNpiezas( getTinaSeleccionada().getNpiezas() );
-        tinaServicio.setPeso( getTinaSeleccionada().getPeso() );
-        tinaServicio.setLibre( getTinaSeleccionada().getLibre() );
-        tinaServicio.setTurno( getTinaSeleccionada().getTurno() );
-        tinaServicio.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().asignaTina(tinaServicio);
+        JsonObject json = new JsonObject();
+        json.addProperty("idPreseleccionPosicionTina", getTinaSeleccionada().getIdPreseleccionPosicionTina() );
+        json.addProperty("idAsignacionCocida", idCocida);
+        json.addProperty("idTina", getTinaSeleccionada().getTina().getIdTina() );
+        json.addProperty("idEspecie", getTinaSeleccionada().getGrupoEspecie().getIdEspecie() );
+        json.addProperty("idTalla", getTinaSeleccionada().getTalla().getIdTalla() );
+        json.addProperty("idSubtalla", getTinaSeleccionada().getSubtalla().getIdSubtalla() );
+        json.addProperty("idEspecialidad", getTinaSeleccionada().getEspecialidad().getIdEspecialidad() );
+        json.addProperty("npiezas", getTinaSeleccionada().getNpiezas() );
+        json.addProperty("peso", getTinaSeleccionada().getPeso() );
+        json.addProperty("libre", getTinaSeleccionada().getLibre() );
+        json.addProperty("turno", getTinaSeleccionada().getTurno() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().asignaTina(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
@@ -324,19 +323,24 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
 
     private void resultadoCocidas(List<Cocida> cocidas){
         if( isAdded() ){
-            //if( !cocidas.isEmpty() ){
-            this.cocidas = cocidas;
-            this.vistaLista = this.vista.findViewById(R.id.listaTinas);
-            this.vistaLista.setHasFixedSize(true);
+            TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
+            if( !cocidas.isEmpty() ) {
+                sinResultado.setVisibility(View.GONE);
 
-            LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
-            this.vistaLista.setLayoutManager(layoutManager);
+                this.cocidas = cocidas;
+                this.vistaLista = this.vista.findViewById(R.id.listaTinas);
+                this.vistaLista.setHasFixedSize(true);
 
-            AdaptadorCocida adaptador = new AdaptadorCocida(cocidas, this);
-            this.vistaLista.setAdapter(adaptador);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                this.vistaLista.setLayoutManager(layoutManager);
+
+                AdaptadorCocida adaptador = new AdaptadorCocida(cocidas, this);
+                this.vistaLista.setAdapter(adaptador);
+            }else{
+                sinResultado.setVisibility(View.VISIBLE);
+            }
 
             terminaProcesando();
-            //}
         }
     }
 
