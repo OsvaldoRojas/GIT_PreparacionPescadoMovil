@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pinsa.simulador">
+    package="com.grupo.pinsa.sip.simulador">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -17,27 +17,15 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
         <activity
-            android:name="com.pinsa.simulador.ActividadArtefactos"
+            android:name="com.grupo.pinsa.sip.simulador.orden.ActividadArtefactos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pinsa.simulador.preselecion.Tabs_Preselecion"
-            android:label="@string/title_activity_tabs__preselecion"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.pinsa.simulador.descongelado.Tabs_Descongelado"
-            android:label="@string/title_activity_tabs__descongelado"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.pinsa.simulador.atemperado.Tabs_Atemperado"
-            android:label="@string/title_activity_tabs__atemperado"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.pinsa.simulador.Navegador"
+            android:name="com.grupo.pinsa.sip.simulador.Navegador"
             android:label="@string/title_activity_navegador"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.pinsa.simulador.Turno"
+            android:name="com.grupo.pinsa.sip.simulador.Turno"
             android:label="@string/app_name"
             android:theme="@style/AppThemeAcceder">
             <intent-filter>
@@ -46,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.pinsa.simulador.MainActivity" />
+        <activity android:name="com.grupo.pinsa.sip.simulador.MainActivity" />
     </application>
 
 </manifest>

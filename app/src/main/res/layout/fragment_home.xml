@@ -1,59 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     tools:context=".home">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center">
 
-        <Button
-            android:id="@+id/botonPreseleccion"
-            style="@style/botonMenu"
-            android:text="@string/preseleccion"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <Button
-            android:id="@+id/botonAtemperado"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/atemperador"/>
+            <Button
+                android:id="@+id/botonPreseleccion"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/preseleccion"/>
 
-        <Button
-            android:id="@+id/botonDescongelado"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/descongelado"/>
+            <Button
+                android:id="@+id/botonAtemperado"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/atemperador"/>
 
-        <Button
-            android:id="@+id/botonEviscerado"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/eviscerar"/>
+            <Button
+                android:id="@+id/botonDescongelado"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/descongelado"/>
 
-        <Button
-            android:id="@+id/botonEmparrillado"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/emparrillado"/>
+            <Button
+                android:id="@+id/botonEviscerado"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/eviscerar"/>
 
-        <Button
-            android:id="@+id/botonMovimiento"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/movimieto"/>
+            <Button
+                android:id="@+id/botonEmparrillado"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/emparrillado"/>
 
-        <Button
-            android:id="@+id/botonControl"
-            style="@style/botonMenu"
-            android:layout_marginTop="15dp"
-            android:text="@string/control"/>
+            <Button
+                android:id="@+id/botonCocimiento"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/cocimiento"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/botonModulos"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/modulos"/>
+
+            <Button
+                android:id="@+id/botonTemperatura"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/temperatura"/>
+
+            <Button
+                android:id="@+id/botonEstatus"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/estatusCocedor"/>
+
+            <Button
+                android:id="@+id/botonLavado"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/lavadoCarros"/>
+
+            <Button
+                android:id="@+id/botonMovimiento"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:text="@string/movimieto"/>
+
+            <Button
+                android:id="@+id/botonControl"
+                style="@style/botonMenu"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/control"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

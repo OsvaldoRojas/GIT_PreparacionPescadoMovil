@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/no_selecion">
+    tools:context=".preselecion.Fragment_Preselecion_Tinas">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,117 +14,112 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ScrollView
+            <SearchView
+                android:id="@+id/campoBusqueda"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/crearOrden"
-                        android:textColor="@color/negro"
-                        android:gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:textSize="17dp"/>
-
-                    <TextView
-                        android:id="@+id/etiquetaFecha"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:textColor="@color/negro"
-                        android:gravity="center"
-                        android:layout_marginTop="1dp"
-                        android:textSize="13dp"/>
-
-                    <Spinner
-                        android:id="@+id/seleccionMaquinaria"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@color/colorAccent"/>
-
-                    <Button
-                        android:id="@+id/botonArtefactos"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:paddingBottom="4dp"
-                        android:paddingTop="4dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:background="@color/colorAccent"
-                        android:text="Seleccionar componentes"
-                        android:textSize="15dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textAllCaps="false"
-                        android:gravity="left" />
-
-                    <ListView
-                        android:id="@+id/listaArtefactos"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:visibility="gone"
-                        android:background="@color/colorAccent"
-                        tools:listitem="@layout/item_artefacto_orden"/>
-
-                    <EditText
-                        android:id="@+id/campoDescripcion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:hint="Descripción del problema"
-                        android:gravity="top"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:background="@color/colorAccent"
-                        android:textSize="15dp"
-                        android:paddingTop="4dp"
-                        android:paddingLeft="5dp"
-                        android:paddingBottom="4dp"
-                        android:lines="10">
-                        <requestFocus/>
-                    </EditText>
-
-                </LinearLayout>
-
-            </ScrollView>
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:queryHint="Búsqueda"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="7"
-                android:orientation="horizontal"
-                android:paddingTop="5dp"
-                android:layout_marginTop="3dp"
-                android:gravity="bottom">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/boton1"
-                    android:text="@string/cancelar"
-                    style="@style/botonAccion"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Folio"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
 
-                <Button
-                    android:id="@+id/boton2"
-                    android:text="@string/aceptar"
-                    style="@style/botonAccion"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.8"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Fecha"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.7"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Equipo"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
+
+                <TextView
+                    android:id="@+id/tituloMecanico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.6"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Mecánico"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/blanco" />
 
             </LinearLayout>
 
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/actualizar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/listaOrden"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawSelectorOnTop="true"
+                    tools:listitem="@layout/item_orden_mantenimiento"/>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         </LinearLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/sinResultados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No se encontraron resultados"
+            android:gravity="center_horizontal"
+            android:paddingTop="100dp"
+            android:visibility="gone"
+            android:textSize="15dp"/>
 
     </FrameLayout>
 

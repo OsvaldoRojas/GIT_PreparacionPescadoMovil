@@ -25,6 +25,8 @@
     <string name="asignarUsuario">Asignar Usuario</string>
     <string name="asignarMontacargas">Usuario Montacargas</string>
     <string name="asignarTurno">Asignar Turno</string>
+    <string name="volver">Regresar</string>
+    <string name="completo">Completo</string>
 
     <string name="crearOrden">Crear orden de mantenimiento</string>
     <string name="ordenMantenimiento">Orden de mantenimiento</string>
@@ -47,6 +49,10 @@
     <string name="descongelado">Descongelado</string>
     <string name="eviscerar">Eviscerado</string>
     <string name="emparrillado">Emparrillado</string>
+    <string name="modulos">Módulos</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="estatusCocedor">Estatus cocedor</string>
+    <string name="lavadoCarros">Lavado de carros</string>
     <string name="movimieto">Movimiento de personal</string>
     <string name="control">Control de proceso manual</string>
     <string name="cocimiento">Cocimiento</string>
