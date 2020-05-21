@@ -23,11 +23,11 @@ import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Eviscerado;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.Operador;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.Gafete;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.Operador;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.Gafete;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 
@@ -36,6 +36,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Fragment_Asigna_Operador extends Fragment {
+
     private static final String ARG_PARAM1 = "param1";
 
     private Serializable mParam1;
@@ -50,14 +51,6 @@ public class Fragment_Asigna_Operador extends Fragment {
     public Fragment_Asigna_Operador() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment Fragment_Descongelado_TiempoMuerto.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_Asigna_Operador newInstance(Serializable param1) {
         Fragment_Asigna_Operador fragment = new Fragment_Asigna_Operador();
         Bundle args = new Bundle();
@@ -169,19 +162,22 @@ public class Fragment_Asigna_Operador extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoAsignacion();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoAsignacion();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al asignar al operador" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -226,18 +222,22 @@ public class Fragment_Asigna_Operador extends Fragment {
             llamadaServicio.enqueue(new Callback<Gafete>() {
                 @Override
                 public void onResponse(Call<Gafete> call, Response<Gafete> response) {
-                    if(response.code() == 200){
-                        resultadoEscaneoGafete( response.body() );
-                    }else{
-                        terminaProcesando();
-                        errorServicio("Error interno del servidor");
+                    if( isAdded() ){
+                        if(response.code() == 200){
+                            resultadoEscaneoGafete( response.body() );
+                        }else{
+                            terminaProcesando();
+                            errorServicio("Error al obtener el operador");
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Gafete> call, Throwable t) {
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    if( isAdded() ){
+                        terminaProcesando();
+                        errorServicio("Error al conectar con el servidor");
+                    }
                 }
             });
         }else{
@@ -336,7 +336,6 @@ public class Fragment_Asigna_Operador extends Fragment {
         barraProgreso.setVisibility(View.GONE);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -360,18 +359,7 @@ public class Fragment_Asigna_Operador extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

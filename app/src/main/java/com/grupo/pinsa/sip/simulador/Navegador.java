@@ -12,12 +12,15 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.cocimiento.Fragment_Carga_Carritos;
 import com.grupo.pinsa.sip.simulador.cocimiento.Fragment_Cocimiento_Plan;
+import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Asigna_Tina;
+import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Cocida;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Cocimiento;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Emparrillado;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Eviscerado;
+import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Lavado;
+import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Modulos;
 import com.grupo.pinsa.sip.simulador.descongelado.Fragment_Descongelado_DetalleEstiba;
 import com.grupo.pinsa.sip.simulador.atemperado.Fragment_Atemperado_Plan;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor;
@@ -26,7 +29,14 @@ import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Descongelado;
 import com.grupo.pinsa.sip.simulador.descongelado.Fragment_Descongelado_Plan;
 import com.grupo.pinsa.sip.simulador.descongelado.Fragment_Descongelado_SalidaTinas;
 import com.grupo.pinsa.sip.simulador.emparrillado.Fragment_Emparrillado_Plan;
+import com.grupo.pinsa.sip.simulador.estatusCocedor.Fragment_Cocida;
+import com.grupo.pinsa.sip.simulador.estatusCocedor.Fragment_Estatus;
 import com.grupo.pinsa.sip.simulador.eviscerado.Fragment_Eviscerado_Plan;
+import com.grupo.pinsa.sip.simulador.lavadoCarros.Fragment_Lavado_Plan;
+import com.grupo.pinsa.sip.simulador.modulos.Fragment_Detalle_Modulo;
+import com.grupo.pinsa.sip.simulador.modulos.Fragment_Entrada_Manual;
+import com.grupo.pinsa.sip.simulador.modulos.Fragment_Modulos_Plan;
+import com.grupo.pinsa.sip.simulador.modulos.Fragment_Vista_Modulo;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_AsignaMecanico;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_CreaOrdenMantenimiento;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_DetalleOrden;
@@ -36,9 +46,12 @@ import com.grupo.pinsa.sip.simulador.preselecion.Fragment_Asigna_Operador;
 import com.grupo.pinsa.sip.simulador.preselecion.Fragment_Asigna_Tina;
 import com.grupo.pinsa.sip.simulador.preselecion.Fragment_Asigna_Tina_Cocida;
 import com.grupo.pinsa.sip.simulador.preselecion.Fragment_Preselecion_Tinas;
+import com.grupo.pinsa.sip.simulador.temperatura.Fragment_Temperatura_Carrito;
+import com.grupo.pinsa.sip.simulador.temperatura.Fragment_Temperatura_Tina;
+import com.grupo.pinsa.sip.simulador.temperatura.HomeTemperatura;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
 import com.google.android.material.navigation.NavigationView;
 
 public class Navegador extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Fragment_OrdenMantenimiento.OnFragmentInteractionListener,
@@ -52,7 +65,12 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         com.grupo.pinsa.sip.simulador.emparrillado.Fragment_Asigna_Operador.OnFragmentInteractionListener, Fragment_MovimientoPersonal.OnFragmentInteractionListener,
         Fragment_ControlProceso.OnFragmentInteractionListener, Fragment_Asigna_Tina_Cocida.OnFragmentInteractionListener, Fragment_Cocimiento_Plan.OnFragmentInteractionListener,
         Contenedor_Cocimiento.OnFragmentInteractionListener, com.grupo.pinsa.sip.simulador.cocimiento.Fragment_Asigna_Operador.OnFragmentInteractionListener,
-        Fragment_Carga_Carritos.OnFragmentInteractionListener {
+        Fragment_Carga_Carritos.OnFragmentInteractionListener, Contenedor_Asigna_Tina.OnFragmentInteractionListener, Fragment_Lavado_Plan.OnFragmentInteractionListener,
+        com.grupo.pinsa.sip.simulador.lavadoCarros.Fragment_Asigna_Operador.OnFragmentInteractionListener, Contenedor_Lavado.OnFragmentInteractionListener,
+        Fragment_Estatus.OnFragmentInteractionListener, Contenedor_Cocida.OnFragmentInteractionListener, Fragment_Cocida.OnFragmentInteractionListener,
+        HomeTemperatura.OnFragmentInteractionListener, Fragment_Temperatura_Tina.OnFragmentInteractionListener, Fragment_Temperatura_Carrito.OnFragmentInteractionListener,
+        Contenedor_Modulos.OnFragmentInteractionListener, Fragment_Modulos_Plan.OnFragmentInteractionListener, com.grupo.pinsa.sip.simulador.modulos.Fragment_Asigna_Operador.OnFragmentInteractionListener,
+        Fragment_Vista_Modulo.OnFragmentInteractionListener, Fragment_Detalle_Modulo.OnFragmentInteractionListener, Fragment_Entrada_Manual.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +86,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commit();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        permisos(navigationView);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -75,35 +94,35 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void permisos(NavigationView navigationView){
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            navigationView.getMenu().getItem(6).setVisible(false);
+            navigationView.getMenu().getItem(7).setVisible(false);
+        }else{
+            if( UsuarioLogueado.getUsuarioLogueado().getId_rol() != Constantes.ROL.auxiliar.getId() ){
+                navigationView.getMenu().getItem(1).setVisible(false);
+                navigationView.getMenu().getItem(2).setVisible(false);
+                navigationView.getMenu().getItem(3).setVisible(false);
+                navigationView.getMenu().getItem(4).setVisible(false);
+                navigationView.getMenu().getItem(5).setVisible(false);
+                navigationView.getMenu().getItem(6).setVisible(false);
+                navigationView.getMenu().getItem(7).setVisible(false);
+            }
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        /*DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }*/
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.navegador, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

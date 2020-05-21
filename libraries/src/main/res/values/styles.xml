@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Version Text -->
+    <style name="grupopinsa_version">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textColor">@color/grupopinsa_colorGray</item>
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+
+    <!-- Text -->
+    <style name="grupopinsa_larger_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_large_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_normal_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_small_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_smaller_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    
+    <!-- Bold Text -->
+    <style name="grupopinsa_larger_bold_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_large_bold_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_normal_bold_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_small_bold_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+    <style name="grupopinsa_smaller_bold_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+    </style>
+
+    <!-- Text Center Alignment -->
+    <style name="grupopinsa_larger_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_large_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_normal_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_small_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_smaller_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Bold Text Center Alignment -->
+    <style name="grupopinsa_larger_bold_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_large_bold_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_normal_bold_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_small_bold_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_smaller_bold_center_text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorLightBlack</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Disabled Text -->
+    <style name="grupopinsa_larger_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_large_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_normal_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_small_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_smaller_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+
+    <!-- Disabled Bold Text -->
+    <style name="grupopinsa_larger_bold_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_large_bold_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_normal_bold_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_small_bold_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+    <style name="grupopinsa_smaller_bold_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+    </style>
+
+    <!-- Disabled Text Center Alignment -->
+    <style name="grupopinsa_larger_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_large_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_normal_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_small_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_smaller_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Disabled Bold Text Center Alignment -->
+    <style name="grupopinsa_larger_bold_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_large_bold_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_normal_bold_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_small_bold_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="grupopinsa_smaller_bold_center_text_disabled">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/grupopinsa_colorDarkGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Text Style Button -->
+    <style name="grupopinsa_text_button_larger">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_larger</item>
+        <item name="android:textColor">@color/grupopinsa_colorBlue</item>
+        <item name="android:paddingLeft">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingRight">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingTop">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:paddingBottom">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:layout_marginLeft">@dimen/grupopinsa_spacing_tiny</item>
+        <item name="android:layout_marginRight">@dimen/grupopinsa_spacing_tiny</item>
+    </style>
+    <style name="grupopinsa_text_button_large">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+        <item name="android:textColor">@color/grupopinsa_colorBlue</item>
+        <item name="android:paddingLeft">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingRight">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingTop">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:paddingBottom">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:layout_marginLeft">@dimen/grupopinsa_spacing_tiny</item>
+        <item name="android:layout_marginRight">@dimen/grupopinsa_spacing_tiny</item>
+    </style>
+    <style name="grupopinsa_text_button_normal">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+        <item name="android:textColor">@color/grupopinsa_colorBlue</item>
+        <item name="android:paddingLeft">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingRight">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingTop">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:paddingBottom">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:layout_marginLeft">@dimen/grupopinsa_spacing_tiny</item>
+        <item name="android:layout_marginRight">@dimen/grupopinsa_spacing_tiny</item>
+    </style>
+    <style name="grupopinsa_text_button_small">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+        <item name="android:textColor">@color/grupopinsa_colorBlue</item>
+        <item name="android:paddingLeft">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingRight">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingTop">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:paddingBottom">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:layout_marginLeft">@dimen/grupopinsa_spacing_tiny</item>
+        <item name="android:layout_marginRight">@dimen/grupopinsa_spacing_tiny</item>
+    </style>
+    <style name="grupopinsa_text_button_smaller">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+        <item name="android:textColor">@color/grupopinsa_colorBlue</item>
+        <item name="android:paddingLeft">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingRight">@dimen/grupopinsa_spacing_normal</item>
+        <item name="android:paddingTop">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:paddingBottom">@dimen/grupopinsa_spacing_small</item>
+        <item name="android:layout_marginLeft">@dimen/grupopinsa_spacing_tiny</item>
+        <item name="android:layout_marginRight">@dimen/grupopinsa_spacing_tiny</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="grupopinsa_larger_button">
+        <item name="android:background">@color/grupopinsa_colorLightBlue</item>
+        <item name="android:textColor">@color/grupopinsa_colorWhite</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+    </style>
+    <style name="grupopinsa_large_button">
+        <item name="android:background">@color/grupopinsa_colorLightBlue</item>
+        <item name="android:textColor">@color/grupopinsa_colorWhite</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_large</item>
+    </style>
+    <style name="grupopinsa_normal_button">
+        <item name="android:background">@color/grupopinsa_colorLightBlue</item>
+        <item name="android:textColor">@color/grupopinsa_colorWhite</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_normal</item>
+    </style>
+    <style name="grupopinsa_small_button">
+        <item name="android:background">@color/grupopinsa_colorLightBlue</item>
+        <item name="android:textColor">@color/grupopinsa_colorWhite</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_small</item>
+    </style>
+    <style name="grupopinsa_smaller_button">
+        <item name="android:background">@color/grupopinsa_colorLightBlue</item>
+        <item name="android:textColor">@color/grupopinsa_colorWhite</item>
+        <item name="android:textSize">@dimen/grupopinsa_font_smaller</item>
+    </style>
+
+    <!-- Checkbox -->
+    <style name="grupopinsa_check_box">
+        <item name="colorAccent">@color/design_default_color_primary</item>
+        <item name="android:buttonTint">@color/design_default_color_primary</item>
+    </style>
+    <style name="grupopinsa_check_box_white">
+        <item name="colorAccent">@color/grupopinsa_colorWhite</item>
+        <item name="android:buttonTint">@color/grupopinsa_colorWhite</item>
+    </style>
+
+    <!-- Spinner -->
+    <style name="grupopinsa_spinner_dropdown" parent="Base.Widget.AppCompat.Spinner.Underlined">
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:dropDownWidth">match_parent</item>
+    </style>
+
+    <!-- Custom Components -->
+    <style name="grupopinsa_edit_text_disabled">
+        <item name="android:paddingTop">@dimen/grupopinsa_spacing_tiny</item>
+        <item name="android:paddingBottom">@dimen/grupopinsa_spacing_tiny</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="grupopinsa_table_cell_first_last">
+        <item name="android:layout_marginLeft">-10dp</item>
+        <item name="android:layout_marginRight">-10dp</item>
+    </style>
+</resources>

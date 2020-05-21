@@ -21,9 +21,9 @@ import com.google.gson.JsonObject;
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
-import com.grupo.pinsa.sip.simulador.vista.Operador;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.Operador;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,19 +193,23 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         llamadaServicio.enqueue(new Callback<List<Operador>>() {
             @Override
             public void onResponse(Call<List<Operador>> call, Response<List<Operador>> response) {
-                if(response.code() == 200){
-                    ordenaOperadores( response.body() );
-                    terminaProcesando();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        ordenaOperadores( response.body() );
+                        terminaProcesando();
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener los operadores asignados");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Operador>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -329,19 +333,22 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    ventanaMensaje("El usuario fue liberado exitosamente");
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        ventanaMensaje("El usuario fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar al operador" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -414,23 +421,26 @@ public class Fragment_Emparrillado_Plan extends Fragment {
     private void liberaTurnoServicio(){
         JsonObject json = new JsonObject();
         json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberarTurnoEmparrillado(json);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurnoEmparrillado(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    getAsignados();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        getAsignados();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar el turno" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }

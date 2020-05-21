@@ -1,30 +1,41 @@
 package com.grupo.pinsa.sip.simulador.conexion;
 
 import com.google.gson.JsonObject;
-import com.grupo.pinsa.sip.simulador.vista.Artefacto;
-import com.grupo.pinsa.sip.simulador.vista.Cocida;
-import com.grupo.pinsa.sip.simulador.vista.Especialidad;
-import com.grupo.pinsa.sip.simulador.vista.Etapa;
-import com.grupo.pinsa.sip.simulador.vista.GrupoEspecie;
-import com.grupo.pinsa.sip.simulador.vista.Maquinaria;
-import com.grupo.pinsa.sip.simulador.vista.Operador;
-import com.grupo.pinsa.sip.simulador.vista.OperadorBascula;
-import com.grupo.pinsa.sip.simulador.vista.OperadorMontacargas;
-import com.grupo.pinsa.sip.simulador.vista.OrdenMantenimiento;
-import com.grupo.pinsa.sip.simulador.vista.PosicionEstibaAtemperado;
-import com.grupo.pinsa.sip.simulador.vista.PosicionEstibaDescongelado;
-import com.grupo.pinsa.sip.simulador.vista.Refaccion;
-import com.grupo.pinsa.sip.simulador.vista.SalidaTina;
-import com.grupo.pinsa.sip.simulador.vista.Subtalla;
-import com.grupo.pinsa.sip.simulador.vista.Talla;
-import com.grupo.pinsa.sip.simulador.vista.Tina;
-import com.grupo.pinsa.sip.simulador.vista.TinaProceso;
-import com.grupo.pinsa.sip.simulador.vista.servicio.Gafete;
-import com.grupo.pinsa.sip.simulador.vista.servicio.ListaOrdenMantenimientoServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.MezclaTinaServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.OrdenMantenimientoGuardar;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.TinaEscaneo;
+import com.grupo.pinsa.sip.simulador.modelo.Artefacto;
+import com.grupo.pinsa.sip.simulador.modelo.Bascula;
+import com.grupo.pinsa.sip.simulador.modelo.Carrito;
+import com.grupo.pinsa.sip.simulador.modelo.Cocedor;
+import com.grupo.pinsa.sip.simulador.modelo.CocedorActualSiguiente;
+import com.grupo.pinsa.sip.simulador.modelo.Cocida;
+import com.grupo.pinsa.sip.simulador.modelo.EmpleadoEstacion;
+import com.grupo.pinsa.sip.simulador.modelo.Especialidad;
+import com.grupo.pinsa.sip.simulador.modelo.Etapa;
+import com.grupo.pinsa.sip.simulador.modelo.GrupoEspecie;
+import com.grupo.pinsa.sip.simulador.modelo.Maquinaria;
+import com.grupo.pinsa.sip.simulador.modelo.Modulo;
+import com.grupo.pinsa.sip.simulador.modelo.Operador;
+import com.grupo.pinsa.sip.simulador.modelo.OperadorBascula;
+import com.grupo.pinsa.sip.simulador.modelo.OperadorMontacargas;
+import com.grupo.pinsa.sip.simulador.modelo.OrdenMantenimiento;
+import com.grupo.pinsa.sip.simulador.modelo.PosicionEstibaAtemperado;
+import com.grupo.pinsa.sip.simulador.modelo.PosicionEstibaDescongelado;
+import com.grupo.pinsa.sip.simulador.modelo.Refaccion;
+import com.grupo.pinsa.sip.simulador.modelo.SalidaTina;
+import com.grupo.pinsa.sip.simulador.modelo.Subtalla;
+import com.grupo.pinsa.sip.simulador.modelo.Talla;
+import com.grupo.pinsa.sip.simulador.modelo.TemperaturaCarrito;
+import com.grupo.pinsa.sip.simulador.modelo.TemperaturaTina;
+import com.grupo.pinsa.sip.simulador.modelo.Tina;
+import com.grupo.pinsa.sip.simulador.modelo.TinaProceso;
+import com.grupo.pinsa.sip.simulador.modelo.Zona;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.CocedorCarritosAsignados;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.Gafete;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.ListaOrdenMantenimientoServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.MezclaTinaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.ModuloCarritosAsignados;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.OrdenMantenimientoGuardar;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.TinaEscaneo;
 
 import java.util.List;
 
@@ -52,6 +63,14 @@ public interface ServicioRest {
 
     @GET("catalogos/subtallas")
     Call<List<Subtalla>> getSubtallas();
+
+    @GET("catalogos/tallas/filtrado")
+    Call<List<Talla>> getTallasFiltrado(@Query("tipoAgrupacion") String tipoAgrupacion,
+                                        @Query("activo") boolean activo);
+
+    @GET("catalogos/subtallas/filtrado")
+    Call<List<Subtalla>> getSubtallasFiltrado(@Query("idTalla") int idTalla,
+                                              @Query("activo") boolean activo);
 
     @GET("catalogos/especies")
     Call<List<GrupoEspecie>> getEspecies();
@@ -100,10 +119,53 @@ public interface ServicioRest {
     Call<List<Cocida>> getAsignacionCocida();
 
     @GET("etapas/posiciones/tinas/{idTina}")
-    Call<TinaProceso> getTinaProceso(@Path("idTina") long idTina);
+    Call<TinaProceso> getTinaProceso(@Path("idTina") String idTina);
 
     @GET("descongelado/salida")
     Call<List<SalidaTina>> getSalidaTinas();
+
+    @GET("empleado/estacion")
+    Call<EmpleadoEstacion> getEmpleadoEstacion(@Query("idEmpleado") String idEmpleado);
+
+    @GET("cocimiento/operadores")
+    Call<List<Operador>> getOperadoresCocimiento();
+
+    @GET("lavado/operadores")
+    Call<List<Operador>> getOperadoresLavado();
+
+    @GET("cocimiento/cocida/actualSiguiente")
+    Call<CocedorActualSiguiente> getCocedorActualSiguiente();
+
+    @GET("cocimiento/carritos/sinAsignar")
+    Call<List<Carrito>> getCarritosSinAsignar();
+
+    @GET("cocimiento/catalogos/cocedores")
+    Call<List<Cocedor>> getCocedoresCocimiento();
+
+    @GET("cocimiento/cocedores/cocida/{idCocida}")
+    Call<List<Cocedor>> getDetalleCocidasCocedor(@Path("idCocida") long idCocida);
+
+    @GET("temperaturas/tinas")
+    Call<List<TemperaturaTina>> getTinasTemperatura(@Query("etapa") int idEtapa);
+
+    @GET("modulos/catalogos/modulos")
+    Call<List<Modulo>> getModulos();
+
+    @GET("modulos/{idModulo}/carritos")
+    Call<List<Carrito>> getCarritosModulo(@Path("idModulo") long idModulo);
+
+    @GET("modulos/operador")
+    Call<List<Operador>> getOperadoresModulo();
+
+    @GET("catalogos/zonas")
+    Call<List<Zona>> getZonas();
+
+    @GET("catalogos/basculas")
+    Call<List<Bascula>> getBasculas(@Query("clave") String clave);
+
+    @GET("modulos/carritos/{idCocedor}/{idBascula}/pesados")
+    Call<List<Carrito>> getCarritosSinAsignarModulo(@Path("idCocedor") long idCocedor,
+                                                    @Path("idBascula") int idBascula);
 
     @PUT("preseleccion/montacargas")
     Call<RespuestaServicio> guardaMontacargas(@Body JsonObject body);
@@ -120,17 +182,14 @@ public interface ServicioRest {
     @PUT("preseleccion/operadores/liberar-todos")
     Call<RespuestaServicio> liberaTurno(@Body JsonObject body);
 
-    @PUT("emparrillado/estaciones/liberar-todos")
-    Call<RespuestaServicio> liberarTurnoEmparrillado(@Body JsonObject body);
+    @PUT("emparrillado/estaciones/liberarTodos")
+    Call<RespuestaServicio> liberaTurnoEmparrillado(@Body JsonObject body);
 
-    @PUT("eviscerado/estaciones/liberar-todos")
-    Call<RespuestaServicio> liberarTurnoEviscerado(@Body JsonObject body);
+    @PUT("eviscerado/estaciones/liberarTodos")
+    Call<RespuestaServicio> liberaTurnoEviscerado(@Body JsonObject body);
 
     @PUT("preseleccion/posiciones/tinas")
     Call<RespuestaServicio> asignaTina(@Body JsonObject body);
-
-    @POST("preseleccion/posiciones/tinas/liberar")
-    Call<RespuestaServicio> liberaTina(@Body JsonObject body);
 
     @PUT("ordenes/mantenimientos")
     Call<RespuestaServicio> actualizaOrdenMantenimiento(@Body JsonObject body);
@@ -140,6 +199,33 @@ public interface ServicioRest {
 
     @PUT("descongelado/salida/marcadoVisible")
     Call<RespuestaServicio> guardaSalidaTina(@Body JsonObject body);
+
+    @PUT("cocimiento/operadores/libera-todos")
+    Call<RespuestaServicio> liberaTurnoCocimiento(@Body JsonObject body);
+
+    @PUT("cocimiento/operadores")
+    Call<RespuestaServicio> guardaOperadorCocimiento(@Body JsonObject body);
+
+    @PUT("lavado/operadores")
+    Call<RespuestaServicio> guardaOperadorLavado(@Body JsonObject body);
+
+    @PUT("lavado/operadores/libera-todos")
+    Call<RespuestaServicio> liberaTurnoLavado(@Body JsonObject body);
+
+    @PUT("temperaturas/tinas")
+    Call<List<RespuestaServicio>> guardaTemperaturaTina(@Body List<TemperaturaTina> tinas);
+
+    @PUT("temperaturas/carritos")
+    Call<List<RespuestaServicio>> guardaTemperaturaCarrito(@Body List<TemperaturaCarrito> carritos);
+
+    @PUT("modulos/operador")
+    Call<RespuestaServicio> guardaOperadorModulo(@Body JsonObject body);
+
+    @PUT("modulos/operadores/libera-todos")
+    Call<RespuestaServicio> liberaTurnoModulo(@Body JsonObject body);
+
+    @POST("preseleccion/posiciones/tinas/liberar")
+    Call<RespuestaServicio> liberaTina(@Body JsonObject body);
 
     @POST("preseleccion/posiciones/tinas/mezclar")
     Call<RespuestaServicio> mezclaTinas(@Body MezclaTinaServicio tinasMezcladas);
@@ -161,6 +247,21 @@ public interface ServicioRest {
 
     @POST("etapas/posiciones/tinas")
     Call<RespuestaServicio> guardaPeso(@Body JsonObject body);
+
+    @POST("cocimiento/cocedor/carritos")
+    Call<RespuestaServicio> asignaCarritosCocedor(@Body CocedorCarritosAsignados carritosAsignados);
+
+    @POST("cocimiento/cocedor/asignarStatus")
+    Call<RespuestaServicio> cambiaEstatusCocedor(@Body JsonObject body);
+
+    @POST("cocimiento/proceso/cocida")
+    Call<RespuestaServicio> iniciaCocida(@Body JsonObject body);
+
+    @POST("cocimiento/proceso/compensacion")
+    Call<RespuestaServicio> generaCompensacion(@Body JsonObject body);
+
+    @POST("modulos/carritos")
+    Call<List<RespuestaServicio>> asignaCarritosModulo(@Body ModuloCarritosAsignados carritosAsignados);
 
     @POST("empleado/puesto")
     Call<RespuestaServicio> guardaPuesto(@Body JsonObject body);

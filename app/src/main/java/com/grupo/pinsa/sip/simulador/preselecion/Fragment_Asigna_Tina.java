@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -29,17 +30,19 @@ import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor;
 import com.grupo.pinsa.sip.simulador.utilerias.Catalogos;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.Especialidad;
-import com.grupo.pinsa.sip.simulador.vista.GrupoEspecie;
-import com.grupo.pinsa.sip.simulador.vista.Subtalla;
-import com.grupo.pinsa.sip.simulador.vista.Talla;
-import com.grupo.pinsa.sip.simulador.vista.Tina;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.TinaEscaneo;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.Especialidad;
+import com.grupo.pinsa.sip.simulador.modelo.GrupoEspecie;
+import com.grupo.pinsa.sip.simulador.modelo.Subtalla;
+import com.grupo.pinsa.sip.simulador.modelo.Talla;
+import com.grupo.pinsa.sip.simulador.modelo.Tina;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.TinaEscaneo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,32 +50,25 @@ import retrofit2.Response;
 
 public class Fragment_Asigna_Tina extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private Serializable mParam1;
 
     private View vista;
-
     private AlertDialog ventanaError;
 
     private Tina tinaSeleccionada;
+    private AdaptadorTalla adaptadorTalla;
+    private AdaptadorSubtalla adaptadorSubtalla;
+
+    private List<Talla> catalogoTalla;
+    private List<Subtalla> catalogoSubtalla;
 
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Asigna_Tina() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment Fragment_Preselecion_Tinas.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_Asigna_Tina newInstance(Serializable param1) {
         Fragment_Asigna_Tina fragment = new Fragment_Asigna_Tina();
         Bundle args = new Bundle();
@@ -98,7 +94,6 @@ public class Fragment_Asigna_Tina extends Fragment {
         return this.vista;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -122,18 +117,7 @@ public class Fragment_Asigna_Tina extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
@@ -173,11 +157,37 @@ public class Fragment_Asigna_Tina extends Fragment {
             }
         });
 
-        Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
-        seleccionSubtalla.setAdapter( new AdaptadorSubtalla( getContext(), Catalogos.getInstancia().getCatalogoSubtalla() ) );
+        Spinner seleccionTalla = vista.findViewById(R.id.seleccionTalla);
+        seleccionTalla.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                iniciaProcesando();
+                Spinner seleccionSubtalla = vista.findViewById(R.id.seleccionSubtalla);
+                seleccionSubtalla.setSelection(0);
+                if( catalogoTalla.get(i).getIdTalla() > 0 ){
+                    getSubtallas( catalogoTalla.get(i).getIdTalla() );
+                }else{
+                    catalogoSubtalla.removeAll( Catalogos.getInstancia().getCatalogoSubtalla() );
+                    Catalogos.getInstancia().setCatalogoSubtalla(new ArrayList<Subtalla>());
+                    catalogoSubtalla.addAll( Catalogos.getInstancia().getCatalogoSubtalla() );
+                    adaptadorSubtalla.notifyDataSetChanged();
+                    terminaProcesando();
+                }
+            }
 
-        Spinner seleccionTalla = this.vista.findViewById(R.id.seleccionTalla);
-        seleccionTalla.setAdapter( new AdaptadorTalla( getContext(), Catalogos.getInstancia().getCatalogoTalla() ) );
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        this.catalogoTalla = Catalogos.getInstancia().getCatalogoTalla();
+        this.adaptadorTalla = new AdaptadorTalla( getContext(), this.catalogoTalla );
+        seleccionTalla.setAdapter(this.adaptadorTalla);
+
+        Spinner seleccionSubtalla = this.vista.findViewById(R.id.seleccionSubtalla);
+        this.catalogoSubtalla = Catalogos.getInstancia().getCatalogoSubtalla();
+        this.adaptadorSubtalla = new AdaptadorSubtalla( getContext(), this.catalogoSubtalla );
+        seleccionSubtalla.setAdapter(this.adaptadorSubtalla);
 
         Spinner seleccionEspecie = this.vista.findViewById(R.id.seleccionEspecie);
         seleccionEspecie.setAdapter( new AdaptadorGrupoEspecie( getContext(), Catalogos.getInstancia().getCatalogoGrupoEspecie() ) );
@@ -206,6 +216,67 @@ public class Fragment_Asigna_Tina extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 validaTina( editable.toString() );
+            }
+        });
+
+        iniciaProcesando();
+        getTallas();
+    }
+
+    private void getTallas(){
+        Call<List<Talla>> llamadaServicio = APIServicios.getConexionWeb()
+                .getTallasFiltrado("PRESELECCION", true);
+        llamadaServicio.enqueue(new Callback<List<Talla>>() {
+            @Override
+            public void onResponse(Call<List<Talla>> call, Response<List<Talla>> response) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    if( response.code() == 200 ){
+                        catalogoTalla.removeAll( Catalogos.getInstancia().getCatalogoTalla() );
+                        Catalogos.getInstancia().setCatalogoTalla( response.body() );
+                        catalogoTalla.addAll( Catalogos.getInstancia().getCatalogoTalla() );
+                        adaptadorTalla.notifyDataSetChanged();
+                    }else{
+                        errorServicio("Error al obtener las tallas");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Talla>> call, Throwable t) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
+            }
+        });
+    }
+
+    private void getSubtallas(int idTalla){
+        Call<List<Subtalla>> llamadaServicio = APIServicios.getConexionWeb()
+                .getSubtallasFiltrado(idTalla, true);
+        llamadaServicio.enqueue(new Callback<List<Subtalla>>() {
+            @Override
+            public void onResponse(Call<List<Subtalla>> call, Response<List<Subtalla>> response) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    if( response.code() == 200 ){
+                        catalogoSubtalla.removeAll( Catalogos.getInstancia().getCatalogoSubtalla() );
+                        Catalogos.getInstancia().setCatalogoSubtalla( response.body() );
+                        catalogoSubtalla.addAll( Catalogos.getInstancia().getCatalogoSubtalla() );
+                        adaptadorSubtalla.notifyDataSetChanged();
+                    }else{
+                        errorServicio("Error al obtener las subtallas");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Subtalla>> call, Throwable t) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -255,7 +326,7 @@ public class Fragment_Asigna_Tina extends Fragment {
         JsonObject json = new JsonObject();
         json.addProperty("idPreseleccionPosicionTina", getTinaSeleccionada().getIdPreseleccionPosicionTina() );
         json.addProperty("idAsignacionCocida", 0);
-        json.addProperty("idTina", getTinaSeleccionada().getTina().getIdTina() );
+        json.addProperty("idTina", getTinaSeleccionada().getTina().getDescripcion() );
         json.addProperty("idEspecie", getTinaSeleccionada().getGrupoEspecie().getIdEspecie() );
         json.addProperty("idTalla", getTinaSeleccionada().getTalla().getIdTalla() );
         json.addProperty("idSubtalla", getTinaSeleccionada().getSubtalla().getIdSubtalla() );
@@ -274,19 +345,22 @@ public class Fragment_Asigna_Tina extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoAsignacion();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoAsignacion();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al asignar la tina" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -325,24 +399,28 @@ public class Fragment_Asigna_Tina extends Fragment {
     }
 
     private void validaTina(String codigo){
-        if( codigo.length() >= 15 ){
+        if( codigo.length() >= 3 ){
             iniciaProcesando();
             Call<TinaEscaneo> llamadaServicio = APIServicios.getConexion().getTina(codigo);
             llamadaServicio.enqueue(new Callback<TinaEscaneo>() {
                 @Override
                 public void onResponse(Call<TinaEscaneo> call, Response<TinaEscaneo> response) {
-                    if(response.code() == 200){
-                        resultadoEscaneoTina( response.body() );
-                    }else{
-                        terminaProcesando();
-                        errorServicio("Error interno del servidor");
+                    if( isAdded() ){
+                        if(response.code() == 200){
+                            resultadoEscaneoTina( response.body() );
+                        }else{
+                            terminaProcesando();
+                            errorServicio("Error al obtener la tina");
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TinaEscaneo> call, Throwable t) {
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    if( isAdded() ){
+                        terminaProcesando();
+                        errorServicio("Error al conectar con el servidor");
+                    }
                 }
             });
         }else{
@@ -356,7 +434,10 @@ public class Fragment_Asigna_Tina extends Fragment {
         TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
 
         if( resultadoTina.getIdTinaDes() != null ){
-            campoDescripcion.setText( resultadoTina.getTinaDes() );
+            campoDescripcion.setText(
+                    resultadoTina.getIdTinaDes().concat(" - ")
+                            .concat( resultadoTina.getTinaDes() )
+            );
             campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
 
             getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );

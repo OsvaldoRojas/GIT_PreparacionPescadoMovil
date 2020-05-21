@@ -33,12 +33,12 @@ import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.utilerias.Catalogos;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.OrdenMantenimiento;
-import com.grupo.pinsa.sip.simulador.vista.Refaccion;
-import com.grupo.pinsa.sip.simulador.vista.RefaccionOrden;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.OrdenMantenimiento;
+import com.grupo.pinsa.sip.simulador.modelo.Refaccion;
+import com.grupo.pinsa.sip.simulador.modelo.RefaccionOrden;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,11 +46,8 @@ import retrofit2.Response;
 
 public class Fragment_DetalleOrden extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private long mParam1;
 
     private View vista;
@@ -79,14 +76,6 @@ public class Fragment_DetalleOrden extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment Fragment_Preselecion_Tinas.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_DetalleOrden newInstance(long param1) {
         Fragment_DetalleOrden fragment = new Fragment_DetalleOrden();
         Bundle args = new Bundle();
@@ -112,7 +101,6 @@ public class Fragment_DetalleOrden extends Fragment {
         return this.vista;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -136,18 +124,7 @@ public class Fragment_DetalleOrden extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
@@ -176,18 +153,22 @@ public class Fragment_DetalleOrden extends Fragment {
         llamadaServicio.enqueue(new Callback<OrdenMantenimiento>() {
             @Override
             public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
-                if(response.code() == 200){
-                    resultadoDetalleOrden( response.body() );
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        resultadoDetalleOrden( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener el detalle de la orden");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<OrdenMantenimiento> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -339,19 +320,22 @@ public class Fragment_DetalleOrden extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoGuardadoRefaccion();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoGuardadoRefaccion();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al guardar la refacción" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -420,17 +404,20 @@ public class Fragment_DetalleOrden extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() != 200 && respuesta.getCodigo() != 0 ){
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() != 200 && response.body().getCodigo() != 0 ){
+                        terminaProcesando();
+                        errorServicio( "Error al actualizar el tiempo" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -451,19 +438,22 @@ public class Fragment_DetalleOrden extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoActualizaOrden();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoActualizaOrden();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al guardar la orden de mantenimiento" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }

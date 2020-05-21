@@ -22,9 +22,9 @@ import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Descongelado;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.PosicionEstibaDescongelado;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.PosicionEstibaDescongelado;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 
@@ -34,11 +34,8 @@ import retrofit2.Response;
 
 public class Fragment_Descongelado_DetalleEstiba extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private Serializable mParam1;
 
     private View vista;
@@ -48,18 +45,11 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
     private PosicionEstibaDescongelado posicionSeleccionada;
 
     private OnFragmentInteractionListener mListener;
+    private CountDownTimer contadorMinutos;
 
     public Fragment_Descongelado_DetalleEstiba() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment Fragment_Preselecion_Tinas.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_Descongelado_DetalleEstiba newInstance(Serializable param1) {
         Fragment_Descongelado_DetalleEstiba fragment = new Fragment_Descongelado_DetalleEstiba();
         Bundle args = new Bundle();
@@ -85,7 +75,6 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
         return this.vista;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -109,18 +98,7 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
@@ -156,15 +134,26 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
         });
 
         final TextView temporizador = this.vista.findViewById(R.id.temporizador);
-        String muestraTemporizador = completaNumero( getPosicionSeleccionada().getMinutos() ).concat(":00");
+        String muestraTemporizador = "00:00";
+        int tiempo = 0;
+        if( getPosicionSeleccionada().getMinutos() > 0 ){
+            muestraTemporizador = completaNumero( getPosicionSeleccionada().getMinutos() ).concat(":00");
+            tiempo = ( getPosicionSeleccionada().getMinutos() * 60 ) * 1000;
+        }
         temporizador.setText(muestraTemporizador);
 
-        int tiempo = ( getPosicionSeleccionada().getMinutos() * 60 ) * 1000;
-        new CountDownTimer(tiempo,1000) {
+        if( temporizador.getText().toString().equals("00:00") && getPosicionSeleccionada().getValvulaEncendida() ){
+            temporizador.setTextColor( getResources().getColor(R.color.noValido) );
+        }else{
+            temporizador.setTextColor( getResources().getColor(R.color.siValido) );
+        }
+
+        this.contadorMinutos = new CountDownTimer(tiempo,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                int segundos = Integer.valueOf( temporizador.getText().toString().substring(3) );
-                int minutos = Integer.valueOf( temporizador.getText().toString().substring(0,2) );
+                int tamano = temporizador.getText().length();
+                int segundos = Integer.valueOf( temporizador.getText().toString().substring(tamano-2) );
+                int minutos = Integer.valueOf( temporizador.getText().toString().substring(0,tamano-3) );
                 if( segundos == 0 ){
                     segundos = 59;
                     minutos = minutos - 1;
@@ -178,6 +167,11 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
             @Override
             public void onFinish() {
                 temporizador.setText("00:00");
+                if( getPosicionSeleccionada().getValvulaEncendida() ){
+                    temporizador.setTextColor( getResources().getColor(R.color.noValido) );
+                }else{
+                    temporizador.setTextColor( getResources().getColor(R.color.siValido) );
+                }
             }
         }.start();
 
@@ -193,6 +187,12 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
             resultado = "0".concat(resultado);
         }
         return resultado;
+    }
+
+    @Override
+    public void onPause() {
+        this.contadorMinutos.cancel();
+        super.onPause();
     }
 
     private void iniciaPosiciones(){
@@ -431,27 +431,30 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
     private void completaPosicion(){
         JsonObject json = new JsonObject();
         json.addProperty("idDescongeladoPosicionTina", getPosicionSeleccionada().getIdPosicion() );
-        json.addProperty("bloqueado", true );
+        //json.addProperty("bloqueado", true );
         json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
 
         Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().completaPosicion(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoPosicionCompleta();
-                    terminaProcesando();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoPosicionCompleta();
+                        terminaProcesando();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al completar la posición" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -466,25 +469,28 @@ public class Fragment_Descongelado_DetalleEstiba extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    if( respuesta.getMensaje().equalsIgnoreCase("La tina no ha terminado su proceso de descongelado") ){
-                        terminaProcesando();
-                        errorServicio( respuesta.getMensaje() );
+                if( isAdded() ){
+                    if( response.code() == 200 && response.body().getCodigo() == 0 ){
+                        if( response.body().getMensaje().equalsIgnoreCase("La tina no ha terminado su proceso de descongelado") ){
+                            terminaProcesando();
+                            errorServicio( response.body().getMensaje() );
+                        }else{
+                            resultadoLiberaTina();
+                            terminaProcesando();
+                        }
                     }else{
-                        resultadoLiberaTina();
                         terminaProcesando();
+                        errorServicio( "Error al liberar la tina" );
                     }
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }

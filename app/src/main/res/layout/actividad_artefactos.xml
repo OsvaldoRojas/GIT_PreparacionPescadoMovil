@@ -14,15 +14,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/mensajeArtefactos"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:textSize="17dp"/>
-
             <ListView
                 android:id="@+id/listaArtefactos"
                 android:layout_marginTop="5dp"

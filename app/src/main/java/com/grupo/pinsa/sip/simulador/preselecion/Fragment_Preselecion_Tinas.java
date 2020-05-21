@@ -23,14 +23,15 @@ import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorMezclarSubtallas;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorTinasLiberadas;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
+import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Asigna_Tina;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.OperadorBascula;
-import com.grupo.pinsa.sip.simulador.vista.OperadorMontacargas;
-import com.grupo.pinsa.sip.simulador.vista.Tina;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.MezclaTinaServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.OperadorBascula;
+import com.grupo.pinsa.sip.simulador.modelo.OperadorMontacargas;
+import com.grupo.pinsa.sip.simulador.modelo.Tina;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.MezclaTinaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,21 +41,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_Preselecion_Tinas.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_Preselecion_Tinas#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fragment_Preselecion_Tinas extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     View vista;
@@ -154,15 +145,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.montacargasSeleccionado = montacargasSeleccionado;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Preselecion_Tinas.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_Preselecion_Tinas newInstance(String param1, String param2) {
         Fragment_Preselecion_Tinas fragment = new Fragment_Preselecion_Tinas();
         Bundle args = new Bundle();
@@ -667,19 +649,23 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         tinasAsignadas.enqueue(new Callback<List<Tina>>() {
             @Override
             public void onResponse(Call<List<Tina>> call, Response<List<Tina>> response) {
-                if(response.code() == 200){
-                    ordenaTinas( response.body() );
-                    getMontacragasAsignados();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        ordenaTinas( response.body() );
+                        getMontacragasAsignados();
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener las tinas asignadas");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Tina>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -689,20 +675,24 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         operadoresAsignados.enqueue(new Callback<List<OperadorBascula>>() {
             @Override
             public void onResponse(Call<List<OperadorBascula>> call, Response<List<OperadorBascula>> response) {
-                if(response.code() == 200){
-                    ordenaOperadoresBascula( response.body() );
-                    marcaTurno();
-                    terminaProcesando();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        ordenaOperadoresBascula( response.body() );
+                        marcaTurno();
+                        terminaProcesando();
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener los operadores asignados");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<OperadorBascula>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -712,26 +702,29 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         montacargasAsignados.enqueue(new Callback<List<OperadorMontacargas>>() {
             @Override
             public void onResponse(Call<List<OperadorMontacargas>> call, Response<List<OperadorMontacargas>> response) {
-                if(response.code() == 200){
-                    ordenaOperadoresMontacargas( response.body() );
-                    getOperadoresAsignados();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        ordenaOperadoresMontacargas( response.body() );
+                        getOperadoresAsignados();
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener montacargas asignados");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<OperadorMontacargas>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
 
     private void asignarTina(){
-        //Fragment fragment = new Fragment_Asigna_Tina().newInstance( getTinaSeleccionada() );
-        Fragment fragment = new Fragment_Asigna_Tina_Cocida().newInstance( getTinaSeleccionada() );
+        Fragment fragment = new Contenedor_Asigna_Tina().newInstance( 0, getTinaSeleccionada() );
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
     }
 
@@ -744,19 +737,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoAsignacion("La posición fue liberada exitosamente");
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoAsignacion("La posición fue liberada exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar la tina" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -805,19 +801,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoAsignacion("El usuario fue liberado exitosamente");
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoAsignacion("El usuario fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar al operador" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -845,19 +844,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoAsignacion("El usuario fue liberado exitosamente");
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoAsignacion("El usuario fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar al operador" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -973,19 +975,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                terminaProcesando();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoMezclaTinas();
-                }else{
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    if( response.code() == 200 ){
+                        resultadoMezclaTinas();
+                    }else{
+                        errorServicio( "Error al mezclar tinas" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -1079,19 +1084,22 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    getAsignados();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        getAsignados();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar el turno" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }

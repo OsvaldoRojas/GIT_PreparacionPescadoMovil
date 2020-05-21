@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.vista.Puesto;
+import com.grupo.pinsa.sip.simulador.modelo.Puesto;
 
 import java.util.List;
 

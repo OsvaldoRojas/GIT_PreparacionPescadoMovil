@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_OrdenMantenimiento;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

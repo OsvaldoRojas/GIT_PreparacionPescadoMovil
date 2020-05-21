@@ -22,11 +22,11 @@ import com.google.gson.JsonObject;
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.OrdenMantenimiento;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.Gafete;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.OrdenMantenimiento;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.Gafete;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -150,18 +150,22 @@ public class Fragment_AsignaMecanico extends Fragment {
         llamadaServicio.enqueue(new Callback<OrdenMantenimiento>() {
             @Override
             public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
-                if(response.code() == 200){
-                    resultadoDetalleOrden( response.body() );
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        resultadoDetalleOrden( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener el detalle de la orden");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<OrdenMantenimiento> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -228,19 +232,22 @@ public class Fragment_AsignaMecanico extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoActualizaOrden();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoActualizaOrden();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al asignar el mécanico" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -310,18 +317,22 @@ public class Fragment_AsignaMecanico extends Fragment {
             llamadaServicio.enqueue(new Callback<Gafete>() {
                 @Override
                 public void onResponse(Call<Gafete> call, Response<Gafete> response) {
-                    if(response.code() == 200){
-                        resultadoEscaneoGafete( response.body() );
-                    }else{
-                        terminaProcesando();
-                        errorServicio("Error interno del servidor");
+                    if( isAdded() ){
+                        if(response.code() == 200){
+                            resultadoEscaneoGafete( response.body() );
+                        }else{
+                            terminaProcesando();
+                            errorServicio("Error al obtener operador");
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Gafete> call, Throwable t) {
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    if( isAdded() ){
+                        terminaProcesando();
+                        errorServicio("Error al conectar con el servidor");
+                    }
                 }
             });
         }else{

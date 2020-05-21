@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.vista.RefaccionOrden;
+import com.grupo.pinsa.sip.simulador.modelo.RefaccionOrden;
 
 import java.util.List;
 

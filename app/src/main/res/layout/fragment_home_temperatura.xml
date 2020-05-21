@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/botonPreseleccion"
+                style="@style/botonMenu"
+                android:layout_margin="7dp"
+                android:text="@string/preseleccion"/>
+
+            <Button
+                android:id="@+id/botonAtemperado"
+                style="@style/botonMenu"
+                android:layout_margin="7dp"
+                android:text="@string/atemperador"/>
+
+            <Button
+                android:id="@+id/botonEviscerado"
+                style="@style/botonMenu"
+                android:layout_margin="7dp"
+                android:text="@string/eviscerar"/>
+
+            <Button
+                android:id="@+id/botonCocimiento"
+                style="@style/botonMenu"
+                android:layout_margin="7dp"
+                android:text="@string/cocimiento"/>
+
+            <Button
+                android:id="@+id/botonModulos"
+                style="@style/botonMenu"
+                android:layout_margin="7dp"
+                android:text="@string/modulos"/>
+
+            <Button
+                android:id="@+id/botonVolver"
+                style="@style/botonMenu"
+                android:layout_margin="7dp"
+                android:text="@string/volver"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

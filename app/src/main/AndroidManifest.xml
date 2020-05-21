@@ -18,7 +18,8 @@
 
         <activity
             android:name="com.grupo.pinsa.sip.simulador.orden.ActividadArtefactos"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/titulo_componentes"
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.grupo.pinsa.sip.simulador.Navegador"
             android:label="@string/title_activity_navegador"

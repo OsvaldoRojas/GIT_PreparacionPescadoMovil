@@ -27,4 +27,9 @@
 
     <color name="noValido">#CF0808</color>
     <color name="siValido">#0EB82B</color>
+
+    <color name="fondoModulo">#F6F9FF</color>
+    <color name="fondoModuloTurno1">#617AA1</color>
+    <color name="fondoModuloTurno2">#CFDEFD</color>
+    <color name="vacioModulo">#AABCDA</color>
 </resources>

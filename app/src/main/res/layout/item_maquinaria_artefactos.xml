@@ -29,6 +29,7 @@
             android:paddingRight="10dp"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
+            android:buttonTint="@color/colorPrimary"
             android:gravity="center_vertical"/>
 
     </LinearLayout>

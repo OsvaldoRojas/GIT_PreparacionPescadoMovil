@@ -52,6 +52,7 @@
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
                     android:paddingLeft="5dp"
+                    android:singleLine="true"
                     android:focusable="true">
                     <requestFocus/>
                 </EditText>
@@ -69,6 +70,7 @@
                     android:textSize="15dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
+                    android:visibility="gone"
                     android:paddingLeft="5dp"/>
 
                 <TextView
@@ -129,7 +131,7 @@
 
                 <Button
                     android:id="@+id/boton1"
-                    android:text="@string/cancelar"
+                    android:text="LIMPIAR"
                     style="@style/botonAccion"/>
 
                 <Button

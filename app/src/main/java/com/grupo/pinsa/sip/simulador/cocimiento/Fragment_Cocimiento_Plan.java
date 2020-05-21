@@ -19,15 +19,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.JsonObject;
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCocedorCocimiento;
+import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCocedor;
+import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
-import com.grupo.pinsa.sip.simulador.vista.Cocedor;
-import com.grupo.pinsa.sip.simulador.vista.Operador;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.Cocedor;
+import com.grupo.pinsa.sip.simulador.modelo.Operador;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_Cocimiento_Plan extends Fragment {
 
@@ -87,13 +95,14 @@ public class Fragment_Cocimiento_Plan extends Fragment {
 
     private void iniciaComponentes(){
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
-        //iniciaProcesando();
+        iniciaProcesando();
 
         this.actualizar = this.vista.findViewById(R.id.actualizar);
         this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 actualizar.setRefreshing(true);
+                getCocedores();
                 getAsignados();
             }
         });
@@ -175,58 +184,33 @@ public class Fragment_Cocimiento_Plan extends Fragment {
             }
         });
 
-
-        //////
-
-        this.listaCocedores = new ArrayList<>();
-        Cocedor cocedor1 = new Cocedor();
-        cocedor1.setId("1");
-        cocedor1.setTamano("Grande 3");
-        cocedor1.setCapacidad(28);
-        cocedor1.setEstatus("Libre");
-
-        Cocedor cocedor2 = new Cocedor();
-        cocedor2.setId("2");
-        cocedor2.setTamano("Grande 1");
-        cocedor2.setCapacidad(28);
-        cocedor2.setEstatus("Ocupado");
-
-        Cocedor cocedor3 = new Cocedor();
-        cocedor3.setId("3");
-        cocedor3.setTamano("Mediano 1");
-        cocedor3.setCapacidad(14);
-        cocedor3.setEstatus("Libre");
-
-        Cocedor cocedor4 = new Cocedor();
-        cocedor4.setId("4");
-        cocedor4.setTamano("Mediano 2");
-        cocedor4.setCapacidad(14);
-        cocedor4.setEstatus("Libre");
-
-        Cocedor cocedor5 = new Cocedor();
-        cocedor5.setId("5");
-        cocedor5.setTamano("Chico 1");
-        cocedor5.setCapacidad(7);
-        cocedor5.setEstatus("Libre");
-
-        this.listaCocedores.add(cocedor1);
-        this.listaCocedores.add(cocedor2);
-        this.listaCocedores.add(cocedor3);
-        this.listaCocedores.add(cocedor4);
-        this.listaCocedores.add(cocedor5);
-
-        RecyclerView vistaLista = this.vista.findViewById(R.id.listaCocedores);
-        vistaLista.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
-        vistaLista.setLayoutManager(layoutManager);
-
-        AdaptadorCocedorCocimiento adaptador = new AdaptadorCocedorCocimiento(this.listaCocedores, this);
-        vistaLista.setAdapter(adaptador);
-
-        /////
-
+        getCocedores();
         getAsignados();
+    }
+
+    private void getCocedores(){
+        Call<List<Cocedor>> llamadaServicio = APIServicios.getConexionAPPWEB().getCocedoresCocimiento();
+        llamadaServicio.enqueue(new Callback<List<Cocedor>>() {
+            @Override
+            public void onResponse(Call<List<Cocedor>> call, Response<List<Cocedor>> response) {
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        muestraCocedores( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener los cocedores");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cocedor>> call, Throwable t) {
+                /*if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }*/
+            }
+        });
     }
 
     private void getAsignados(){
@@ -238,36 +222,49 @@ public class Fragment_Cocimiento_Plan extends Fragment {
     }
 
     private void getOperadoresAsignados(){
-        /*Call<List<Operador>> llamadaServicio = APIServicios.getConexion().getOperadoresEmparrillado();
+        Call<List<Operador>> llamadaServicio = APIServicios.getConexion().getOperadoresCocimiento();
         llamadaServicio.enqueue(new Callback<List<Operador>>() {
             @Override
             public void onResponse(Call<List<Operador>> call, Response<List<Operador>> response) {
-                if(response.code() == 200){
-                    ordenaOperadores( response.body() );
-                    terminaProcesando();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        ordenaOperadores( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener los operadores asignados");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Operador>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
-        });*/
-        //
-        List<Operador> listaOperadores = new ArrayList<>();
-        for(int x = 1; x <= 8; x++){
-            Operador operador = new Operador();
-            operador.setIdEstacion(x);
-            operador.setEstacion(String.valueOf(x));
-            operador.setLibre(true);
-            listaOperadores.add(operador);
+        });
+    }
+
+    private void muestraCocedores(List<Cocedor> cocedores){
+        this.listaCocedores = cocedores;
+        for(Cocedor cocedor : this.listaCocedores){
+            cocedor.setEspecie("");
+            cocedor.setEspecialidad("");
+            cocedor.setTiempoRestante("");
+            cocedor.setTotalCarritos("");
         }
-        ordenaOperadores(listaOperadores);
-        //
+
+        RecyclerView vistaLista = this.vista.findViewById(R.id.listaCocedores);
+        vistaLista.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
+        vistaLista.setLayoutManager(layoutManager);
+
+        AdaptadorCocedor adaptador = new AdaptadorCocedor(this.listaCocedores, this);
+        vistaLista.setAdapter(adaptador);
+
+        terminaProcesando();
     }
 
     public void ordenaOperadores(List<Operador> listaOperadores){
@@ -283,6 +280,7 @@ public class Fragment_Cocimiento_Plan extends Fragment {
                 recursoOperador.setEstado(Constantes.ESTADO.seleccionado);
                 accionIconoOperador( recursoOperador.getIdEstacion() );
             }
+            terminaProcesando();
         }
     }
 
@@ -379,31 +377,34 @@ public class Fragment_Cocimiento_Plan extends Fragment {
     }
 
     private void guardaOperador(){
-        /*JsonObject json = new JsonObject();
+        JsonObject json = new JsonObject();
         json.addProperty("idEstacion", getOperadorSeleccionado().getIdEstacion() );
         json.addProperty("libre", getOperadorSeleccionado().isLibre() );
         json.addProperty("idEmpleado", String.valueOf( getOperadorSeleccionado().getIdEmpleado() ) );
         json.addProperty("turno", getOperadorSeleccionado().isTurno() );
-        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorEmparrillado(json);
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorCocimiento(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    ventanaMensaje("El usuario fue liberado exitosamente");
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        ventanaMensaje("El usuario fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar al operador" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
-        });*/
+        });
     }
 
     private void liberaTurno(){
@@ -444,32 +445,37 @@ public class Fragment_Cocimiento_Plan extends Fragment {
     }
 
     private void liberaTurnoServicio(){
-        /*JsonObject json = new JsonObject();
-        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberarTurnoEmparrillado(json);
+        JsonObject json = new JsonObject();
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurnoCocimiento(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    getAsignados();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        getAsignados();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar el turno" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
-        });*/
+        });
     }
 
     public void cargaCarritos(int posicion){
-        Fragment fragment = new Fragment_Carga_Carritos().newInstance( this.listaCocedores.get(posicion) );
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        if( !this.listaCocedores.get(posicion).getEstatus().equalsIgnoreCase( Constantes.ESTATUS_COCEDOR.inhabilitado.getDescripcion() ) ){
+            Fragment fragment = new Fragment_Carga_Carritos().newInstance( this.listaCocedores.get(posicion), (Serializable) this.listaCocedores);
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+        }
     }
 
     private void deshabilitaRecursos(){

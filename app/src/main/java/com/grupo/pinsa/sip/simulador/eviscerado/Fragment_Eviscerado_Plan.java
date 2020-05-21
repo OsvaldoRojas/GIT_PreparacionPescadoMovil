@@ -21,9 +21,9 @@ import com.google.gson.JsonObject;
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
-import com.grupo.pinsa.sip.simulador.vista.Operador;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.Operador;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Fragment_Eviscerado_Plan extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    
     private View vista;
 
     private ImageView operador1;
@@ -93,31 +86,9 @@ public class Fragment_Eviscerado_Plan extends Fragment {
         this.operadorSeleccionado = operadorSeleccionado;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Descongelado_Plan.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_Eviscerado_Plan newInstance(String param1, String param2) {
-        Fragment_Eviscerado_Plan fragment = new Fragment_Eviscerado_Plan();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -330,19 +301,23 @@ public class Fragment_Eviscerado_Plan extends Fragment {
         llamadaServicio.enqueue(new Callback<List<Operador>>() {
             @Override
             public void onResponse(Call<List<Operador>> call, Response<List<Operador>> response) {
-                if(response.code() == 200){
-                    ordenaOperadores( response.body() );
-                    terminaProcesando();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        ordenaOperadores( response.body() );
+                        terminaProcesando();
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error obtener los operadores asignados");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Operador>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -466,19 +441,22 @@ public class Fragment_Eviscerado_Plan extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    ventanaMensaje("El usuario fue liberado exitosamente");
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        ventanaMensaje("El usuario fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar al operador" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -551,23 +529,26 @@ public class Fragment_Eviscerado_Plan extends Fragment {
     private void liberaTurnoServicio(){
         JsonObject json = new JsonObject();
         json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberarTurnoEviscerado(json);
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().liberaTurnoEviscerado(json);
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    getAsignados();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        getAsignados();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar el turno" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -661,7 +642,6 @@ public class Fragment_Eviscerado_Plan extends Fragment {
         this.barraProgreso.setVisibility(View.GONE);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -687,7 +667,6 @@ public class Fragment_Eviscerado_Plan extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorMaquinariaArtefacto;
-import com.grupo.pinsa.sip.simulador.vista.Artefacto;
+import com.grupo.pinsa.sip.simulador.modelo.Artefacto;
 
 import java.io.Serializable;
 import java.util.List;

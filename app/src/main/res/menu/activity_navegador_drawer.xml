@@ -25,19 +25,19 @@
             android:title="@string/descongelado" />
         <item
             android:id="@+id/nav_eviscerado"
-            android:icon="@drawable/ic_nieve"
+            android:icon="@drawable/ic_pinsa_carritos"
             android:title="@string/eviscerar" />
         <item
             android:id="@+id/nav_emparrillado"
-            android:icon="@drawable/ic_nieve"
+            android:icon="@drawable/ic_emparrillado"
             android:title="@string/emparrillado" />
         <item
             android:id="@+id/nav_movimiento"
-            android:icon="@drawable/ic_nieve"
+            android:icon="@drawable/ic_movimiento_personal"
             android:title="@string/movimieto" />
         <item
             android:id="@+id/nav_control"
-            android:icon="@drawable/ic_nieve"
+            android:icon="@drawable/ic_control_proceso"
             android:title="@string/control" />
     </group>
 

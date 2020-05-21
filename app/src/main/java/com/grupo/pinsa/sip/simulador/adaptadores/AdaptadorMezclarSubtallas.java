@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.vista.Tina;
+import com.grupo.pinsa.sip.simulador.modelo.Tina;
 
 import java.util.List;
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.grupo.pinsa.libraries.components.design.HeaderCell
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/id_grupopinsa_header_cell_text"
+        style="@style/grupopinsa_small_bold_center_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:textColor="@color/grupopinsa_colorWhite"/>
+
+    <ImageView
+        android:id="@+id/id_grupopinsa_header_cell_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_sort_white"
+        android:contentDescription="@string/grupopinsa_icono_ordenar_imagen_descripcion"
+        android:visibility="gone"/>
+
+</com.grupo.pinsa.libraries.components.design.HeaderCell>

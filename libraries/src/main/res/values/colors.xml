@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="grupopinsa_colorWhite">#FFFFFF</color>
+    <color name="grupopinsa_colorLightGray">#cccccc</color>
+    <color name="grupopinsa_colorGray">#B1B1B1</color>
+    <color name="grupopinsa_colorDarkGray">#858585</color>
+    <color name="grupopinsa_colorLightBlack">#232323</color>
+    <color name="grupopinsa_colorBlack">#101010</color>
+    <color name="grupopinsa_colorBlue">#3F51B5</color>
+    <color name="grupopinsa_colorBlueDark">#303F9F</color>
+    <color name="grupopinsa_colorLightBlue">#3c8dbc</color>
+    <color name="grupopinsa_colorCyan">#5cc8ff</color>
+
+    <color name="grupopinsa_colorSuccess">#30a13f</color>
+    <color name="grupopinsa_colorNotify">#3F51B5</color>
+    <color name="grupopinsa_colorWarning">#cc6301</color>
+    <color name="grupopinsa_colorError">#b5413f</color>
+</resources>

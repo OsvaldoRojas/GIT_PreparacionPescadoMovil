@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grupopinsa_colorWhite"
+        android:paddingTop="@dimen/grupopinsa_spacing_large"
+        android:paddingBottom="@dimen/grupopinsa_spacing_large"
+        android:paddingLeft="@dimen/grupopinsa_spacing_large"
+        android:paddingRight="@dimen/grupopinsa_spacing_large"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/id_grupopinsa_dialogo_message"
+                style="@style/grupopinsa_large_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grupopinsa_colorDarkGray"
+                android:minHeight="@dimen/grupopinsa_spacing_huge"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/id_grupopinsa_dialogo_loading"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/grupopinsa_spacing_normal"
+            android:visibility="visible"
+            android:indeterminateDrawable="@drawable/drw_barra_circular_infinita" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_grupopinsa_edit_text_disabled"
+    style="@style/grupopinsa_edit_text_disabled"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/id_grupopinsa_edit_text_disabled_hint"
+        style="@style/grupopinsa_small_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grupopinsa_colorGray"
+        android:text="@string/grupopinsa_texto_vacio"
+        android:inputType="none"/>
+
+    <TextView
+        android:id="@+id/id_grupopinsa_edit_text_disabled_text"
+        style="@style/grupopinsa_normal_text_disabled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grupopinsa_texto_vacio"
+        android:inputType="none"/>
+</LinearLayout>

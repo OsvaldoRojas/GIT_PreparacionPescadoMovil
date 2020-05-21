@@ -4,7 +4,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     card_view:cardCornerRadius="8dp"
@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -34,21 +34,28 @@
                     android:id="@+id/imagenCocedor"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/ic_eliminar"/>
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@drawable/ic_cocedor"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/contenedorTamano"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -70,10 +77,12 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/contenedorCapacidad"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -95,10 +104,12 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/contenedorEstatus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -116,6 +127,114 @@
                         android:textSize="12dp"
                         android:textColor="@color/colorPrimary"
                         android:text="Ocupado"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contenedorEspecie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Especie: "/>
+
+                    <TextView
+                        android:id="@+id/especie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="AAA"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contenedorEspecialidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Especialidad: "/>
+
+                    <TextView
+                        android:id="@+id/especialidad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="importación"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contenedorTiempoRestante"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Tiempo restante: "/>
+
+                    <TextView
+                        android:id="@+id/tiempoRestante"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="00:00"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contenedorCarritos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="Carritos: "/>
+
+                    <TextView
+                        android:id="@+id/carritos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="25/28"/>
 
                 </LinearLayout>
 

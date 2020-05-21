@@ -2,23 +2,32 @@ package com.grupo.pinsa.sip.simulador.utilerias;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.grupo.pinsa.sip.simulador.Fragment_ControlProceso;
 import com.grupo.pinsa.sip.simulador.Fragment_MovimientoPersonal;
+import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCarritoCocida;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Atemperado;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Cocimiento;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Descongelado;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Emparrillado;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Eviscerado;
+import com.grupo.pinsa.sip.simulador.estatusCocedor.Fragment_Estatus;
+import com.grupo.pinsa.sip.simulador.home;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_OrdenMantenimiento;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Lavado;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Modulos;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.temperatura.Fragment_Temperatura_Carrito;
+import com.grupo.pinsa.sip.simulador.temperatura.Fragment_Temperatura_Tina;
+import com.grupo.pinsa.sip.simulador.temperatura.HomeTemperatura;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,6 +71,17 @@ public class Utilerias {
         return false;
     }
 
+    public static int obtenerPosicionItem(Spinner spinner, String descripcion) {
+        int posicion = 0;
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(descripcion)) {
+                posicion = i;
+                break;
+            }
+        }
+        return posicion;
+    }
+
     public static String fechaActual(){
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         return formatoFecha.format( new Date() );
@@ -97,13 +117,13 @@ public class Utilerias {
                     return new Contenedor_Descongelado().newInstance(pestaña);
                 case 4:
                     return new Contenedor_Eviscerado().newInstance(pestaña);
-                case 5:
+                case 8:
                     return new Contenedor_Emparrillado().newInstance(pestaña);
-                case 6:
+                case 5:
                     return new Contenedor_Cocimiento().newInstance(pestaña);
-                case 7:
+                case 6:
                     return new Contenedor_Modulos().newInstance(pestaña);
-                case 10:
+                case 7:
                     return new Contenedor_Lavado().newInstance(pestaña);
             }
         }
@@ -131,9 +151,9 @@ public class Utilerias {
                 case modulos:
                     return new Contenedor_Modulos();
                 case temperatura:
-                    //return new Fragment_Temperatura();
+                    return new HomeTemperatura();
                 case estatus:
-                    //return new Fragment_Estatus();
+                    return new Fragment_Estatus();
                 case lavado:
                     return new Contenedor_Lavado();
                 case movimiento:
@@ -141,6 +161,22 @@ public class Utilerias {
                 case control:
                     return new Fragment_ControlProceso();
             }
+        }
+        return null;
+    }
+
+    public static Fragment navegaTemperatura(Constantes.ETAPA etapa){
+        switch (etapa){
+            case preseleccion:
+            case atemperado:
+            case eviscerado:
+                return new Fragment_Temperatura_Tina().newInstance( Catalogos.getInstancia().getEtapaTemperatura(etapa) );
+            case cocimiento:
+                return new Fragment_Temperatura_Carrito().newInstance(1);
+            case modulos:
+                return new Fragment_Temperatura_Carrito().newInstance(2);
+            case temperatura:
+                return new home();
         }
         return null;
     }

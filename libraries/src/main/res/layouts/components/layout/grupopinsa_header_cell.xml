@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_grupopinsa_header_cell_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/grupopinsa_spacing_tiny"
+    android:paddingBottom="@dimen/grupopinsa_spacing_tiny"
+    android:layout_weight="1"
+    android:background="@drawable/style_brd_right_lightgray"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+</LinearLayout>

@@ -1,0 +1,50 @@
+<resources>
+    <!-- Dialogo -->
+    <string name="grupopinsa_dialogo_respuesta_si">Si</string>
+    <string name="grupopinsa_dialogo_respuesta_no">No</string>
+    <string name="grupopinsa_dialogo_respuesta_aceptar">Aceptar</string>
+    <string name="grupopinsa_dialogo_respuesta_cancelar">Cancelar</string>
+    <string name="grupopinsa_dialogo_respuesta_esperar">Esperar</string>
+    <string name="grupopinsa_dialogo_respuesta_continuar">Continuar</string>
+    <string name="grupopinsa_dialogo_respuesta_guardar">Guardar</string>
+    <string name="grupopinsa_dialogo_respuesta_borrar">Borrar</string>
+    <string name="grupopinsa_dialogo_respuesta_salir">Salir</string>
+
+    <string name="grupopinsa_dialogo_mensaje_conectando">Conectando &#8230;</string>
+    <string name="grupopinsa_dialogo_mensaje_buscando">Buscando &#8230;</string>
+    <string name="grupopinsa_dialogo_mensaje_cargando">Cargando &#8230;</string>
+    <string name="grupopinsa_dialogo_mensaje_espere">Espere &#8230;</string>
+    <string name="grupopinsa_dialogo_mensaje_procesando">Procesando &#8230;</string>
+
+    <string name="grupopinsa_dialogo_error_view_no_definida">La vista no se encuentra configurada.</string>
+    <string name="grupopinsa_dialogo_error_parse">Problema con el formato de fecha.</string>
+
+    <string name="grupopinsa_dialogo_icono_descripcion">Grupo Pinsa</string>
+
+    <!-- Imagen Descriptions -->
+    <string name="grupopinsa_icono_ordenar_imagen_descripcion">Ordenar</string>
+
+    <!-- Preferences Manager -->
+    <string name="grupopinsa_preferences_error_put">Problema al actualizar la preferencia.</string>
+    <string name="grupopinsa_preferences_error_get">Preferencia inexistente.</string>
+
+    <!-- Conversion -->
+    <string name="grupopinsa_conversion_error_md5">Problema durante el cifrado.</string>
+    <string name="grupopinsa_conversion_error_date">Problema durante la conversion de la fecha.</string>
+
+    <!-- Activity Splash -->
+    <string name="grupopinsa_splash_imagen_descripcion">Grupo Pinsa</string>
+
+    <!-- Toolbar -->
+    <string name="grupopinsa_toolbar_imagen_descripcion">Grupo Pinsa</string>
+
+    <!-- Logo Completo -->
+    <string name="grupopinsa_logo_completo_imagen_descripcion">Grupo Pinsa</string>
+
+    <!-- Texto Vacío -->
+    <string name="grupopinsa_texto_vacio"/>
+
+    <!-- Lector Codigos -->
+    <string name="grupopinsa_lector_codigos_error_camera">Ocurrio un error al inicar la camara.</string>
+    <string name="grupopinsa_lector_codigos_error_permisos_camera">No se han establecido los permisos para acceder a la camara.</string>
+</resources>

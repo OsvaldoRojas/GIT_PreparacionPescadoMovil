@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.vista.Cocida;
+import com.grupo.pinsa.sip.simulador.modelo.Cocida;
 
 import java.util.List;
 
@@ -42,8 +42,9 @@ public class AdaptadorCocida extends RecyclerView.Adapter<AdaptadorCocida.Cocida
         holder.especie.setText( this.listaCocida.get(position).getEspecie().getDescripcion() );
         holder.especialidad.setText( this.listaCocida.get(position).getEspecialiad().getDescripcion() );
         holder.turno.setText( this.listaCocida.get(position).isTurno() ? "Turno 2" : "Turno 1" );
-        holder.cantidadTina.setText( String.valueOf( this.listaCocida.get(position).getTinasPreseleccionadas() ) + "/" +
-                String.valueOf( this.listaCocida.get(position).getTinasSimulador() ) );
+        String cantidad = this.listaCocida.get(position).getTinasPreseleccionadas() + "/" +
+                this.listaCocida.get(position).getTinasSimulador();
+        holder.cantidadTina.setText(cantidad);
     }
 
     @Override
@@ -95,14 +96,6 @@ public class AdaptadorCocida extends RecyclerView.Adapter<AdaptadorCocida.Cocida
                             anterior.turno.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
                             anterior.cantidadTina.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
                             anterior.fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorAccent) );
-
-                            /*anterior.talla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.subTalla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.especie.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.especialidad.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.turno.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.cantidadTina.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorAccent) );*/
                         }
 
                         if( !(cocidaAnterior == null) ){

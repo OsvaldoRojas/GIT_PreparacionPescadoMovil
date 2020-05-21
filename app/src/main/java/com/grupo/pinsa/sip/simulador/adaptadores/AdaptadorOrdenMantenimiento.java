@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.ListaOrdenMantenimientoServicio;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.ListaOrdenMantenimientoServicio;
 
 import java.util.ArrayList;
 import java.util.List;

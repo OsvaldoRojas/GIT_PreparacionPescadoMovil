@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EditTextDisabled">
+        <attr name="EditTextDisabled_Hint" format="string" />
+        <attr name="EditTextDisabled_Text" format="string" />
+        <attr name="EditTextDisabled_Hint_Gravity" format="integer" />
+        <attr name="EditTextDisabled_Text_Gravity" format="integer" />
+        <attr name="EditTextDisabled_Background" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="DetailCellText">
+        <attr name="DetailCellText_Color" format="color" />
+    </declare-styleable>
+</resources>

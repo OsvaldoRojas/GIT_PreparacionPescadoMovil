@@ -1,12 +1,12 @@
 package com.grupo.pinsa.sip.simulador.utilerias;
 
-import com.grupo.pinsa.sip.simulador.vista.Especialidad;
-import com.grupo.pinsa.sip.simulador.vista.Etapa;
-import com.grupo.pinsa.sip.simulador.vista.GrupoEspecie;
-import com.grupo.pinsa.sip.simulador.vista.Maquinaria;
-import com.grupo.pinsa.sip.simulador.vista.Refaccion;
-import com.grupo.pinsa.sip.simulador.vista.Subtalla;
-import com.grupo.pinsa.sip.simulador.vista.Talla;
+import com.grupo.pinsa.sip.simulador.modelo.Especialidad;
+import com.grupo.pinsa.sip.simulador.modelo.Etapa;
+import com.grupo.pinsa.sip.simulador.modelo.GrupoEspecie;
+import com.grupo.pinsa.sip.simulador.modelo.Maquinaria;
+import com.grupo.pinsa.sip.simulador.modelo.Refaccion;
+import com.grupo.pinsa.sip.simulador.modelo.Subtalla;
+import com.grupo.pinsa.sip.simulador.modelo.Talla;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,81 +47,89 @@ public class Catalogos {
         return etapaActual;
     }
 
+    public int getEtapaTemperatura(Constantes.ETAPA etapa){
+        for( Etapa etapaLista : this.catalogoEtapa){
+            if( etapaLista.getDescripcion().equalsIgnoreCase( etapa.toString() ) ){
+                return etapaLista.getIdEtapa();
+            }
+        }
+        return 0;
+    }
+
     public void setCatalogoMaquinaria(List<Maquinaria> catalogoMaquinaria) {
-        this.catalogoMaquinaria = new ArrayList<>();
-        Maquinaria maquinaria = new Maquinaria();
-        maquinaria.setDescripcion("Máquinaria");
-        maquinaria.setIdMaquinaria(0);
-        this.catalogoMaquinaria.add(maquinaria);
-        this.catalogoMaquinaria.addAll(catalogoMaquinaria);
+        this.catalogoMaquinaria = catalogoMaquinaria;
     }
 
     public List<Maquinaria> getCatalogoMaquinaria() {
-        return catalogoMaquinaria;
+        Maquinaria maquinaria = new Maquinaria();
+        maquinaria.setDescripcion("Máquinaria");
+        maquinaria.setIdMaquinaria(0);
+        this.catalogoMaquinaria.add(0, maquinaria);
+        return this.catalogoMaquinaria;
     }
 
     public List<Subtalla> getCatalogoSubtalla() {
-        return catalogoSubtalla;
-    }
-
-    public void setCatalogoSubtalla(List<Subtalla> catalogoSubtalla) {
-        this.catalogoSubtalla = new ArrayList<>();
         Subtalla subtalla = new Subtalla();
         subtalla.setDescripcion("Subtalla");
         subtalla.setIdSubtalla(0);
-        this.catalogoSubtalla.add(subtalla);
-        this.catalogoSubtalla.addAll(catalogoSubtalla);
+        this.catalogoSubtalla.add(0, subtalla);
+        return this.catalogoSubtalla;
+    }
+
+    public void setCatalogoSubtalla(List<Subtalla> catalogoSubtalla) {
+        this.catalogoSubtalla = catalogoSubtalla;
     }
 
     public List<Talla> getCatalogoTalla() {
-        return catalogoTalla;
-    }
-
-    public void setCatalogoTalla(List<Talla> catalogoTalla) {
-        this.catalogoTalla = new ArrayList<>();
         Talla talla = new Talla();
         talla.setDescripcion("Talla");
         talla.setIdTalla(0);
-        this.catalogoTalla.add(talla);
-        this.catalogoTalla.addAll(catalogoTalla);
+        this.catalogoTalla.add(0, talla);
+        return this.catalogoTalla;
+    }
+
+    public void setCatalogoTalla(List<Talla> catalogoTalla) {
+        this.catalogoTalla = catalogoTalla;
     }
 
     public List<GrupoEspecie> getCatalogoGrupoEspecie() {
-        return catalogoGrupoEspecie;
+        if(this.catalogoGrupoEspecie.isEmpty() || this.catalogoGrupoEspecie.get(0).getIdEspecie() > 0){
+            GrupoEspecie especie = new GrupoEspecie();
+            especie.setDescripcion("Especie");
+            especie.setIdEspecie(0);
+            this.catalogoGrupoEspecie.add(0, especie);
+
+        }
+        return this.catalogoGrupoEspecie;
     }
 
     public void setCatalogoGrupoEspecie(List<GrupoEspecie> catalogoGrupoEspecie) {
-        this.catalogoGrupoEspecie = new ArrayList<>();
-        GrupoEspecie especie = new GrupoEspecie();
-        especie.setDescripcion("Especie");
-        especie.setIdEspecie(0);
-        this.catalogoGrupoEspecie.add(especie);
-        this.catalogoGrupoEspecie.addAll(catalogoGrupoEspecie);
+        this.catalogoGrupoEspecie = catalogoGrupoEspecie;
     }
 
     public List<Especialidad> getCatalogoEspecialidad() {
-        return catalogoEspecialidad;
+        if(this.catalogoEspecialidad.isEmpty() || this.catalogoEspecialidad.get(0).getIdEspecialidad() > 0){
+            Especialidad especialidad = new Especialidad();
+            especialidad.setDescripcion("Especialidad");
+            especialidad.setIdEspecialidad(0);
+            this.catalogoEspecialidad.add(0, especialidad);
+        }
+        return this.catalogoEspecialidad;
     }
 
     public void setCatalogoEspecialidad(List<Especialidad> catalogoEspecialidad) {
-        this.catalogoEspecialidad = new ArrayList<>();
-        Especialidad especialidad = new Especialidad();
-        especialidad.setDescripcion("Especialidad");
-        especialidad.setIdEspecialidad(0);
-        this.catalogoEspecialidad.add(especialidad);
-        this.catalogoEspecialidad.addAll(catalogoEspecialidad);
+        this.catalogoEspecialidad = catalogoEspecialidad;
     }
 
     public List<Refaccion> getCatalogoRefaccion() {
-        return catalogoRefaccion;
-    }
-
-    public void setCatalogoRefaccion(List<Refaccion> catalogoRefaccion) {
-        this.catalogoRefaccion = new ArrayList<>();
         Refaccion refaccion = new Refaccion();
         refaccion.setIdRefaccion(0);
         refaccion.setDescripcion("Refacción");
-        this.catalogoRefaccion.add(refaccion);
-        this.catalogoRefaccion.addAll(catalogoRefaccion);
+        this.catalogoRefaccion.add(0, refaccion);
+        return this.catalogoRefaccion;
+    }
+
+    public void setCatalogoRefaccion(List<Refaccion> catalogoRefaccion) {
+        this.catalogoRefaccion = catalogoRefaccion;
     }
 }

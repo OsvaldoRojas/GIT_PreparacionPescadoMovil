@@ -14,10 +14,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.Usuario;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.Usuario;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
 
 public class LoginActivity extends AppCompatActivity {
 

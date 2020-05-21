@@ -27,11 +27,11 @@ import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.conexion.CerrarTiempoOrden;
 import com.grupo.pinsa.sip.simulador.utilerias.Catalogos;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.OrdenMantenimiento;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.ListaOrdenMantenimientoServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.OrdenMantenimiento;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.ListaOrdenMantenimientoServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.util.List;
 
@@ -39,21 +39,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_OrdenMantenimiento.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_OrdenMantenimiento#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fragment_OrdenMantenimiento extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private View vista;
@@ -66,6 +56,7 @@ public class Fragment_OrdenMantenimiento extends Fragment {
 
     private AdaptadorOrdenMantenimiento adaptadorOrden;
     private ListaOrdenMantenimientoServicio ordenSeleccionada;
+    private List<ListaOrdenMantenimientoServicio> listaOrdenes;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,15 +71,6 @@ public class Fragment_OrdenMantenimiento extends Fragment {
         this.ordenSeleccionada = ordenSeleccionada;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Preselecion_OM.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_OrdenMantenimiento newInstance(String param1, String param2) {
         Fragment_OrdenMantenimiento fragment = new Fragment_OrdenMantenimiento();
         Bundle args = new Bundle();
@@ -160,18 +142,22 @@ public class Fragment_OrdenMantenimiento extends Fragment {
         llamadaServicio.enqueue(new Callback<List<ListaOrdenMantenimientoServicio>>() {
             @Override
             public void onResponse(Call<List<ListaOrdenMantenimientoServicio>> call, Response<List<ListaOrdenMantenimientoServicio>> response) {
-                if(response.code() == 200){
-                    resultadoServicioLista( response.body() );
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        resultadoServicioLista( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener las ordenes");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<ListaOrdenMantenimientoServicio>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -205,11 +191,13 @@ public class Fragment_OrdenMantenimiento extends Fragment {
 
     public void resultadoServicioLista(final List<ListaOrdenMantenimientoServicio> lista){
         if( isAdded() ){
+            this.listaOrdenes = lista;
             TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
-            if( !lista.isEmpty() ) {
+            if( !this.listaOrdenes.isEmpty() ) {
                 sinResultado.setVisibility(View.GONE);
+                this.listaVistaOrden.setVisibility(View.VISIBLE);
 
-                this.adaptadorOrden = new AdaptadorOrdenMantenimiento(getContext(), lista);
+                this.adaptadorOrden = new AdaptadorOrdenMantenimiento(getContext(), this.listaOrdenes);
                 this.listaVistaOrden.setAdapter(this.adaptadorOrden);
 
                 this.listaVistaOrden.setLongClickable(true);
@@ -217,7 +205,7 @@ public class Fragment_OrdenMantenimiento extends Fragment {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adaptador, View vista, int posicion, long id) {
                         vista.setSelected(true);
-                        setOrdenSeleccionada(lista.get(posicion));
+                        setOrdenSeleccionada(listaOrdenes.get(posicion));
                         PopupMenu menu = new PopupMenu(getContext(), vista);
                         menu.getMenuInflater().inflate(R.menu.menu_lista_orden, menu.getMenu());
                         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -267,6 +255,7 @@ public class Fragment_OrdenMantenimiento extends Fragment {
                     }
                 });
             }else{
+                this.listaVistaOrden.setVisibility(View.GONE);
                 sinResultado.setVisibility(View.VISIBLE);
             }
 
@@ -330,30 +319,6 @@ public class Fragment_OrdenMantenimiento extends Fragment {
             );
             cerrarTiempoOrden.execute();
         }
-        /*OrdenMantenimientoCerrarTiempo orden = new OrdenMantenimientoCerrarTiempo();
-        orden.setIdOrden( getOrdenSeleccionada().getIdOrdenMantenimiento() );
-        orden.setFecha(null);
-        orden.setUsuario( UsuarioLogueado.getUsuarioLogueado(null).getClave_usuario() );
-
-        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().cierraTiempoOrdenMantenimiento(orden);
-        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
-            @Override
-            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    getOrdenesMantenimiento();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
-            }
-        });*/
     }
 
     private void obtenDetalle(final boolean finaliza){
@@ -363,22 +328,26 @@ public class Fragment_OrdenMantenimiento extends Fragment {
         llamadaServicio.enqueue(new Callback<OrdenMantenimiento>() {
             @Override
             public void onResponse(Call<OrdenMantenimiento> call, Response<OrdenMantenimiento> response) {
-                if(response.code() == 200){
-                    if(finaliza){
-                        finalizaOrden( response.body() );
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        if(finaliza){
+                            finalizaOrden( response.body() );
+                        }else{
+                            cierraTiempo( response.body() );
+                        }
                     }else{
-                        cierraTiempo( response.body() );
+                        terminaProcesando();
+                        errorServicio("Error al obtener el detalle de la orden");
                     }
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
                 }
             }
 
             @Override
             public void onFailure(Call<OrdenMantenimiento> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -399,19 +368,22 @@ public class Fragment_OrdenMantenimiento extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    getOrdenesMantenimiento();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        getOrdenesMantenimiento();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al guardar la orden de mantenimiento" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }

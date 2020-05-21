@@ -24,13 +24,13 @@ import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorMaquinaria;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.utilerias.Catalogos;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.Artefacto;
-import com.grupo.pinsa.sip.simulador.vista.Maquinaria;
-import com.grupo.pinsa.sip.simulador.vista.OrdenMantenimiento;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.ArtefactoServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.OrdenMantenimientoGuardar;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.Artefacto;
+import com.grupo.pinsa.sip.simulador.modelo.Maquinaria;
+import com.grupo.pinsa.sip.simulador.modelo.OrdenMantenimiento;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.ArtefactoServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.OrdenMantenimientoGuardar;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -216,19 +216,26 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
         llamadaServicio.enqueue(new Callback<List<Maquinaria>>() {
             @Override
             public void onResponse(Call<List<Maquinaria>> call, Response<List<Maquinaria>> response) {
-                if(response.code() == 200){
-                    Catalogos.getInstancia().setCatalogoMaquinaria( response.body() );
-                    seleccionMaquinaria.setAdapter(
-                            new AdaptadorMaquinaria( Catalogos.getInstancia().getCatalogoMaquinaria(), getContext() )
-                    );
-                    terminaProcesando();
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        Catalogos.getInstancia().setCatalogoMaquinaria( response.body() );
+                        seleccionMaquinaria.setAdapter(
+                                new AdaptadorMaquinaria( Catalogos.getInstancia().getCatalogoMaquinaria(), getContext() )
+                        );
+                        terminaProcesando();
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener las máquinarias");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Maquinaria>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
 
@@ -241,15 +248,22 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
         llamadaServicio.enqueue(new Callback<List<Artefacto>>() {
             @Override
             public void onResponse(Call<List<Artefacto>> call, Response<List<Artefacto>> response) {
-                if(response.code() == 200){
-                    resultadoCatalogoArtefacto( response.body() );
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        resultadoCatalogoArtefacto( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener los artefactos");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Artefacto>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -321,19 +335,22 @@ public class Fragment_CreaOrdenMantenimiento extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                terminaProcesando();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    mensajeGuardado();
-                }else{
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    if( response.code() == 200 ){
+                        mensajeGuardado();
+                    }else{
+                        errorServicio( "Error al guardar la orden de mantenimiento" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }

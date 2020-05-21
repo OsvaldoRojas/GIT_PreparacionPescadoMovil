@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.descongelado.Fragment_Descongelado_SalidaTinas;
-import com.grupo.pinsa.sip.simulador.vista.SalidaTina;
+import com.grupo.pinsa.sip.simulador.modelo.SalidaTina;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -22,9 +22,9 @@ import com.google.gson.JsonObject;
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorListaSalida;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
-import com.grupo.pinsa.sip.simulador.vista.SalidaTina;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.SalidaTina;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 
 import java.util.List;
 
@@ -103,18 +103,22 @@ public class Fragment_Descongelado_SalidaTinas extends Fragment {
         llamadaServicio.enqueue(new Callback<List<SalidaTina>>() {
             @Override
             public void onResponse(Call<List<SalidaTina>> call, Response<List<SalidaTina>> response) {
-                if(response.code() == 200){
-                    resultadoTinas( response.body() );
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        resultadoTinas( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener las tinas");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<SalidaTina>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -130,18 +134,22 @@ public class Fragment_Descongelado_SalidaTinas extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                if(response.code() == 200){
-                    getTinas();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        getTinas();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al dar salida a la tina" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }

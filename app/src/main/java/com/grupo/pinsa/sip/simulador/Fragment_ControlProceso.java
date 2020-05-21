@@ -18,12 +18,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.TinaProceso;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.TinaProceso;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -31,33 +30,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Fragment_ControlProceso extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private View vista;
 
     private AlertDialog ventanaError;
+    private AlertDialog ventanaMensaje;
 
     private OnFragmentInteractionListener mListener;
 
     public Fragment_ControlProceso() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Descongelado_TiempoMuerto.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_ControlProceso newInstance(String param1, String param2) {
         Fragment_ControlProceso fragment = new Fragment_ControlProceso();
         Bundle args = new Bundle();
@@ -161,20 +149,42 @@ public class Fragment_ControlProceso extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                terminaProcesando();
-                if(response.code() == 200){
-                    limpiaComponentes();
-                }else{
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    if(response.code() == 200){
+                        //limpiaComponentes();
+                        //muestraCampos( response.body() );     0178
+                        if(response.body() != null){
+                            RespuestaServicio resultado = response.body();
+                            if(resultado.getColumna() != null && !resultado.getColumna().equals("")){
+                                muestraMensaje(resultado.getFila().concat( resultado.getColumna() ).concat( resultado.getNivel() ));
+                            }else{
+                                muestraMensaje("Guardado exitosamente");
+                            }
+                        }else{
+                            errorServicio( "Error al guardar peso" );
+                        }
+                    }else{
+                        errorServicio( "Error al guardar peso" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
+    }
+
+    private void muestraCampos(RespuestaServicio respuestaServicio){
+        TextView campoPosicion = this.vista.findViewById(R.id.campoPosicion);
+        campoPosicion.setText(
+                respuestaServicio.getFila().concat( respuestaServicio.getColumna() ).concat( respuestaServicio.getNivel() )
+        );
     }
 
     private void limpiaComponentes(){
@@ -192,24 +202,28 @@ public class Fragment_ControlProceso extends Fragment {
     }
 
     private void validaTina(String codigo){
-        if( codigo.length() >= 15 ){
+        if( codigo.length() >= 3 ){
             iniciaProcesando();
-            Call<TinaProceso> llamadaServicio = APIServicios.getConexion().getTinaProceso( Long.valueOf(codigo) );
+            Call<TinaProceso> llamadaServicio = APIServicios.getConexion().getTinaProceso(codigo);
             llamadaServicio.enqueue(new Callback<TinaProceso>() {
                 @Override
                 public void onResponse(Call<TinaProceso> call, Response<TinaProceso> response) {
-                    if(response.code() == 200){
-                        resultadoTinaProceso( response.body() );
-                    }else{
-                        terminaProcesando();
-                        errorServicio("Error interno del servidor");
+                    if( isAdded() ){
+                        if(response.code() == 200){
+                            resultadoTinaProceso( response.body() );
+                        }else{
+                            terminaProcesando();
+                            errorServicio("Error al validar la tina");
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TinaProceso> call, Throwable t) {
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    if( isAdded() ){
+                        terminaProcesando();
+                        errorServicio("Error al conectar con el servidor");
+                    }
                 }
             });
         }else{
@@ -238,6 +252,34 @@ public class Fragment_ControlProceso extends Fragment {
         }
 
         terminaProcesando();
+    }
+
+    public void muestraMensaje(final String mensaje){
+        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
+        builder.setCancelable(false);
+        builder.setView(vistaAsignar);
+
+        this.ventanaMensaje = builder.create();
+        this.ventanaMensaje.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                TextView etiquetaMensaje = ventanaMensaje.findViewById(R.id.etiquetaMensaje);
+                etiquetaMensaje.setText(mensaje);
+
+                Button botonAceptar = ventanaMensaje.findViewById(R.id.boton1);
+                botonAceptar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        limpiaComponentes();
+                        ventanaMensaje.dismiss();
+                    }
+                });
+            }
+        });
+        this.ventanaMensaje.show();
     }
 
     public void errorServicio(final String mensaje){

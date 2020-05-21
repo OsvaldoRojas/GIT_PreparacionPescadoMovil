@@ -19,24 +19,12 @@ import com.grupo.pinsa.sip.simulador.preselecion.Fragment_Preselecion_Tinas;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Contenedor.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Contenedor#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Contenedor extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private int mParam1;
 
-    private  View vista;
+    private View vista;
     private TabLayout pestañas;
     private ViewPager viewPager;
     private AppBarLayout appbar;
@@ -45,14 +33,6 @@ public class Contenedor extends Fragment {
     public Contenedor() {
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment Contenedor.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Contenedor newInstance(int param1) {
         Contenedor fragment = new Contenedor();
         Bundle args = new Bundle();
@@ -109,7 +89,7 @@ public class Contenedor extends Fragment {
 
     private void llenarview(ViewPager viewPager) {
         SesionesAdapter adatartes= new SesionesAdapter(getFragmentManager());
-        adatartes.addfragments(new Fragment_Preselecion_Tinas(), getResources().getString(R.string.Preselecion_tinas));
+        adatartes.addfragments(new Fragment_Preselecion_Tinas(), getResources().getString(R.string.disenoPlan));
         adatartes.addfragments(new Fragment_CreaOrdenMantenimiento(), getResources().getString(R.string.TiempoMuerto));
         adatartes.addfragments(new Fragment_OrdenMantenimiento(), getResources().getString(R.string.OM));
         viewPager.setAdapter(adatartes);
@@ -117,7 +97,7 @@ public class Contenedor extends Fragment {
 
     private void iniciaTab(){
         TextView textView1 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
-        textView1.setText( getResources().getString(R.string.Preselecion_tinas) );
+        textView1.setText( getResources().getString(R.string.disenoPlan) );
         pestañas.getTabAt(0).setCustomView(textView1);
         TextView textView2 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
         textView2.setText( getResources().getString(R.string.TiempoMuerto) );

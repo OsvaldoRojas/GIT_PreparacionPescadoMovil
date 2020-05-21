@@ -3,12 +3,10 @@ package com.grupo.pinsa.sip.simulador.conexion;
 import android.os.AsyncTask;
 
 import com.grupo.pinsa.sip.simulador.utilerias.Catalogos;
-import com.grupo.pinsa.sip.simulador.vista.Especialidad;
-import com.grupo.pinsa.sip.simulador.vista.Etapa;
-import com.grupo.pinsa.sip.simulador.vista.GrupoEspecie;
-import com.grupo.pinsa.sip.simulador.vista.Refaccion;
-import com.grupo.pinsa.sip.simulador.vista.Subtalla;
-import com.grupo.pinsa.sip.simulador.vista.Talla;
+import com.grupo.pinsa.sip.simulador.modelo.Especialidad;
+import com.grupo.pinsa.sip.simulador.modelo.Etapa;
+import com.grupo.pinsa.sip.simulador.modelo.GrupoEspecie;
+import com.grupo.pinsa.sip.simulador.modelo.Refaccion;
 
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
             }
         });
 
-        Call<List<Talla>> catalogoTalla = APIServicios.getConexion().getTallas();
+        /*Call<List<Talla>> catalogoTalla = APIServicios.getConexion().getTallas();
         catalogoTalla.enqueue(new Callback<List<Talla>>() {
             @Override
             public void onResponse(Call<List<Talla>> call, Response<List<Talla>> response) {
@@ -63,9 +61,9 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
             public void onFailure(Call<List<Talla>> call, Throwable t) {
 
             }
-        });
+        });*/
 
-        Call<List<Subtalla>> catalogoSubtalla = APIServicios.getConexion().getSubtallas();
+        /*Call<List<Subtalla>> catalogoSubtalla = APIServicios.getConexion().getSubtallas();
         catalogoSubtalla.enqueue(new Callback<List<Subtalla>>() {
             @Override
             public void onResponse(Call<List<Subtalla>> call, Response<List<Subtalla>> response) {
@@ -78,7 +76,7 @@ public class CargaCatalogos extends AsyncTask<Void,Integer,Boolean> {
             public void onFailure(Call<List<Subtalla>> call, Throwable t) {
 
             }
-        });
+        });*/
 
         Call<List<GrupoEspecie>> catalogoEspecie = APIServicios.getConexion().getEspecies();
         catalogoEspecie.enqueue(new Callback<List<GrupoEspecie>>() {

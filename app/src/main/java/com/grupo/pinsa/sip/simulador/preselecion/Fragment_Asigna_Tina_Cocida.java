@@ -26,11 +26,11 @@ import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCocida;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
-import com.grupo.pinsa.sip.simulador.vista.Cocida;
-import com.grupo.pinsa.sip.simulador.vista.Tina;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.vista.servicio.RespuestaServicio;
-import com.grupo.pinsa.sip.simulador.vista.servicio.TinaEscaneo;
+import com.grupo.pinsa.sip.simulador.modelo.Cocida;
+import com.grupo.pinsa.sip.simulador.modelo.Tina;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.TinaEscaneo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -205,7 +205,7 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
         JsonObject json = new JsonObject();
         json.addProperty("idPreseleccionPosicionTina", getTinaSeleccionada().getIdPreseleccionPosicionTina() );
         json.addProperty("idAsignacionCocida", idCocida);
-        json.addProperty("idTina", getTinaSeleccionada().getTina().getIdTina() );
+        json.addProperty("idTina", getTinaSeleccionada().getTina().getDescripcion() );
         json.addProperty("idEspecie", getTinaSeleccionada().getGrupoEspecie().getIdEspecie() );
         json.addProperty("idTalla", getTinaSeleccionada().getTalla().getIdTalla() );
         json.addProperty("idSubtalla", getTinaSeleccionada().getSubtalla().getIdSubtalla() );
@@ -219,19 +219,22 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
         llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
             @Override
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
-                RespuestaServicio respuesta = response.body();
-                if( response.code() == 200 && respuesta.getCodigo() == 0 ){
-                    resultadoAsignacion();
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        resultadoAsignacion();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al asignar la tina" );
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<RespuestaServicio> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -282,18 +285,22 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
         llamadaServicio.enqueue(new Callback<List<Cocida>>() {
             @Override
             public void onResponse(Call<List<Cocida>> call, Response<List<Cocida>> response) {
-                if(response.code() == 200){
-                    resultadoCocidas( response.body() );
-                }else{
-                    terminaProcesando();
-                    errorServicio("Error interno del servidor");
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        resultadoCocidas( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener las cocidas");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Cocida>> call, Throwable t) {
-                terminaProcesando();
-                errorServicio("Error al conectar con el servidor");
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
             }
         });
     }
@@ -322,24 +329,28 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     }
 
     private void validaTina(String codigo){
-        if( codigo.length() >= 15 ){
+        if( codigo.length() >= 3 ){
             iniciaProcesando();
             Call<TinaEscaneo> llamadaServicio = APIServicios.getConexion().getTina(codigo);
             llamadaServicio.enqueue(new Callback<TinaEscaneo>() {
                 @Override
                 public void onResponse(Call<TinaEscaneo> call, Response<TinaEscaneo> response) {
-                    if(response.code() == 200){
-                        resultadoEscaneoTina( response.body() );
-                    }else{
-                        terminaProcesando();
-                        errorServicio("Error interno del servidor");
+                    if( isAdded() ){
+                        if(response.code() == 200){
+                            resultadoEscaneoTina( response.body() );
+                        }else{
+                            terminaProcesando();
+                            errorServicio("Error al obtener la tina");
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TinaEscaneo> call, Throwable t) {
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
+                    if( isAdded() ){
+                        terminaProcesando();
+                        errorServicio("Error al conectar con el servidor");
+                    }
                 }
             });
         }else{
@@ -353,7 +364,10 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
         TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
 
         if( resultadoTina.getIdTinaDes() != null ){
-            campoDescripcion.setText( resultadoTina.getTinaDes() );
+            campoDescripcion.setText(
+                    resultadoTina.getIdTinaDes().concat(" - ")
+                            .concat( resultadoTina.getTinaDes() )
+            );
             campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
 
             getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );

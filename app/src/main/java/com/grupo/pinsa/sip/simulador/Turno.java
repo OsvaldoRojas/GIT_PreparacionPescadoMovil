@@ -8,9 +8,8 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.CargaCatalogos;
-import com.grupo.pinsa.sip.simulador.vista.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
 
 public class Turno extends AppCompatActivity {
 
@@ -44,7 +43,7 @@ public class Turno extends AppCompatActivity {
         ul.setNombre("Juan");
         ul.setApellido_paterno("Perez");
         ul.setClave_usuario("usuarioerp");
-        ul.setId_empleado(7000008);
+        ul.setId_empleado(7000002);
         ul.setId_rol(1);//1 = auxiliar; 2 = mecanico; 3 = supervisor
 
         this.turnoUno = findViewById(R.id.turnoUno);

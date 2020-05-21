@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 
 import com.grupo.pinsa.sip.simulador.LoginActivity;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
-import com.grupo.pinsa.sip.simulador.vista.ErrorServicio;
-import com.grupo.pinsa.sip.simulador.vista.Usuario;
+import com.grupo.pinsa.sip.simulador.modelo.ErrorServicio;
+import com.grupo.pinsa.sip.simulador.modelo.Usuario;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;

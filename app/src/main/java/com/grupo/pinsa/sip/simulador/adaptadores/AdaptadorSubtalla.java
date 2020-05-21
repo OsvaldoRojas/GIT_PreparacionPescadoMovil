@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.vista.Subtalla;
+import com.grupo.pinsa.sip.simulador.modelo.Subtalla;
 
 import java.util.List;
 

@@ -90,7 +90,7 @@ public class Contenedor_Emparrillado extends Fragment {
 
     private void llenarview(ViewPager viewPager) {
         SesionesAdapter adatartes2= new SesionesAdapter(getFragmentManager());
-        adatartes2.addfragments(new Fragment_Emparrillado_Plan(), getResources().getString(R.string.Preselecion_tinas));
+        adatartes2.addfragments(new Fragment_Emparrillado_Plan(), getResources().getString(R.string.disenoPlan));
         adatartes2.addfragments(new Fragment_CreaOrdenMantenimiento(), getResources().getString(R.string.TiempoMuerto));
         adatartes2.addfragments(new Fragment_OrdenMantenimiento(), getResources().getString(R.string.OM));
         viewPager.setAdapter(adatartes2);
@@ -98,7 +98,7 @@ public class Contenedor_Emparrillado extends Fragment {
 
     private void iniciaTab(){
         TextView textView1 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
-        textView1.setText( getResources().getString(R.string.Preselecion_tinas) );
+        textView1.setText( getResources().getString(R.string.disenoPlan) );
         pestañas.getTabAt(0).setCustomView(textView1);
         TextView textView2 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
         textView2.setText( getResources().getString(R.string.TiempoMuerto) );

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.vista.Artefacto;
+import com.grupo.pinsa.sip.simulador.modelo.Artefacto;
 
 import java.util.List;
 
@@ -48,6 +48,7 @@ public class AdaptadorMaquinariaArtefacto extends ArrayAdapter<Artefacto> {
             }
         });
 
+        vista.setClickable(true);
         return vista;
     }
 

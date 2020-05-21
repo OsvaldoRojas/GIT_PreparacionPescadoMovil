@@ -10,9 +10,9 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.utilerias.Constantes;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
+import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
 
 public class home extends Fragment {
 
@@ -26,7 +26,6 @@ public class home extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public home() {
-        // Required empty public constructor
     }
 
     public static home newInstance(String param1, String param2) {
@@ -56,125 +55,181 @@ public class home extends Fragment {
     }
 
     private void iniciaComponentes(){
-        Button botonPreseleccion = this.vista.findViewById(R.id.botonPreseleccion);
-        botonPreseleccion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.preseleccion))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonPreseleccion = this.vista.findViewById(R.id.botonPreseleccion);
+            botonPreseleccion.setVisibility(View.VISIBLE);
+            botonPreseleccion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.preseleccion))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonAtemperado = this.vista.findViewById(R.id.botonAtemperado);
-        botonAtemperado.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.atemperado))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonAtemperado = this.vista.findViewById(R.id.botonAtemperado);
+            botonAtemperado.setVisibility(View.VISIBLE);
+            botonAtemperado.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.atemperado))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonDescongelado = this.vista.findViewById(R.id.botonDescongelado);
-        botonDescongelado.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.descongelado))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonDescongelado = this.vista.findViewById(R.id.botonDescongelado);
+            botonDescongelado.setVisibility(View.VISIBLE);
+            botonDescongelado.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.descongelado))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonMovimiento = this.vista.findViewById(R.id.botonMovimiento);
-        botonMovimiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.movimiento))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId() ){
+            Button botonMovimiento = this.vista.findViewById(R.id.botonMovimiento);
+            botonMovimiento.setVisibility(View.VISIBLE);
+            botonMovimiento.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.movimiento))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonControl = this.vista.findViewById(R.id.botonControl);
-        botonControl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.control))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId() ){
+            Button botonControl = this.vista.findViewById(R.id.botonControl);
+            botonControl.setVisibility(View.VISIBLE);
+            botonControl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.control))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonEviscerado = this.vista.findViewById(R.id.botonEviscerado);
-        botonEviscerado.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.eviscerado))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonEviscerado = this.vista.findViewById(R.id.botonEviscerado);
+            botonEviscerado.setVisibility(View.VISIBLE);
+            botonEviscerado.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.eviscerado))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonEmparrillado = this.vista.findViewById(R.id.botonEmparrillado);
-        botonEmparrillado.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.emparrillado))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonEmparrillado = this.vista.findViewById(R.id.botonEmparrillado);
+            botonEmparrillado.setVisibility(View.VISIBLE);
+            botonEmparrillado.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.emparrillado))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonCocimiento = this.vista.findViewById(R.id.botonCocimiento);
-        botonCocimiento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.cocimiento))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonCocimiento = this.vista.findViewById(R.id.botonCocimiento);
+            botonCocimiento.setVisibility(View.VISIBLE);
+            botonCocimiento.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.cocimiento))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonModulos = this.vista.findViewById(R.id.botonModulos);
-        botonModulos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.modulos))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonModulos = this.vista.findViewById(R.id.botonModulos);
+            botonModulos.setVisibility(View.VISIBLE);
+            botonModulos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.modulos))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonTemperatura = this.vista.findViewById(R.id.botonTemperatura);
-        botonTemperatura.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.temperatura))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonTemperatura = this.vista.findViewById(R.id.botonTemperatura);
+            botonTemperatura.setVisibility(View.VISIBLE);
+            botonTemperatura.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.temperatura))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonEstatus = this.vista.findViewById(R.id.botonEstatus);
-        botonEstatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.estatus))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonEstatus = this.vista.findViewById(R.id.botonEstatus);
+            botonEstatus.setVisibility(View.VISIBLE);
+            botonEstatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.estatus))
+                            .commit();
+                }
+            });
+        }
 
-        Button botonLavado = this.vista.findViewById(R.id.botonLavado);
-        botonLavado.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.lavado))
-                        .commit();
-            }
-        });
+        if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.auxiliar.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
+                || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
+            Button botonLavado = this.vista.findViewById(R.id.botonLavado);
+            botonLavado.setVisibility(View.VISIBLE);
+            botonLavado.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.lavado))
+                            .commit();
+                }
+            });
+        }
     }
 
     public void onButtonPressed(Uri uri) {

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.cocimiento.Fragment_Carga_Carritos;
-import com.grupo.pinsa.sip.simulador.vista.Carrito;
+import com.grupo.pinsa.sip.simulador.modelo.Carrito;
 
 import java.util.List;
 
@@ -89,29 +89,33 @@ public class AdaptadorCarritosCocimiento extends RecyclerView.Adapter<AdaptadorC
             vista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Carrito carritoSeleccionado = listaCarritos.get( getLayoutPosition() );
-                    if( carritoSeleccionado.isSeleccionado() ){
-                        carrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                        etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                        especie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                        etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                        subtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                        etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                        fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorAccent) );
-                        carritoSeleccionado.setSeleccionado(false);
-                        carritoSeleccionado.setSeleccionadoSuma(false);
-                    }else{
-                        carrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                        etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                        especie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                        etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                        subtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                        etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                        fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                        carritoSeleccionado.setSeleccionado(true);
-                        carritoSeleccionado.setSeleccionadoSuma(true);
+                    if( ( (Fragment_Carga_Carritos) pantalla).libre ){
+                        Carrito carritoSeleccionado = listaCarritos.get( getLayoutPosition() );
+                        if( carritoSeleccionado.isSeleccionado() ){
+                            carrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                            etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                            especie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                            etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                            subtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                            etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                            fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorAccent) );
+                            carritoSeleccionado.setSeleccionado(false);
+                            carritoSeleccionado.setSeleccionadoSuma(false);
+                        }else{
+                            if( (( (Fragment_Carga_Carritos) pantalla).totalCarritos) < ( (Fragment_Carga_Carritos) pantalla).capacidadTotal ){
+                                carrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                                etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                                especie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                                etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                                subtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                                etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                                fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                                carritoSeleccionado.setSeleccionado(true);
+                                carritoSeleccionado.setSeleccionadoSuma(true);
+                            }
+                        }
+                        ( (Fragment_Carga_Carritos) pantalla).actualizaTotal();
                     }
-                    ( (Fragment_Carga_Carritos) pantalla).actualizaTotal();
                 }
             });
         }

@@ -101,21 +101,20 @@
                     android:paddingLeft="5dp"
                     android:paddingBottom="4dp" />
 
-                <Spinner
-                    android:id="@+id/seleccionArea"
+                <TextView
+                    android:id="@+id/campoEstacion"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
-
-                <Spinner
-                    android:id="@+id/seleccionPuesto"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="20dp"
+                    android:hint="Estación"
+                    android:gravity="center_vertical"
+                    android:background="@color/colorAccent"
+                    android:textSize="15dp"
+                    android:paddingTop="4dp"
+                    android:paddingLeft="5dp"
+                    android:paddingBottom="4dp" />
 
             </LinearLayout>
 
@@ -127,13 +126,9 @@
                 android:gravity="bottom">
 
                 <Button
-                    android:id="@+id/boton1"
-                    android:text="@string/cancelar"
-                    style="@style/botonAccion"/>
-
-                <Button
-                    android:id="@+id/boton2"
-                    android:text="@string/aceptar"
+                    android:id="@+id/liberar"
+                    android:visibility="invisible"
+                    android:text="@string/liberarUsuario"
                     style="@style/botonAccion"/>
 
             </LinearLayout>
