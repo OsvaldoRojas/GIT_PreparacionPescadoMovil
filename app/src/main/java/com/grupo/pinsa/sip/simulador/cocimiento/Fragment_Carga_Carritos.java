@@ -53,7 +53,7 @@ public class Fragment_Carga_Carritos extends Fragment {
 
     private View vista;
 
-    private List<Carrito> listaCarritos;
+    private List<Carrito> listaCarritos = new ArrayList<>();
     private List<Cocedor> cocedores;
     private AdaptadorCarritosCocimiento adaptador;
 
@@ -494,7 +494,7 @@ public class Fragment_Carga_Carritos extends Fragment {
     }
 
     public void actualizaTotal(){
-        this.totalCarritos = 0;
+        this.totalCarritos = getCocedorSeleccionado().getCarritos().size();
         for(Carrito carrito : this.listaCarritos){
             if( carrito.isSeleccionadoSuma() ){
                 this.totalCarritos = this.totalCarritos + 1;

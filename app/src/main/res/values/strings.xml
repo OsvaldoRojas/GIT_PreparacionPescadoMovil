@@ -36,6 +36,7 @@
     <string name="iniciar">Iniciar</string>
     <string name="salidaCarritos">Salida carritos</string>
     <string name="registrar">Registrar</string>
+    <string name="registrarSalida">Registrar salida</string>
 
     <string name="crearOrden">Crear orden de mantenimiento</string>
     <string name="ordenMantenimiento">Orden de mantenimiento</string>

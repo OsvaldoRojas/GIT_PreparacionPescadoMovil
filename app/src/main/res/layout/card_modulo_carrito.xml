@@ -77,7 +77,7 @@
                         android:id="@+id/etiquetaPeso"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="11dp"
+                        android:textSize="10dp"
                         android:textColor="@color/colorPrimary"
                         android:text="Peso: "/>
 
@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="9dp"
                         android:textColor="@color/colorPrimary"
-                        android:text=""/>
+                        android:text="13"/>
 
                 </LinearLayout>
 

@@ -33,6 +33,7 @@ import com.grupo.pinsa.sip.simulador.modelo.servicio.Gafete;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.ListaOrdenMantenimientoServicio;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.MezclaTinaServicio;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.ModuloCarritosAsignados;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.ModuloSalidaCarritos;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.OrdenMantenimientoGuardar;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.TinaEscaneo;
@@ -167,6 +168,10 @@ public interface ServicioRest {
     Call<List<Carrito>> getCarritosSinAsignarModulo(@Path("idCocedor") long idCocedor,
                                                     @Path("idBascula") int idBascula);
 
+    @GET("modulos/{idModulo}/{idBascula}/carritos")
+    Call<List<Carrito>> getCarritosSalida(@Path("idModulo") long idModulo,
+                                          @Path("idBascula") int idBascula);
+
     @PUT("preseleccion/montacargas")
     Call<RespuestaServicio> guardaMontacargas(@Body JsonObject body);
 
@@ -262,6 +267,9 @@ public interface ServicioRest {
 
     @POST("modulos/carritos")
     Call<List<RespuestaServicio>> asignaCarritosModulo(@Body ModuloCarritosAsignados carritosAsignados);
+
+    @POST("modulos/carritos/salida")
+    Call<List<RespuestaServicio>> guardaSalidaCarritos(@Body ModuloSalidaCarritos carritosSalida);
 
     @POST("empleado/puesto")
     Call<RespuestaServicio> guardaPuesto(@Body JsonObject body);

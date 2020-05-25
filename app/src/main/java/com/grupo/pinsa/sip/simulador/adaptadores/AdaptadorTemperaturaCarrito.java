@@ -94,31 +94,29 @@ public class AdaptadorTemperaturaCarrito extends RecyclerView.Adapter<AdaptadorT
             vista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if( ( (Fragment_Temperatura_Carrito) pantalla).libre ){
-                        Carrito carritoSeleccionado = listaCarritos.get( getLayoutPosition() );
-                        if( carritoSeleccionado.isSeleccionado() ){
-                            temperatura.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            carrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            especie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            subtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorAccent) );
-                            carritoSeleccionado.setSeleccionado(false);
-                            carritoSeleccionado.setSeleccionadoSuma(false);
-                        }else{
-                            temperatura.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            carrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            especie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            subtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            carritoSeleccionado.setSeleccionado(true);
-                            carritoSeleccionado.setSeleccionadoSuma(true);
-                        }
+                    Carrito carritoSeleccionado = listaCarritos.get( getLayoutPosition() );
+                    if( carritoSeleccionado.isSeleccionado() ){
+                        temperatura.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        carrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        especie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        subtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorAccent) );
+                        carritoSeleccionado.setSeleccionado(false);
+                        carritoSeleccionado.setSeleccionadoSuma(false);
+                    }else{
+                        temperatura.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        carrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        especie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        subtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        carritoSeleccionado.setSeleccionado(true);
+                        carritoSeleccionado.setSeleccionadoSuma(true);
                     }
                 }
             });

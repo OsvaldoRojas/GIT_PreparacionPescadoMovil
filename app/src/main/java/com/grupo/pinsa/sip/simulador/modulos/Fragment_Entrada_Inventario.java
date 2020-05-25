@@ -21,16 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.grupo.pinsa.sip.simulador.R;
-import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorBasculaCatalogo;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCarritoModulo;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCocedorCatalogo;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
-import com.grupo.pinsa.sip.simulador.modelo.Bascula;
 import com.grupo.pinsa.sip.simulador.modelo.Carrito;
 import com.grupo.pinsa.sip.simulador.modelo.Cocedor;
 import com.grupo.pinsa.sip.simulador.modelo.Modulo;
 import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
-import com.grupo.pinsa.sip.simulador.modelo.servicio.ModuloCarritosAsignados;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
 
@@ -42,25 +39,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Entrada_Manual extends Fragment {
+public class Fragment_Entrada_Inventario extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
 
     private View vista;
 
-    private List<Carrito> listaCarritos;
+    private List<Carrito> listaCarritos = new ArrayList<>();
     private List<Cocedor> cocedores;
-    private List<Bascula> basculas;
     private AdaptadorCarritoModulo adaptador;
 
     public int totalCarritos = 0;
     public int capacidadTotal;
-    private boolean cargando = false;
 
     private AlertDialog ventanaError;
     private AlertDialog ventanaEmergente;
     private ProgressBar barraProgreso;
-    private SwipeRefreshLayout actualizar;
     private RecyclerView vistaLista;
     private Spinner seleccionaCocedor;
     private Spinner seleccionaBascula;
@@ -70,11 +64,11 @@ public class Fragment_Entrada_Manual extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_Entrada_Manual() {
+    public Fragment_Entrada_Inventario() {
     }
 
-    public static Fragment_Entrada_Manual newInstance(Serializable param1) {
-        Fragment_Entrada_Manual fragment = new Fragment_Entrada_Manual();
+    public static Fragment_Entrada_Inventario newInstance(Serializable param1) {
+        Fragment_Entrada_Inventario fragment = new Fragment_Entrada_Inventario();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -92,7 +86,7 @@ public class Fragment_Entrada_Manual extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista = inflater.inflate(R.layout.fragment_entrada_manual, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_entrada_inventario, container, false);
         iniciaComponentes();
         return this.vista;
     }
@@ -115,25 +109,19 @@ public class Fragment_Entrada_Manual extends Fragment {
         etiquetaTotalCarritos.setText( String.valueOf(this.totalCarritos).concat("/")
                 .concat( String.valueOf(this.capacidadTotal) ) );
 
-        this.actualizar = this.vista.findViewById(R.id.actualizar);
-        this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                actualizar.setRefreshing(true);
-                if( ( (Cocedor) seleccionaCocedor.getSelectedItem() ).getId() > 0 &&
-                        ( (Bascula) seleccionaBascula.getSelectedItem() ).getIdBascula() > 0 ){
-                    getCarritosSinAsignar();
-                }else{
-                    actualizar.setRefreshing(false);
-                }
-            }
-        });
-
-        this.registrar = this.vista.findViewById(R.id.botonRegistrar);
+        this.registrar = this.vista.findViewById(R.id.botonCompleto);
         this.registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 validaGuardado();
+            }
+        });
+
+        Button ver = this.vista.findViewById(R.id.botonVer);
+        ver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -153,62 +141,9 @@ public class Fragment_Entrada_Manual extends Fragment {
         capacidad.setText( String.valueOf( getModuloSeleccionado().getCapacidadMaxima() ) );
 
         this.vistaLista = this.vista.findViewById(R.id.listaCarritos);
-
         this.seleccionaCocedor = this.vista.findViewById(R.id.seleccionCocedor);
-        this.seleccionaCocedor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if( cocedores.get(i).getId() > 0 ){
-                    if(!cargando){
-                        cargando = true;
-                        for(Bascula bascula : basculas){
-                            if( cocedores.get(i).getBascula() != null &&
-                                    bascula.getIdBascula() == cocedores.get(i).getBascula().getIdBascula() ){
-                                seleccionaBascula.setSelection(
-                                        Utilerias.obtenerPosicionItem( seleccionaBascula, bascula.getDescripcion() )
-                                );
-                                break;
-                            }
-                        }
-                        if( ( (Bascula) seleccionaBascula.getSelectedItem() ).getIdBascula() > 0 ){
-                            iniciaProcesando();
-                            getCarritosSinAsignar();
-                        }else{
-                            cargando = false;
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        this.seleccionaBascula = this.vista.findViewById(R.id.seleccionBascula);
-        this.seleccionaBascula.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if( basculas.get(i).getIdBascula() > 0 ){
-                    if( ( (Cocedor) seleccionaCocedor.getSelectedItem() ).getId() > 0 ){
-                        if(!cargando){
-                            cargando = true;
-                            iniciaProcesando();
-                            getCarritosSinAsignar();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         getCatalogoCocedores();
-        getCatalogoBasculas();
     }
 
     private void getCatalogoCocedores(){
@@ -247,42 +182,6 @@ public class Fragment_Entrada_Manual extends Fragment {
         terminaProcesando();
     }
 
-    private void getCatalogoBasculas(){
-        Call<List<Bascula>> llamadaServicio = APIServicios.getConexionAPPWEB().getBasculas("coc");
-        llamadaServicio.enqueue(new Callback<List<Bascula>>() {
-            @Override
-            public void onResponse(Call<List<Bascula>> call, Response<List<Bascula>> response) {
-                if( isAdded() ){
-                    if(response.code() == 200){
-                        muestraBasculas( response.body() );
-                    }else{
-                        terminaProcesando();
-                        errorServicio("Error al obtener las básculas");
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Bascula>> call, Throwable t) {
-                if( isAdded() ){
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
-                }
-            }
-        });
-    }
-
-    private void muestraBasculas(List<Bascula> basculas){
-        this.basculas = basculas;
-        Bascula basculaVacia = new Bascula();
-        basculaVacia.setIdBascula(0);
-        basculaVacia.setDescripcion("Seleccionar báscula");
-        this.basculas.add(0, basculaVacia);
-        AdaptadorBasculaCatalogo adaptadorBasculaCatalogo = new AdaptadorBasculaCatalogo(getContext(), this.basculas);
-        this.seleccionaBascula.setAdapter(adaptadorBasculaCatalogo);
-        terminaProcesando();
-    }
-
     private void validaGuardado(){
         if( this.totalCarritos == getModuloSeleccionado().getCarritos().size() ){
             errorServicio("Es necesario seleccionar al menos un carrito");
@@ -300,7 +199,7 @@ public class Fragment_Entrada_Manual extends Fragment {
             }
         }
 
-        ModuloCarritosAsignados carritosAsignados = new ModuloCarritosAsignados();
+        /*ModuloCarritosAsignados carritosAsignados = new ModuloCarritosAsignados();
         carritosAsignados.setIdModulo( getModuloSeleccionado().getId() );
         carritosAsignados.setIdCocedor( ( (Cocedor) this.seleccionaCocedor.getSelectedItem() ).getId() );
         carritosAsignados.setIdBascula( ( (Bascula) this.seleccionaBascula.getSelectedItem() ).getIdBascula() );
@@ -330,7 +229,7 @@ public class Fragment_Entrada_Manual extends Fragment {
                     errorServicio("Error al conectar con el servidor");
                 }
             }
-        });
+        });*/
     }
 
     private void validaResultado(List<RespuestaServicio> respuestas){
@@ -343,7 +242,7 @@ public class Fragment_Entrada_Manual extends Fragment {
         }
 
         if(error){
-            getCarritosSinAsignar();
+            //getCarritosSinAsignar();
             errorServicio("Ocurrió un error al asignar alguno de los carritos");
         }else{
             Fragment fragment = new Fragment_Vista_Modulo().newInstance( getModuloSeleccionado() );
@@ -351,74 +250,22 @@ public class Fragment_Entrada_Manual extends Fragment {
         }
     }
 
-    private void getCarritosSinAsignar(){
-        long idCocedor = ( (Cocedor) this.seleccionaCocedor.getSelectedItem() ).getId();
-        int idBascula = ( (Bascula) this.seleccionaBascula.getSelectedItem() ).getIdBascula();
-        Call<List<Carrito>> llamadaServicio = APIServicios.getConexion()
-                .getCarritosSinAsignarModulo(idCocedor, idBascula);
-        llamadaServicio.enqueue(new Callback<List<Carrito>>() {
-            @Override
-            public void onResponse(Call<List<Carrito>> call, Response<List<Carrito>> response) {
-                if( isAdded() ){
-                    if(response.code() == 200){
-                        muestraCarritos( response.body() );
-                    }else{
-                        terminaProcesando();
-                        errorServicio("Error al obtener los carritos sin asignar módulo");
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Carrito>> call, Throwable t) {
-                if( isAdded() ){
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
-                }
-            }
-        });
-    }
-
     private void muestraCarritos(List<Carrito> carritos){
-        for(Carrito carritoNuevo : carritos){
-            for(Carrito carritoAnterior : this.listaCarritos){
-                if( carritoNuevo.getId() == carritoAnterior.getId() ){
-                    carritoNuevo.setSeleccionado( carritoAnterior.isSeleccionado() );
-                    carritoNuevo.setSeleccionadoSuma( carritoAnterior.isSeleccionadoSuma() );
-                    break;
-                }
-            }
-        }
         this.listaCarritos = carritos;
-        TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
-        if( !this.listaCarritos.isEmpty() ) {
-            sinResultado.setVisibility(View.GONE);
-            this.vistaLista.setVisibility(View.VISIBLE);
+        this.vistaLista.setHasFixedSize(true);
 
-            this.vistaLista.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
+        this.vistaLista.setLayoutManager(layoutManager);
 
-            LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
-            this.vistaLista.setLayoutManager(layoutManager);
-
-            this.adaptador = new AdaptadorCarritoModulo(this.listaCarritos, this);
-            this.vistaLista.setAdapter(this.adaptador);
-
-        }else{
-            this.vistaLista.setVisibility(View.GONE);
-            sinResultado.setVisibility(View.VISIBLE);
-        }
+        this.adaptador = new AdaptadorCarritoModulo(this.listaCarritos, this);
+        this.vistaLista.setAdapter(this.adaptador);
 
         actualizaTotal();
         terminaProcesando();
     }
 
     public void actualizaTotal(){
-        this.totalCarritos = getModuloSeleccionado().getCarritos().size();
-        for(Carrito carrito : this.listaCarritos){
-            if( carrito.isSeleccionadoSuma() ){
-                this.totalCarritos = this.totalCarritos + 1;
-            }
-        }
+        this.totalCarritos = getModuloSeleccionado().getCarritos().size() + this.listaCarritos.size();
         TextView etiquetaTotalCarritos = this.vista.findViewById(R.id.totalCarritos);
         etiquetaTotalCarritos.setText( String.valueOf(this.totalCarritos).concat("/")
                 .concat( String.valueOf(this.capacidadTotal) ) );
@@ -458,9 +305,6 @@ public class Fragment_Entrada_Manual extends Fragment {
 
     public void terminaProcesando(){
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        if( this.actualizar.isRefreshing() ){
-            this.actualizar.setRefreshing(false);
-        }
         this.barraProgreso.setVisibility(View.GONE);
     }
 

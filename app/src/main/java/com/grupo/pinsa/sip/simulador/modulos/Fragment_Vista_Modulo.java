@@ -111,7 +111,8 @@ public class Fragment_Vista_Modulo extends Fragment {
         botonSalidaCarritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //navega a salida carritos
+                Fragment fragment = new Fragment_Salida_Carritos().newInstance( getModuloSeleccionado() );
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });
 
@@ -120,7 +121,8 @@ public class Fragment_Vista_Modulo extends Fragment {
         botonEntradaManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //navega a entrada manual
+                Fragment fragment = new Fragment_Entrada_Manual().newInstance( getModuloSeleccionado() );
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });
 

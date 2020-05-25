@@ -75,40 +75,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <Spinner
                     android:id="@+id/seleccionCocedor"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:layout_weight="1"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@color/colorAccent"/>
 
-                <Spinner
-                    android:id="@+id/seleccionBascula"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="30dp"
+                <Button
+                    android:id="@+id/botonVer"
+                    style="@style/botonMenu"
+                    android:layout_height="40dp"
                     android:layout_marginRight="30dp"
-                    android:background="@color/colorAccent"/>
+                    android:text="Ver"/>
 
             </LinearLayout>
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/actualizar"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listaCarritos"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="2.7"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/listaCarritos"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/card_modulo_carrito"/>
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                tools:listitem="@layout/card_modulo_carrito"/>
 
             <LinearLayout
                 android:id="@+id/contenedorBotones"
@@ -131,22 +124,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/sinResultados"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="No se encontraron resultados"
-            android:gravity="center_horizontal"
-            android:paddingTop="160dp"
-            android:visibility="gone"
-            android:textSize="15dp"/>
 
     </FrameLayout>
 

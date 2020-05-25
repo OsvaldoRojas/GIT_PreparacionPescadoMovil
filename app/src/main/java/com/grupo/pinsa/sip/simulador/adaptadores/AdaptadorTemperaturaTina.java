@@ -94,31 +94,29 @@ public class AdaptadorTemperaturaTina extends RecyclerView.Adapter<AdaptadorTemp
             vista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if( ( (Fragment_Temperatura_Tina) pantalla).libre ){
-                        TemperaturaTina tinaSeleccionada = listaTinas.get( getLayoutPosition() );
-                        if( tinaSeleccionada.isSeleccionado() ){
-                            temperatura.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            tina.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            etiquetaTina.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            especie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            subtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorAccent) );
-                            tinaSeleccionada.setSeleccionado(false);
-                            tinaSeleccionada.setSeleccionadoSuma(false);
-                        }else{
-                            temperatura.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            tina.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            etiquetaTina.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            especie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            subtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
-                            fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorPrimary) );
-                            tinaSeleccionada.setSeleccionado(true);
-                            tinaSeleccionada.setSeleccionadoSuma(true);
-                        }
+                    TemperaturaTina tinaSeleccionada = listaTinas.get( getLayoutPosition() );
+                    if( tinaSeleccionada.isSeleccionado() ){
+                        temperatura.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        tina.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        etiquetaTina.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        especie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        subtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorAccent) );
+                        tinaSeleccionada.setSeleccionado(false);
+                        tinaSeleccionada.setSeleccionadoSuma(false);
+                    }else{
+                        temperatura.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        tina.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        etiquetaTina.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        especie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        etiquetaEspecie.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        subtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        etiquetaSubtalla.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
+                        fondo.setBackgroundColor( pantalla.getResources().getColor(R.color.colorPrimary) );
+                        tinaSeleccionada.setSeleccionado(true);
+                        tinaSeleccionada.setSeleccionadoSuma(true);
                     }
                 }
             });

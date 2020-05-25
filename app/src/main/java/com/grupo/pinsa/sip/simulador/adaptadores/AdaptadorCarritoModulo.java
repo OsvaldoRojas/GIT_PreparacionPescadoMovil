@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.modelo.Carrito;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Entrada_Manual;
+import com.grupo.pinsa.sip.simulador.modulos.Fragment_Salida_Carritos;
 
 import java.util.List;
 
@@ -162,7 +163,10 @@ public class AdaptadorCarritoModulo extends RecyclerView.Adapter<AdaptadorCarrit
                         carritoSeleccionado.setSeleccionado(false);
                         carritoSeleccionado.setSeleccionadoSuma(false);
                     }else{
-                        if( (( (Fragment_Entrada_Manual) pantalla).totalCarritos) < ( (Fragment_Entrada_Manual) pantalla).capacidadTotal ){
+                        if( ( pantalla instanceof Fragment_Entrada_Manual &&
+                                ( ( (Fragment_Entrada_Manual) pantalla).totalCarritos) < ( (Fragment_Entrada_Manual) pantalla).capacidadTotal ) ||
+                                ( pantalla instanceof Fragment_Salida_Carritos &&
+                                        ( ( (Fragment_Salida_Carritos) pantalla).totalCarritos) < ( (Fragment_Salida_Carritos) pantalla).capacidadTotal ) ){
                             carrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
                             etiquetaCarrito.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
                             etiquetaPeso.setTextColor( pantalla.getResources().getColor(R.color.blanco) );
@@ -184,7 +188,13 @@ public class AdaptadorCarritoModulo extends RecyclerView.Adapter<AdaptadorCarrit
                             carritoSeleccionado.setSeleccionadoSuma(true);
                         }
                     }
-                    ( (Fragment_Entrada_Manual) pantalla).actualizaTotal();
+                    if(pantalla instanceof Fragment_Entrada_Manual){
+                        ( (Fragment_Entrada_Manual) pantalla).actualizaTotal();
+                    }else{
+                        if(pantalla instanceof Fragment_Salida_Carritos){
+                            ( (Fragment_Salida_Carritos) pantalla).actualizaTotal();
+                        }
+                    }
                 }
             });
         }

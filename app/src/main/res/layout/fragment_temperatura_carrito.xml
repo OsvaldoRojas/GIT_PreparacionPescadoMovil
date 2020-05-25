@@ -55,7 +55,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_marginRight="20dp"
-                            android:hint="Número de cocida"
+                            android:hint="Número cocida"
                             android:gravity="left"
                             android:background="@color/colorAccent"
                             android:textSize="15dp"
@@ -127,7 +127,7 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/actualizar"
                 android:layout_width="match_parent"
-                android:layout_weight="2.7"
+                android:layout_weight="3"
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -139,11 +139,12 @@
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <LinearLayout
+
                 android:id="@+id/contenedorBotones"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                android:layout_weight="5"
+                android:layout_weight="7"
                 android:visibility="visible">
 
                 <Button

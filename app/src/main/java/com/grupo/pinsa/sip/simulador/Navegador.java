@@ -36,6 +36,7 @@ import com.grupo.pinsa.sip.simulador.lavadoCarros.Fragment_Lavado_Plan;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Detalle_Modulo;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Entrada_Manual;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Modulos_Plan;
+import com.grupo.pinsa.sip.simulador.modulos.Fragment_Salida_Carritos;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Vista_Modulo;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_AsignaMecanico;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_CreaOrdenMantenimiento;
@@ -70,7 +71,8 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         Fragment_Estatus.OnFragmentInteractionListener, Contenedor_Cocida.OnFragmentInteractionListener, Fragment_Cocida.OnFragmentInteractionListener,
         HomeTemperatura.OnFragmentInteractionListener, Fragment_Temperatura_Tina.OnFragmentInteractionListener, Fragment_Temperatura_Carrito.OnFragmentInteractionListener,
         Contenedor_Modulos.OnFragmentInteractionListener, Fragment_Modulos_Plan.OnFragmentInteractionListener, com.grupo.pinsa.sip.simulador.modulos.Fragment_Asigna_Operador.OnFragmentInteractionListener,
-        Fragment_Vista_Modulo.OnFragmentInteractionListener, Fragment_Detalle_Modulo.OnFragmentInteractionListener, Fragment_Entrada_Manual.OnFragmentInteractionListener {
+        Fragment_Vista_Modulo.OnFragmentInteractionListener, Fragment_Detalle_Modulo.OnFragmentInteractionListener, Fragment_Entrada_Manual.OnFragmentInteractionListener,
+        Fragment_Salida_Carritos.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -80,8 +80,8 @@ public class Fragment_Temperatura_Carrito extends Fragment {
     public Fragment_Temperatura_Carrito() {
     }
 
-    public static Fragment_Temperatura_Tina newInstance(int param1) {
-        Fragment_Temperatura_Tina fragment = new Fragment_Temperatura_Tina();
+    public static Fragment_Temperatura_Carrito newInstance(int param1) {
+        Fragment_Temperatura_Carrito fragment = new Fragment_Temperatura_Carrito();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -356,6 +356,7 @@ public class Fragment_Temperatura_Carrito extends Fragment {
             temperaturaCarrito.setUsuario( UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
             temperaturaCarrito.setIdCocidaCarrito( carrito.getIdCocidaCarrito() );
             temperaturaCarrito.setIdModuloEspacio( carrito.getIdModuloEspacio() );
+            listaTemperaturasCarrito.add(temperaturaCarrito);
         }
         Call<List<RespuestaServicio>> llamadaServicio = APIServicios.getConexion().guardaTemperaturaCarrito(listaTemperaturasCarrito);
         llamadaServicio.enqueue(new Callback<List<RespuestaServicio>>() {

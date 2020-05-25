@@ -469,8 +469,8 @@
             android:layout_height="match_parent"
             android:text="No se encontraron resultados"
             android:gravity="center_horizontal"
-            android:paddingTop="100dp"
-            android:visibility="visible"
+            android:paddingTop="215dp"
+            android:visibility="gone"
             android:textSize="15dp"/>
 
     </FrameLayout>
