@@ -93,9 +93,28 @@ public class Fragment_OrdenMantenimiento extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista=inflater.inflate(R.layout.fragment_orden_mantenimiento, container, false);
-
         iniciaComponentes();
         return vista;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     private void iniciaComponentes(){
@@ -126,7 +145,7 @@ public class Fragment_OrdenMantenimiento extends Fragment {
         getOrdenesMantenimiento();
     }
 
-    private void getOrdenesMantenimiento(){
+    public void getOrdenesMantenimiento(){
         Call<List<ListaOrdenMantenimientoServicio>> llamadaServicio;
         if( UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
             llamadaServicio = APIServicios.getConexion()

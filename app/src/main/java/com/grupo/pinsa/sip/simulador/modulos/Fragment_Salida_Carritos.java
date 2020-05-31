@@ -212,7 +212,7 @@ public class Fragment_Salida_Carritos extends Fragment {
     }
 
     private void validaGuardado(){
-        if( this.totalCarritos == getModuloSeleccionado().getCarritos().size() ){
+        if( this.totalCarritos == 0 ){
             errorServicio("Es necesario seleccionar al menos un carrito");
         }else{
             iniciaProcesando();

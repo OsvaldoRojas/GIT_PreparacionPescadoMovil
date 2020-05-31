@@ -21,6 +21,7 @@ import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Emparrillado;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Eviscerado;
 import com.grupo.pinsa.sip.simulador.estatusCocedor.Fragment_Estatus;
 import com.grupo.pinsa.sip.simulador.home;
+import com.grupo.pinsa.sip.simulador.modelo.Bascula;
 import com.grupo.pinsa.sip.simulador.orden.Fragment_OrdenMantenimiento;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Lavado;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Modulos;
@@ -74,7 +75,7 @@ public class Utilerias {
     public static int obtenerPosicionItem(Spinner spinner, String descripcion) {
         int posicion = 0;
         for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(descripcion)) {
+            if ( ( (Bascula) spinner.getItemAtPosition(i) ).getDescripcion().equalsIgnoreCase(descripcion)) {
                 posicion = i;
                 break;
             }

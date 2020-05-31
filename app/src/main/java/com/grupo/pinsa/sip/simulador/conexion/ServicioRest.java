@@ -172,6 +172,9 @@ public interface ServicioRest {
     Call<List<Carrito>> getCarritosSalida(@Path("idModulo") long idModulo,
                                           @Path("idBascula") int idBascula);
 
+    @GET("modulos/vistaPanoramica")
+    Call<List<Modulo>> getModulosVistaPanoramica();
+
     @PUT("preseleccion/montacargas")
     Call<RespuestaServicio> guardaMontacargas(@Body JsonObject body);
 

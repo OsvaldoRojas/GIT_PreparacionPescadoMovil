@@ -2,6 +2,7 @@ package com.grupo.pinsa.sip.simulador.modulos;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,10 +26,12 @@ import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCarritoModulo;
 import com.grupo.pinsa.sip.simulador.adaptadores.AdaptadorCocedorCatalogo;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
+import com.grupo.pinsa.sip.simulador.modelo.Bascula;
 import com.grupo.pinsa.sip.simulador.modelo.Carrito;
 import com.grupo.pinsa.sip.simulador.modelo.Cocedor;
 import com.grupo.pinsa.sip.simulador.modelo.Modulo;
 import com.grupo.pinsa.sip.simulador.modelo.UsuarioLogueado;
+import com.grupo.pinsa.sip.simulador.modelo.servicio.ModuloCarritosAsignados;
 import com.grupo.pinsa.sip.simulador.modelo.servicio.RespuestaServicio;
 import com.grupo.pinsa.sip.simulador.utilerias.Utilerias;
 
@@ -38,6 +42,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Entrada_Inventario extends Fragment {
 
@@ -57,7 +63,6 @@ public class Fragment_Entrada_Inventario extends Fragment {
     private ProgressBar barraProgreso;
     private RecyclerView vistaLista;
     private Spinner seleccionaCocedor;
-    private Spinner seleccionaBascula;
     private Button registrar;
 
     private Modulo moduloSeleccionado;
@@ -109,7 +114,7 @@ public class Fragment_Entrada_Inventario extends Fragment {
         etiquetaTotalCarritos.setText( String.valueOf(this.totalCarritos).concat("/")
                 .concat( String.valueOf(this.capacidadTotal) ) );
 
-        this.registrar = this.vista.findViewById(R.id.botonCompleto);
+        this.registrar = this.vista.findViewById(R.id.botonRegistrar);
         this.registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +126,11 @@ public class Fragment_Entrada_Inventario extends Fragment {
         ver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if( ( (Cocedor) seleccionaCocedor.getSelectedItem() ).getId() > 0 ){
+                    navega();
+                }else{
+                    errorServicio("Es necesario seleccionar un cocedor");
+                }
             }
         });
 
@@ -191,21 +200,31 @@ public class Fragment_Entrada_Inventario extends Fragment {
         }
     }
 
-    private void guarda(){
-        List<Carrito> listaCarritosAsignados = new ArrayList<>();
-        for(Carrito carrito : this.listaCarritos){
-            if( carrito.isSeleccionado() ){
-                listaCarritosAsignados.add(carrito);
-            }
-        }
+    private void navega(){
+        Intent contenedores = new Intent(getContext(), ActividadCarritosInventario.class);
+        contenedores.putExtra("cocedor", (Serializable) this.seleccionaCocedor.getSelectedItem() );
+        contenedores.putExtra("listaCarritosAgregados", (Serializable) this.listaCarritos);
+        contenedores.putExtra("capacidadTotal", this.capacidadTotal);
+        contenedores.putExtra("totalCarritos", this.totalCarritos);
+        contenedores.putExtra("bascula",
+                ( (Cocedor) this.seleccionaCocedor.getSelectedItem() ).getBascula() != null
+                        ? ( (Cocedor) this.seleccionaCocedor.getSelectedItem() ).getBascula().getDescripcion()
+                        : ""
+        );
+        startActivityForResult(contenedores, 0);
+    }
 
-        /*ModuloCarritosAsignados carritosAsignados = new ModuloCarritosAsignados();
+    private void guarda(){
+        int consecutivo = 1;
+        for(Carrito carrito : this.listaCarritos){
+            carrito.setPosicion( String.valueOf(consecutivo) );
+            consecutivo = consecutivo + 1;
+        }
+        ModuloCarritosAsignados carritosAsignados = new ModuloCarritosAsignados();
         carritosAsignados.setIdModulo( getModuloSeleccionado().getId() );
-        carritosAsignados.setIdCocedor( ( (Cocedor) this.seleccionaCocedor.getSelectedItem() ).getId() );
-        carritosAsignados.setIdBascula( ( (Bascula) this.seleccionaBascula.getSelectedItem() ).getIdBascula() );
-        carritosAsignados.setIdBascula( UsuarioLogueado.getUsuarioLogueado().getTurno() );
+        carritosAsignados.setTurno( UsuarioLogueado.getUsuarioLogueado().getTurno() );
         carritosAsignados.setUsuario( UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
-        carritosAsignados.setCarritos(listaCarritosAsignados);
+        carritosAsignados.setCarritos(this.listaCarritos);
 
         Call<List<RespuestaServicio>> llamadaServicio = APIServicios.getConexion().asignaCarritosModulo(carritosAsignados);
         llamadaServicio.enqueue(new Callback<List<RespuestaServicio>>() {
@@ -229,20 +248,24 @@ public class Fragment_Entrada_Inventario extends Fragment {
                     errorServicio("Error al conectar con el servidor");
                 }
             }
-        });*/
+        });
     }
 
     private void validaResultado(List<RespuestaServicio> respuestas){
-        boolean error = false;
+        List<Carrito> carritosRemover = new ArrayList<>();
         for(RespuestaServicio respuestaServicio : respuestas){
-            if( respuestaServicio.getCodigo() > 0 ){
-                error = true;
-                break;
+            if( respuestaServicio.getCodigo() == 0 ){
+                for(Carrito carrito : this.listaCarritos){
+                    if( respuestaServicio.getId().equals( String.valueOf( carrito.getIdCocidaCarrito() ) ) ){
+                        carritosRemover.add(carrito);
+                    }
+                }
             }
         }
+        this.listaCarritos.removeAll(carritosRemover);
 
-        if(error){
-            //getCarritosSinAsignar();
+        if( !this.listaCarritos.isEmpty() ){
+            muestraCarritos(this.listaCarritos);
             errorServicio("Ocurrió un error al asignar alguno de los carritos");
         }else{
             Fragment fragment = new Fragment_Vista_Modulo().newInstance( getModuloSeleccionado() );
@@ -252,6 +275,10 @@ public class Fragment_Entrada_Inventario extends Fragment {
 
     private void muestraCarritos(List<Carrito> carritos){
         this.listaCarritos = carritos;
+        for(Carrito carrito : this.listaCarritos){
+            carrito.setSeleccionado(false);
+            carrito.setSeleccionadoSuma(false);
+        }
         this.vistaLista.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
@@ -269,6 +296,14 @@ public class Fragment_Entrada_Inventario extends Fragment {
         TextView etiquetaTotalCarritos = this.vista.findViewById(R.id.totalCarritos);
         etiquetaTotalCarritos.setText( String.valueOf(this.totalCarritos).concat("/")
                 .concat( String.valueOf(this.capacidadTotal) ) );
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if( resultCode == RESULT_OK ){
+            iniciaProcesando();
+            muestraCarritos( (List<Carrito>) data.getSerializableExtra("listaCarritosAgregados") );
+        }
     }
 
     public void errorServicio(final String mensaje){

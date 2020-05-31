@@ -55,14 +55,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_marginRight="20dp"
-                            android:hint="Número cocida"
-                            android:gravity="left"
+                            android:hint="Cocida"
+                            android:gravity="center"
                             android:background="@color/colorAccent"
                             android:textSize="15dp"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"/>
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"/>
 
                     </LinearLayout>
 
@@ -77,7 +77,7 @@
                             android:id="@+id/temperatura"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:layout_weight="1"
+                            android:layout_weight="3.5"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="10dp"
                             android:hint="Temperatura"
@@ -97,7 +97,8 @@
                         <Button
                             android:id="@+id/botonRegistrar"
                             style="@style/botonMenu"
-                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_height="35dp"
                             android:layout_marginRight="20dp"
                             android:text="@string/registrar"/>
 

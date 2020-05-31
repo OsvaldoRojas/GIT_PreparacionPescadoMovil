@@ -15,6 +15,7 @@ public class Turno extends AppCompatActivity {
 
     private LinearLayout turnoUno;
     private LinearLayout turnoDos;
+    private LinearLayout turnoTres;
     private Button botonAceptar;
     private int turno = 0;
 
@@ -48,6 +49,7 @@ public class Turno extends AppCompatActivity {
 
         this.turnoUno = findViewById(R.id.turnoUno);
         this.turnoDos = findViewById(R.id.turnoDos);
+        this.turnoTres = findViewById(R.id.turnoTres);
         this.botonAceptar = findViewById(R.id.botonAceptar);
 
         this.turnoUno.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +57,7 @@ public class Turno extends AppCompatActivity {
             public void onClick(View view) {
                 turno = 1;
                 turnoDos.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
+                turnoTres.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
                 turnoUno.setBackground( getResources().getDrawable(R.drawable.contenedor_turno_seleccionado) );
                 botonAceptar.setVisibility(View.VISIBLE);
             }
@@ -65,7 +68,19 @@ public class Turno extends AppCompatActivity {
             public void onClick(View view) {
                 turno = 2;
                 turnoUno.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
+                turnoTres.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
                 turnoDos.setBackground( getResources().getDrawable(R.drawable.contenedor_turno_seleccionado) );
+                botonAceptar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        this.turnoTres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                turno = 3;
+                turnoUno.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
+                turnoDos.setBackground( getResources().getDrawable(R.drawable.contenedor_turno) );
+                turnoTres.setBackground( getResources().getDrawable(R.drawable.contenedor_turno_seleccionado) );
                 botonAceptar.setVisibility(View.VISIBLE);
             }
         });

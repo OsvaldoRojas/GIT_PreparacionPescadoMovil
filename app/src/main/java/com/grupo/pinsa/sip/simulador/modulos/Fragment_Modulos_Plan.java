@@ -2,6 +2,7 @@ package com.grupo.pinsa.sip.simulador.modulos;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +37,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Modulos_Plan extends Fragment {
 
@@ -124,7 +128,8 @@ public class Fragment_Modulos_Plan extends Fragment {
         this.boton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //vistaPanoramica();
+                Intent vistaPanoramica = new Intent(getContext(), ActividadVistaPanoramica.class);
+                startActivityForResult(vistaPanoramica, 0);
             }
         });
 
@@ -371,10 +376,6 @@ public class Fragment_Modulos_Plan extends Fragment {
         iniciaProcesando();
         getOperadorSeleccionado().setIdEmpleado(0);
         getOperadorSeleccionado().setLibre(true);
-        getOperadorSeleccionado().setTurno(true);
-        if( UsuarioLogueado.getUsuarioLogueado().getTurno() == 1 ){
-            getOperadorSeleccionado().setTurno(false);
-        }
         guardaOperador();
     }
 
@@ -383,7 +384,7 @@ public class Fragment_Modulos_Plan extends Fragment {
         json.addProperty("idEstacion", getOperadorSeleccionado().getIdEstacion() );
         json.addProperty("libre", getOperadorSeleccionado().isLibre() );
         json.addProperty("idEmpleado", String.valueOf( getOperadorSeleccionado().getIdEmpleado() ) );
-        json.addProperty("turno", getOperadorSeleccionado().isTurno() );
+        json.addProperty("turno", UsuarioLogueado.getUsuarioLogueado().getTurno() );
         json.addProperty("idZona", getOperadorSeleccionado().getIdZona() );
         json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
         Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorModulo(json);
@@ -516,6 +517,15 @@ public class Fragment_Modulos_Plan extends Fragment {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if( resultCode == RESULT_OK ){
+            iniciaProcesando();
+            getModulos();
+            getAsignados();
+        }
     }
 
     public void ventanaMensaje(final String mensaje){

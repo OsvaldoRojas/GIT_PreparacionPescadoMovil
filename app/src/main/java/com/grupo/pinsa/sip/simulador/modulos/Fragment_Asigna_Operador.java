@@ -177,12 +177,6 @@ public class Fragment_Asigna_Operador extends Fragment {
                 !campoNombre.getText().equals("") &&
                 ( (Zona) this.seleccionZona.getSelectedItem() ).getId() != 0 ){
             iniciaProcesando();
-            getOperadorSeleccionado().setLibre(false);
-            getOperadorSeleccionado().setTurno(true);
-            if( UsuarioLogueado.getUsuarioLogueado().getTurno() == 1 ){
-                getOperadorSeleccionado().setTurno(false);
-            }
-
             guarda();
         }else{
             errorValidacion();
@@ -192,9 +186,9 @@ public class Fragment_Asigna_Operador extends Fragment {
     private void guarda(){
         JsonObject json = new JsonObject();
         json.addProperty("idEstacion", getOperadorSeleccionado().getIdEstacion() );
-        json.addProperty("libre", getOperadorSeleccionado().isLibre() );
+        json.addProperty("libre", false );
         json.addProperty("idEmpleado", String.valueOf( getOperadorSeleccionado().getIdEmpleado() ) );
-        json.addProperty("turno", getOperadorSeleccionado().isTurno() );
+        json.addProperty("turno", UsuarioLogueado.getUsuarioLogueado().getTurno() );
         json.addProperty("idZona", ( (Zona) this.seleccionZona.getSelectedItem() ).getId() );
         json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
         Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorModulo(json);

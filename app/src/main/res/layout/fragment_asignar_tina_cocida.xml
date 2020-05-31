@@ -55,6 +55,7 @@
                     android:paddingBottom="4dp"
                     android:paddingLeft="5dp"
                     android:singleLine="true"
+                    android:inputType="number"
                     android:focusable="true">
                     <requestFocus/>
                 </EditText>

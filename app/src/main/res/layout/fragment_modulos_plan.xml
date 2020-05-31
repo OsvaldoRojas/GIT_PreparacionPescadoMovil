@@ -113,7 +113,6 @@
                 <Button
                     android:id="@+id/boton3"
                     android:text="@string/liberarOperadores"
-                    android:enabled="false"
                     style="@style/botonAccion"/>
 
                 <Button

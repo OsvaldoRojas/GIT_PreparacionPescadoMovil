@@ -4,80 +4,51 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.TooltipCompat;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.grupo.pinsa.sip.simulador.R;
 import com.grupo.pinsa.sip.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.simulador.contenedores.Contenedor_Modulos;
-import com.grupo.pinsa.sip.simulador.modelo.Carrito;
 import com.grupo.pinsa.sip.simulador.modelo.Modulo;
 
-import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Vista_Modulo extends Fragment {
-
-    private static final String ARG_PARAM1 = "param1";
+public class Fragment_Vista_Panoramica extends Fragment {
 
     private View vista;
     private AlertDialog ventanaError;
     private ProgressBar barraProgreso;
-    private SwipeRefreshLayout actualizar;
 
-    private Modulo moduloSeleccionado;
-
-    public Modulo getModuloSeleccionado() {
-        return moduloSeleccionado;
-    }
-
-    public void setModuloSeleccionado(Modulo moduloSeleccionado) {
-        this.moduloSeleccionado = moduloSeleccionado;
-    }
+    private List<Modulo> modulos;
 
     private OnFragmentInteractionListener mListener;
 
-    public Fragment_Vista_Modulo() {
-    }
-
-    public static Fragment_Vista_Modulo newInstance(Serializable param1) {
-        Fragment_Vista_Modulo fragment = new Fragment_Vista_Modulo();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
+    public Fragment_Vista_Panoramica() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            setModuloSeleccionado( (Modulo) getArguments().getSerializable(ARG_PARAM1) );
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista = inflater.inflate(R.layout.fragment_vista_modulo, container, false);
+        this.vista = inflater.inflate(R.layout.actividad_vista_panoramica, container, false);
         iniciaComponentes();
         return this.vista;
     }
@@ -86,20 +57,8 @@ public class Fragment_Vista_Modulo extends Fragment {
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
         iniciaProcesando();
 
-        this.actualizar = this.vista.findViewById(R.id.actualizar);
-        this.actualizar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                actualizar.setRefreshing(true);
-                getCarritos();
-            }
-        });
-
-        TextView etiquetaModulo = this.vista.findViewById(R.id.modulo);
-        etiquetaModulo.setText( getModuloSeleccionado().getDescripcion() );
-
-        Button botonCancelar = this.vista.findViewById(R.id.boton2);
-        botonCancelar.setOnClickListener(new View.OnClickListener() {
+        Button botonSalir = this.vista.findViewById(R.id.boton1);
+        botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment fragment = new Contenedor_Modulos().newInstance(0);
@@ -107,50 +66,48 @@ public class Fragment_Vista_Modulo extends Fragment {
             }
         });
 
-        Button botonSalidaCarritos = this.vista.findViewById(R.id.boton1);
-        botonSalidaCarritos.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton botonActualiza = this.vista.findViewById(R.id.actualiza);
+        botonActualiza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Fragment_Salida_Carritos().newInstance( getModuloSeleccionado() );
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                iniciaProcesando();
+                getModulos();
             }
         });
 
-        FloatingActionButton botonEntradaManual = this.vista.findViewById(R.id.entradaManual);
-        TooltipCompat.setTooltipText(botonEntradaManual, "Entrada manual");
-        botonEntradaManual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment = new Fragment_Entrada_Manual().newInstance( getModuloSeleccionado() );
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
-            }
-        });
-
-        FloatingActionButton botonEntradaInventario = this.vista.findViewById(R.id.entradaInventario);
-        TooltipCompat.setTooltipText(botonEntradaInventario, "Entrada inventario");
-        botonEntradaInventario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment = new Fragment_Entrada_Inventario().newInstance( getModuloSeleccionado() );
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
-            }
-        });
-
-        FloatingActionButton botonDetalle = this.vista.findViewById(R.id.detalle);
-        TooltipCompat.setTooltipText(botonDetalle, "Detalle");
-        botonDetalle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment = new Fragment_Detalle_Modulo().newInstance( getModuloSeleccionado() );
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
-            }
-        });
-
-        getCarritos();
+        getModulos();
     }
 
-    private void dibujaModulo(){
-        int posicionesInhabilitadas = getModuloSeleccionado().getCapacidadMaxima() - getModuloSeleccionado().getCapacidadActual();
+    private void getModulos(){
+        Call<List<Modulo>> llamadaServicio = APIServicios.getConexion().getModulosVistaPanoramica();
+        llamadaServicio.enqueue(new Callback<List<Modulo>>() {
+            @Override
+            public void onResponse(Call<List<Modulo>> call, Response<List<Modulo>> response) {
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        dibujaModulos();
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al obtener los módulos de vista" );
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Modulo>> call, Throwable t) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
+            }
+        });
+    }
+
+    private void dibujaModulos(){
+        for(Modulo modulo : this.modulos){
+
+        }
+        /*int posicionesInhabilitadas = getModuloSeleccionado().getCapacidadMaxima() - getModuloSeleccionado().getCapacidadActual();
         int posicionesDibujadas = 0;
         int posicionesTurno1 = posicionesInhabilitadas;
         int posicionesTurno2 = getModuloSeleccionado().getCarritos().size() + posicionesInhabilitadas;
@@ -205,68 +162,40 @@ public class Fragment_Vista_Modulo extends Fragment {
         float[] arregloTemperaturas = new float[]{35.6f,23.3f,40.5f};
         getModuloSeleccionado().setTemperaturas(arregloTemperaturas);
         //
-        if( getModuloSeleccionado().getTemperaturas() != null ){
-            LinearLayout temperaturas = this.vista.findViewById(R.id.temperaturas);
-            temperaturas.removeAllViews();
-            for(int posicion = 0; posicion < getModuloSeleccionado().getTemperaturas().length; posicion++){
-                LinearLayout linearFila = new LinearLayout( getContext() );
-                LinearLayout.LayoutParams layoutParams = new LinearLayout
-                        .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-                linearFila.setLayoutParams(layoutParams);
-                linearFila.setGravity(Gravity.CENTER_VERTICAL);
-                linearFila.setOrientation(LinearLayout.HORIZONTAL);
-                temperaturas.addView(linearFila);
+        LinearLayout temperaturas = this.vista.findViewById(R.id.temperaturas);
+        temperaturas.removeAllViews();
+        for(int posicion = 0; posicion < getModuloSeleccionado().getTemperaturas().length; posicion++){
+            LinearLayout linearFila = new LinearLayout( getContext() );
+            LinearLayout.LayoutParams layoutParams = new LinearLayout
+                    .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            linearFila.setLayoutParams(layoutParams);
+            linearFila.setGravity(Gravity.CENTER_VERTICAL);
+            linearFila.setOrientation(LinearLayout.HORIZONTAL);
+            temperaturas.addView(linearFila);
 
-                TextView etiquetaTemperatura = new TextView( getContext() );
-                etiquetaTemperatura.setText(
-                        String.valueOf( getModuloSeleccionado().getTemperaturas()[posicion] ).concat("°C")
-                );
-                etiquetaTemperatura.setTextSize(12);
-                etiquetaTemperatura.setPadding(0, 0, 5, 0);
-                linearFila.addView(etiquetaTemperatura);
+            TextView etiquetaTemperatura = new TextView( getContext() );
+            etiquetaTemperatura.setText(
+                    String.valueOf( getModuloSeleccionado().getTemperaturas()[posicion] ).concat("°C")
+            );
+            etiquetaTemperatura.setTextSize(12);
+            etiquetaTemperatura.setPadding(0, 0, 5, 0);
+            linearFila.addView(etiquetaTemperatura);
 
-                ImageView imagen = new ImageView( getContext() );
-                LinearLayout.LayoutParams imagenParams = new LinearLayout.LayoutParams(50, 50);
-                imagenParams.setMargins(1, 1, 1, 1 );
-                imagen.setLayoutParams(imagenParams);
-                imagen.setPadding(10, 10, 10, 10);
-                imagen.setBackground( getResources().getDrawable( R.drawable.contenedor_modulo_vacio ) );
-                if(getModuloSeleccionado().getTemperaturas()[posicion] <= 35){
-                    imagen.setImageResource(R.drawable.ic_temperatura_modulo2);
-                }else{
-                    imagen.setImageResource(R.drawable.ic_temperatura_modulo1);
-                }
-                linearFila.addView(imagen);
+            ImageView imagen = new ImageView( getContext() );
+            LinearLayout.LayoutParams imagenParams = new LinearLayout.LayoutParams(50, 50);
+            imagenParams.setMargins(1, 1, 1, 1 );
+            imagen.setLayoutParams(imagenParams);
+            imagen.setPadding(10, 10, 10, 10);
+            imagen.setBackground( getResources().getDrawable( R.drawable.contenedor_modulo_vacio ) );
+            if(getModuloSeleccionado().getTemperaturas()[posicion] <= 35){
+                imagen.setImageResource(R.drawable.ic_temperatura_modulo2);
+            }else{
+                imagen.setImageResource(R.drawable.ic_temperatura_modulo1);
             }
-        }
+            linearFila.addView(imagen);
+        }*/
 
         terminaProcesando();
-    }
-
-    private void getCarritos(){
-        Call<List<Carrito>> llamadaServicio = APIServicios.getConexionAPPWEB().getCarritosModulo( getModuloSeleccionado().getId() );
-        llamadaServicio.enqueue(new Callback<List<Carrito>>() {
-            @Override
-            public void onResponse(Call<List<Carrito>> call, Response<List<Carrito>> response) {
-                if( isAdded() ){
-                    if( response.code() == 200 ){
-                        getModuloSeleccionado().setCarritos( response.body() );
-                        dibujaModulo();
-                    }else{
-                        terminaProcesando();
-                        errorServicio( "Error al obtener los carritos del módulo" );
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Carrito>> call, Throwable t) {
-                if( isAdded() ){
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
-                }
-            }
-        });
     }
 
     public void errorServicio(final String mensaje){
@@ -302,9 +231,6 @@ public class Fragment_Vista_Modulo extends Fragment {
     }
 
     public void terminaProcesando(){
-        if( this.actualizar.isRefreshing() ){
-            this.actualizar.setRefreshing(false);
-        }
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         this.barraProgreso.setVisibility(View.GONE);
     }

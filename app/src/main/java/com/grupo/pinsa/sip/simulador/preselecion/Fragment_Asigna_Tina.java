@@ -525,7 +525,7 @@ public class Fragment_Asigna_Tina extends Fragment {
             seleccionEspecie.setSelection(
                     obtenerPosicionItem(
                             seleccionEspecie,
-                            getTinaSeleccionada().getGrupoEspecie().getIdEspecieInicial(),
+                            getTinaSeleccionada().getGrupoEspecie().getIdEspecie(),
                             "Especie"
                     )
             );

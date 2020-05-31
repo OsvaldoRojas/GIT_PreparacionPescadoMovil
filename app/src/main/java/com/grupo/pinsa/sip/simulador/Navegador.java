@@ -34,6 +34,7 @@ import com.grupo.pinsa.sip.simulador.estatusCocedor.Fragment_Estatus;
 import com.grupo.pinsa.sip.simulador.eviscerado.Fragment_Eviscerado_Plan;
 import com.grupo.pinsa.sip.simulador.lavadoCarros.Fragment_Lavado_Plan;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Detalle_Modulo;
+import com.grupo.pinsa.sip.simulador.modulos.Fragment_Entrada_Inventario;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Entrada_Manual;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Modulos_Plan;
 import com.grupo.pinsa.sip.simulador.modulos.Fragment_Salida_Carritos;
@@ -72,7 +73,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         HomeTemperatura.OnFragmentInteractionListener, Fragment_Temperatura_Tina.OnFragmentInteractionListener, Fragment_Temperatura_Carrito.OnFragmentInteractionListener,
         Contenedor_Modulos.OnFragmentInteractionListener, Fragment_Modulos_Plan.OnFragmentInteractionListener, com.grupo.pinsa.sip.simulador.modulos.Fragment_Asigna_Operador.OnFragmentInteractionListener,
         Fragment_Vista_Modulo.OnFragmentInteractionListener, Fragment_Detalle_Modulo.OnFragmentInteractionListener, Fragment_Entrada_Manual.OnFragmentInteractionListener,
-        Fragment_Salida_Carritos.OnFragmentInteractionListener {
+        Fragment_Salida_Carritos.OnFragmentInteractionListener, Fragment_Entrada_Inventario.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

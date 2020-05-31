@@ -12,14 +12,6 @@ public class ModuloCarritosAsignados {
     @Expose
     private long idModulo;
 
-    @SerializedName("idCocedor")
-    @Expose
-    private long idCocedor;
-
-    @SerializedName("idBascula")
-    @Expose
-    private int idBascula;
-
     @SerializedName("turno")
     @Expose
     private int turno;
@@ -38,22 +30,6 @@ public class ModuloCarritosAsignados {
 
     public void setIdModulo(long idModulo) {
         this.idModulo = idModulo;
-    }
-
-    public long getIdCocedor() {
-        return idCocedor;
-    }
-
-    public void setIdCocedor(long idCocedor) {
-        this.idCocedor = idCocedor;
-    }
-
-    public int getIdBascula() {
-        return idBascula;
-    }
-
-    public void setIdBascula(int idBascula) {
-        this.idBascula = idBascula;
     }
 
     public int getTurno() {

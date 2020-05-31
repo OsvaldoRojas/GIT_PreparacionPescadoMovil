@@ -72,6 +72,14 @@ public class Carrito implements Serializable {
     @Expose
     private List<Movimiento> movimientos;
 
+    @SerializedName("posicion")
+    @Expose
+    private String posicion;
+
+    @SerializedName("idBascula")
+    @Expose
+    private long idBascula;
+
     private boolean seleccionado = false;
     private boolean seleccionadoGeneral = false;
     private boolean seleccionadoSuma = false;
@@ -226,5 +234,21 @@ public class Carrito implements Serializable {
 
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public long getIdBascula() {
+        return idBascula;
+    }
+
+    public void setIdBascula(long idBascula) {
+        this.idBascula = idBascula;
+    }
+
+    public String getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(String posicion) {
+        this.posicion = posicion;
     }
 }

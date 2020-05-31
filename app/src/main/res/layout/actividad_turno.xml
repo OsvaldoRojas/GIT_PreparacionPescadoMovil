@@ -23,59 +23,84 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:gravity="center"
             android:layout_marginTop="50dp">
 
             <LinearLayout
                 android:id="@+id/turnoUno"
                 android:layout_weight="1"
-                android:layout_marginRight="5dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp"
                 android:gravity="center"
                 style="@style/turno">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_sunrise"/>
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:text="Turno 1"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:gravity="center"
-                    android:textSize="25dp"
-                    android:layout_marginTop="10dp"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_sunrise"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/turnoDos"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:gravity="center"
+                android:layout_marginBottom="15dp"
                 style="@style/turno">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_sunset"/>
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:text="Turno 2"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
                     android:gravity="center"
-                    android:textSize="25dp"
-                    android:layout_marginTop="10dp"/>
+                    android:textSize="25dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/turnoTres"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                style="@style/turno">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_sunset"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_turno3_pinsa"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Turno 3"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center"
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 

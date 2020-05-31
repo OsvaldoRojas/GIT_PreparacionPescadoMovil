@@ -40,7 +40,7 @@
                         android:id="@+id/temperatura"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_weight="1"
+                        android:layout_weight="3.5"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="10dp"
                         android:hint="Temperatura"
@@ -60,8 +60,9 @@
                     <Button
                         android:id="@+id/botonRegistrar"
                         style="@style/botonMenu"
-                        android:layout_height="40dp"
+                        android:layout_height="35dp"
                         android:layout_marginRight="20dp"
+                        android:layout_weight="1"
                         android:text="@string/registrar"/>
 
                 </LinearLayout>

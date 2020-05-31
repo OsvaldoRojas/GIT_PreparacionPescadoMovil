@@ -29,7 +29,7 @@
                     android:layout_weight="1"
                     android:layout_marginRight="5dp"
                     android:hint="Descripción módulo"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:background="@color/colorAccent"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
@@ -43,7 +43,7 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
                     android:hint="Capacidad módulo"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:background="@color/colorAccent"
                     android:textSize="15dp"
                     android:paddingTop="4dp"
@@ -82,7 +82,7 @@
                     android:id="@+id/seleccionCocedor"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_weight="1"
+                    android:layout_weight="5"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="10dp"
                     android:background="@color/colorAccent"/>
@@ -90,7 +90,8 @@
                 <Button
                     android:id="@+id/botonVer"
                     style="@style/botonMenu"
-                    android:layout_height="40dp"
+                    android:layout_weight="3"
+                    android:layout_height="35dp"
                     android:layout_marginRight="30dp"
                     android:text="Ver"/>
 
@@ -108,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                android:layout_weight="5"
+                android:layout_weight="7.5"
                 android:visibility="visible">
 
                 <Button

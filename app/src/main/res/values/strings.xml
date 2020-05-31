@@ -37,6 +37,7 @@
     <string name="salidaCarritos">Salida carritos</string>
     <string name="registrar">Registrar</string>
     <string name="registrarSalida">Registrar salida</string>
+    <string name="agregar">Agregar</string>
 
     <string name="crearOrden">Crear orden de mantenimiento</string>
     <string name="ordenMantenimiento">Orden de mantenimiento</string>
@@ -75,9 +76,9 @@
     <string name="liberarCompleta">L. Completa</string>
     <string name="detalleEstiba">Detalle estiba</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_navegador">Nombre Usuario</string>
     <string name="titulo_componentes">Selecciona componentes a revisar</string>
+    <string name="titulo_inventario">Selecciona carritos</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

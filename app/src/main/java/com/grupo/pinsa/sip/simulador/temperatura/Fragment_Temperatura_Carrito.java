@@ -387,7 +387,8 @@ public class Fragment_Temperatura_Carrito extends Fragment {
         for(RespuestaServicio respuestaServicio : respuestas){
             if( respuestaServicio.getCodigo() > 0 ){
                 for(Carrito carrito : this.carritos){
-                    if( respuestaServicio.getId() == String.valueOf( carrito.getId() ) ){
+                    if( ( this.etapa == 1 && respuestaServicio.getId() == String.valueOf( carrito.getIdCocidaCarrito() ) )
+                            || ( this.etapa == 2 && respuestaServicio.getId() == String.valueOf( carrito.getIdModuloEspacio() ) ) ){
                         carrito.setTemperatura(0);
                         break;
                     }

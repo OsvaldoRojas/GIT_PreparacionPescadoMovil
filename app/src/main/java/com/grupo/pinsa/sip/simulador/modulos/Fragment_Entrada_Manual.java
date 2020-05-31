@@ -48,7 +48,7 @@ public class Fragment_Entrada_Manual extends Fragment {
 
     private View vista;
 
-    private List<Carrito> listaCarritos;
+    private List<Carrito> listaCarritos = new ArrayList<>();
     private List<Cocedor> cocedores;
     private List<Bascula> basculas;
     private AdaptadorCarritoModulo adaptador;
@@ -294,17 +294,19 @@ public class Fragment_Entrada_Manual extends Fragment {
 
     private void guarda(){
         List<Carrito> listaCarritosAsignados = new ArrayList<>();
+        int consecutivo = 1;
         for(Carrito carrito : this.listaCarritos){
             if( carrito.isSeleccionado() ){
+                carrito.setPosicion( String.valueOf(consecutivo) );
+                carrito.setIdBascula( ( (Bascula) this.seleccionaBascula.getSelectedItem() ).getIdBascula() );
                 listaCarritosAsignados.add(carrito);
+                consecutivo = consecutivo + 1;
             }
         }
 
         ModuloCarritosAsignados carritosAsignados = new ModuloCarritosAsignados();
         carritosAsignados.setIdModulo( getModuloSeleccionado().getId() );
-        carritosAsignados.setIdCocedor( ( (Cocedor) this.seleccionaCocedor.getSelectedItem() ).getId() );
-        carritosAsignados.setIdBascula( ( (Bascula) this.seleccionaBascula.getSelectedItem() ).getIdBascula() );
-        carritosAsignados.setIdBascula( UsuarioLogueado.getUsuarioLogueado().getTurno() );
+        carritosAsignados.setTurno( UsuarioLogueado.getUsuarioLogueado().getTurno() );
         carritosAsignados.setUsuario( UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
         carritosAsignados.setCarritos(listaCarritosAsignados);
 
@@ -360,6 +362,7 @@ public class Fragment_Entrada_Manual extends Fragment {
             @Override
             public void onResponse(Call<List<Carrito>> call, Response<List<Carrito>> response) {
                 if( isAdded() ){
+                    cargando = false;
                     if(response.code() == 200){
                         muestraCarritos( response.body() );
                     }else{
@@ -372,6 +375,7 @@ public class Fragment_Entrada_Manual extends Fragment {
             @Override
             public void onFailure(Call<List<Carrito>> call, Throwable t) {
                 if( isAdded() ){
+                    cargando = false;
                     terminaProcesando();
                     errorServicio("Error al conectar con el servidor");
                 }
@@ -380,9 +384,10 @@ public class Fragment_Entrada_Manual extends Fragment {
     }
 
     private void muestraCarritos(List<Carrito> carritos){
+        //TODO: filtrar solo los carritos que en peso tiene diferente de 0.0
         for(Carrito carritoNuevo : carritos){
             for(Carrito carritoAnterior : this.listaCarritos){
-                if( carritoNuevo.getId() == carritoAnterior.getId() ){
+                if( carritoNuevo.getDescripcion().equalsIgnoreCase( carritoAnterior.getDescripcion() ) ){
                     carritoNuevo.setSeleccionado( carritoAnterior.isSeleccionado() );
                     carritoNuevo.setSeleccionadoSuma( carritoAnterior.isSeleccionadoSuma() );
                     break;
