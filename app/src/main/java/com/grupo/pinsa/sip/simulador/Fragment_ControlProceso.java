@@ -152,12 +152,13 @@ public class Fragment_ControlProceso extends Fragment {
                 if( isAdded() ){
                     terminaProcesando();
                     if(response.code() == 200){
-                        //limpiaComponentes();
-                        //muestraCampos( response.body() );     0178
                         if(response.body() != null){
                             RespuestaServicio resultado = response.body();
                             if(resultado.getColumna() != null && !resultado.getColumna().equals("")){
-                                muestraMensaje(resultado.getFila().concat( resultado.getColumna() ).concat( resultado.getNivel() ));
+                                muestraMensaje(
+                                        resultado.getFila().concat( resultado.getColumna() )
+                                                .concat("-").concat( resultado.getNivel() )
+                                );
                             }else{
                                 muestraMensaje("Guardado exitosamente");
                             }

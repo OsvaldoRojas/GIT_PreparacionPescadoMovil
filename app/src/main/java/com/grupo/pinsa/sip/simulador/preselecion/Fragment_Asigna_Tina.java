@@ -424,27 +424,21 @@ public class Fragment_Asigna_Tina extends Fragment {
                 }
             });
         }else{
-            TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+            TextView campoEscaner = this.vista.findViewById(R.id.campoEscaner);
+            campoEscaner.setTextColor( getResources().getColor(R.color.noValido) );
         }
     }
 
     public void resultadoEscaneoTina(TinaEscaneo resultadoTina){
-        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
+        TextView campoEscaner = this.vista.findViewById(R.id.campoEscaner);
 
         if( resultadoTina.getIdTinaDes() != null ){
-            campoDescripcion.setText(
-                    resultadoTina.getIdTinaDes().concat(" - ")
-                            .concat( resultadoTina.getTinaDes() )
-            );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.siValido) );
+            campoEscaner.setTextColor( getResources().getColor(R.color.siValido) );
 
             getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );
             getTinaSeleccionada().getTina().setDescripcion( resultadoTina.getTinaDes() );
         } else{
-            campoDescripcion.setText( getResources().getString(R.string.mensajeErrorEscaneo) );
-            campoDescripcion.setTextColor( getResources().getColor(R.color.noValido) );
+            campoEscaner.setTextColor( getResources().getColor(R.color.noValido) );
         }
 
         terminaProcesando();

@@ -100,26 +100,13 @@ public class Fragment_OrdenMantenimiento extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+        iniciaProcesando();
+        getOrdenesMantenimiento();
     }
 
     private void iniciaComponentes(){
         this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
-        iniciaProcesando();
+        //iniciaProcesando();
 
         this.campoBusqueda = this.vista.findViewById(R.id.campoBusqueda);
         this.campoBusqueda.setIconifiedByDefault(false);
@@ -142,7 +129,7 @@ public class Fragment_OrdenMantenimiento extends Fragment {
             tituloMecanico.setVisibility(View.GONE);
         }
 
-        getOrdenesMantenimiento();
+        //getOrdenesMantenimiento();
     }
 
     public void getOrdenesMantenimiento(){
