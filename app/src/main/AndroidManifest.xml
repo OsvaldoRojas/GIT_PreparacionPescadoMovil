@@ -21,6 +21,10 @@
             android:label="@string/titulo_componentes"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".modulos.ActividadVistaPanoramica"
+            android:label="@string/titulo_vista"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".modulos.ActividadCarritosInventario"
             android:label="@string/titulo_inventario"
             android:theme="@style/AppTheme" />

@@ -78,6 +78,7 @@
 
     <string name="title_activity_navegador">Nombre Usuario</string>
     <string name="titulo_componentes">Selecciona componentes a revisar</string>
+    <string name="titulo_vista">Vista panorámica</string>
     <string name="titulo_inventario">Selecciona carritos</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

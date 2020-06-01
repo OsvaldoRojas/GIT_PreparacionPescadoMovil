@@ -24,7 +24,49 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:orientation="vertical"/>
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/contenedorUno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedorDos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedorTres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedorCuatro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/contenedorCinco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/contenedorBotonesDos"
