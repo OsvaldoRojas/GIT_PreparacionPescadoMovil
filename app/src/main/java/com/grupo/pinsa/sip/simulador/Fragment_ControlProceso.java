@@ -67,7 +67,6 @@ public class Fragment_ControlProceso extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         this.vista = inflater.inflate(R.layout.fragment_control_proceso, container, false);
         iniciaComponente();
         return this.vista;
@@ -238,18 +237,21 @@ public class Fragment_ControlProceso extends Fragment {
         TextView campoPosicion = this.vista.findViewById(R.id.campoPosicion);
         TextView campoEtapaActual = this.vista.findViewById(R.id.campoEtapaActual);
         TextView campoEtapaSiguiente = this.vista.findViewById(R.id.campoEtapaSiguiente);
+        TextView campoPeso = this.vista.findViewById(R.id.campoPeso);
         if( tina.getId() == null ){
             campoEscaner.setTextColor( getResources().getColor(R.color.noValido) );
 
             campoPosicion.setText("");
             campoEtapaActual.setText("");
             campoEtapaSiguiente.setText("");
+            campoPeso.setText("");
         }else{
             campoEscaner.setTextColor( getResources().getColor(R.color.siValido) );
 
             campoPosicion.setText( tina.getPosicion() );
             campoEtapaActual.setText( tina.getEtapaActual() );
             campoEtapaSiguiente.setText( tina.getEtapaSiguiente() );
+            campoPeso.setText( String.valueOf( tina.getPeso() ) );
         }
 
         terminaProcesando();
@@ -322,7 +324,6 @@ public class Fragment_ControlProceso extends Fragment {
         barraProgreso.setVisibility(View.GONE);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -346,18 +347,7 @@ public class Fragment_ControlProceso extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

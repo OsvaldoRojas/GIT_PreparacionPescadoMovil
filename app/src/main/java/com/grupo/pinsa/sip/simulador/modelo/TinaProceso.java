@@ -15,6 +15,10 @@ public class TinaProceso implements Serializable {
     @Expose
     private String posicion;
 
+    @SerializedName("pesoActual")
+    @Expose
+    private long peso;
+
     @SerializedName("etapaActual")
     @Expose
     private String etapaActual;
@@ -53,5 +57,13 @@ public class TinaProceso implements Serializable {
 
     public void setEtapaSiguiente(String etapaSiguiente) {
         this.etapaSiguiente = etapaSiguiente;
+    }
+
+    public long getPeso() {
+        return peso;
+    }
+
+    public void setPeso(long peso) {
+        this.peso = peso;
     }
 }

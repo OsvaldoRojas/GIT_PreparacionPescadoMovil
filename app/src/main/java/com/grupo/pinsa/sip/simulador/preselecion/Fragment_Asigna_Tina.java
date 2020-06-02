@@ -57,6 +57,8 @@ public class Fragment_Asigna_Tina extends Fragment {
     private View vista;
     private AlertDialog ventanaError;
 
+    private boolean tinaValida = false;
+
     private Tina tinaSeleccionada;
     private AdaptadorTalla adaptadorTalla;
     private AdaptadorSubtalla adaptadorSubtalla;
@@ -286,13 +288,8 @@ public class Fragment_Asigna_Tina extends Fragment {
         Spinner especialidad = this.vista.findViewById(R.id.seleccionEspecialidad);
         Spinner talla = this.vista.findViewById(R.id.seleccionTalla);
         Spinner subtalla = this.vista.findViewById(R.id.seleccionSubtalla);
-        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
-        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
 
-        if( !campoEscaner.getText().equals("") &&
-                !campoDescripcion.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
-                !campoDescripcion.getText().equals("") ){
-
+        if(this.tinaValida){
             if( ( (GrupoEspecie) especie.getSelectedItem() ).getIdEspecie() > 0 ){
                 if( ( (Talla) talla.getSelectedItem() ).getIdTalla() > 0 ){
                     if( ( (Subtalla) subtalla.getSelectedItem() ).getIdSubtalla() > 0 ){
@@ -399,6 +396,7 @@ public class Fragment_Asigna_Tina extends Fragment {
     }
 
     private void validaTina(String codigo){
+        this.tinaValida = false;
         if( codigo.length() >= 3 ){
             iniciaProcesando();
             Call<TinaEscaneo> llamadaServicio = APIServicios.getConexion().getTina(codigo);
@@ -433,6 +431,7 @@ public class Fragment_Asigna_Tina extends Fragment {
         TextView campoEscaner = this.vista.findViewById(R.id.campoEscaner);
 
         if( resultadoTina.getIdTinaDes() != null ){
+            this.tinaValida = true;
             campoEscaner.setTextColor( getResources().getColor(R.color.siValido) );
 
             getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );

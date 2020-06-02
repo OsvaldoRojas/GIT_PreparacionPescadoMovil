@@ -45,6 +45,8 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
 
     private Serializable mParam1;
 
+    private boolean tinaValida = false;
+
     private View vista;
 
     private AlertDialog ventanaError;
@@ -171,13 +173,7 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     }
 
     private void validaAsignacion(){
-        EditText campoEscaner = this.vista.findViewById(R.id.campoEscaner);
-        TextView campoDescripcion = this.vista.findViewById(R.id.campoDescripcion);
-
-        if( !campoEscaner.getText().equals("") &&
-                !campoDescripcion.getText().equals( getResources().getString(R.string.mensajeErrorEscaneo) ) &&
-                !campoDescripcion.getText().equals("") ){
-
+        if(this.tinaValida){
                 Cocida cocidaSeleccionada = getAsignacionCocida();
                 if( cocidaSeleccionada == null ){
                     errorValidacion("Es necesario seleccionar una asignación cocida");
@@ -195,7 +191,6 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
 
                     guarda( cocidaSeleccionada.getId() );
                 }
-
         }else{
             errorValidacion("Es necesario capturar una tina");
         }
@@ -329,6 +324,7 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     }
 
     private void validaTina(String codigo){
+        this.tinaValida = false;
         if( codigo.length() >= 3 ){
             iniciaProcesando();
             Call<TinaEscaneo> llamadaServicio = APIServicios.getConexion().getTina(codigo);
@@ -363,6 +359,7 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
         TextView campoEscaner = this.vista.findViewById(R.id.campoEscaner);
 
         if( resultadoTina.getIdTinaDes() != null ){
+            this.tinaValida = true;
             campoEscaner.setTextColor( getResources().getColor(R.color.siValido) );
 
             getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );
