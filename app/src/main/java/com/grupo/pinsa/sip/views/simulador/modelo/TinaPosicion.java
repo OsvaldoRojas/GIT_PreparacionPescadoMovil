@@ -9,17 +9,17 @@ public class TinaPosicion implements Serializable {
 
     @SerializedName("idTina")
     @Expose
-    private long idTina;
+    private String idTina;
 
     @SerializedName("descripcion")
     @Expose
     private String descripcion;
 
-    public long getIdTina() {
+    public String getIdTina() {
         return idTina;
     }
 
-    public void setIdTina(long idTina) {
+    public void setIdTina(String idTina) {
         this.idTina = idTina;
     }
 

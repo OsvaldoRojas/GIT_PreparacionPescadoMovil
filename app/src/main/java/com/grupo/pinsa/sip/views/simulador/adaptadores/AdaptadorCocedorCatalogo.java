@@ -35,7 +35,7 @@ public class AdaptadorCocedorCatalogo extends ArrayAdapter<Cocedor> {
         }
 
         ( (TextView) vista.findViewById(R.id.opcionSpinner) )
-                .setText( this.listaCocedores.get(posicion).getTamano() );
+                .setText( this.listaCocedores.get(posicion).getDescripcion() );
 
         return vista;
     }
@@ -55,7 +55,7 @@ public class AdaptadorCocedorCatalogo extends ArrayAdapter<Cocedor> {
         }
 
         Cocedor cocedor = this.listaCocedores.get(posicion);
-        ( (CocedorCatalogoHolder) fila.getTag() ).getOpcioneSpinner().setText( cocedor.getTamano() );
+        ( (CocedorCatalogoHolder) fila.getTag() ).getOpcioneSpinner().setText( cocedor.getDescripcion() );
 
         return fila;
     }

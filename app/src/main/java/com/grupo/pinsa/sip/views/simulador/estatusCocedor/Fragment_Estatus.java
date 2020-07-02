@@ -22,6 +22,7 @@ import com.grupo.pinsa.sip.views.simulador.adaptadores.AdaptadorCocedor;
 import com.grupo.pinsa.sip.views.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.views.simulador.contenedores.Contenedor_Cocida;
 import com.grupo.pinsa.sip.views.simulador.modelo.Cocedor;
+import com.grupo.pinsa.sip.views.simulador.utilerias.Constantes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class Fragment_Estatus extends Fragment {
     }
 
     private void getCocedores(){
-        Call<List<Cocedor>> llamadaServicio = APIServicios.getConexion().getCocedoresCocimiento();
+        Call<List<Cocedor>> llamadaServicio = APIServicios.getConexionAPPWEB().getCocedoresCocimiento();
         llamadaServicio.enqueue(new Callback<List<Cocedor>>() {
             @Override
             public void onResponse(Call<List<Cocedor>> call, Response<List<Cocedor>> response) {
@@ -104,15 +105,23 @@ public class Fragment_Estatus extends Fragment {
     private void muestraCocedores(List<Cocedor> cocedores){
         this.listaCocedores = new ArrayList<>();
         for(Cocedor cocedor : cocedores){
+            cocedor.setEstatus("");
             if( cocedor.getCarritos() != null && !cocedor.getCarritos().isEmpty() ){
-                cocedor.setEstatus("");
                 cocedor.setTotalCarritos(
                         String.valueOf( cocedor.getCarritos().size() )
-                        .concat("/")
-                        .concat( String.valueOf( cocedor.getCapacidad() ) )
+                                .concat("/")
+                                .concat( String.valueOf( cocedor.getCapacidad() ) )
                 );
-                this.listaCocedores.add(cocedor);
+                cocedor.setTiempoRestante( cocedor.getTiempoRestante().substring(0, 5) );
+                cocedor.setEspecie( cocedor.getEspecie() != null ? cocedor.getEspecie() : "" );
+                cocedor.setEspecialidad( cocedor.getEspecialidad() != null ? cocedor.getEspecialidad() : "" );
+            }else{
+                cocedor.setTotalCarritos("");
+                cocedor.setTiempoRestante("");
+                cocedor.setEspecie("");
+                cocedor.setEspecialidad("");
             }
+            this.listaCocedores.add(cocedor);
         }
 
         RecyclerView vistaLista = this.vista.findViewById(R.id.listaCocedores);
@@ -126,19 +135,22 @@ public class Fragment_Estatus extends Fragment {
         terminaProcesando();
     }
 
-    public void detalleCocida(final int posicion){
+    public void detalleCocida(int posicion){
+        if( this.listaCocedores.get(posicion).getCarritos() != null && !this.listaCocedores.get(posicion).getCarritos().isEmpty() ){
+            getDetalle( this.listaCocedores.get(posicion).getIdCocida() );
+        }
+    }
+
+    public void getDetalle(long idCocida){
         iniciaProcesando();
         Call<List<Cocedor>> llamadaServicio = APIServicios.getConexionAPPWEB()
-                .getDetalleCocidasCocedor( this.listaCocedores.get(posicion).getIdCocida() );
+                .getDetalleCocidasCocedor(idCocida);
         llamadaServicio.enqueue(new Callback<List<Cocedor>>() {
             @Override
             public void onResponse(Call<List<Cocedor>> call, Response<List<Cocedor>> response) {
                 if( isAdded() ){
                     if(response.code() == 200){
                         if( !response.body().isEmpty() ){
-                            for( Cocedor cocedor : response.body() ){
-                                cocedor.setIdCocida( listaCocedores.get(posicion).getIdCocida() );
-                            }
                             terminaProcesando();
                             Fragment fragment = new Contenedor_Cocida().newInstance( 0, (Serializable) response.body() );
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();

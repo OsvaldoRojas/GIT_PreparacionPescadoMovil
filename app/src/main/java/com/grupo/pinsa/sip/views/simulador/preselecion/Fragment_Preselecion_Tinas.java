@@ -371,7 +371,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             if( operador.getIdPreseleccionEstacion() == posicion ){
                 if( operador.getEstado() == Constantes.ESTADO.inicial ){
                     setOperadorSeleccionado(operador);
-                    deshabilitaRecursos();
+                    //deshabilitaRecursos();
                     getIconoOperador( operador.getIdPreseleccionEstacion() )
                             .setImageResource(R.drawable.ic_operador_blanco);
                     getIconoOperador( operador.getIdPreseleccionEstacion() )
@@ -388,7 +388,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 }else{
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
-                        habilitaRecursos();
+                        //habilitaRecursos();
                         if( operador.getLibre() ){
                             getIconoOperador( operador.getIdPreseleccionEstacion() )
                                     .setImageResource(R.drawable.ic_operador_gris);
@@ -410,7 +410,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         }
                     }else{
                         setOperadorSeleccionado(operador);
-                        deshabilitaRecursos();
+                        //deshabilitaRecursos();
                         getIconoOperador( operador.getIdPreseleccionEstacion() )
                                 .setImageResource(R.drawable.ic_operador_blanco);
                         getIconoOperador( operador.getIdPreseleccionEstacion() )
@@ -436,7 +436,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             if( tina.getIdPreseleccionPosicionTina() == posicion ){
                 if( tina.getEstado() == Constantes.ESTADO.inicial ){
                     setTinaSeleccionada(tina);
-                    deshabilitaRecursos();
+                    //deshabilitaRecursos();
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
                             .setImageResource(R.drawable.ic_tina_blanca);
                     getIconoTina( tina.getIdPreseleccionPosicionTina() )
@@ -465,7 +465,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             tina.setEstado( Constantes.ESTADO.asignado );
                         }
 
-                        if(esMezclar){
+                        if(this.esMezclar){
                             this.listaMezclarTinas.remove(tina);
                             if(this.listaMezclarTinas.size() == 0){
                                 this.contenedorBotones.setVisibility(View.GONE);
@@ -473,7 +473,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             }
                         }else{
                             setTinaSeleccionada(null);
-                            habilitaRecursos();
+                            //habilitaRecursos();
                             this.contenedorBotones.setVisibility(View.GONE);
                             if( validaMuestraTurno() ){
                                 this.contenedorTurno.setVisibility(View.VISIBLE);
@@ -486,7 +486,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                                 .setBackground( getResources().getDrawable( R.drawable.contenedor_icono_seleccionado ) );
                         tina.setEstado( Constantes.ESTADO.seleccionado );
 
-                        if(esMezclar){
+                        if(this.esMezclar){
                             this.listaMezclarTinas.add(tina);
                             this.contenedorMensaje.setVisibility(View.GONE);
                             this.boton1.setText(R.string.cancelar);
@@ -495,10 +495,9 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             this.boton2.setText(R.string.aceptar);
                             this.boton2.setEnabled(true);
                             this.boton2.setOnClickListener(this.eventoAceptarMezclar);
-                            this.contenedorBotones.setVisibility(View.VISIBLE);
                         }else{
                             setTinaSeleccionada(tina);
-                            deshabilitaRecursos();
+                            //deshabilitaRecursos();
                             this.boton1.setText(R.string.liberarTina);
                             this.boton1.setEnabled(true);
                             this.boton1.setOnClickListener(this.eventoLiberarTina);
@@ -510,8 +509,8 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                             }
                             this.boton2.setOnClickListener(this.eventoMezclarTina);
                             this.contenedorTurno.setVisibility(View.GONE);
-                            this.contenedorBotones.setVisibility(View.VISIBLE);
                         }
+                        this.contenedorBotones.setVisibility(View.VISIBLE);
                     }
                 }
                 break;
@@ -566,7 +565,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             if( montacargas.getIdPreseleccionMontacarga() == posicion ){
                 if( montacargas.getEstado() == Constantes.ESTADO.inicial ){
                     setMontacargasSeleccionado(montacargas);
-                    deshabilitaRecursos();
+                    //deshabilitaRecursos();
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                             .setImageResource(R.drawable.ic_montacargas_blanco);
                     getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
@@ -583,7 +582,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                 }else{
                     if( montacargas.getEstado() == Constantes.ESTADO.seleccionado ){
                         setMontacargasSeleccionado(null);
-                        habilitaRecursos();
+                        //habilitaRecursos();
                         if( montacargas.getLibre() ){
                             getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                     .setImageResource(R.drawable.ic_montacargas_gris);
@@ -603,7 +602,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         }
                     }else{
                         setMontacargasSeleccionado(montacargas);
-                        deshabilitaRecursos();
+                        //deshabilitaRecursos();
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
                                 .setImageResource(R.drawable.ic_montacargas_blanco);
                         getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() )
@@ -642,6 +641,25 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         }
 
         getTinasAsignadas();
+    }
+
+    private void limpiaSeleccionado(int posicion){
+        if(!this.esMezclar){
+            if( getTinaSeleccionada() != null
+                    && getTinaSeleccionada().getIdPreseleccionPosicionTina() != posicion ){
+                accionIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() );
+            }
+
+            if( getOperadorSeleccionado() != null
+                    && getOperadorSeleccionado().getIdPreseleccionEstacion() != posicion ){
+                accionIconoOperador( getOperadorSeleccionado().getIdPreseleccionEstacion() );
+            }
+
+            if( getMontacargasSeleccionado() != null
+                    && getMontacargasSeleccionado().getIdPreseleccionMontacarga() != posicion ){
+                accionIconoMontacargas( getMontacargasSeleccionado().getIdPreseleccionMontacarga() );
+            }
+        }
     }
 
     private void getTinasAsignadas(){
@@ -763,7 +781,24 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.contenedorBotones.setVisibility(View.GONE);
         this.contenedorMensaje.setVisibility(View.VISIBLE);
 
-        habilitaTinas();
+        //TODO: PROBLEMA AL MEXCLAR TINAS YA QUE QUITA LA PRIMERA SELECCIONADA AL SELECCIONES LAS DEMAS
+
+        //habilitaTinas();
+        for(OperadorBascula operador : this.listaOperadores){
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(false);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(false);
+        }
+
+        for(Tina tina : this.listaTinas){
+            if( tina.getLibre() ){
+                getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(false);
+            }
+        }
+
+        getIconoTina( getTinaSeleccionada().getIdPreseleccionPosicionTina() ).setEnabled(false);
     }
 
     private void habilitaTinas(){
@@ -803,7 +838,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
                 if( isAdded() ){
                     if( response.code() == 200 ){
-                        resultadoAsignacion("El usuario fue liberado exitosamente");
+                        resultadoAsignacion("El operador fue liberado exitosamente");
                     }else{
                         terminaProcesando();
                         errorServicio( "Error al liberar al operador" );
@@ -846,7 +881,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
                 if( isAdded() ){
                     if( response.code() == 200 ){
-                        resultadoAsignacion("El usuario fue liberado exitosamente");
+                        resultadoAsignacion("El operador fue liberado exitosamente");
                     }else{
                         terminaProcesando();
                         errorServicio( "Error al liberar al operador" );
@@ -901,6 +936,19 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         for( Tina tina : this.listaMezclarTinas ){
             accionIconoTina( tina.getIdPreseleccionPosicionTina() );
         }
+
+        for(OperadorBascula operador : this.listaOperadores){
+            getIconoOperador( operador.getIdPreseleccionEstacion() ).setEnabled(true);
+        }
+
+        for(OperadorMontacargas montacargas : this.listaMontacargas){
+            getIconoMontacargas( montacargas.getIdPreseleccionMontacarga() ).setEnabled(true);
+        }
+
+        for(Tina tina : this.listaTinas){
+            getIconoTina( tina.getIdPreseleccionPosicionTina() ).setEnabled(true);
+        }
+
     }
 
     private String getMensajeMezclar(){
@@ -939,7 +987,6 @@ public class Fragment_Preselecion_Tinas extends Fragment {
                         iniciaProcesando();
                         mezclaTinasServicio();
                         ventanaEmergente.dismiss();
-                        //resultadoMezclaTinas();
                     }
                 });
 
@@ -1086,7 +1133,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
                 if( isAdded() ){
                     if( response.code() == 200 ){
-                        getAsignados();
+                        ventanaMensaje("Los operadores fueron liberados exitosamente");
                     }else{
                         terminaProcesando();
                         errorServicio( "Error al liberar el turno" );
@@ -1207,7 +1254,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(1);
                 accionIconoTina(1);
+            }
+        });
+        this.tina1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(1);
+                return true;
             }
         });
 
@@ -1215,7 +1270,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(2);
                 accionIconoTina(2);
+            }
+        });
+        this.tina2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(2);
+                return true;
             }
         });
 
@@ -1223,7 +1286,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(3);
                 accionIconoTina(3);
+            }
+        });
+        this.tina3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(3);
+                return true;
             }
         });
 
@@ -1231,7 +1302,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(4);
                 accionIconoTina(4);
+            }
+        });
+        this.tina4.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(4);
+                return true;
             }
         });
 
@@ -1239,7 +1318,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(5);
                 accionIconoTina(5);
+            }
+        });
+        this.tina5.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(5);
+                return true;
             }
         });
 
@@ -1247,7 +1334,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(6);
                 accionIconoTina(6);
+            }
+        });
+        this.tina6.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(6);
+                return true;
             }
         });
 
@@ -1255,7 +1350,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(7);
                 accionIconoTina(7);
+            }
+        });
+        this.tina7.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(7);
+                return true;
             }
         });
 
@@ -1263,7 +1366,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(8);
                 accionIconoTina(8);
+            }
+        });
+        this.tina8.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(8);
+                return true;
             }
         });
 
@@ -1271,7 +1382,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(9);
                 accionIconoTina(9);
+            }
+        });
+        this.tina9.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(9);
+                return true;
             }
         });
 
@@ -1279,7 +1398,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(10);
                 accionIconoTina(10);
+            }
+        });
+        this.tina10.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(10);
+                return true;
             }
         });
 
@@ -1287,7 +1414,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(11);
                 accionIconoTina(11);
+            }
+        });
+        this.tina11.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(11);
+                return true;
             }
         });
 
@@ -1295,7 +1430,15 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.tina12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(12);
                 accionIconoTina(12);
+            }
+        });
+        this.tina12.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                navegaDetalleTina(12);
+                return true;
             }
         });
 
@@ -1303,6 +1446,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(1);
                 accionIconoOperador(1);
             }
         });
@@ -1311,6 +1455,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(2);
                 accionIconoOperador(2);
             }
         });
@@ -1319,6 +1464,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(3);
                 accionIconoOperador(3);
             }
         });
@@ -1327,6 +1473,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(4);
                 accionIconoOperador(4);
             }
         });
@@ -1335,6 +1482,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(5);
                 accionIconoOperador(5);
             }
         });
@@ -1343,6 +1491,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(6);
                 accionIconoOperador(6);
             }
         });
@@ -1351,6 +1500,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(7);
                 accionIconoOperador(7);
             }
         });
@@ -1359,6 +1509,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(8);
                 accionIconoOperador(8);
             }
         });
@@ -1367,6 +1518,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(9);
                 accionIconoOperador(9);
             }
         });
@@ -1375,6 +1527,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.operador10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(10);
                 accionIconoOperador(10);
             }
         });
@@ -1383,6 +1536,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.montacargas1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(1);
                 accionIconoMontacargas(1);
             }
         });
@@ -1391,6 +1545,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.montacargas2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(2);
                 accionIconoMontacargas(2);
             }
         });
@@ -1399,6 +1554,7 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.montacargas3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(3);
                 accionIconoMontacargas(3);
             }
         });
@@ -1407,11 +1563,31 @@ public class Fragment_Preselecion_Tinas extends Fragment {
         this.montacargas4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(4);
                 accionIconoMontacargas(4);
             }
         });
 
         getAsignados();
+    }
+
+    private void navegaDetalleTina(int posicion){
+        if(!this.esMezclar){
+            for( Tina tina : this.listaTinas ){
+                if( tina.getIdPreseleccionPosicionTina() == posicion ){
+                    if( !tina.getLibre() ){
+                        if( tina.getIdAsignacionCocida() > 0 ){
+                            Fragment fragment = Fragment_Asigna_Tina_Cocida.newInstance( tina, false );
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                        }else{
+                            Fragment fragment = Fragment_Asigna_Tina.newInstance( tina, false );
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                        }
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     public void iniciaProcesando(){

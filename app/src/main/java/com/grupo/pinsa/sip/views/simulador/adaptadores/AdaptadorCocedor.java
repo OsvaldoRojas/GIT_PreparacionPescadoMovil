@@ -42,9 +42,9 @@ public class AdaptadorCocedor extends RecyclerView.Adapter<AdaptadorCocedor.Coce
     public void onBindViewHolder(@NonNull CocedorCocimientoViewHolder holder, int position) {
         Cocedor cocedor = this.listaCocedores.get(position);
 
-        if( !cocedor.getTamano().equals("") ){
-            holder.contenedorTamano.setVisibility(View.VISIBLE);
-            holder.tamano.setText( cocedor.getTamano() );
+        if( !cocedor.getDescripcion().equals("") ){
+            holder.contenedorDescripcion.setVisibility(View.VISIBLE);
+            holder.descripcion.setText( cocedor.getDescripcion() );
         }
 
         if( !String.valueOf( cocedor.getCapacidad() ).equals("") ){
@@ -87,14 +87,14 @@ public class AdaptadorCocedor extends RecyclerView.Adapter<AdaptadorCocedor.Coce
 
     public static class CocedorCocimientoViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView tamano;
+        public TextView descripcion;
         public TextView capacidad;
         public TextView estatus;
         public TextView especie;
         public TextView especialidad;
         public TextView tiempoRestante;
         public TextView carritos;
-        public LinearLayout contenedorTamano;
+        public LinearLayout contenedorDescripcion;
         public LinearLayout contenedorCapacidad;
         public LinearLayout contenedorEstatus;
         public LinearLayout contenedorEspecie;
@@ -105,14 +105,14 @@ public class AdaptadorCocedor extends RecyclerView.Adapter<AdaptadorCocedor.Coce
 
         public CocedorCocimientoViewHolder(View vista, final Fragment pantalla){
             super(vista);
-            this.tamano = vista.findViewById(R.id.tamano);
+            this.descripcion = vista.findViewById(R.id.descripcion);
             this.capacidad = vista.findViewById(R.id.capacidad);
             this.estatus = vista.findViewById(R.id.estatus);
             this.especie = vista.findViewById(R.id.especie);
             this.especialidad = vista.findViewById(R.id.especialidad);
             this.tiempoRestante = vista.findViewById(R.id.tiempoRestante);
             this.carritos = vista.findViewById(R.id.carritos);
-            this.contenedorTamano = vista.findViewById(R.id.contenedorTamano);
+            this.contenedorDescripcion = vista.findViewById(R.id.contenedorDescripcion);
             this.contenedorCapacidad = vista.findViewById(R.id.contenedorCapacidad);
             this.contenedorEstatus = vista.findViewById(R.id.contenedorEstatus);
             this.contenedorEspecie = vista.findViewById(R.id.contenedorEspecie);

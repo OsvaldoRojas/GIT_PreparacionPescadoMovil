@@ -141,8 +141,8 @@ public class Fragment_Cocida extends Fragment {
 
         List<DetalleSimple> listaCocedor = new ArrayList<>();
         DetalleSimple tamano = new DetalleSimple();
-        tamano.setLlave("Tamaño");
-        tamano.setValor( getCocedorSeleccionado().getTamano() );
+        tamano.setLlave("Descripción");
+        tamano.setValor( getCocedorSeleccionado().getDescripcion() );
         listaCocedor.add(tamano);
 
         DetalleSimple capacidad = new DetalleSimple();
@@ -192,7 +192,7 @@ public class Fragment_Cocida extends Fragment {
 
         DetalleSimple tiempoRestante = new DetalleSimple();
         tiempoRestante.setLlave("Tiempo restante");
-        tiempoRestante.setValor(getCocedorSeleccionado().getTiempoRestante());
+        tiempoRestante.setValor(getCocedorSeleccionado().getTiempoRestante().substring(0, 5));
         listaCocida.add(tiempoRestante);
 
         DetalleSimple totalCarritos = new DetalleSimple();
@@ -266,16 +266,13 @@ public class Fragment_Cocida extends Fragment {
 
     public void detalleCocida(){
         Call<List<Cocedor>> llamadaServicio = APIServicios.getConexionAPPWEB()
-                .getDetalleCocidasCocedor( getCocedorSeleccionado().getId() );
+                .getDetalleCocidasCocedor( getCocedorSeleccionado().getIdCocida() );
         llamadaServicio.enqueue(new Callback<List<Cocedor>>() {
             @Override
             public void onResponse(Call<List<Cocedor>> call, Response<List<Cocedor>> response) {
                 if( isAdded() ){
                     if(response.code() == 200){
                         if( !response.body().isEmpty() ){
-                            for( Cocedor cocedor : response.body() ){
-                                cocedor.setIdCocida( getCocedorSeleccionado().getIdCocida() );
-                            }
                             terminaProcesando();
                             Fragment fragment = new Contenedor_Cocida().newInstance( 0, (Serializable) response.body() );
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();

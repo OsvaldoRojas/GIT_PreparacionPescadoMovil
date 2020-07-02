@@ -34,11 +34,14 @@ import retrofit2.Response;
 public class Fragment_Detalle_Modulo extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     private View vista;
     private AlertDialog ventanaError;
     private ProgressBar barraProgreso;
     private SwipeRefreshLayout actualizar;
+
+    private boolean vistaPanoramica = false;
 
     private Modulo moduloSeleccionado;
 
@@ -55,10 +58,11 @@ public class Fragment_Detalle_Modulo extends Fragment {
     public Fragment_Detalle_Modulo() {
     }
 
-    public static Fragment_Detalle_Modulo newInstance(Serializable param1) {
+    public static Fragment_Detalle_Modulo newInstance(Serializable param1, boolean vistaPanoramica) {
         Fragment_Detalle_Modulo fragment = new Fragment_Detalle_Modulo();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
+        args.putBoolean("vistaPanoramica", vistaPanoramica);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,6 +72,7 @@ public class Fragment_Detalle_Modulo extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             setModuloSeleccionado( (Modulo) getArguments().getSerializable(ARG_PARAM1) );
+            this.vistaPanoramica = getArguments().getBoolean("vistaPanoramica");
         }
     }
 
@@ -96,8 +101,13 @@ public class Fragment_Detalle_Modulo extends Fragment {
         botonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Fragment_Vista_Modulo().newInstance( getModuloSeleccionado() );
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                if(vistaPanoramica){
+                    Fragment fragment = new Fragment_Vista_Panoramica();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                }else{
+                    Fragment fragment = new Fragment_Vista_Modulo().newInstance( getModuloSeleccionado() );
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+                }
             }
         });
 

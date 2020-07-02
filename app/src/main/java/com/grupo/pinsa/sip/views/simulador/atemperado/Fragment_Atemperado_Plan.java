@@ -21,6 +21,7 @@ import com.grupo.pinsa.sip.R;
 import com.grupo.pinsa.sip.views.simulador.conexion.APIServicios;
 import com.grupo.pinsa.sip.views.simulador.utilerias.Constantes;
 import com.grupo.pinsa.sip.views.simulador.modelo.PosicionEstibaAtemperado;
+import com.grupo.pinsa.sip.views.simulador.utilerias.Utilerias;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -219,6 +220,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(1);
                 accionIconoPosicion(1);
             }
         });
@@ -227,6 +229,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(2);
                 accionIconoPosicion(2);
             }
         });
@@ -235,6 +238,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(3);
                 accionIconoPosicion(3);
             }
         });
@@ -243,6 +247,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(4);
                 accionIconoPosicion(4);
             }
         });
@@ -251,6 +256,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(5);
                 accionIconoPosicion(5);
             }
         });
@@ -259,6 +265,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(6);
                 accionIconoPosicion(6);
             }
         });
@@ -267,6 +274,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(7);
                 accionIconoPosicion(7);
             }
         });
@@ -275,6 +283,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(8);
                 accionIconoPosicion(8);
             }
         });
@@ -283,6 +292,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(9);
                 accionIconoPosicion(9);
             }
         });
@@ -291,6 +301,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(10);
                 accionIconoPosicion(10);
             }
         });
@@ -299,6 +310,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(11);
                 accionIconoPosicion(11);
             }
         });
@@ -307,6 +319,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(12);
                 accionIconoPosicion(12);
             }
         });
@@ -315,6 +328,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(13);
                 accionIconoPosicion(13);
             }
         });
@@ -323,6 +337,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(14);
                 accionIconoPosicion(14);
             }
         });
@@ -331,6 +346,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(15);
                 accionIconoPosicion(15);
             }
         });
@@ -339,6 +355,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(16);
                 accionIconoPosicion(16);
             }
         });
@@ -347,6 +364,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(17);
                 accionIconoPosicion(17);
             }
         });
@@ -355,6 +373,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(18);
                 accionIconoPosicion(18);
             }
         });
@@ -363,6 +382,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion19.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(19);
                 accionIconoPosicion(19);
             }
         });
@@ -371,6 +391,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(20);
                 accionIconoPosicion(20);
             }
         });
@@ -379,6 +400,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion21.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(21);
                 accionIconoPosicion(21);
             }
         });
@@ -387,6 +409,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion22.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(22);
                 accionIconoPosicion(22);
             }
         });
@@ -395,6 +418,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion23.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(23);
                 accionIconoPosicion(23);
             }
         });
@@ -403,6 +427,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion24.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(24);
                 accionIconoPosicion(24);
             }
         });
@@ -411,6 +436,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion25.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(25);
                 accionIconoPosicion(25);
             }
         });
@@ -419,6 +445,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion26.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(26);
                 accionIconoPosicion(26);
             }
         });
@@ -427,6 +454,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion27.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(27);
                 accionIconoPosicion(27);
             }
         });
@@ -435,6 +463,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion28.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(28);
                 accionIconoPosicion(28);
             }
         });
@@ -443,6 +472,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion29.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(29);
                 accionIconoPosicion(29);
             }
         });
@@ -451,6 +481,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion30.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(30);
                 accionIconoPosicion(30);
             }
         });
@@ -459,6 +490,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion31.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(31);
                 accionIconoPosicion(31);
             }
         });
@@ -467,6 +499,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion32.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(32);
                 accionIconoPosicion(32);
             }
         });
@@ -475,6 +508,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion33.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(33);
                 accionIconoPosicion(33);
             }
         });
@@ -483,6 +517,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion34.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(34);
                 accionIconoPosicion(34);
             }
         });
@@ -491,6 +526,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion35.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(35);
                 accionIconoPosicion(35);
             }
         });
@@ -499,6 +535,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion36.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(36);
                 accionIconoPosicion(36);
             }
         });
@@ -507,6 +544,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion37.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(37);
                 accionIconoPosicion(37);
             }
         });
@@ -515,6 +553,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion38.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(38);
                 accionIconoPosicion(38);
             }
         });
@@ -523,6 +562,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion39.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(39);
                 accionIconoPosicion(39);
             }
         });
@@ -531,6 +571,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion40.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(40);
                 accionIconoPosicion(40);
             }
         });
@@ -539,6 +580,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion41.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(41);
                 accionIconoPosicion(41);
             }
         });
@@ -547,6 +589,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion42.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(42);
                 accionIconoPosicion(42);
             }
         });
@@ -555,6 +598,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion43.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(43);
                 accionIconoPosicion(43);
             }
         });
@@ -563,6 +607,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion44.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(44);
                 accionIconoPosicion(44);
             }
         });
@@ -571,6 +616,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion45.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(45);
                 accionIconoPosicion(45);
             }
         });
@@ -579,6 +625,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion46.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(46);
                 accionIconoPosicion(46);
             }
         });
@@ -587,6 +634,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion47.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(47);
                 accionIconoPosicion(47);
             }
         });
@@ -595,6 +643,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion48.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(48);
                 accionIconoPosicion(48);
             }
         });
@@ -603,6 +652,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion49.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(49);
                 accionIconoPosicion(49);
             }
         });
@@ -611,6 +661,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion50.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(50);
                 accionIconoPosicion(50);
             }
         });
@@ -619,6 +670,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion51.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(51);
                 accionIconoPosicion(51);
             }
         });
@@ -627,6 +679,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion52.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(52);
                 accionIconoPosicion(52);
             }
         });
@@ -635,6 +688,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion53.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(53);
                 accionIconoPosicion(53);
             }
         });
@@ -643,6 +697,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion54.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(54);
                 accionIconoPosicion(54);
             }
         });
@@ -651,6 +706,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion55.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(55);
                 accionIconoPosicion(55);
             }
         });
@@ -659,6 +715,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion56.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(56);
                 accionIconoPosicion(56);
             }
         });
@@ -667,6 +724,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion57.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(57);
                 accionIconoPosicion(57);
             }
         });
@@ -675,6 +733,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion58.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(58);
                 accionIconoPosicion(58);
             }
         });
@@ -683,6 +742,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion59.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(59);
                 accionIconoPosicion(59);
             }
         });
@@ -691,6 +751,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion60.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(60);
                 accionIconoPosicion(60);
             }
         });
@@ -699,6 +760,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion61.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(61);
                 accionIconoPosicion(61);
             }
         });
@@ -707,6 +769,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion62.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(62);
                 accionIconoPosicion(62);
             }
         });
@@ -715,6 +778,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion63.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(63);
                 accionIconoPosicion(63);
             }
         });
@@ -723,6 +787,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion64.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(64);
                 accionIconoPosicion(64);
             }
         });
@@ -731,6 +796,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion65.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(65);
                 accionIconoPosicion(65);
             }
         });
@@ -739,6 +805,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion66.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(66);
                 accionIconoPosicion(66);
             }
         });
@@ -747,6 +814,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion67.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(67);
                 accionIconoPosicion(67);
             }
         });
@@ -755,6 +823,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion68.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(68);
                 accionIconoPosicion(68);
             }
         });
@@ -763,6 +832,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion69.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(69);
                 accionIconoPosicion(69);
             }
         });
@@ -771,6 +841,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion70.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(70);
                 accionIconoPosicion(70);
             }
         });
@@ -779,6 +850,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion71.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(71);
                 accionIconoPosicion(71);
             }
         });
@@ -787,6 +859,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion72.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(72);
                 accionIconoPosicion(72);
             }
         });
@@ -795,6 +868,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion73.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(73);
                 accionIconoPosicion(73);
             }
         });
@@ -803,6 +877,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion74.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(74);
                 accionIconoPosicion(74);
             }
         });
@@ -811,6 +886,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion75.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(75);
                 accionIconoPosicion(75);
             }
         });
@@ -819,6 +895,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion76.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(76);
                 accionIconoPosicion(76);
             }
         });
@@ -827,6 +904,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion77.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(77);
                 accionIconoPosicion(77);
             }
         });
@@ -835,6 +913,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion78.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(78);
                 accionIconoPosicion(78);
             }
         });
@@ -843,6 +922,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion79.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(79);
                 accionIconoPosicion(79);
             }
         });
@@ -851,6 +931,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion80.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(80);
                 accionIconoPosicion(80);
             }
         });
@@ -859,6 +940,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion81.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(81);
                 accionIconoPosicion(81);
             }
         });
@@ -867,6 +949,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion82.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(82);
                 accionIconoPosicion(82);
             }
         });
@@ -875,6 +958,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion83.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(83);
                 accionIconoPosicion(83);
             }
         });
@@ -883,6 +967,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion84.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(84);
                 accionIconoPosicion(84);
             }
         });
@@ -891,6 +976,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion85.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(85);
                 accionIconoPosicion(85);
             }
         });
@@ -899,6 +985,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion86.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(86);
                 accionIconoPosicion(86);
             }
         });
@@ -907,6 +994,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion87.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(87);
                 accionIconoPosicion(87);
             }
         });
@@ -915,6 +1003,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion88.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(88);
                 accionIconoPosicion(88);
             }
         });
@@ -923,6 +1012,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion89.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(89);
                 accionIconoPosicion(89);
             }
         });
@@ -931,6 +1021,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion90.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(90);
                 accionIconoPosicion(90);
             }
         });
@@ -939,6 +1030,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion91.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(91);
                 accionIconoPosicion(91);
             }
         });
@@ -947,6 +1039,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion92.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(92);
                 accionIconoPosicion(92);
             }
         });
@@ -955,6 +1048,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion93.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(93);
                 accionIconoPosicion(93);
             }
         });
@@ -963,6 +1057,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion94.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(94);
                 accionIconoPosicion(94);
             }
         });
@@ -971,6 +1066,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion95.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(95);
                 accionIconoPosicion(95);
             }
         });
@@ -979,6 +1075,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion96.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(96);
                 accionIconoPosicion(96);
             }
         });
@@ -987,6 +1084,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion97.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(97);
                 accionIconoPosicion(97);
             }
         });
@@ -995,6 +1093,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion98.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(98);
                 accionIconoPosicion(98);
             }
         });
@@ -1003,6 +1102,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion99.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(99);
                 accionIconoPosicion(99);
             }
         });
@@ -1011,6 +1111,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
         this.posicion100.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(100);
                 accionIconoPosicion(100);
             }
         });
@@ -1094,6 +1195,11 @@ public class Fragment_Atemperado_Plan extends Fragment {
             for( PosicionEstibaAtemperado recursoEstiba : this.listaPosiciones ){
                 recursoEstiba.setEstado(Constantes.ESTADO.inicial);
                 muestraIcono(recursoEstiba);
+                if( recursoEstiba.getConteoNivel() > 0 ){
+                    getIconoPosicion( recursoEstiba.getIdAtemperadoPosicionTina() ).setEnabled(true);
+                }else{
+                    getIconoPosicion( recursoEstiba.getIdAtemperadoPosicionTina() ).setEnabled(false);
+                }
             }
         }
     }
@@ -1115,7 +1221,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
                     @Override
                     public void onClick(View view) {
                         ventanaEmergente.dismiss();
-                        accionIconoPosicion( getPosicionSeleccionada().getIdAtemperadoPosicionTina() );
+                        //accionIconoPosicion( getPosicionSeleccionada().getIdAtemperadoPosicionTina() );
                     }
                 });
 
@@ -1130,6 +1236,12 @@ public class Fragment_Atemperado_Plan extends Fragment {
 
                 TextView etiquetaEspecialidad = ventanaEmergente.findViewById(R.id.etiquetaEspecialidad);
                 etiquetaEspecialidad.setText( getPosicionSeleccionada().getEspecialidad() );
+
+                TextView etiquetaFechaProceso = ventanaEmergente.findViewById(R.id.etiquetaFechaProceso);
+                etiquetaFechaProceso.setText( Utilerias.formatoFecha( getPosicionSeleccionada().getFechaProceso() ) );
+
+                TextView etiquetaTurno = ventanaEmergente.findViewById(R.id.etiquetaTurno);
+                etiquetaTurno.setText( "Turno ".concat( getPosicionSeleccionada().getTurno() == 0 ? "1" : "2" ) );
             }
         });
         this.ventanaEmergente.show();
@@ -1141,7 +1253,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
                 if( posicionEstiba.getConteoNivel() > 0 ){
                     if( posicionEstiba.getEstado() == Constantes.ESTADO.inicial ){
                         setPosicionSeleccionada(posicionEstiba);
-                        deshabilitaRecursos();
+                        //deshabilitaRecursos();
                         getIconoPosicion( posicionEstiba.getIdAtemperadoPosicionTina() )
                                 .setBackground( getResources().getDrawable(R.drawable.contenedor_icono_seleccionado) );
                         posicionEstiba.setEstado(Constantes.ESTADO.seleccionado);
@@ -1150,7 +1262,7 @@ public class Fragment_Atemperado_Plan extends Fragment {
                     }else{
                         if( posicionEstiba.getEstado() == Constantes.ESTADO.seleccionado ){
                             setPosicionSeleccionada(null);
-                            habilitaRecursos();
+                            //habilitaRecursos();
                             posicionEstiba.setEstado(Constantes.ESTADO.inicial);
                             muestraIcono(posicionEstiba);
                             this.botonera.setVisibility(View.INVISIBLE);
@@ -1159,6 +1271,13 @@ public class Fragment_Atemperado_Plan extends Fragment {
                 }
                 break;
             }
+        }
+    }
+
+    private void limpiaSeleccionado(int posicion){
+        if( getPosicionSeleccionada() != null
+                && getPosicionSeleccionada().getIdAtemperadoPosicionTina() != posicion ){
+            accionIconoPosicion( getPosicionSeleccionada().getIdAtemperadoPosicionTina() );
         }
     }
 

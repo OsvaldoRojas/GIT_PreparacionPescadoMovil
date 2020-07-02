@@ -99,6 +99,19 @@ public class Fragment_Temperatura_Tina extends Fragment {
         TextView etiquetaFecha = this.vista.findViewById(R.id.etiquetaFecha);
         etiquetaFecha.setText( Utilerias.fechaActual() );
 
+        TextView etiquetaTitulo = this.vista.findViewById(R.id.etiquetaTitulo);
+        switch( getIdEtapa() ){
+            case 1:
+                etiquetaTitulo.setText("Preselección");
+                break;
+            case 2:
+                etiquetaTitulo.setText("Atemperado");
+                break;
+            case 4:
+                etiquetaTitulo.setText("Eviscerado");
+                break;
+        }
+
         this.temperatura = this.vista.findViewById(R.id.temperatura);
         this.vistaTinas = this.vista.findViewById(R.id.listaTinas);
 
@@ -133,21 +146,25 @@ public class Fragment_Temperatura_Tina extends Fragment {
         resgitrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(TemperaturaTina tina : listaTinas){
-                    if( tina.isSeleccionado() ){
-                        tina.setTemperatura( Float.valueOf( temperatura.getText().toString() ) );
+                if( !temperatura.getText().toString().equals("") && !temperatura.getText().toString().equals(".") ){
+                    for(TemperaturaTina tina : listaTinas){
+                        if( tina.isSeleccionado() ){
+                            tina.setTemperatura( Float.valueOf( temperatura.getText().toString() ) );
+                        }
                     }
-                }
-                temperatura.setText("");
-                if( seleccionarTodo.isChecked() ){
-                    seleccionarTodo.callOnClick();
+                    temperatura.setText("");
+                    if( seleccionarTodo.isChecked() ){
+                        seleccionarTodo.callOnClick();
+                    }else{
+                        for(int i = 0; i < listaTinas.size(); i++){
+                            listaTinas.get(i).setSeleccionado( seleccionarTodo.isChecked() );
+                            listaTinas.get(i).setSeleccionadoGeneral( !seleccionarTodo.isChecked() );
+                            listaTinas.get(i).setSeleccionadoSuma( seleccionarTodo.isChecked() );
+                        }
+                        adaptador.notifyDataSetChanged();
+                    }
                 }else{
-                    for(int i = 0; i < listaTinas.size(); i++){
-                        listaTinas.get(i).setSeleccionado( seleccionarTodo.isChecked() );
-                        listaTinas.get(i).setSeleccionadoGeneral( !seleccionarTodo.isChecked() );
-                        listaTinas.get(i).setSeleccionadoSuma( seleccionarTodo.isChecked() );
-                    }
-                    adaptador.notifyDataSetChanged();
+                    errorServicio("Es necesario ingresar una temperatura valida");
                 }
             }
         });
@@ -202,7 +219,9 @@ public class Fragment_Temperatura_Tina extends Fragment {
     private void muestraTinas(List<TemperaturaTina> tinas){
         this.listaTinas = tinas;
         TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
+        Button guardar = this.vista.findViewById(R.id.botonGuardar);
         if( !this.listaTinas.isEmpty() ) {
+            guardar.setEnabled(true);
             this.vistaTinas.setVisibility(View.VISIBLE);
             sinResultado.setVisibility(View.GONE);
             this.vistaTinas.setHasFixedSize(true);
@@ -213,6 +232,7 @@ public class Fragment_Temperatura_Tina extends Fragment {
             this.adaptador = new AdaptadorTemperaturaTina(this.listaTinas, this);
             this.vistaTinas.setAdapter(this.adaptador);
         }else{
+            guardar.setEnabled(false);
             this.vistaTinas.setVisibility(View.GONE);
             sinResultado.setVisibility(View.VISIBLE);
         }

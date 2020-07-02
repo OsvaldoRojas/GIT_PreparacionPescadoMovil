@@ -161,7 +161,7 @@ public class home extends Fragment {
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
             Button botonCocimiento = this.vista.findViewById(R.id.botonCocimiento);
-            //botonCocimiento.setVisibility(View.VISIBLE);
+            botonCocimiento.setVisibility(View.VISIBLE);
             botonCocimiento.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -176,7 +176,7 @@ public class home extends Fragment {
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
             Button botonModulos = this.vista.findViewById(R.id.botonModulos);
-            //botonModulos.setVisibility(View.VISIBLE);
+            botonModulos.setVisibility(View.VISIBLE);
             botonModulos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -191,7 +191,7 @@ public class home extends Fragment {
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
             Button botonTemperatura = this.vista.findViewById(R.id.botonTemperatura);
-            //botonTemperatura.setVisibility(View.VISIBLE);
+            botonTemperatura.setVisibility(View.VISIBLE);
             botonTemperatura.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -206,7 +206,7 @@ public class home extends Fragment {
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
             Button botonEstatus = this.vista.findViewById(R.id.botonEstatus);
-            //botonEstatus.setVisibility(View.VISIBLE);
+            botonEstatus.setVisibility(View.VISIBLE);
             botonEstatus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -221,7 +221,7 @@ public class home extends Fragment {
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.supervisor.getId()
                 || UsuarioLogueado.getUsuarioLogueado().getId_rol() == Constantes.ROL.mecanico.getId() ){
             Button botonLavado = this.vista.findViewById(R.id.botonLavado);
-            //botonLavado.setVisibility(View.VISIBLE);
+            botonLavado.setVisibility(View.VISIBLE);
             botonLavado.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

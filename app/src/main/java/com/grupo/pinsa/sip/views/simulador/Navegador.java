@@ -40,6 +40,7 @@ import com.grupo.pinsa.sip.views.simulador.modulos.Fragment_Entrada_Manual;
 import com.grupo.pinsa.sip.views.simulador.modulos.Fragment_Modulos_Plan;
 import com.grupo.pinsa.sip.views.simulador.modulos.Fragment_Salida_Carritos;
 import com.grupo.pinsa.sip.views.simulador.modulos.Fragment_Vista_Modulo;
+import com.grupo.pinsa.sip.views.simulador.modulos.Fragment_Vista_Panoramica;
 import com.grupo.pinsa.sip.views.simulador.orden.Fragment_AsignaMecanico;
 import com.grupo.pinsa.sip.views.simulador.orden.Fragment_CreaOrdenMantenimiento;
 import com.grupo.pinsa.sip.views.simulador.orden.Fragment_DetalleOrden;
@@ -74,7 +75,7 @@ public class Navegador extends AppCompatActivity implements NavigationView.OnNav
         HomeTemperatura.OnFragmentInteractionListener, Fragment_Temperatura_Tina.OnFragmentInteractionListener, Fragment_Temperatura_Carrito.OnFragmentInteractionListener,
         Contenedor_Modulos.OnFragmentInteractionListener, Fragment_Modulos_Plan.OnFragmentInteractionListener, com.grupo.pinsa.sip.views.simulador.modulos.Fragment_Asigna_Operador.OnFragmentInteractionListener,
         Fragment_Vista_Modulo.OnFragmentInteractionListener, Fragment_Detalle_Modulo.OnFragmentInteractionListener, Fragment_Entrada_Manual.OnFragmentInteractionListener,
-        Fragment_Salida_Carritos.OnFragmentInteractionListener, Fragment_Entrada_Inventario.OnFragmentInteractionListener {
+        Fragment_Salida_Carritos.OnFragmentInteractionListener, Fragment_Entrada_Inventario.OnFragmentInteractionListener, Fragment_Vista_Panoramica.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

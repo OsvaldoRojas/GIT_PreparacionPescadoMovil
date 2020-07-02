@@ -91,7 +91,7 @@ public class Fragment_Vista_Modulo extends Fragment {
             @Override
             public void onRefresh() {
                 actualizar.setRefreshing(true);
-                getCarritos();
+                getModulos();
             }
         });
 
@@ -141,11 +141,46 @@ public class Fragment_Vista_Modulo extends Fragment {
         botonDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new Fragment_Detalle_Modulo().newInstance( getModuloSeleccionado() );
+                Fragment fragment = new Fragment_Detalle_Modulo().newInstance( getModuloSeleccionado(), false );
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
             }
         });
 
+        getCarritos();
+    }
+
+    private void getModulos(){
+        Call<List<Modulo>> llamadaServicio = APIServicios.getConexionAPPWEB().getModulos();
+        llamadaServicio.enqueue(new Callback<List<Modulo>>() {
+            @Override
+            public void onResponse(Call<List<Modulo>> call, Response<List<Modulo>> response) {
+                if( isAdded() ){
+                    if(response.code() == 200){
+                        preparaModulo( response.body() );
+                    }else{
+                        terminaProcesando();
+                        errorServicio("Error al obtener el módulo");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Modulo>> call, Throwable t) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
+            }
+        });
+    }
+
+    private void preparaModulo(List<Modulo> modulos){
+        for(Modulo modulo : modulos){
+            if( getModuloSeleccionado().getId() == modulo.getId() ){
+                setModuloSeleccionado(modulo);
+                break;
+            }
+        }
         getCarritos();
     }
 

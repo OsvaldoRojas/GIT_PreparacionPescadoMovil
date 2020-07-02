@@ -216,6 +216,15 @@ public class Fragment_MovimientoPersonal extends Fragment {
             case "EMPARRILLADO":
                 liberaOperadorEmparrillado();
                 break;
+            case "COCIMIENTO":
+                liberaOperadorCocimiento();
+                break;
+            case "MODULOS":
+                liberaOperadorModulos();
+                break;
+            case "LAVADO DE CARROS":
+                liberaOperadorLavadoCarros();
+                break;
         }
     }
 
@@ -235,7 +244,7 @@ public class Fragment_MovimientoPersonal extends Fragment {
                 if( isAdded() ){
                     terminaProcesando();
                     if( response.code() == 200 ){
-                        ventanaMensaje("El usuario fue liberado exitosamente");
+                        ventanaMensaje("El operador fue liberado exitosamente");
                     }else{
                         errorServicio( "Error al liberar al operador" );
                     }
@@ -265,7 +274,7 @@ public class Fragment_MovimientoPersonal extends Fragment {
                 if( isAdded() ){
                     terminaProcesando();
                     if( response.code() == 200 ){
-                        ventanaMensaje("El usuario fue liberado exitosamente");
+                        ventanaMensaje("El operador fue liberado exitosamente");
                     }else{
                         errorServicio( "Error al liberar al operador" );
                     }
@@ -296,7 +305,7 @@ public class Fragment_MovimientoPersonal extends Fragment {
                 if( isAdded() ){
                     terminaProcesando();
                     if( response.code() == 200 ){
-                        ventanaMensaje("El usuario fue liberado exitosamente");
+                        ventanaMensaje("El operador fue liberado exitosamente");
                     }else{
                         errorServicio( "Error al liberar al operador" );
                     }
@@ -327,8 +336,102 @@ public class Fragment_MovimientoPersonal extends Fragment {
                 if( isAdded() ){
                     terminaProcesando();
                     if( response.code() == 200 ){
-                        ventanaMensaje("El usuario fue liberado exitosamente");
+                        ventanaMensaje("El operador fue liberado exitosamente");
                     }else{
+                        errorServicio( "Error al liberar al operador" );
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
+            }
+        });
+    }
+
+    private void liberaOperadorCocimiento(){
+        JsonObject json = new JsonObject();
+        json.addProperty("idEstacion", getEmpleadoEstacion().getIdEstacion() );
+        json.addProperty("libre", true );
+        json.addProperty("idEmpleado", "0" );
+        json.addProperty("turno", getEmpleadoEstacion().getTurno() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorCocimiento(json);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        ventanaMensaje("El operador fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar al operador" );
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
+            }
+        });
+    }
+
+    private void liberaOperadorModulos(){
+        JsonObject json = new JsonObject();
+        json.addProperty("idEstacion", getEmpleadoEstacion().getIdEstacion() );
+        json.addProperty("libre", true );
+        json.addProperty("idEmpleado", "0" );
+        json.addProperty("turno", UsuarioLogueado.getUsuarioLogueado().getTurno() );
+        json.addProperty("idZona", 1 );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorModulo(json);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        ventanaMensaje("El operador fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
+                        errorServicio( "Error al liberar al operador" );
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaServicio> call, Throwable t) {
+                if( isAdded() ){
+                    terminaProcesando();
+                    errorServicio("Error al conectar con el servidor");
+                }
+            }
+        });
+    }
+
+    private void liberaOperadorLavadoCarros(){
+        JsonObject json = new JsonObject();
+        json.addProperty("idEstacion", getEmpleadoEstacion().getIdEstacion() );
+        json.addProperty("libre", true );
+        json.addProperty("idEmpleado", "0" );
+        json.addProperty("turno", getEmpleadoEstacion().getTurno() );
+        json.addProperty("usuario", UsuarioLogueado.getUsuarioLogueado().getClave_usuario() );
+        Call<RespuestaServicio> llamadaServicio = APIServicios.getConexion().guardaOperadorLavado(json);
+        llamadaServicio.enqueue(new Callback<RespuestaServicio>() {
+            @Override
+            public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
+                if( isAdded() ){
+                    if( response.code() == 200 ){
+                        ventanaMensaje("El operador fue liberado exitosamente");
+                    }else{
+                        terminaProcesando();
                         errorServicio( "Error al liberar al operador" );
                     }
                 }

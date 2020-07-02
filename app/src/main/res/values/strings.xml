@@ -15,28 +15,31 @@
     <string name="TiempoMuerto">Tiempo muerto</string>
     <string name="disenoPlan">Diseño de plan</string>
     <string name="Salida">Salida tinas</string>
+    <string name="controlProcesoDescongelado">Control proceso\ndescongelado</string>
     <string name="Pinza">Pinsa</string>
     <string name="asignaCocida">Asigna cocida</string>
     <string name="asignaTina">Selección manual</string>
     <string name="cocidaInicial">Cocida inicial</string>
 
+    <string name="controlProceso">Control Proceso Descongelado</string>
     <string name="liberarTina">Liberar Tina</string>
     <string name="asignarTina">Asignar Tina</string>
     <string name="mezclarTina">Mezclar Tinas</string>
-    <string name="liberarUsuario">Liberar Usuario</string>
+    <string name="liberarUsuario">Liberar Operador</string>
     <string name="liberarOperadores">Liberar Operadores</string>
-    <string name="asignarUsuario">Asignar Usuario</string>
-    <string name="vistaPanoramica">Vista panorámica</string>
-    <string name="asignarMontacargas">Usuario Montacargas</string>
+    <string name="asignarUsuario">Asignar Operador</string>
+    <string name="vistaPanoramica">Vista Panorámica</string>
+    <string name="asignarMontacargas">Operador Montacargas</string>
     <string name="asignarTurno">Asignar Turno</string>
     <string name="volver">Regresar</string>
     <string name="completo">Completo</string>
     <string name="guardar">Guardar</string>
     <string name="compensacion">Compensación</string>
+    <string name="graficar">Graficar</string>
     <string name="iniciar">Iniciar</string>
-    <string name="salidaCarritos">Salida carritos</string>
+    <string name="salidaCarritos">Salida Carritos</string>
     <string name="registrar">Registrar</string>
-    <string name="registrarSalida">Registrar salida</string>
+    <string name="registrarSalida">Registrar Salida</string>
     <string name="agregar">Agregar</string>
 
     <string name="crearOrden">Crear orden de mantenimiento</string>

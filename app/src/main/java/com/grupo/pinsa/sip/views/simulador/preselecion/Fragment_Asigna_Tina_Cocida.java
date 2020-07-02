@@ -33,6 +33,7 @@ import com.grupo.pinsa.sip.views.simulador.modelo.servicio.RespuestaServicio;
 import com.grupo.pinsa.sip.views.simulador.modelo.servicio.TinaEscaneo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,10 +43,10 @@ import retrofit2.Response;
 public class Fragment_Asigna_Tina_Cocida extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
-
-    private Serializable mParam1;
+    private static final String ARG_PARAM2 = "param2";
 
     private boolean tinaValida = false;
+    private Boolean nuevo;
 
     private View vista;
 
@@ -61,10 +62,19 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     public Fragment_Asigna_Tina_Cocida() {
     }
 
-    public static Fragment_Asigna_Tina_Cocida newInstance(Serializable param1) {
+    public Boolean getNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(Boolean nuevo) {
+        this.nuevo = nuevo;
+    }
+
+    public static Fragment_Asigna_Tina_Cocida newInstance(Serializable param1, Boolean param2) {
         Fragment_Asigna_Tina_Cocida fragment = new Fragment_Asigna_Tina_Cocida();
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, param1);
+        args.putBoolean(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,7 +83,8 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getSerializable(ARG_PARAM1);
+            setTinaSeleccionada( (Tina) getArguments().getSerializable(ARG_PARAM1) );
+            setNuevo( getArguments().getBoolean(ARG_PARAM2) );
         }
     }
 
@@ -123,7 +134,6 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
 
     private void iniciaComponentes() {
         iniciaProcesando();
-        setTinaSeleccionada((Tina) mParam1);
 
         Button botonCancelar = this.vista.findViewById(R.id.boton1);
         botonCancelar.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +178,14 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
                 validaTina( editable.toString() );
             }
         });
+
+        if( !getNuevo() ){
+            botonCancelar.setText(R.string.volver);
+            botonAceptar.setVisibility(View.GONE);
+            etiquetaPosicion.setText( "Tina ".concat( getTinaSeleccionada().getPosicion() ) );
+            campoEscaner.setEnabled(false);
+            campoEscaner.setText( getTinaSeleccionada().getTina().getIdTina() );
+        }
 
         getCocidas();
     }
@@ -302,18 +320,29 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
 
     private void resultadoCocidas(List<Cocida> cocidas){
         if( isAdded() ){
+            this.cocidas = new ArrayList<>();
+            if( !getNuevo() ){
+                for( Cocida cocida : cocidas ){
+                    if( cocida.getId() == getTinaSeleccionada().getIdAsignacionCocida() ){
+                        this.cocidas.add(cocida);
+                        break;
+                    }
+                }
+            }else{
+                this.cocidas.addAll(cocidas);
+            }
+
             TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
-            if( !cocidas.isEmpty() ) {
+            if( !this.cocidas.isEmpty() ) {
                 sinResultado.setVisibility(View.GONE);
 
-                this.cocidas = cocidas;
                 this.vistaLista = this.vista.findViewById(R.id.listaTinas);
                 this.vistaLista.setHasFixedSize(true);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 this.vistaLista.setLayoutManager(layoutManager);
 
-                AdaptadorCocida adaptador = new AdaptadorCocida(cocidas, this);
+                AdaptadorCocida adaptador = new AdaptadorCocida(this.cocidas, this);
                 this.vistaLista.setAdapter(adaptador);
             }else{
                 sinResultado.setVisibility(View.VISIBLE);
@@ -362,7 +391,7 @@ public class Fragment_Asigna_Tina_Cocida extends Fragment {
             this.tinaValida = true;
             campoEscaner.setTextColor( getResources().getColor(R.color.siValido) );
 
-            getTinaSeleccionada().getTina().setIdTina( Long.valueOf( resultadoTina.getIdTinaDes() ) );
+            getTinaSeleccionada().getTina().setIdTina( resultadoTina.getIdTinaDes() );
             getTinaSeleccionada().getTina().setDescripcion( resultadoTina.getTinaDes() );
         } else{
             campoEscaner.setTextColor( getResources().getColor(R.color.noValido) );

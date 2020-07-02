@@ -32,6 +32,14 @@ public class PosicionEstibaAtemperado implements Serializable {
     @Expose
     private Boolean bloqueado;
 
+    @SerializedName("fechaProceso")
+    @Expose
+    private String fechaProceso;
+
+    @SerializedName("turno")
+    @Expose
+    private int turno;
+
     private String claveMaquina;
     private Constantes.ESTADO estado;
 
@@ -97,5 +105,21 @@ public class PosicionEstibaAtemperado implements Serializable {
 
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public String getFechaProceso() {
+        return fechaProceso;
+    }
+
+    public void setFechaProceso(String fechaProceso) {
+        this.fechaProceso = fechaProceso;
+    }
+
+    public int getTurno() {
+        return turno;
+    }
+
+    public void setTurno(int turno) {
+        this.turno = turno;
     }
 }

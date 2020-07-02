@@ -117,6 +117,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(1);
                 accionIconoOperador(1);
             }
         });
@@ -125,6 +126,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(2);
                 accionIconoOperador(2);
             }
         });
@@ -133,6 +135,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(3);
                 accionIconoOperador(3);
             }
         });
@@ -141,6 +144,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(4);
                 accionIconoOperador(4);
             }
         });
@@ -149,6 +153,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(5);
                 accionIconoOperador(5);
             }
         });
@@ -157,6 +162,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(6);
                 accionIconoOperador(6);
             }
         });
@@ -165,6 +171,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(7);
                 accionIconoOperador(7);
             }
         });
@@ -173,6 +180,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
         this.operador8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                limpiaSeleccionado(8);
                 accionIconoOperador(8);
             }
         });
@@ -235,7 +243,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
             if( operador.getIdEstacion() == posicion ){
                 if( operador.getEstado() == Constantes.ESTADO.inicial ){
                     setOperadorSeleccionado(operador);
-                    deshabilitaRecursos();
+                    //deshabilitaRecursos();
                     getIconoOperador( operador.getIdEstacion() )
                             .setImageResource(R.drawable.ic_operador_blanco);
                     getIconoOperador( operador.getIdEstacion() )
@@ -257,7 +265,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
                 }else{
                     if( operador.getEstado() == Constantes.ESTADO.seleccionado ){
                         setOperadorSeleccionado(null);
-                        habilitaRecursos();
+                        //habilitaRecursos();
                         if( operador.isLibre() ){
                             getIconoOperador( operador.getIdEstacion() )
                                     .setImageResource(R.drawable.ic_operador_gris);
@@ -280,7 +288,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
                         }
                     }else{
                         setOperadorSeleccionado(operador);
-                        deshabilitaRecursos();
+                        //deshabilitaRecursos();
                         getIconoOperador( operador.getIdEstacion() )
                                 .setImageResource(R.drawable.ic_operador_blanco);
                         getIconoOperador( operador.getIdEstacion() )
@@ -303,6 +311,13 @@ public class Fragment_Emparrillado_Plan extends Fragment {
                 }
                 break;
             }
+        }
+    }
+
+    private void limpiaSeleccionado(int posicion){
+        if( getOperadorSeleccionado() != null
+                && getOperadorSeleccionado().getIdEstacion() != posicion ){
+            accionIconoOperador( getOperadorSeleccionado().getIdEstacion() );
         }
     }
 
@@ -335,7 +350,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
                 if( isAdded() ){
                     if( response.code() == 200 ){
-                        ventanaMensaje("El usuario fue liberado exitosamente");
+                        ventanaMensaje("El operador fue liberado exitosamente");
                     }else{
                         terminaProcesando();
                         errorServicio( "Error al liberar al operador" );
@@ -427,7 +442,7 @@ public class Fragment_Emparrillado_Plan extends Fragment {
             public void onResponse(Call<RespuestaServicio> call, Response<RespuestaServicio> response) {
                 if( isAdded() ){
                     if( response.code() == 200 ){
-                        getAsignados();
+                        ventanaMensaje("Los operadores fueron liberados exitosamente");
                     }else{
                         terminaProcesando();
                         errorServicio( "Error al liberar el turno" );

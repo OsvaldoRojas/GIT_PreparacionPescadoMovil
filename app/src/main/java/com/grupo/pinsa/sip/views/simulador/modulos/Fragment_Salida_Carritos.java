@@ -201,7 +201,7 @@ public class Fragment_Salida_Carritos extends Fragment {
         AdaptadorBasculaCatalogo adaptadorBasculaCatalogo = new AdaptadorBasculaCatalogo(getContext(), this.basculas);
         this.seleccionaBascula.setAdapter(adaptadorBasculaCatalogo);
         this.seleccionaBascula.setSelection(
-                Utilerias.obtenerPosicionItem(
+                Utilerias.obtenerPosicionBascula(
                         this.seleccionaBascula,
                         getModuloSeleccionado().getBascula().getDescripcion()
                 )

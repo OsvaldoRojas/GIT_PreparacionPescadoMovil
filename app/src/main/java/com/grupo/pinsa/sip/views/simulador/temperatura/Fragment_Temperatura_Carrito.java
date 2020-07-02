@@ -151,21 +151,25 @@ public class Fragment_Temperatura_Carrito extends Fragment {
         resgitrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(Carrito carrito : carritos){
-                    if( carrito.isSeleccionado() ){
-                        carrito.setTemperatura( Float.valueOf( temperatura.getText().toString() ) );
+                if( !temperatura.getText().toString().equals("") && !temperatura.getText().toString().equals(".") ){
+                    for(Carrito carrito : carritos){
+                        if( carrito.isSeleccionado() ){
+                            carrito.setTemperatura( Float.valueOf( temperatura.getText().toString() ) );
+                        }
                     }
-                }
-                temperatura.setText("");
-                if( seleccionarTodo.isChecked() ){
-                    seleccionarTodo.callOnClick();
+                    temperatura.setText("");
+                    if( seleccionarTodo.isChecked() ){
+                        seleccionarTodo.callOnClick();
+                    }else{
+                        for(int i = 0; i < carritos.size(); i++){
+                            carritos.get(i).setSeleccionado( seleccionarTodo.isChecked() );
+                            carritos.get(i).setSeleccionadoGeneral( !seleccionarTodo.isChecked() );
+                            carritos.get(i).setSeleccionadoSuma( seleccionarTodo.isChecked() );
+                        }
+                        adaptador.notifyDataSetChanged();
+                    }
                 }else{
-                    for(int i = 0; i < carritos.size(); i++){
-                        carritos.get(i).setSeleccionado( seleccionarTodo.isChecked() );
-                        carritos.get(i).setSeleccionadoGeneral( !seleccionarTodo.isChecked() );
-                        carritos.get(i).setSeleccionadoSuma( seleccionarTodo.isChecked() );
-                    }
-                    adaptador.notifyDataSetChanged();
+                    errorServicio("Es necesario ingresar una temperatura valida");
                 }
             }
         });
@@ -189,16 +193,19 @@ public class Fragment_Temperatura_Carrito extends Fragment {
             }
         });
 
+        TextView etiquetaTitulo = this.vista.findViewById(R.id.etiquetaTitulo);
         if(this.etapa == 1){
+            etiquetaTitulo.setText("Cocimiento");
             getCocedores();
         }else{
+            etiquetaTitulo.setText("Módulos");
             this.numeroCocida.setVisibility(View.GONE);
             getModulos();
         }
     }
 
     private void getCocedores(){
-        Call<List<Cocedor>> llamadaServicio = APIServicios.getConexion().getCocedoresCocimiento();
+        Call<List<Cocedor>> llamadaServicio = APIServicios.getConexionAPPWEB().getCocedoresCocimiento();
         llamadaServicio.enqueue(new Callback<List<Cocedor>>() {
             @Override
             public void onResponse(Call<List<Cocedor>> call, Response<List<Cocedor>> response) {
@@ -226,7 +233,7 @@ public class Fragment_Temperatura_Carrito extends Fragment {
         this.cocedores = listaCocedores;
         Cocedor cocedorVacio = new Cocedor();
         cocedorVacio.setId(0);
-        cocedorVacio.setTamano("Seleccionar cocedor");
+        cocedorVacio.setDescripcion("Seleccionar");
         this.cocedores.add(0, cocedorVacio);
         AdaptadorCocedorCatalogo adaptadorCocedorCatalogo = new AdaptadorCocedorCatalogo(getContext(), this.cocedores);
         this.seleccionador.setAdapter(adaptadorCocedorCatalogo);
@@ -237,7 +244,7 @@ public class Fragment_Temperatura_Carrito extends Fragment {
                     numeroCocida.setText("");
                     muestraCarritos(new ArrayList<Carrito>());
                 }else{
-                    numeroCocida.setText( String.valueOf( cocedores.get(i).getNumeroCocida() ) );
+                    numeroCocida.setText( cocedores.get(i).getNumeroCocida() );
                     muestraCarritos( cocedores.get(i).getCarritos() );
                 }
             }
@@ -253,7 +260,9 @@ public class Fragment_Temperatura_Carrito extends Fragment {
     private void muestraCarritos(List<Carrito> listaCarritos){
         this.carritos = listaCarritos;
         TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
+        Button guardar = this.vista.findViewById(R.id.botonGuardar);
         if( !this.carritos.isEmpty() ) {
+            guardar.setEnabled(true);
             this.vistaCarritos.setVisibility(View.VISIBLE);
             sinResultado.setVisibility(View.GONE);
             this.vistaCarritos.setHasFixedSize(true);
@@ -264,6 +273,7 @@ public class Fragment_Temperatura_Carrito extends Fragment {
             this.adaptador = new AdaptadorTemperaturaCarrito(this.carritos, this);
             this.vistaCarritos.setAdapter(this.adaptador);
         }else{
+            guardar.setEnabled(false);
             this.vistaCarritos.setVisibility(View.GONE);
             sinResultado.setVisibility(View.VISIBLE);
         }

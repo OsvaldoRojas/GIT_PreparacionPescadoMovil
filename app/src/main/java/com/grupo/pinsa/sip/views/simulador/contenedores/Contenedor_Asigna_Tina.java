@@ -94,9 +94,9 @@ public class Contenedor_Asigna_Tina extends Fragment {
 
     private void llenarview(ViewPager viewPager) {
         SesionesAdapter adatartes= new SesionesAdapter(getFragmentManager());
-        Fragment asignaCocida = Fragment_Asigna_Tina_Cocida.newInstance(this.mParam2);
+        Fragment asignaCocida = Fragment_Asigna_Tina_Cocida.newInstance(this.mParam2, true);
         adatartes.addfragments(asignaCocida, getResources().getString(R.string.asignaCocida));
-        Fragment asignaTina = Fragment_Asigna_Tina.newInstance(this.mParam2);
+        Fragment asignaTina = Fragment_Asigna_Tina.newInstance(this.mParam2, true);
         adatartes.addfragments(asignaTina, getResources().getString(R.string.asignaTina));
         viewPager.setAdapter(adatartes);
     }

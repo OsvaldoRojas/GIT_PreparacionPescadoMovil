@@ -2,6 +2,7 @@ package com.grupo.pinsa.sip.views.simulador.modulos;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -27,14 +29,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 public class Fragment_Vista_Panoramica extends Fragment {
 
     private View vista;
-    private AlertDialog ventanaError;
-    private ProgressBar barraProgreso;
-
-    private List<Modulo> modulos;
-
     private OnFragmentInteractionListener mListener;
 
     public Fragment_Vista_Panoramica() {
@@ -48,191 +47,31 @@ public class Fragment_Vista_Panoramica extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.vista = inflater.inflate(R.layout.actividad_vista_panoramica, container, false);
+        this.vista = inflater.inflate(R.layout.fragment_vista_panoramica, container, false);
         iniciaComponentes();
         return this.vista;
     }
 
     private void iniciaComponentes(){
-        this.barraProgreso = this.vista.findViewById(R.id.barraProgreso);
-        iniciaProcesando();
-
-        Button botonSalir = this.vista.findViewById(R.id.boton1);
-        botonSalir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragment = new Contenedor_Modulos().newInstance(0);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
-            }
-        });
-
-        FloatingActionButton botonActualiza = this.vista.findViewById(R.id.actualiza);
-        botonActualiza.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                iniciaProcesando();
-                getModulos();
-            }
-        });
-
-        getModulos();
+        Intent vistaPanoramica = new Intent(getContext(), ActividadVistaPanoramica.class);
+        startActivityForResult(vistaPanoramica, 0);
     }
 
-    private void getModulos(){
-        Call<List<Modulo>> llamadaServicio = APIServicios.getConexion().getModulosVistaPanoramica();
-        llamadaServicio.enqueue(new Callback<List<Modulo>>() {
-            @Override
-            public void onResponse(Call<List<Modulo>> call, Response<List<Modulo>> response) {
-                if( isAdded() ){
-                    if( response.code() == 200 ){
-                        dibujaModulos();
-                    }else{
-                        terminaProcesando();
-                        errorServicio( "Error al obtener los módulos de vista" );
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Modulo>> call, Throwable t) {
-                if( isAdded() ){
-                    terminaProcesando();
-                    errorServicio("Error al conectar con el servidor");
-                }
-            }
-        });
-    }
-
-    private void dibujaModulos(){
-        for(Modulo modulo : this.modulos){
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if( resultCode == RESULT_OK ){
+           String navegacion = data.getStringExtra("navegacion");
+           if( navegacion.equalsIgnoreCase("volver") ){
+               Fragment fragment = new Contenedor_Modulos().newInstance(0);
+               getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+           }else{
+               if( navegacion.equalsIgnoreCase("detalle") ){
+                   Modulo modulo = (Modulo) data.getSerializableExtra("modulo");
+                   Fragment fragment = new Fragment_Detalle_Modulo().newInstance(modulo, true);
+                   getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).commit();
+               }
+           }
         }
-        /*int posicionesInhabilitadas = getModuloSeleccionado().getCapacidadMaxima() - getModuloSeleccionado().getCapacidadActual();
-        int posicionesDibujadas = 0;
-        int posicionesTurno1 = posicionesInhabilitadas;
-        int posicionesTurno2 = getModuloSeleccionado().getCarritos().size() + posicionesInhabilitadas;
-        for( Carrito carrito : getModuloSeleccionado().getCarritos() ){
-            if( carrito.getTurno() == 1 ){
-                posicionesTurno1 = posicionesTurno1+1;
-            }
-        }
-        LinearLayout posiciones = this.vista.findViewById(R.id.posiciones);
-        posiciones.removeAllViews();
-        for( int columna = 0; columna < getModuloSeleccionado().getColumna(); columna++  ){
-            LinearLayout linearFila = new LinearLayout( getContext() );
-            LinearLayout.LayoutParams layoutParams = new LinearLayout
-                    .LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            linearFila.setLayoutParams(layoutParams);
-            linearFila.setOrientation(LinearLayout.VERTICAL);
-            posiciones.addView(linearFila);
-            for( int fila = 0; fila < getModuloSeleccionado().getFila(); fila++ ){
-                if( posicionesDibujadas == getModuloSeleccionado().getCapacidadMaxima() ){
-                    terminaProcesando();
-                    return;
-                }
-                ImageView imagen = new ImageView( getContext() );
-                LinearLayout.LayoutParams imagenParams = new LinearLayout.LayoutParams(70, 70);
-                imagenParams.setMargins(1, 1, 1, 1 );
-                imagen.setLayoutParams(imagenParams);
-                imagen.setPadding(10, 10, 10, 10);
-
-                if(posicionesDibujadas < posicionesInhabilitadas){
-                    imagen.setImageResource(R.drawable.ic_block_modulo);
-                    imagen.setBackground( getResources().getDrawable( R.drawable.contenedor_modulo_vacio ) );
-                }else{
-                    if(posicionesDibujadas < posicionesTurno1){
-                        imagen.setImageResource(R.drawable.ic_pinsa_carritos);
-                        imagen.setBackground( getResources().getDrawable( R.drawable.contenedor_modulo_turno1 ) );
-                    }else{
-                        if(posicionesDibujadas < posicionesTurno2){
-                            imagen.setImageResource(R.drawable.ic_pinsa_carrito_turno2);
-                            imagen.setBackground( getResources().getDrawable( R.drawable.contenedor_modulo_turno2 ) );
-                        }else{
-                            imagen.setImageResource(R.drawable.ic_pinsa_carrito_vacio);
-                            imagen.setBackground( getResources().getDrawable( R.drawable.contenedor_modulo_vacio ) );
-                        }
-                    }
-                }
-                linearFila.addView(imagen);
-                posicionesDibujadas = posicionesDibujadas+1;
-            }
-        }
-
-        //
-        float[] arregloTemperaturas = new float[]{35.6f,23.3f,40.5f};
-        getModuloSeleccionado().setTemperaturas(arregloTemperaturas);
-        //
-        LinearLayout temperaturas = this.vista.findViewById(R.id.temperaturas);
-        temperaturas.removeAllViews();
-        for(int posicion = 0; posicion < getModuloSeleccionado().getTemperaturas().length; posicion++){
-            LinearLayout linearFila = new LinearLayout( getContext() );
-            LinearLayout.LayoutParams layoutParams = new LinearLayout
-                    .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
-            linearFila.setLayoutParams(layoutParams);
-            linearFila.setGravity(Gravity.CENTER_VERTICAL);
-            linearFila.setOrientation(LinearLayout.HORIZONTAL);
-            temperaturas.addView(linearFila);
-
-            TextView etiquetaTemperatura = new TextView( getContext() );
-            etiquetaTemperatura.setText(
-                    String.valueOf( getModuloSeleccionado().getTemperaturas()[posicion] ).concat("°C")
-            );
-            etiquetaTemperatura.setTextSize(12);
-            etiquetaTemperatura.setPadding(0, 0, 5, 0);
-            linearFila.addView(etiquetaTemperatura);
-
-            ImageView imagen = new ImageView( getContext() );
-            LinearLayout.LayoutParams imagenParams = new LinearLayout.LayoutParams(50, 50);
-            imagenParams.setMargins(1, 1, 1, 1 );
-            imagen.setLayoutParams(imagenParams);
-            imagen.setPadding(10, 10, 10, 10);
-            imagen.setBackground( getResources().getDrawable( R.drawable.contenedor_modulo_vacio ) );
-            if(getModuloSeleccionado().getTemperaturas()[posicion] <= 35){
-                imagen.setImageResource(R.drawable.ic_temperatura_modulo2);
-            }else{
-                imagen.setImageResource(R.drawable.ic_temperatura_modulo1);
-            }
-            linearFila.addView(imagen);
-        }*/
-
-        terminaProcesando();
-    }
-
-    public void errorServicio(final String mensaje){
-        AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View vistaAsignar = inflater.inflate(R.layout.dialog_mensaje_general, null);
-        builder.setCancelable(false);
-        builder.setView(vistaAsignar);
-
-        this.ventanaError = builder.create();
-        this.ventanaError.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                TextView etiquetaMensaje = ventanaError.findViewById(R.id.etiquetaMensaje);
-                etiquetaMensaje.setText(mensaje);
-
-                Button botonAceptar = ventanaError.findViewById(R.id.boton1);
-                botonAceptar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ventanaError.dismiss();
-                    }
-                });
-            }
-        });
-        this.ventanaError.show();
-    }
-
-    public void iniciaProcesando(){
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.barraProgreso.setVisibility(View.VISIBLE);
-    }
-
-    public void terminaProcesando(){
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        this.barraProgreso.setVisibility(View.GONE);
     }
 
     public void onButtonPressed(Uri uri) {

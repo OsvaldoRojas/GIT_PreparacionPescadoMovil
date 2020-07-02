@@ -32,6 +32,7 @@ import com.grupo.pinsa.sip.views.simulador.modelo.Modulo;
 import com.grupo.pinsa.sip.views.simulador.modelo.UsuarioLogueado;
 import com.grupo.pinsa.sip.views.simulador.modelo.servicio.ModuloCarritosAsignados;
 import com.grupo.pinsa.sip.views.simulador.modelo.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.views.simulador.utilerias.Constantes;
 import com.grupo.pinsa.sip.views.simulador.utilerias.Utilerias;
 
 import java.io.Serializable;
@@ -165,7 +166,7 @@ public class Fragment_Entrada_Manual extends Fragment {
                             if( cocedores.get(i).getBascula() != null &&
                                     bascula.getIdBascula() == cocedores.get(i).getBascula().getIdBascula() ){
                                 seleccionaBascula.setSelection(
-                                        Utilerias.obtenerPosicionItem( seleccionaBascula, bascula.getDescripcion() )
+                                        Utilerias.obtenerPosicionBascula( seleccionaBascula, bascula.getDescripcion() )
                                 );
                                 break;
                             }
@@ -237,10 +238,16 @@ public class Fragment_Entrada_Manual extends Fragment {
     }
 
     private void muestraCocedores(List<Cocedor> cocedores){
-        this.cocedores = cocedores;
+        //this.cocedores = cocedores;
+        this.cocedores = new ArrayList<>();
+        for( Cocedor cocedor : cocedores ){
+            if( cocedor.getEstatus().equalsIgnoreCase( Constantes.ESTATUS_COCEDOR.procesoDescarga.getDescripcion() ) ){
+                this.cocedores.add(cocedor);
+            }
+        }
         Cocedor cocedorVacio = new Cocedor();
         cocedorVacio.setId(0);
-        cocedorVacio.setTamano("Seleccionar cocedor");
+        cocedorVacio.setDescripcion("Seleccionar cocedor");
         this.cocedores.add(0, cocedorVacio);
         AdaptadorCocedorCatalogo adaptadorCocedorCatalogo = new AdaptadorCocedorCatalogo(getContext(), this.cocedores);
         this.seleccionaCocedor.setAdapter(adaptadorCocedorCatalogo);
@@ -384,8 +391,14 @@ public class Fragment_Entrada_Manual extends Fragment {
     }
 
     private void muestraCarritos(List<Carrito> carritos){
-        //TODO: filtrar solo los carritos que en peso tiene diferente de 0.0
-        for(Carrito carritoNuevo : carritos){
+        List<Carrito> listaCarritosPesados = new ArrayList<>();
+        for(Carrito carrito : carritos){
+            if( carrito.getPeso() > 0.0 ){
+                listaCarritosPesados.add(carrito);
+            }
+        }
+
+        for(Carrito carritoNuevo : listaCarritosPesados){
             for(Carrito carritoAnterior : this.listaCarritos){
                 if( carritoNuevo.getDescripcion().equalsIgnoreCase( carritoAnterior.getDescripcion() ) ){
                     carritoNuevo.setSeleccionado( carritoAnterior.isSeleccionado() );
@@ -394,7 +407,7 @@ public class Fragment_Entrada_Manual extends Fragment {
                 }
             }
         }
-        this.listaCarritos = carritos;
+        this.listaCarritos = listaCarritosPesados;
         TextView sinResultado = this.vista.findViewById(R.id.sinResultados);
         if( !this.listaCarritos.isEmpty() ) {
             sinResultado.setVisibility(View.GONE);

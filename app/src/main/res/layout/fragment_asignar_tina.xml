@@ -20,6 +20,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/etiquetaTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/asignarTina"
@@ -90,37 +91,69 @@
                     android:gravity="left"
                     android:drawableRight="@drawable/ic_precarga" />
 
-                <Spinner
-                    android:id="@+id/seleccionEspecie"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/seleccionTalla"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    <Spinner
+                        android:id="@+id/seleccionEspecie"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
 
-                <Spinner
-                    android:id="@+id/seleccionSubtalla"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/seleccionEspecialidad"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/seleccionTalla"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/seleccionSubtalla"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/seleccionEspecialidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

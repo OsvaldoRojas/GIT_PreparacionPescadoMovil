@@ -120,7 +120,7 @@ public class ActividadCarritosInventario extends AppCompatActivity {
         });
 
         TextView cocedor = findViewById(R.id.cocedor);
-        cocedor.setText( getCocedorSeleccionado().getTamano() );
+        cocedor.setText( getCocedorSeleccionado().getDescripcion() );
 
         this.vistaLista = findViewById(R.id.listaCarritos);
 
@@ -173,7 +173,7 @@ public class ActividadCarritosInventario extends AppCompatActivity {
         AdaptadorBasculaCatalogo adaptadorBasculaCatalogo = new AdaptadorBasculaCatalogo(this, this.basculas);
         this.seleccionaBascula.setAdapter(adaptadorBasculaCatalogo);
         this.seleccionaBascula.setSelection(
-                Utilerias.obtenerPosicionItem(
+                Utilerias.obtenerPosicionBascula(
                         this.seleccionaBascula,
                         getIntent().getStringExtra("bascula")
                 )

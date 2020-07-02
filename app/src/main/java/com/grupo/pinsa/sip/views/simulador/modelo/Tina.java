@@ -12,6 +12,10 @@ public class Tina implements Serializable {
     @Expose
     private int idPreseleccionPosicionTina;
 
+    @SerializedName("idAsignacionCocida")
+    @Expose
+    private long idAsignacionCocida;
+
     @SerializedName("posicion")
     @Expose
     private String posicion;
@@ -181,5 +185,13 @@ public class Tina implements Serializable {
 
     public void setPorcentaje(int porcentaje) {
         this.porcentaje = porcentaje;
+    }
+
+    public long getIdAsignacionCocida() {
+        return idAsignacionCocida;
+    }
+
+    public void setIdAsignacionCocida(long idAsignacionCocida) {
+        this.idAsignacionCocida = idAsignacionCocida;
     }
 }

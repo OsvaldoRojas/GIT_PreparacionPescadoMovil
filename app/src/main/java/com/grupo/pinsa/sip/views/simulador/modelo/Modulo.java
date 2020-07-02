@@ -49,6 +49,8 @@ public class Modulo implements Serializable {
     @Expose
     private float[] temperaturas;
 
+    private int totalTouch = 0;
+
     private List<Carrito> carritos = new ArrayList<>();
 
     public long getId() {
@@ -137,5 +139,13 @@ public class Modulo implements Serializable {
 
     public void setCarritos(List<Carrito> carritos) {
         this.carritos = carritos;
+    }
+
+    public int getTotalTouch() {
+        return totalTouch;
+    }
+
+    public void setTotalTouch(int totalTouch) {
+        this.totalTouch = totalTouch;
     }
 }

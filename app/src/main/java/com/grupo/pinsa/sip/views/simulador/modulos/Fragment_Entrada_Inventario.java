@@ -30,6 +30,7 @@ import com.grupo.pinsa.sip.views.simulador.modelo.Modulo;
 import com.grupo.pinsa.sip.views.simulador.modelo.UsuarioLogueado;
 import com.grupo.pinsa.sip.views.simulador.modelo.servicio.ModuloCarritosAsignados;
 import com.grupo.pinsa.sip.views.simulador.modelo.servicio.RespuestaServicio;
+import com.grupo.pinsa.sip.views.simulador.utilerias.Constantes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -177,10 +178,16 @@ public class Fragment_Entrada_Inventario extends Fragment {
     }
 
     private void muestraCocedores(List<Cocedor> cocedores){
-        this.cocedores = cocedores;
+        //this.cocedores = cocedores;
+        this.cocedores = new ArrayList<>();
+        for( Cocedor cocedor : cocedores ){
+            if( cocedor.getEstatus().equalsIgnoreCase( Constantes.ESTATUS_COCEDOR.procesoDescarga.getDescripcion() ) ){
+                this.cocedores.add(cocedor);
+            }
+        }
         Cocedor cocedorVacio = new Cocedor();
         cocedorVacio.setId(0);
-        cocedorVacio.setTamano("Seleccionar cocedor");
+        cocedorVacio.setDescripcion("Seleccionar cocedor");
         this.cocedores.add(0, cocedorVacio);
         AdaptadorCocedorCatalogo adaptadorCocedorCatalogo = new AdaptadorCocedorCatalogo(getContext(), this.cocedores);
         this.seleccionaCocedor.setAdapter(adaptadorCocedorCatalogo);

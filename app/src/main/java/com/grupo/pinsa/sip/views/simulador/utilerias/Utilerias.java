@@ -69,7 +69,7 @@ public class Utilerias {
         return false;
     }
 
-    public static int obtenerPosicionItem(Spinner spinner, String descripcion) {
+    public static int obtenerPosicionBascula(Spinner spinner, String descripcion) {
         int posicion = 0;
         for (int i = 0; i < spinner.getCount(); i++) {
             if ( ( (Bascula) spinner.getItemAtPosition(i) ).getDescripcion().equalsIgnoreCase(descripcion)) {
@@ -82,6 +82,11 @@ public class Utilerias {
 
     public static String fechaActual(){
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        return formatoFecha.format( new Date() );
+    }
+
+    public static String fechaHoraActual(){
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return formatoFecha.format( new Date() );
     }
 

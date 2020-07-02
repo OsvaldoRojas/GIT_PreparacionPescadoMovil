@@ -7,6 +7,8 @@ import com.grupo.pinsa.sip.views.simulador.modelo.Carrito;
 import com.grupo.pinsa.sip.views.simulador.modelo.Cocedor;
 import com.grupo.pinsa.sip.views.simulador.modelo.CocedorActualSiguiente;
 import com.grupo.pinsa.sip.views.simulador.modelo.Cocida;
+import com.grupo.pinsa.sip.views.simulador.modelo.ControlDescongelado;
+import com.grupo.pinsa.sip.views.simulador.modelo.ControlDescongeladoDetalle;
 import com.grupo.pinsa.sip.views.simulador.modelo.EmpleadoEstacion;
 import com.grupo.pinsa.sip.views.simulador.modelo.Especialidad;
 import com.grupo.pinsa.sip.views.simulador.modelo.Etapa;
@@ -175,6 +177,12 @@ public interface ServicioRest {
     @GET("modulos/vistaPanoramica")
     Call<List<Modulo>> getModulosVistaPanoramica();
 
+    @GET("procesos/descongelados")
+    Call<List<ControlDescongelado>> getControlDescongelado(@Query("fecha") String fecha);
+
+    @GET("procesos/descongelados/consumo")
+    Call<ControlDescongeladoDetalle> getControlDetalle(@Query("fecha") String fecha);
+
     @PUT("preseleccion/montacargas")
     Call<RespuestaServicio> guardaMontacargas(@Body JsonObject body);
 
@@ -231,6 +239,9 @@ public interface ServicioRest {
 
     @PUT("modulos/operadores/libera-todos")
     Call<RespuestaServicio> liberaTurnoModulo(@Body JsonObject body);
+
+    @PUT("procesos/descongelados")
+    Call<RespuestaServicio> guardaControlDescongelado(@Body ControlDescongelado controlDescongelado);
 
     @POST("preseleccion/posiciones/tinas/liberar")
     Call<RespuestaServicio> liberaTina(@Body JsonObject body);

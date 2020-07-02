@@ -44,7 +44,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Código de Usuario"
+                    android:hint="Código de Operador"
                     android:gravity="left"
                     android:textColor="@color/colorPrimaryDark"
                     android:background="@color/colorAccent"
@@ -65,7 +65,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Nombre del Usuario"
+                    android:hint="Nombre del Operador"
                     android:gravity="left"
                     android:background="@color/colorAccent"
                     android:textSize="15dp"
@@ -73,13 +73,21 @@
                     android:paddingBottom="4dp"
                     android:paddingLeft="5dp"/>
 
-                <Spinner
-                    android:id="@+id/seleccionZona"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp" />
+                    android:layout_marginRight="20dp"
+                    android:background="@color/colorAccent">
+
+                    <Spinner
+                        android:id="@+id/seleccionZona"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -170,12 +170,18 @@ public class Fragment_Carga_Carritos extends Fragment {
         this.vistaLista = this.vista.findViewById(R.id.listaCarritos);
 
         this.seleccionaCocedor = this.vista.findViewById(R.id.seleccionCocedor);
+        List<Cocedor> cocedoresSeleccion = new ArrayList<>();
+        for( Cocedor cocedor : getCocedores() ){
+            if( !cocedor.getEstatus().equalsIgnoreCase( Constantes.ESTATUS_COCEDOR.inhabilitado.getDescripcion() ) ){
+                cocedoresSeleccion.add(cocedor);
+            }
+        }
         Cocedor cocedorVacio = new Cocedor();
         cocedorVacio.setId(0);
-        cocedorVacio.setTamano("Seleccionar cocedor");
-        getCocedores().add(0, cocedorVacio);
-        //TODO: Quitar los cocedores deshabilitados
-        AdaptadorCocedorCatalogo adaptadorCocedorCatalogo = new AdaptadorCocedorCatalogo(getContext(), getCocedores());
+        cocedorVacio.setDescripcion("Seleccionar cocedor");
+        cocedoresSeleccion.add(0, cocedorVacio);
+
+        AdaptadorCocedorCatalogo adaptadorCocedorCatalogo = new AdaptadorCocedorCatalogo(getContext(), cocedoresSeleccion);
         this.seleccionaCocedor.setAdapter(adaptadorCocedorCatalogo);
 
         this.seleccionarTodo = this.vista.findViewById(R.id.seleccionarTodo);
@@ -463,34 +469,42 @@ public class Fragment_Carga_Carritos extends Fragment {
 
     private void muestraInformacion(CocedorActualSiguiente actualSiguiente){
         TextView actual = this.vista.findViewById(R.id.actual);
-        actual.setText( actualSiguiente.getActual().getDescripcion() );
-
         TextView subtallaActual = this.vista.findViewById(R.id.subtallaActual);
-        subtallaActual.setText( actualSiguiente.getActual().getSubtalla() );
-
         TextView especieActual = this.vista.findViewById(R.id.especieActual);
-        especieActual.setText( actualSiguiente.getActual().getEspecie() );
-
         TextView capacidadActual = this.vista.findViewById(R.id.capacidadActual);
-        capacidadActual.setText( String.valueOf( actualSiguiente.getActual().getCapacidad() ) );
-
         TextView horaActual = this.vista.findViewById(R.id.horaActual);
-        horaActual.setText( actualSiguiente.getActual().getHoraInicio() );
+        if( actualSiguiente.getActual().getCapacidad() > 0 ){
+            actual.setText( actualSiguiente.getActual().getDescripcion() );
+            subtallaActual.setText( actualSiguiente.getActual().getSubtalla() );
+            especieActual.setText( actualSiguiente.getActual().getEspecie() );
+            capacidadActual.setText( String.valueOf( actualSiguiente.getActual().getCapacidad() ) );
+            horaActual.setText( actualSiguiente.getActual().getHoraInicio().substring(11) );
+        }else{
+            actual.setText("---");
+            subtallaActual.setText("---");
+            especieActual.setText("---");
+            capacidadActual.setText("---");
+            horaActual.setText("---" );
+        }
 
         TextView siguiente = this.vista.findViewById(R.id.siguiente);
-        siguiente.setText( actualSiguiente.getSiguiente().getDescripcion() );
-
         TextView subtallaSiguiente = this.vista.findViewById(R.id.subtallaSiguiente);
-        subtallaSiguiente.setText( actualSiguiente.getSiguiente().getSubtalla() );
-
         TextView especieSiguiente = this.vista.findViewById(R.id.especieSiguiente);
-        especieSiguiente.setText( actualSiguiente.getSiguiente().getEspecie() );
-
         TextView capacidadSiguiente = this.vista.findViewById(R.id.capacidadSiguiente);
-        capacidadSiguiente.setText( String.valueOf( actualSiguiente.getSiguiente().getCapacidad() ) );
-
         TextView horaSiguiente = this.vista.findViewById(R.id.horaSiguiente);
-        horaSiguiente.setText( actualSiguiente.getSiguiente().getHoraInicio() );
+        if( actualSiguiente.getSiguiente().getCapacidad() > 0 ){
+            siguiente.setText( actualSiguiente.getSiguiente().getDescripcion() );
+            subtallaSiguiente.setText( actualSiguiente.getSiguiente().getSubtalla() );
+            especieSiguiente.setText( actualSiguiente.getSiguiente().getEspecie() );
+            capacidadSiguiente.setText( String.valueOf( actualSiguiente.getSiguiente().getCapacidad() ) );
+            horaSiguiente.setText( actualSiguiente.getSiguiente().getHoraInicio().substring(11) );
+        }else{
+            siguiente.setText("---");
+            subtallaSiguiente.setText("---");
+            especieSiguiente.setText("---");
+            capacidadSiguiente.setText("---");
+            horaSiguiente.setText("---");
+        }
     }
 
     public void actualizaTotal(){

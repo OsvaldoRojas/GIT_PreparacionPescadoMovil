@@ -21,6 +21,10 @@ public class Cocedor implements Serializable {
     @Expose
     private String tamano;
 
+    @SerializedName("descripcion")
+    @Expose
+    private String descripcion;
+
     @SerializedName("capacidad")
     @Expose
     private int capacidad;
@@ -53,7 +57,7 @@ public class Cocedor implements Serializable {
 
     @SerializedName("numeroCocida")
     @Expose
-    private long numeroCocida;
+    private String numeroCocida;
 
     @SerializedName("idCocida")
     @Expose
@@ -78,6 +82,10 @@ public class Cocedor implements Serializable {
     @SerializedName("bascula")
     @Expose
     private Bascula bascula;
+
+    @SerializedName("plan")
+    @Expose
+    private boolean plan;
 
     private int totalCocidas;
 
@@ -163,11 +171,11 @@ public class Cocedor implements Serializable {
         this.totalCarritos = totalCarritos;
     }
 
-    public long getNumeroCocida() {
+    public String getNumeroCocida() {
         return numeroCocida;
     }
 
-    public void setNumeroCocida(long numeroCocida) {
+    public void setNumeroCocida(String numeroCocida) {
         this.numeroCocida = numeroCocida;
     }
 
@@ -241,5 +249,21 @@ public class Cocedor implements Serializable {
 
     public void setBascula(Bascula bascula) {
         this.bascula = bascula;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public boolean isPlan() {
+        return plan;
+    }
+
+    public void setPlan(boolean plan) {
+        this.plan = plan;
     }
 }

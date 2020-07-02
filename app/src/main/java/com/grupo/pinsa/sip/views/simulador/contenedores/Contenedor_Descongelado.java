@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.grupo.pinsa.sip.views.simulador.descongelado.Fragment_Descongelado_Control;
 import com.grupo.pinsa.sip.views.simulador.orden.Fragment_CreaOrdenMantenimiento;
 import com.grupo.pinsa.sip.views.simulador.orden.Fragment_OrdenMantenimiento;
 import com.grupo.pinsa.sip.R;
@@ -97,6 +98,7 @@ public class Contenedor_Descongelado extends Fragment {
         adatartes2.addfragments(new Fragment_CreaOrdenMantenimiento(), getResources().getString(R.string.TiempoMuerto));
         adatartes2.addfragments(new Fragment_OrdenMantenimiento(), getResources().getString(R.string.OM));
         adatartes2.addfragments(new Fragment_Descongelado_SalidaTinas(), getResources().getString(R.string.Salida));
+        adatartes2.addfragments(new Fragment_Descongelado_Control(), getResources().getString(R.string.controlProcesoDescongelado));
         viewPager.setAdapter(adatartes2);
     }
 
@@ -113,6 +115,9 @@ public class Contenedor_Descongelado extends Fragment {
         TextView textView4 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
         textView4.setText( getResources().getString(R.string.Salida) );
         pestañas.getTabAt(3).setCustomView(textView4);
+        TextView textView5 = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+        textView5.setText( getResources().getString(R.string.controlProcesoDescongelado) );
+        pestañas.getTabAt(4).setCustomView(textView5);
     }
 
     public void onButtonPressed(Uri uri) {

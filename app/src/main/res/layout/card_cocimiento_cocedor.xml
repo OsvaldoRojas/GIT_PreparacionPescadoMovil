@@ -50,7 +50,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/contenedorTamano"
+                    android:id="@+id/contenedorDescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -64,10 +64,10 @@
                         android:layout_marginLeft="5dp"
                         android:textSize="12dp"
                         android:textColor="@color/colorPrimary"
-                        android:text="Tamaño: "/>
+                        android:text="Descripción: "/>
 
                     <TextView
-                        android:id="@+id/tamano"
+                        android:id="@+id/descripcion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12dp"

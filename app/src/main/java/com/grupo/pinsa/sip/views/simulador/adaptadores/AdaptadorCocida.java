@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.grupo.pinsa.sip.R;
 import com.grupo.pinsa.sip.views.simulador.modelo.Cocida;
+import com.grupo.pinsa.sip.views.simulador.preselecion.Fragment_Asigna_Tina_Cocida;
 
 import java.util.List;
 
@@ -75,43 +76,45 @@ public class AdaptadorCocida extends RecyclerView.Adapter<AdaptadorCocida.Cocida
             vista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Cocida cocida = listaCocida.get( getLayoutPosition() );
-                    if( cocida.isSeleccionado() ){
-                        cocida.setSeleccionado(false);
-                        talla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                        subTalla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                        especie.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                        especialidad.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                        turno.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                        cantidadTina.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                        fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorAccent) );
-                        anterior = null;
-                        cocidaAnterior = null;
-                    }else{
-                        if( !(anterior == null) ) {
-                            anterior.talla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.subTalla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.especie.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.especialidad.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.turno.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.cantidadTina.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                            anterior.fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorAccent) );
-                        }
+                    if( ( (Fragment_Asigna_Tina_Cocida) fragment ).getNuevo() ){
+                        Cocida cocida = listaCocida.get( getLayoutPosition() );
+                        if( cocida.isSeleccionado() ){
+                            cocida.setSeleccionado(false);
+                            talla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                            subTalla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                            especie.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                            especialidad.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                            turno.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                            cantidadTina.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                            fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorAccent) );
+                            anterior = null;
+                            cocidaAnterior = null;
+                        }else{
+                            if( !(anterior == null) ) {
+                                anterior.talla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                                anterior.subTalla.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                                anterior.especie.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                                anterior.especialidad.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                                anterior.turno.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                                anterior.cantidadTina.setTextColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                                anterior.fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorAccent) );
+                            }
 
-                        if( !(cocidaAnterior == null) ){
-                            cocidaAnterior.setSeleccionado(false);
-                        }
+                            if( !(cocidaAnterior == null) ){
+                                cocidaAnterior.setSeleccionado(false);
+                            }
 
-                        cocida.setSeleccionado(true);
-                        talla.setTextColor( fragment.getResources().getColor(R.color.blanco) );
-                        subTalla.setTextColor( fragment.getResources().getColor(R.color.blanco) );
-                        especie.setTextColor( fragment.getResources().getColor(R.color.blanco) );
-                        especialidad.setTextColor( fragment.getResources().getColor(R.color.blanco) );
-                        turno.setTextColor( fragment.getResources().getColor(R.color.blanco) );
-                        cantidadTina.setTextColor( fragment.getResources().getColor(R.color.blanco) );
-                        fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorPrimary) );
-                        anterior = CocidaViewHolder.this;
-                        cocidaAnterior = cocida;
+                            cocida.setSeleccionado(true);
+                            talla.setTextColor( fragment.getResources().getColor(R.color.blanco) );
+                            subTalla.setTextColor( fragment.getResources().getColor(R.color.blanco) );
+                            especie.setTextColor( fragment.getResources().getColor(R.color.blanco) );
+                            especialidad.setTextColor( fragment.getResources().getColor(R.color.blanco) );
+                            turno.setTextColor( fragment.getResources().getColor(R.color.blanco) );
+                            cantidadTina.setTextColor( fragment.getResources().getColor(R.color.blanco) );
+                            fondo.setBackgroundColor( fragment.getResources().getColor(R.color.colorPrimary) );
+                            anterior = CocidaViewHolder.this;
+                            cocidaAnterior = cocida;
+                        }
                     }
                 }
             });
