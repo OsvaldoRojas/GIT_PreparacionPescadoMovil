@@ -151,13 +151,13 @@ public class Utilerias {
                     return new Contenedor_Emparrillado();
                 case cocimiento:
                     return new Contenedor_Cocimiento();
-                case modulos:
+                case enfriamiento:
                     return new Contenedor_Modulos();
                 case temperatura:
                     return new HomeTemperatura();
                 case estatus:
                     return new Fragment_Estatus();
-                case lavado:
+                case lavadoCarro:
                     return new Contenedor_Lavado();
                 case movimiento:
                     return new Fragment_MovimientoPersonal();
@@ -176,7 +176,7 @@ public class Utilerias {
                 return new Fragment_Temperatura_Tina().newInstance( Catalogos.getInstancia().getEtapaTemperatura(etapa) );
             case cocimiento:
                 return new Fragment_Temperatura_Carrito().newInstance(1);
-            case modulos:
+            case enfriamiento:
                 return new Fragment_Temperatura_Carrito().newInstance(2);
             case temperatura:
                 return new home();

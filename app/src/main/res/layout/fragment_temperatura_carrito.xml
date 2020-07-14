@@ -84,7 +84,7 @@
                             android:layout_height="30dp"
                             android:layout_weight="4"
                             android:layout_marginLeft="10dp"
-                            android:hint="Cocida"
+                            android:hint="Número de cocida"
                             android:gravity="center_vertical"
                             android:background="@color/colorAccent"
                             android:textSize="12dp"

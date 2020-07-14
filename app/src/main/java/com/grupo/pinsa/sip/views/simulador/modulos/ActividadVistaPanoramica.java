@@ -270,7 +270,7 @@ public class ActividadVistaPanoramica extends AppCompatActivity {
         int posicionesTurno1 = posicionesInhabilitadas;
         int posicionesTurno2 = modulo.getCarritos().size() + posicionesInhabilitadas;
         for( Carrito carrito : modulo.getCarritos() ){
-            if( carrito.getTurno() == 1 ){
+            if( carrito.getTurnoMP() == 0 ){
                 posicionesTurno1 = posicionesTurno1+1;
             }
         }
@@ -441,7 +441,7 @@ public class ActividadVistaPanoramica extends AppCompatActivity {
         int posicionesTurno1 = posicionesInhabilitadas;
         int posicionesTurno2 = modulo.getCarritos().size() + posicionesInhabilitadas;
         for( Carrito carrito : modulo.getCarritos() ){
-            if( carrito.getTurno() == 1 ){
+            if( carrito.getTurnoMP() == 0 ){
                 posicionesTurno1 = posicionesTurno1+1;
             }
         }

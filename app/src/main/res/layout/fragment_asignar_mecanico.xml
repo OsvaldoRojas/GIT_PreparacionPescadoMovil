@@ -44,7 +44,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Escanear gafete"
+                    android:hint="Código del Mecánico"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorPrimaryDark"
                     android:background="@color/colorAccent"

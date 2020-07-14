@@ -190,7 +190,7 @@ public class Fragment_Vista_Modulo extends Fragment {
         int posicionesTurno1 = posicionesInhabilitadas;
         int posicionesTurno2 = getModuloSeleccionado().getCarritos().size() + posicionesInhabilitadas;
         for( Carrito carrito : getModuloSeleccionado().getCarritos() ){
-            if( carrito.getTurno() == 1 ){
+            if( carrito.getTurnoMP() == 0 ){
                 posicionesTurno1 = posicionesTurno1+1;
             }
         }

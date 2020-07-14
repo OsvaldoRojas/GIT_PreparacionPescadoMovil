@@ -82,7 +82,7 @@ public class HomeTemperatura extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Utilerias.navegaTemperatura(Constantes.ETAPA.modulos))
+                        .replace(R.id.content_main, Utilerias.navegaTemperatura(Constantes.ETAPA.enfriamiento))
                         .commit();
             }
         });

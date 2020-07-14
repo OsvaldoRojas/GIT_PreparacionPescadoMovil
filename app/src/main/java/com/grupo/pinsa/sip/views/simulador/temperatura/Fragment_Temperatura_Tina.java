@@ -184,7 +184,9 @@ public class Fragment_Temperatura_Tina extends Fragment {
                 }else{
                     seleccionarTodo.setText("Seleccionar todo");
                 }
-                adaptador.notifyDataSetChanged();
+                if(adaptador != null){
+                    adaptador.notifyDataSetChanged();
+                }
             }
         });
 

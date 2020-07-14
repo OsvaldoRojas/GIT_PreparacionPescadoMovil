@@ -35,8 +35,12 @@ public class Catalogos {
     }
 
     public void setEtapaActual(Constantes.ETAPA etapa) {
+        String etapaNombre = etapa.toString();
+        if(etapaNombre.equalsIgnoreCase("lavadoCarro")){
+            etapaNombre = "lavado carro";
+        }
         for( Etapa etapaLista : this.catalogoEtapa){
-            if( etapaLista.getDescripcion().equalsIgnoreCase( etapa.toString() ) ){
+            if( etapaLista.getDescripcion().equalsIgnoreCase(etapaNombre) ){
                 this.etapaActual = etapaLista.getIdEtapa();
                 break;
             }

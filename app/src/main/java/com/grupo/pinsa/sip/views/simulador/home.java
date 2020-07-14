@@ -181,7 +181,7 @@ public class home extends Fragment {
                 @Override
                 public void onClick(View view) {
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.modulos))
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.enfriamiento))
                             .commit();
                 }
             });
@@ -226,7 +226,7 @@ public class home extends Fragment {
                 @Override
                 public void onClick(View view) {
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.lavado))
+                            .replace(R.id.content_main, Utilerias.navegaInicio(Constantes.ETAPA.lavadoCarro))
                             .commit();
                 }
             });

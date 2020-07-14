@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,8 +53,8 @@ public class AdaptadorCarritoModuloInventario extends RecyclerView.Adapter<Adapt
                 holder.barco.setText( carrito.getMovimientos().get(0).getBarco().concat("...") );
             }
         }
-        if( carrito.getPeso() > 0.0 ){
-            holder.fondo.setBackground( pantalla.getDrawable(R.drawable.borde_peso) );
+        if( carrito.getPeso() == 0.0 ){
+            holder.contenedorBorde.setBackground( pantalla.getDrawable(R.drawable.borde_peso) );
         }
         if( !carrito.isSeleccionado() ){
             holder.carrito.setTextColor( pantalla.getResources().getColor(R.color.colorPrimary) );
@@ -118,6 +119,7 @@ public class AdaptadorCarritoModuloInventario extends RecyclerView.Adapter<Adapt
         public TextView etiquetaTemperatura;
         public TextView temperatura;
         public RelativeLayout fondo;
+        public LinearLayout contenedorBorde;
 
         public CarritoModuloViewHolder(View vista, final Activity pantalla, final List<Carrito> listaCarritos){
             super(vista);
@@ -138,6 +140,7 @@ public class AdaptadorCarritoModuloInventario extends RecyclerView.Adapter<Adapt
             this.etiquetaTemperatura = vista.findViewById(R.id.etiquetaTemperatura);
             this.temperatura = vista.findViewById(R.id.temperatura);
             this.fondo = vista.findViewById(R.id.fondo);
+            this.contenedorBorde = vista.findViewById(R.id.contenedorBorde);
 
             vista.setClickable(true);
             vista.setOnClickListener(new View.OnClickListener() {

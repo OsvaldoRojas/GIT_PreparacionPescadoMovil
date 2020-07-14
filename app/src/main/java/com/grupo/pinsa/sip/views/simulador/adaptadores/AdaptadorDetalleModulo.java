@@ -31,7 +31,7 @@ public class AdaptadorDetalleModulo extends RecyclerView.Adapter<AdaptadorDetall
 
     @Override
     public void onBindViewHolder(@NonNull CarritoModuloViewHolder holder, int position) {
-        holder.turno.setText( String.valueOf( this.listaCarritos.get(position).getTurno() ) );
+        holder.turno.setText( String.valueOf( this.listaCarritos.get(position).getTurnoMP() == 0 ? 1 : 2 ) );
         holder.carrito.setText( this.listaCarritos.get(position).getDescripcion() );
         holder.especie.setText( this.listaCarritos.get(position).getEspecie() );
         holder.subtalla.setText( this.listaCarritos.get(position).getSubtalla() );

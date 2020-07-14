@@ -68,6 +68,10 @@ public class Carrito implements Serializable {
     @Expose
     private int turno;
 
+    @SerializedName("turnoMP")
+    @Expose
+    private int turnoMP;
+
     @SerializedName("movimientos")
     @Expose
     private List<Movimiento> movimientos;
@@ -250,5 +254,13 @@ public class Carrito implements Serializable {
 
     public void setPosicion(String posicion) {
         this.posicion = posicion;
+    }
+
+    public int getTurnoMP() {
+        return turnoMP;
+    }
+
+    public void setTurnoMP(int turnoMP) {
+        this.turnoMP = turnoMP;
     }
 }

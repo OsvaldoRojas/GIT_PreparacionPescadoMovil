@@ -15,10 +15,10 @@ public class Constantes {
         eviscerado,
         emparrillado,
         cocimiento,
-        modulos,
+        enfriamiento,
         temperatura,
         estatus,
-        lavado,
+        lavadoCarro,
         movimiento,
         control
     }
