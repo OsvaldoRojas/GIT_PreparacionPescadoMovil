@@ -166,7 +166,9 @@ public class Fragment_Temperatura_Carrito extends Fragment {
                             carritos.get(i).setSeleccionadoGeneral( !seleccionarTodo.isChecked() );
                             carritos.get(i).setSeleccionadoSuma( seleccionarTodo.isChecked() );
                         }
-                        adaptador.notifyDataSetChanged();
+                        if(adaptador != null){
+                            adaptador.notifyDataSetChanged();
+                        }
                     }
                 }else{
                     errorServicio("Es necesario ingresar una temperatura valida");

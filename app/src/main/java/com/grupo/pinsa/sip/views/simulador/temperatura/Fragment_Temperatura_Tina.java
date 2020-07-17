@@ -161,7 +161,9 @@ public class Fragment_Temperatura_Tina extends Fragment {
                             listaTinas.get(i).setSeleccionadoGeneral( !seleccionarTodo.isChecked() );
                             listaTinas.get(i).setSeleccionadoSuma( seleccionarTodo.isChecked() );
                         }
-                        adaptador.notifyDataSetChanged();
+                        if(adaptador != null){
+                            adaptador.notifyDataSetChanged();
+                        }
                     }
                 }else{
                     errorServicio("Es necesario ingresar una temperatura valida");

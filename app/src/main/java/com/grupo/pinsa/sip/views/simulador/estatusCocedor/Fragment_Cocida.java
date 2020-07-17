@@ -182,12 +182,20 @@ public class Fragment_Cocida extends Fragment {
 
         DetalleSimple fechaInicio = new DetalleSimple();
         fechaInicio.setLlave("Fecha de inicio");
-        fechaInicio.setValor(getCocedorSeleccionado().getFechaInicio());
+        fechaInicio.setValor("");
+        if( getCocedorSeleccionado().getFechaInicio() != null
+                && !getCocedorSeleccionado().getFechaInicio().equals("") ){
+            fechaInicio.setValor( getCocedorSeleccionado().getFechaInicio().substring(0, 10) );
+        }
         listaCocida.add(fechaInicio);
 
         DetalleSimple horaInicio = new DetalleSimple();
         horaInicio.setLlave("Hora de inicio");
-        horaInicio.setValor(getCocedorSeleccionado().getHoraInicio());
+        horaInicio.setValor("");
+        if( getCocedorSeleccionado().getHoraInicio() != null
+                && !getCocedorSeleccionado().getHoraInicio().equals("") ){
+            horaInicio.setValor( getCocedorSeleccionado().getHoraInicio().substring(11, 16) );
+        }
         listaCocida.add(horaInicio);
 
         DetalleSimple tiempoRestante = new DetalleSimple();
