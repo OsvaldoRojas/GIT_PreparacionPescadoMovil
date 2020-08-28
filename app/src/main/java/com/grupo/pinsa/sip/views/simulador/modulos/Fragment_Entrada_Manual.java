@@ -393,7 +393,7 @@ public class Fragment_Entrada_Manual extends Fragment {
     private void muestraCarritos(List<Carrito> carritos){
         List<Carrito> listaCarritosPesados = new ArrayList<>();
         for(Carrito carrito : carritos){
-            if( carrito.getPeso() == 0.0 ){
+            if( carrito.getPeso() > 0.0 ){
                 listaCarritosPesados.add(carrito);
             }
         }

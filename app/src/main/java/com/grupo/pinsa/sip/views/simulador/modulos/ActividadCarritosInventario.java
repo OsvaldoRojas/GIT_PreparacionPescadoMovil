@@ -192,6 +192,12 @@ public class ActividadCarritosInventario extends AppCompatActivity {
             }
         }
 
+        if( carritosActualizados.isEmpty() ){
+            terminaProcesando();
+            errorServicio("Agregue al menos un carrito");
+            return;
+        }
+
         //al guardar quitar todos los carritos que vienen del  mismo cocedor de la lista de agregados
         List<Carrito> carritosRemover = new ArrayList<>();
         for(Carrito carritoAgregado : this.listaCarritosAgregados){

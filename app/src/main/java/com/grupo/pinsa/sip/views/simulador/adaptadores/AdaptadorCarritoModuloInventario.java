@@ -53,7 +53,7 @@ public class AdaptadorCarritoModuloInventario extends RecyclerView.Adapter<Adapt
                 holder.barco.setText( carrito.getMovimientos().get(0).getBarco().concat("...") );
             }
         }
-        if( carrito.getPeso() == 0.0 ){
+        if( carrito.getPeso() > 0.0 ){
             holder.contenedorBorde.setBackground( pantalla.getDrawable(R.drawable.borde_peso) );
         }
         if( !carrito.isSeleccionado() ){

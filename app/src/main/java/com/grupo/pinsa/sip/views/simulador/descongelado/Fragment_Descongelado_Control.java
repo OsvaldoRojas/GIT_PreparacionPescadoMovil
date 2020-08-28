@@ -212,6 +212,11 @@ public class Fragment_Descongelado_Control extends Fragment {
             LinearLayoutManager layoutManager = new LinearLayoutManager( getContext() );
             this.vistaLista.setLayoutManager(layoutManager);
 
+            for(ControlDescongelado controlDescongelado : this.listaControlDescongelado){
+                String fechaServicio = controlDescongelado.getFecha();
+                controlDescongelado.setFecha( fechaServicio.replace("-", "/") );
+            }
+
             AdaptadorControlDescongelado adaptadorControlDescongelado = new AdaptadorControlDescongelado(
                     this.listaControlDescongelado,
                     this
